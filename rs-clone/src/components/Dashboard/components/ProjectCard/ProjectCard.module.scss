@@ -6,11 +6,11 @@
   border-left: 20px solid;
   border-radius: 3px;
   background: #ffffff;
-  box-shadow: var(
-    --ds-shadow-raised,
-    0 1px 1px rgba(9, 30, 66, 0.25),
-    0 0 1px rgba(9, 30, 66, 0.31)
-  );
+  box-shadow: 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+
+  &:hover {
+    box-shadow: 0 2px 4px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+  }
 }
 
 .titleArea {
@@ -40,7 +40,7 @@
   cursor: pointer;
 
   &:hover {
-    color: #0065FF;
+    color: #0065ff;
   }
 }
 
