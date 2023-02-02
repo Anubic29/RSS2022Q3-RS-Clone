@@ -1,6 +1,5 @@
 import React from 'react';
 import { MdExpandMore } from 'react-icons/md';
-import './header.scss';
 
 const Header = () => {
   return (
@@ -9,7 +8,7 @@ const Header = () => {
         <div className="header_logo"></div>
         <nav className="header_menu">
           <ul className="header_menu-list">
-            <li className="header_menu-item">
+            <li className="header_menu-item active">
               <span className="header_menu-text">Your work</span>
               <MdExpandMore className="header_menu-arrow" />
             </li>
@@ -21,8 +20,10 @@ const Header = () => {
         </nav>
         <button className="header_create-btn">Create</button>
         <div className="header_profile-wrap">
-          <div className="header_profile-icon">
-            <span className="header_profile-name">OD</span>
+          <div className="header_profile-inner">
+            <div className="header_profile-icon">
+              <span className="header_profile-name">OD</span>
+            </div>
           </div>
         </div>
       </div>

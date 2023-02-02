@@ -37,6 +37,19 @@
   padding-left: 16px;
 }
 
+.header_profile-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+    &:hover {
+      background-color: $colorHoverBlue;
+    }
+}
+
 .header_menu-list {
   display: flex;
 }
@@ -48,6 +61,15 @@
   line-height: 32px;
   padding: 0 8px;
   cursor: pointer;
+  color: $colorContent;
+  font-weight: 500;
+  border-radius: 5px;
+  position: relative;
+
+  &:hover {
+    background-color: $colorHoverBlue;
+    color: $colorSecondary;
+  }
 }
 
 .header_menu-span {
@@ -58,13 +80,26 @@
   line-height: 32px;
   vertical-align: middle;
   margin-left: 8px;
+  color: inherit;
+}
+
+.header_menu-item.active::after {
+    height: 3px;
+    position: absolute;
+    right: 4px;
+    bottom: -10px;
+    left: 4px;
+    background-color: $colorPrimary;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    content: "";
 }
 
 .header_profile-icon {
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  background-color: cornflowerblue;
+  background-color: $colorSecondary;
   line-height: 30px;
   text-align: center;
   font-weight: 500;
@@ -75,7 +110,7 @@
   height: 32px;
   color: white;
   font-weight: 500;
-  background-color: blue;
+  background-color: $colorPrimary;
   border: none;
   line-height: 32px;
   border-radius: 5px;
@@ -84,4 +119,8 @@
   padding-right: 15px;
   margin-left: 12px;
   cursor: pointer;
+
+    &:hover {
+      background-color: $colorSecondary;
+    }
 }
