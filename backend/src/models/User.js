@@ -20,7 +20,17 @@ const schema = new Schema({
   password: {
     type: String,
     required: true
-  }
-})
+  },
+  notedItems: [{
+    type: {
+      type: String,
+      required: true
+    },
+    id: {
+      type: String,
+      required: true
+    }
+  }]
+});
 
 module.exports = model('User', schema);
