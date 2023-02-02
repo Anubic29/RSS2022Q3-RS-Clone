@@ -1,21 +1,36 @@
-import { ProjectAvatar } from '../../../index';
+import ProjectAvatar from '../../../ProjectAvatar/ProjectAvatar';
+import { MdOutlineExpandMore } from 'react-icons/md';
+import { ProjectAvatarProps } from '../../../ProjectAvatar/ProjectAvatar';
+
 import styles from './ProjectCard.module.scss';
 
-function ProjectCard() {
+interface ProjectCardProps extends ProjectAvatarProps {
+  title: string;
+  description: string;
+}
+
+function ProjectCard(props: ProjectCardProps) {
+  const { title, description, size, source, bgColor } = props;
+
+  const cardStyles = {
+    borderColor: `${bgColor}50`
+  };
+
   return (
-    <li className={styles.projectCard}>
+    <li className={styles.projectCard} style={cardStyles}>
       <div className={styles.titleArea}>
-        <ProjectAvatar
-          size={24}
-          source="https://cdn-icons-png.flaticon.com/512/1088/1088537.png"
-          bgColor="#FF0000"
-        />
+        <ProjectAvatar {...{ size, source, bgColor }} />
         <div className={styles.projectInfo}>
-          <h3 className={styles.projectTitle}>Project title</h3>
-          <p className={styles.projectDescription}>Description</p>
+          <p className={styles.projectTitle}>{title}</p>
+          <p className={styles.projectDescription}>{description}</p>
         </div>
       </div>
-      <div className={styles.actionsArea}>Actions</div>
+      <div className={styles.actionsArea}>
+        <div className={styles.actions}>
+          Actions
+          <MdOutlineExpandMore />
+        </div>
+      </div>
     </li>
   );
 }

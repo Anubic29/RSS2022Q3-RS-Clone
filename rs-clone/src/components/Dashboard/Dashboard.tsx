@@ -1,9 +1,11 @@
-import { ProjectsSection } from './index';
+import ProjectsSection from './components/ProjectsSection/ProjectsSection';
+
+import styles from './Dashboard.module.scss';
 
 function Dashboard() {
   return (
-    <div className="dashboard">
-      <h1>Your work</h1>
+    <div className={styles.dashboard}>
+      <h1 className={styles.title}>Your work</h1>
       <ProjectsSection />
     </div>
   );

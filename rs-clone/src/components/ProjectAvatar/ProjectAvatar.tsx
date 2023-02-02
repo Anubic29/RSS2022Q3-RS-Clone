@@ -1,6 +1,6 @@
 import './ProjectAvatar.scss';
 
-interface ProjectAvatarProps {
+export interface ProjectAvatarProps {
   size: number;
   source: string;
   bgColor: string;
