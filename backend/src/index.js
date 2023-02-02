@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const users = require('./api/users');
 const projects = require('./api/projects');
+const tasks = require('./api/tasks');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(function(req, res, next) {
 
 app.use("/api/users", users);
 app.use("/api/projects", projects);
+app.use("/api/tasks", tasks);
 
 async function start() {
   try {
