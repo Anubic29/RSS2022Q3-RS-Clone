@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdExpandMore } from 'react-icons/md';
+import UserIcon from '../userIcon/UserIcon';
 
 const Header = () => {
   return (
@@ -19,13 +20,7 @@ const Header = () => {
           </ul>
         </nav>
         <button className="header_create-btn">Create</button>
-        <div className="header_profile-wrap">
-          <div className="header_profile-inner">
-            <div className="header_profile-icon">
-              <span className="header_profile-name">OD</span>
-            </div>
-          </div>
-        </div>
+        <UserIcon user="OD"></UserIcon>
       </div>
     </header>
   );

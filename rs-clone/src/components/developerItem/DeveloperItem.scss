@@ -1,0 +1,16 @@
+.footer_devs-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: $colorContent;
+  cursor: pointer;
+
+  &:hover {
+    color: $colorPrimary;
+  }
+}
+
+.dev-name {
+  font-weight: 500;
+  margin-left: 10px;
+}

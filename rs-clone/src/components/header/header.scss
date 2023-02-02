@@ -32,24 +32,6 @@
   margin-right: 26px;
 }
 
-.header_profile-wrap {
-  margin-left: auto;
-  padding-left: 16px;
-}
-
-.header_profile-inner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  cursor: pointer;
-    &:hover {
-      background-color: $colorHoverBlue;
-    }
-}
-
 .header_menu-list {
   display: flex;
 }
@@ -93,17 +75,6 @@
     border-top-left-radius: 1px;
     border-top-right-radius: 1px;
     content: "";
-}
-
-.header_profile-icon {
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  background-color: $colorSecondary;
-  line-height: 30px;
-  text-align: center;
-  font-weight: 500;
-  cursor: pointer;
 }
 
 .header_create-btn {
