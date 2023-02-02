@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const users = require('./api/users');
+const projects = require('./api/projects');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(function(req, res, next) {
 });
 
 app.use("/api/users", users);
+app.use("/api/projects", projects);
 
 async function start() {
   try {
