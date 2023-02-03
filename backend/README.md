@@ -142,7 +142,8 @@ URL Params:
 None
 
 Query Params:
-None
+user: String (optional)
+author: String (optional)
 
 Data Params:
 None

@@ -25,7 +25,13 @@ function isCorrectProjectColumn(body) {
 
 router.get('/', async (req, res) => {
   try {
-    const projects = await Project.find({})
+    let projects = await Project.find({});
+    if (req.query.user) {
+      projects = projects.filter((project) => project.author === req.query.user || project.team.includes(req.query.user));
+    }
+    if (req.query.author) {
+      projects = projects.filter((project) => project.author === req.query.author);
+    }
     res.json(projects);
   } catch (error) {
     console.error(error);
