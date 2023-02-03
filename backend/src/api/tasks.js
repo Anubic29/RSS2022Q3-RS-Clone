@@ -28,7 +28,19 @@ function isCorrectTaskComment(body) {
 
 router.get('/', async(req, res) => {
   try {
-    const tasks = await Task.find({})
+    let tasks = await Task.find({});
+    if (req.query.author) {
+      tasks = tasks.filter((tasks) => tasks.author === req.query.author);
+    }
+    if (req.query.executor) {
+      tasks = tasks.filter((tasks) => tasks.executor === req.query.executor);
+    }
+    if (req.query.project) {
+      tasks = tasks.filter((tasks) => tasks.projectId === req.query.project);
+    }
+    if (req.query.column) {
+      tasks = tasks.filter((tasks) => tasks.columnId === req.query.column);
+    }
     res.json(tasks);
   } catch (error) {
     console.error(error);

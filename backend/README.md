@@ -325,7 +325,10 @@ URL Params:
 None
 
 Query Params:
-None
+author: String (optional)
+executor: String (optional)
+project: String (optional)
+column: String (optional)
 
 Data Params:
 None
