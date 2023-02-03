@@ -1,11 +1,11 @@
-import Dashboard from './components/Dashboard/Dashboard';
+import { Outlet } from 'react-router-dom';
+
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <h1 className="title">RS Clone</h1>
-      <Dashboard />
+      <Outlet />
     </div>
   );
 }
