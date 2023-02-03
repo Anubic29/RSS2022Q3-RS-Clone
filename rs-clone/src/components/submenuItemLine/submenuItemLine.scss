@@ -1,0 +1,42 @@
+.submenu_line {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+  padding: 0 30px;
+  color: $colorContent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $colorLightGrey;
+  }
+}
+
+.submenu_item-details {
+  display: flex;
+  color: $colorGreyText;
+  line-height: 20px;
+}
+
+.submenu_item-details :first-child:after {
+    display: inline-block;
+    width: 16px;
+    color: $colorGreyText;
+    content: "·";
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 5px;
+  }
+
+.submenu_texts {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.submenu_img-wrap {
+  width: 30px;
+  height: 30px;
+  background-image: url('../../assets/icons/blue-check.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -38,13 +38,14 @@
 
 .header_menu-item {
   height: 32px;
+
+}
+.menu_span-wrap {
   width: auto;
   margin: 0 8px;
   line-height: 32px;
   padding: 0 8px;
   cursor: pointer;
-  color: $colorContent;
-  font-weight: 500;
   border-radius: 5px;
   position: relative;
 
@@ -54,10 +55,6 @@
   }
 }
 
-.header_menu-span {
-  font-weight: 600;
-}
-
 .header_menu-arrow {
   line-height: 32px;
   vertical-align: middle;
@@ -65,16 +62,16 @@
   color: inherit;
 }
 
-.header_menu-item.active::after {
-    height: 3px;
-    position: absolute;
-    right: 4px;
-    bottom: -10px;
-    left: 4px;
-    background-color: $colorPrimary;
-    border-top-left-radius: 1px;
-    border-top-right-radius: 1px;
-    content: "";
+.menu_span-wrap.active::after {
+  height: 3px;
+  position: absolute;
+  right: 4px;
+  bottom: -14px;
+  left: 4px;
+  background-color: $colorPrimary;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+  content: "";
 }
 
 .header_create-btn {
