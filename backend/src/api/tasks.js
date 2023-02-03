@@ -67,7 +67,10 @@ router.post('/', async (req, res) => {
   try {
     if (!isCorrectTaskInfo(req.body)) throw new Error('Not found property');
 
+    const maxId = Math.max(...(await Task.find({ projectId: req.body.projectId })).map((task) => task.id), 0)
+
     const task = new Task({
+      id: maxId + 1,
       title: req.body.title,
       description: req.body.description,
       author: req.body.author,
