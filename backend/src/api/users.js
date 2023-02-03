@@ -29,9 +29,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id/info', async (req, res) => {
   try {
-    if (isNaN(+req.params.id)) throw new Error('Incorrect id');
-
-    const user = (await User.find({ id: +req.params.id }))[0];
+    const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found');
 
     res.json(user);
@@ -43,9 +41,7 @@ router.get('/:id/info', async (req, res) => {
 
 router.get('/:id/noted', async (req, res) => {
   try {
-    if (isNaN(+req.params.id)) throw new Error('Incorrect id');
-
-    const user = (await User.find({ id: +req.params.id }))[0];
+    const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found');
 
     res.json(user.notedItems);
@@ -62,11 +58,7 @@ router.post('/', async (req, res) => {
   try {
     if (!isCorrectUserInfo(req.body)) throw new Error('Not found property');
 
-    const users = await User.find({})
-    const maxId = Math.max(...users.map(user => user.id), 0)
-
     const user = new User({
-      id: maxId + 1,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       mail: req.body.mail,
@@ -84,10 +76,9 @@ router.post('/', async (req, res) => {
 
 router.post('/:id/noted', async (req, res) => {
   try {
-    if (isNaN(+req.params.id)) throw new Error('Incorrect id');
     if (!isCorrectUserNoted(req.body)) throw new Error('Not found property');
 
-    const user = (await User.find({ id: +req.params.id }))[0];
+    const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found');
 
     user.notedItems.push({
@@ -108,10 +99,9 @@ router.post('/:id/noted', async (req, res) => {
 
 router.put('/:id/info', async (req, res) => {
   try {
-    if (isNaN(+req.params.id)) throw new Error('Incorrect id');
     if (!isCorrectUserInfo(req.body)) throw new Error('Not found property');
 
-    const user = (await User.find({ id: +req.params.id }))[0];
+    const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found user');
 
     user.firstName = req.body.firstName;
@@ -132,9 +122,7 @@ router.put('/:id/info', async (req, res) => {
 
 router.delete('/:id/info', async (req, res) => {
   try {
-    if (isNaN(+req.params.id)) throw new Error('Incorrect id');
-
-    const user = (await User.find({ id: +req.params.id }))[0];
+    const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found')
 
     await User.deleteOne({ _id: user._id });
@@ -147,13 +135,10 @@ router.delete('/:id/info', async (req, res) => {
 
 router.delete('/:id/noted/:notedId', async (req, res) => {
   try {
-    if (isNaN(+req.params.id)) throw new Error('Incorrect id');
-
-    const user = (await User.find({ id: +req.params.id }))[0];
+    const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found')
 
     const idx = user.notedItems.findIndex((notedItems) => notedItems.id === req.params['notedId']);
-
     if (idx < 0) throw new Error('Not found noted')
 
     user.notedItems.splice(idx, 1);
