@@ -1,5 +1,5 @@
 import React from 'react';
-import DeveloperItem from './DeveloperItem';
+import DeveloperItem from './devItem/DeveloperItem';
 
 const Footer = () => {
   return (
