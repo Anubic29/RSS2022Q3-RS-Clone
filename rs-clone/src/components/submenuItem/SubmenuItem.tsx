@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BoxWithShadow from '../boxWithShadow/BoxWithShadow';
-import SubmenuNav from '../submenuNav/SubmenuNav';
-import SubmenuItemsBlock from '../submenuItamsBlock/SubmenuItemsBlock';
+import SubmenuNav from './submenuNav/SubmenuNav';
+import SubmenuItemsBlock from './submenuItamsBlock/SubmenuItemsBlock';
 
 const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
   const [tab, setTab] = useState('assigned');

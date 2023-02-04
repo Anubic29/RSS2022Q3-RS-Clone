@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MdExpandMore } from 'react-icons/md';
 import UserIcon from '../userIcon/UserIcon';
 import SubmenuItem from '../submenuItem/SubmenuItem';
-import MenuSpan from '../menuSpan/MenuSpan';
+import MenuSpan from '../submenuItem/menuSpan/MenuSpan';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
