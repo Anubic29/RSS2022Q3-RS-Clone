@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SubmenuItemLine: React.FC<{
   title: string;
@@ -8,20 +9,22 @@ const SubmenuItemLine: React.FC<{
   bgColor: string;
 }> = (props) => {
   return (
-    <li className="submenu_line">
-      <div
-        className="submenu_img-wrap"
-        style={{
-          backgroundColor: `${props.bgColor}`,
-          backgroundImage: `url(${props.src})`
-        }}></div>
-      <div className="submenu_texts">
-        <p className="submenu_item-title">{props.title}</p>
-        <div className="submenu_item-details">
-          <span className="item-details">{props.article}</span>
-          <span className="item-details">{props.project}</span>
+    <li>
+      <Link to="/" className="submenu_line">
+        <div
+          className="submenu_img-wrap"
+          style={{
+            backgroundColor: `${props.bgColor}`,
+            backgroundImage: `url(${props.src})`
+          }}></div>
+        <div className="submenu_texts">
+          <p className="submenu_item-title">{props.title}</p>
+          <div className="submenu_item-details">
+            <span className="item-details">{props.article}</span>
+            <span className="item-details">{props.project}</span>
+          </div>
         </div>
-      </div>
+      </Link>
     </li>
   );
 };
