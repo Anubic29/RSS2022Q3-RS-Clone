@@ -1,0 +1,67 @@
+.projectCard {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: 240px;
+  border-left: 20px solid;
+  border-radius: 3px;
+  background: #ffffff;
+  box-shadow: 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+
+  &:hover {
+    box-shadow: 0 2px 4px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+  }
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: -12px;
+  padding: 16px 10px 16px 0;
+}
+
+.actionsArea {
+  display: flex;
+  padding: 5px 12px 5px 17px;
+  border-top: 1px solid var(--ds-border, #ebecf0);
+}
+
+.projectInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.projectTitle {
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #172b4d;
+  cursor: pointer;
+
+  &:hover {
+    color: #0065ff;
+  }
+}
+
+.projectDescription {
+  font-size: 11px;
+  font-weight: 500;
+  color: #172b4d;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 3px;
+  border-radius: 3px;
+  font-size: 11px;
+  color: #172b4d;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(9, 30, 66, 0.08);
+  }
+}

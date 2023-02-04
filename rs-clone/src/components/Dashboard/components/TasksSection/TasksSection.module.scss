@@ -1,0 +1,37 @@
+.tasksSection {
+  margin-top: 30px;
+  padding: 0 40px;
+}
+
+.content {
+  margin-top: 15px;
+}
+
+.tabs {
+  position: relative;
+  display: flex;
+  gap: 15px;
+  list-style: none;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #EBECF0;
+  }
+}
+
+.tabsItem {
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #42526E;
+  cursor: pointer;
+
+  &:hover {
+    color: #0052CC;
+  }
+}
