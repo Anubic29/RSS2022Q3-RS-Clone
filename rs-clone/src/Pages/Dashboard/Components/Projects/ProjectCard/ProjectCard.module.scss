@@ -1,4 +1,4 @@
-.projectCard {
+.ProjectCard {
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -13,7 +13,7 @@
   }
 }
 
-.titleArea {
+.TitleArea {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -21,19 +21,19 @@
   padding: 16px 10px 16px 0;
 }
 
-.actionsArea {
+.ActionsArea {
   display: flex;
   padding: 5px 12px 5px 17px;
   border-top: 1px solid var(--ds-border, #ebecf0);
 }
 
-.projectInfo {
+.ProjectInfo {
   display: flex;
   flex-direction: column;
   gap: 3px;
 }
 
-.projectTitle {
+.ProjectTitle {
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
@@ -45,13 +45,13 @@
   }
 }
 
-.projectDescription {
+.ProjectDescription {
   font-size: 11px;
   font-weight: 500;
   color: #172b4d;
 }
 
-.actions {
+.Actions {
   display: flex;
   align-items: center;
   gap: 3px;

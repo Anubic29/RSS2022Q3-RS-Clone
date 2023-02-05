@@ -1,7 +1,4 @@
-import ProjectCard from '../ProjectCard/ProjectCard';
-import styles from './ProjectsList.module.scss';
-
-const cardsTestData = [
+const cardsData = [
   {
     id: 1,
     title: 'Project',
@@ -58,14 +55,4 @@ const cardsTestData = [
   }
 ];
 
-function ProjectsList() {
-  return (
-    <ul className={styles.projectsList}>
-      {cardsTestData.map((card) => {
-        return <ProjectCard {...card} key={card.id} />;
-      })}
-    </ul>
-  );
-}
-
-export default ProjectsList;
+export default cardsData;

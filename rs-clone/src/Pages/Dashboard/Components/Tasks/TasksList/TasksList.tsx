@@ -1,10 +1,10 @@
-import TasksListItem from '../TasksListItem/TasksListItem';
+import { TasksListItem } from '../..';
 
-import styles from './TasksList.module.scss';
+import Styles from './TasksList.module.scss';
 
 function TasksList() {
   return (
-    <ul className={styles.tasksList}>
+    <ul className={Styles.TasksList}>
       <TasksListItem />
       <TasksListItem />
       <TasksListItem />
