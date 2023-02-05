@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BoxWithShadow from '../boxWithShadow/BoxWithShadow';
-import SubmenuNav from './submenuNav/SubmenuNav';
+import SubmenuNav from './submenuNav/SubmenuNaм';
 import SubmenuItemsBlock from './submenuItamsBlock/SubmenuItemsBlock';
 import { Link } from 'react-router-dom';
 import classes from './submenuItem.module.scss';
