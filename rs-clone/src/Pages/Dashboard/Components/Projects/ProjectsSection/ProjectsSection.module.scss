@@ -1,0 +1,26 @@
+.Projects {
+  padding: 24px 0 0;
+  background: #fafbfc;
+}
+
+.ProjectsTitleArea {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ProjectsTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #172b4d;
+}
+
+.CreateProjectLink {
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  color: #0065ff;
+
+  &:hover {
+    color: #172b4d;
+  }
+}
