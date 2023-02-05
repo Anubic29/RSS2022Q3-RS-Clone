@@ -4,11 +4,13 @@ import Footer from '../footer/Footer';
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Header />
-      <Outlet />
+      <div className="App">
+        <Outlet />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 
