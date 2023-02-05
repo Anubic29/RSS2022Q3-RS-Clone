@@ -1,18 +1,11 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { App } from '../Components';
-import { Dashboard, NotFound } from '../Pages';
+import { BrowserRouter } from 'react-router-dom';
+import AuthRoute from './AuthRoute';
+import NonAuthRoute from './NonAuthRoute';
 
 function Routing() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Dashboard />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  const isAuthenticated = true;
+
+  return <BrowserRouter>{isAuthenticated ? <AuthRoute /> : <NonAuthRoute />}</BrowserRouter>;
 }
 
 export default Routing;
