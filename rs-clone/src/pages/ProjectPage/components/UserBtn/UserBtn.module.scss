@@ -1,0 +1,48 @@
+@import '../../../../theme/variables.scss';
+
+.user-btn {
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: $colorBackground;
+  position: relative;
+
+  &__content {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.active {
+    outline: 2px solid $colorPrimary;
+    outline-offset: 0;
+  }
+
+  &:not(.active):active {
+    outline: 2px solid $colorPrimary;
+    outline-offset: 0;
+  }
+
+  &__title {
+    padding: 2px 5px;
+    white-space: nowrap;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    position: absolute;
+    left: 50%;
+    bottom: -75%;
+    transform: translate(-50%);
+  }
+
+  &:hover {
+    z-index: 1;
+    cursor: pointer;
+  }
+}
