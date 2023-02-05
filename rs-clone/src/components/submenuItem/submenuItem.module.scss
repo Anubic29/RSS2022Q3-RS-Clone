@@ -1,3 +1,5 @@
+@import '../../theme/variables.scss';
+
 .submenu_box {
   position: absolute;
   top: 60px;
@@ -5,7 +7,7 @@
   z-index: 2;
 }
 
-.submenu_block-inner {
+.submenu_blockInner {
   padding-top: 17px;
 }
 
@@ -16,7 +18,7 @@
   padding: 0 30px;
 }
 
-.submenu_items-list {
+.submenu_itemsList {
     &:after {
     content: '';
     width: 100%;
@@ -27,7 +29,7 @@
   }
 }
 
-.submenu-bottom-nav {
+.submenuBottomNnav {
   margin-top: 30px;
   padding: 20px 30px;
   color: $colorContent;

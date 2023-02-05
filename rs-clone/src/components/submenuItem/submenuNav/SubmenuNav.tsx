@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MenuSpan from '../menuSpan/MenuSpan';
+import classes from './submenuNav.module.scss';
 
 const SubmenuNav: React.FC<{ onNavTabHandler: (tabValue: string) => string; menuItem: string }> = (
   props
@@ -20,11 +21,15 @@ const SubmenuNav: React.FC<{ onNavTabHandler: (tabValue: string) => string; menu
   return (
     <>
       {props.menuItem === 'work' && (
-        <ul className="tabs-list">
-          <li className={`submenu-li ${assignedChosen && 'active'}`} onClick={asignClickHandler}>
+        <ul className={classes.tabsList}>
+          <li
+            className={`${classes.submenuLi} ${assignedChosen && classes.active}`}
+            onClick={asignClickHandler}>
             <MenuSpan text="Assigned to me"></MenuSpan>
           </li>
-          <li className={`submenu-li ${assignedChosen || 'active'}`} onClick={boardClickHandler}>
+          <li
+            className={`${classes.submenuLi} ${assignedChosen || classes.active}`}
+            onClick={boardClickHandler}>
             <MenuSpan text="Boards"></MenuSpan>
           </li>
         </ul>

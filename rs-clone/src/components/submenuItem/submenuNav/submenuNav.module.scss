@@ -1,4 +1,6 @@
-.tabs-list {
+@import '../../../theme/variables.scss';
+
+.tabsList {
   display: flex;
   white-space: nowrap;
   cursor: pointer;
@@ -16,7 +18,7 @@
   }
 }
 
-.submenu-li {
+.submenuLi {
   padding-right: 15px;
   padding-left: 5px;
   padding-bottom: 10px;
@@ -29,7 +31,7 @@
 
 }
 
-.submenu-li.active {
+.submenuLi.active {
   border-bottom: 3px solid;
   border-color: $colorPrimary;
 }

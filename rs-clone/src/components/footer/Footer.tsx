@@ -1,18 +1,19 @@
 import React from 'react';
 import DeveloperItem from './devItem/DeveloperItem';
+import classes from './footer.module.scss';
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="footer_inner">
+    <footer className={classes.footer}>
+      <div className={classes.footer_inner}>
         <a
           href="https://rs.school/js/"
           target="_blank"
-          className="footer_logo"
+          className={classes.footer_logo}
           rel="noreferrer"></a>
-        <div className="footer_year">2023</div>
-        <div className="footer_devs">
-          <div className="footer_devs-wrap">
+        <div className={classes.footer_year}>2023</div>
+        <div className={classes.footer_devs}>
+          <div className={classes.footer_devsWrap}>
             <DeveloperItem
               href="https://github.com/Anubic29/"
               dev=" Alexander Sitailo"></DeveloperItem>

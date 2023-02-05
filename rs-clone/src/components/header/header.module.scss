@@ -1,3 +1,5 @@
+@import '../../theme/variables.scss';
+
 .header {
   width: 100%;
   height: 70px;
@@ -32,15 +34,15 @@
   margin-right: 26px;
 }
 
-.header_menu-list {
+.header_menuList {
   display: flex;
 }
 
-.header_menu-item {
+.header_menuItem {
   height: 32px;
 
 }
-.menu_span-wrap {
+.menu_spanWrap {
   width: auto;
   margin: 0 8px;
   line-height: 32px;
@@ -55,14 +57,14 @@
   }
 }
 
-.header_menu-arrow {
+.header_menuArrow {
   line-height: 32px;
   vertical-align: middle;
   margin-left: 8px;
   color: inherit;
 }
 
-.menu_span-wrap.active::after {
+.menu_spanWrap.active::after {
   height: 3px;
   position: absolute;
   right: 4px;
@@ -74,7 +76,7 @@
   content: "";
 }
 
-.header_create-btn {
+.header_createBtn {
   height: 32px;
   color: white;
   font-weight: 500;

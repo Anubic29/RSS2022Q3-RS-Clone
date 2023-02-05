@@ -3,6 +3,7 @@ import { MdExpandMore } from 'react-icons/md';
 import UserIcon from '../userIcon/UserIcon';
 import SubmenuItem from '../submenuItem/SubmenuItem';
 import MenuSpan from '../submenuItem/menuSpan/MenuSpan';
+import classes from './header.module.scss';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
@@ -29,32 +30,36 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="header_inner">
-        <div className="header_logo"></div>
-        <nav className="header_menu">
-          <ul className="header_menu-list">
-            <li className="header_menu-item">
+    <header className={classes.header}>
+      <div className={classes.header_inner}>
+        <div className={classes.header_logo}></div>
+        <nav className={classes.header_menu}>
+          <ul className={classes.header_menuList}>
+            <li className={classes.header_menuItem}>
               <div
-                className={`menu_span-wrap ${activeItem === 'work' && 'active'}`}
+                className={`${classes.menu_spanWrap} ${
+                  activeItem === classes.work && classes.active
+                }`}
                 onClick={workMenuHandler}>
                 <MenuSpan text="Your work"></MenuSpan>
-                <MdExpandMore className="header_menu-arrow" />
+                <MdExpandMore className={classes.header_menuArrow} />
               </div>
               {activeItem === 'work' && <SubmenuItem menuItem={submenu}></SubmenuItem>}
             </li>
-            <li className="header_menu-item">
+            <li className={classes.header_menuItem}>
               <div
-                className={`menu_span-wrap ${activeItem === 'project' && 'active'}`}
+                className={`${classes.menu_spanWrap} ${
+                  activeItem === classes.project && classes.active
+                }`}
                 onClick={projectMenuHandler}>
                 <MenuSpan text="Projects"></MenuSpan>
-                <MdExpandMore className="header_menu-arrow" />
+                <MdExpandMore className={classes.header_menuArrow} />
               </div>
               {activeItem === 'project' && <SubmenuItem menuItem={submenu}></SubmenuItem>}
             </li>
           </ul>
         </nav>
-        <button className="header_create-btn">Create</button>
+        <button className={classes.header_createBtn}>Create</button>
         <UserIcon user="OD"></UserIcon>
       </div>
     </header>

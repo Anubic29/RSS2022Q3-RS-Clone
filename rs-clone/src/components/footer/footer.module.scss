@@ -1,3 +1,5 @@
+@import '../../theme/variables.scss';
+
 .footer {
   width: 100%;
   height: 120px;
@@ -13,7 +15,6 @@
     background: linear-gradient(rgba(9, 30, 66, 0.13) 0px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px);
     content: "";
   }
-
 }
 
 .footer_inner {
@@ -34,11 +35,11 @@
   margin-right: 26px;
 }
 
-.footer_profile-wrap {
+.footer_profileWrap {
   padding-left: 16px;
 }
 
-.footer_profile-inner {
+.footer_profileInner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,7 +52,7 @@
     }
 }
 
-.footer_profile-icon {
+.footer_profileIcon {
   border-radius: 50%;
   width: 30px;
   height: 30px;

@@ -1,11 +1,12 @@
 import React from 'react';
+import classes from './userIcon.module.scss';
 
 const UserIcon: React.FC<{ user: string }> = (props) => {
   return (
-    <div className="header_profile-wrap">
-      <div className="header_profile-inner">
-        <div className="header_profile-icon">
-          <span className="header_profile-name">{props.user}</span>
+    <div className={classes.header_profileWrap}>
+      <div className={classes.header_profileInner}>
+        <div className={classes.header_profileIcon}>
+          <span className={classes.header_profileName}>{props.user}</span>
         </div>
       </div>
     </div>
