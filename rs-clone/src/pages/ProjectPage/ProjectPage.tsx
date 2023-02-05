@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react';
+import { colorBackgroundColumn, colorSecondaryLight } from '../../theme/variables';
 import BtnAction from './components/BtnAction/BtnAction';
+import BtnMenuAction from './components/BtnMenuAction/BtnMenuAction';
 import UserBtn from './components/UserBtn/UserBtn';
 import SelectPanel from './components/SelectPanel/SelectPanel';
-import { MdStarOutline, MdMoreHoriz, MdSearch, MdPersonAdd } from 'react-icons/md';
+import Column from './components/Column/Column';
+import { MdStarOutline, MdSearch, MdPersonAdd } from 'react-icons/md';
 
 import styles from './ProjectPage.module.scss';
 
@@ -68,10 +71,19 @@ function ProjectPage(props: ProjectPageProps) {
             </form>
           </div>
           <div className={styles['info__actions']}>
-            <ul className={styles['actions__list']}>
-              <BtnAction image={MdStarOutline} title="Add to the list" />
-              <BtnAction image={MdMoreHoriz} />
-            </ul>
+            <div className={styles['actions__list']}>
+              <BtnAction
+                image={MdStarOutline}
+                title="Add to the list"
+                backgrColorHover={colorBackgroundColumn}
+                backgrColorActive={colorSecondaryLight}
+              />
+              <BtnMenuAction
+                options={['Change', 'Remove']}
+                btnBackgrColorHover={colorBackgroundColumn}
+                btnBackgrColorActive={colorSecondaryLight}
+              />
+            </div>
           </div>
         </div>
         <div className={styles['command-panel']}>
@@ -116,7 +128,11 @@ function ProjectPage(props: ProjectPageProps) {
           </div>
         </div>
       </div>
-      <div className={styles['column-list']}></div>
+      <div className={styles['column-list']}>
+        <Column title="Dev Ready" tasks={[1, 5, 7, 2]} />
+        <Column title="In Dev" tasks={[3, 4]} />
+        <Column title="Done" tasks={[6]} />
+      </div>
     </div>
   );
 }

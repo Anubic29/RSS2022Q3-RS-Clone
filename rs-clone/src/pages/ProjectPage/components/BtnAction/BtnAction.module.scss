@@ -2,7 +2,6 @@
 
 .btn {
   position: relative;
-  list-style: none;
   width: 32px;
   height: 32px;
   display: flex;
@@ -24,7 +23,6 @@
   }
 
   &:hover {
-    background-color: $colorBackgroundColumn;
     cursor: pointer;
   }
 }
