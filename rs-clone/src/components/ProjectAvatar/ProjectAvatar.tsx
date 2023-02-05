@@ -1,4 +1,4 @@
-import './ProjectAvatar.scss';
+import classes from './ProjectAvatar.module.scss';
 
 export interface ProjectAvatarProps {
   size: number;
@@ -15,8 +15,14 @@ function ProjectAvatar(props: ProjectAvatarProps) {
   };
 
   return (
-    <div className="project-avatar-container" style={containerStyles}>
-      <img className="project-avatar" src={source} alt="Project avatar" width="75%" height="75%" />
+    <div className={classes.projectAvatarContainer} style={containerStyles}>
+      <img
+        className={classes.projectAvatar}
+        src={source}
+        alt="Project avatar"
+        width="75%"
+        height="75%"
+      />
     </div>
   );
 }
