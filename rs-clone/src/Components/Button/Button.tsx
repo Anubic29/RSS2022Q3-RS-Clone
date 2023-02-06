@@ -1,16 +1,21 @@
+import Styles from './Button.module.scss';
+
 interface ButtonProps {
-  styles?: {
-    [key: string]: string;
-  };
   children?: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+  onClick?: () => void;
 }
 
 function Button(props: ButtonProps) {
-  // const { styles, children, type, className } = props;
+  const { children, className } = props;
+  const classNames = className ? `${Styles.Button} ${className}` : Styles.Button;
 
-  return <button {...props}></button>;
+  return (
+    <button {...props} className={classNames}>
+      {children}
+    </button>
+  );
 }
 
 export default Button;
