@@ -12,18 +12,20 @@ interface TaskProps {
 
 function Task(props: TaskProps) {
   const [hoverTask, setHoverTask] = useState(false);
+  const [isActiveMenu, setIsActiveMenu] = useState(false);
 
   return (
     <div
       className={styles.task}
       onMouseOver={() => setHoverTask(true)}
       onMouseOut={() => setHoverTask(false)}>
-      {hoverTask && (
+      {(hoverTask || isActiveMenu) && (
         <div className={styles['btn-more']}>
           <BtnMenuAction
             options={['Change', 'Remove']}
             btnBackgrColorHover={colorBackgroundHover}
             btnBackgrColorActive={colorSecondaryLight}
+            onAciveMenu={(value) => setIsActiveMenu(value)}
           />
         </div>
       )}

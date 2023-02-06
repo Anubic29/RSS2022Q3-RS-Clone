@@ -14,6 +14,7 @@ function Column(props: ColumnProps) {
   const [title, setTitle] = useState(props.title);
   const [canEditTitle, setCanEditTitle] = useState(false);
   const [hoverColumn, setHoverColumn] = useState(false);
+  const [isActiveMenu, setIsActiveMenu] = useState(false);
 
   return (
     <div className={styles['column-container']}>
@@ -21,12 +22,13 @@ function Column(props: ColumnProps) {
         className={styles.column}
         onMouseOver={() => setHoverColumn(true)}
         onMouseOut={() => setHoverColumn(false)}>
-        {!canEditTitle && hoverColumn && (
+        {!canEditTitle && (isActiveMenu || hoverColumn) && (
           <div className={styles['btn-more']}>
             <BtnMenuAction
               options={['Change', 'Remove']}
               btnBackgrColorHover={colorBackgroundHover}
               btnBackgrColorActive={colorSecondaryLight}
+              onAciveMenu={(value) => setIsActiveMenu(value)}
             />
           </div>
         )}
