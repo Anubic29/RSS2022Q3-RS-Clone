@@ -1,11 +1,15 @@
 import { useRef, useState } from 'react';
-import { colorBackgroundColumn, colorSecondaryLight } from '../../theme/variables';
+import {
+  colorBackgroundColumn,
+  colorBackgroundHover,
+  colorSecondaryLight
+} from '../../theme/variables';
 import BtnAction from './components/BtnAction/BtnAction';
 import BtnMenuAction from './components/BtnMenuAction/BtnMenuAction';
 import UserBtn from './components/UserBtn/UserBtn';
 import SelectPanel from './components/SelectPanel/SelectPanel';
 import Column from './components/Column/Column';
-import { MdStarOutline, MdSearch, MdPersonAdd } from 'react-icons/md';
+import { MdStarOutline, MdSearch, MdPersonAdd, MdOutlineAddCircleOutline } from 'react-icons/md';
 
 import styles from './ProjectPage.module.scss';
 
@@ -129,9 +133,20 @@ function ProjectPage(props: ProjectPageProps) {
         </div>
       </div>
       <div className={styles['column-list']}>
-        <Column title="Dev Ready" tasks={[1, 5, 7, 2]} />
+        <Column title="In Dev" tasks={[1, 2, 3, 4]} />
         <Column title="In Dev" tasks={[3, 4]} />
-        <Column title="Done" tasks={[6]} />
+        <Column title="Done" tasks={[]} />
+        <div className={styles['btn-add-container']}>
+          <div className={styles['btn-add']}>
+            <BtnAction
+              image={MdOutlineAddCircleOutline}
+              title="Create column"
+              backgrColorDefault={colorBackgroundColumn}
+              backgrColorHover={colorBackgroundHover}
+              backgrColorActive={colorSecondaryLight}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

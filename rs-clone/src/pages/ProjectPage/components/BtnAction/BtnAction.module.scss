@@ -16,9 +16,11 @@
     border-radius: 5px;
     color: white;
     background-color: black;
+    font-size: 12px;
     position: absolute;
+    z-index: 5;
     left: 50%;
-    bottom: -75%;
+    bottom: -60%;
     transform: translate(-50%);
   }
 

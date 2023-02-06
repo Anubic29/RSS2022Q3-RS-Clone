@@ -176,4 +176,13 @@
 
 .column-list {
   display: flex;
+
+  .btn-add-container {
+    height: 100%;
+    padding: 0 5px;
+  }
+
+  .btn-add {
+    position: sticky;
+  }
 }
