@@ -26,6 +26,7 @@ interface ProjectPageProps {
 function ProjectPage(props: ProjectPageProps) {
   const [title, setTitle] = useState(props.title);
   const [canEditTitle, setCanEditTitle] = useState(false);
+  const [isScrolledList, setIsScrolledList] = useState(false);
 
   const refSearchBlock = useRef<HTMLDivElement>(null);
   const refSearchInput = useRef<HTMLInputElement>(null);
@@ -132,19 +133,28 @@ function ProjectPage(props: ProjectPageProps) {
           </div>
         </div>
       </div>
-      <div className={styles['column-list']}>
-        <Column title="In Dev" tasks={[1, 2, 3, 4]} />
-        <Column title="In Dev" tasks={[3, 4]} />
-        <Column title="Done" tasks={[]} />
-        <div className={styles['btn-add-container']}>
-          <div className={styles['btn-add']}>
-            <BtnAction
-              image={MdOutlineAddCircleOutline}
-              title="Create column"
-              backgrColorDefault={colorBackgroundColumn}
-              backgrColorHover={colorBackgroundHover}
-              backgrColorActive={colorSecondaryLight}
-            />
+      <div
+        className={styles['column-list-container']}
+        onScroll={(event) => setIsScrolledList((event.target as HTMLDivElement).scrollTop > 0)}>
+        <div className={styles['column-list']}>
+          <Column
+            title="In Dev"
+            stickyHeader={isScrolledList}
+            tasks={[1, 2, 3, 4, 6, 7, 2, 7, 2]}
+          />
+          <Column title="In Dev" stickyHeader={isScrolledList} tasks={[1, 2, 3, 4]} />
+          <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
+          <Column title="Done" stickyHeader={isScrolledList} tasks={[]} />
+          <div className={styles['btn-add-container']}>
+            <div className={styles['btn-add']}>
+              <BtnAction
+                image={MdOutlineAddCircleOutline}
+                title="Create column"
+                backgrColorDefault={colorBackgroundColumn}
+                backgrColorHover={colorBackgroundHover}
+                backgrColorActive={colorSecondaryLight}
+              />
+            </div>
           </div>
         </div>
       </div>

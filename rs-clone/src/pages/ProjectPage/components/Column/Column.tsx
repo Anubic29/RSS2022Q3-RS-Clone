@@ -8,6 +8,7 @@ import styles from './Column.module.scss';
 interface ColumnProps {
   title: string;
   tasks: number[];
+  stickyHeader?: boolean;
 }
 
 function Column(props: ColumnProps) {
@@ -16,23 +17,17 @@ function Column(props: ColumnProps) {
   const [hoverColumn, setHoverColumn] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
 
+  const HeaderBlockStyles = props.stickyHeader
+    ? styles['header-block'] + ' ' + styles['sticky']
+    : styles['header-block'];
+
   return (
     <div className={styles['column-container']}>
       <div
         className={styles.column}
         onMouseOver={() => setHoverColumn(true)}
         onMouseOut={() => setHoverColumn(false)}>
-        {!canEditTitle && (isActiveMenu || hoverColumn) && (
-          <div className={styles['btn-more']}>
-            <BtnMenuAction
-              options={['Change', 'Remove']}
-              btnBackgrColorHover={colorBackgroundHover}
-              btnBackgrColorActive={colorSecondaryLight}
-              onAciveMenu={(value) => setIsActiveMenu(value)}
-            />
-          </div>
-        )}
-        <div className={styles['info-block']}>
+        <div className={HeaderBlockStyles}>
           <form className={styles['title__form']} action="">
             {!canEditTitle ? (
               <span className={styles['title__form__text-backgr']}>
@@ -58,6 +53,16 @@ function Column(props: ColumnProps) {
               />
             )}
           </form>
+          {!canEditTitle && (isActiveMenu || hoverColumn) && (
+            <div className={styles['btn-more']}>
+              <BtnMenuAction
+                options={['Change', 'Remove']}
+                btnBackgrColorHover={colorBackgroundHover}
+                btnBackgrColorActive={colorSecondaryLight}
+                onAciveMenu={(value) => setIsActiveMenu(value)}
+              />
+            </div>
+          )}
         </div>
         <div className={styles['task-list']}>
           {props.tasks.map((task, idx) => (
