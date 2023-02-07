@@ -1,15 +1,11 @@
-import { useRef, useState, useCallback, useMemo } from 'react';
-import {
-  colorBackgroundColumn,
-  colorBackgroundHover,
-  colorSecondaryLight
-} from '../../theme/variables';
+import { useRef, useState } from 'react';
+import { colorBackgroundColumn, colorSecondaryLight } from '../../theme/variables';
 import BtnAction from './components/BtnAction/BtnAction';
 import BtnMenuAction from './components/BtnMenuAction/BtnMenuAction';
 import UserBtn from './components/UserBtn/UserBtn';
 import SelectPanel from './components/SelectPanel/SelectPanel';
-import Column from './components/Column/Column';
-import { MdStarOutline, MdSearch, MdPersonAdd, MdOutlineAddCircleOutline } from 'react-icons/md';
+import ColumnList from './components/ColumnList/ColumnList';
+import { MdStarOutline, MdSearch, MdPersonAdd } from 'react-icons/md';
 
 import styles from './ProjectPage.module.scss';
 
@@ -26,7 +22,6 @@ interface ProjectPageProps {
 function ProjectPage(props: ProjectPageProps) {
   const [title, setTitle] = useState(props.title);
   const [canEditTitle, setCanEditTitle] = useState(false);
-  const [isScrolledList, setIsScrolledList] = useState(false);
 
   // Delete After
   const [columnList, setColumnList] = useState([
@@ -122,58 +117,6 @@ function ProjectPage(props: ProjectPageProps) {
       columnId: '63dbe5ffdcf3ffd695adb4d5'
     }
   ]);
-
-  const [currentTask, setCurrentTask] = useState('');
-  const currentTaskElem = useRef<HTMLDivElement | null>(null);
-
-  const dragStartHandlerTask = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, task: string) => {
-      setCurrentTask(task);
-      currentTaskElem.current = event.target as HTMLDivElement;
-      setTimeout(() => {
-        if (currentTaskElem.current) currentTaskElem.current.style.display = 'none';
-      }, 0);
-    },
-    []
-  );
-  const dragEndHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
-  }, []);
-  const dragLeaveHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    // if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
-  }, []);
-  const dragOverHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  }, []);
-  const dropHandlerTask = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, column: string) => {
-      event.preventDefault();
-      if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
-      setTaskList(
-        taskList.map((task) => {
-          if (task._id === currentTask) task.columnId = column;
-          return task;
-        })
-      );
-    },
-    [currentTask]
-  );
-  const dragHandlersTask = useMemo(
-    () => ({
-      dragStartHandlerTask,
-      dragEndHandlerTask,
-      dragLeaveHandlerTask,
-      dragOverHandlerTask,
-      dropHandlerTask
-    }),
-    [
-      dragStartHandlerTask,
-      dragOverHandlerTask,
-      dropHandlerTask,
-      dragEndHandlerTask,
-      dragLeaveHandlerTask
-    ]
-  );
 
   const refSearchBlock = useRef<HTMLDivElement>(null);
   const refSearchInput = useRef<HTMLInputElement>(null);
@@ -280,37 +223,12 @@ function ProjectPage(props: ProjectPageProps) {
           </div>
         </div>
       </div>
-      <div
-        className={styles['column-list-container']}
-        onScroll={(event) => setIsScrolledList((event.target as HTMLDivElement).scrollTop > 0)}>
-        <div className={styles['column-list']}>
-          <div className={styles['curtain'] + ' ' + styles['left']}></div>
-          <div className={styles['list']}>
-            {columnList.map((column) => (
-              <Column
-                id={column._id}
-                title={column.title}
-                stickyHeader={isScrolledList}
-                key={column._id}
-                tasks={taskList.filter((task) => task.columnId === column._id)}
-                dragHandlersTask={dragHandlersTask}
-              />
-            ))}
-          </div>
-          <div className={styles['btn-add-container']}>
-            <div className={styles['btn-add']}>
-              <BtnAction
-                image={MdOutlineAddCircleOutline}
-                title="Create column"
-                backgrColorDefault={colorBackgroundColumn}
-                backgrColorHover={colorBackgroundHover}
-                backgrColorActive={colorSecondaryLight}
-              />
-            </div>
-          </div>
-          <div className={styles['curtain'] + ' ' + styles['right']}></div>
-        </div>
-      </div>
+      <ColumnList
+        columnList={columnList}
+        taskList={taskList}
+        setColumnList={(data) => setColumnList(data)}
+        setTaskList={(data) => setTaskList(data)}
+      />
     </div>
   );
 }
