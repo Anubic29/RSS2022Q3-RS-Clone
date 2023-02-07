@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback, useMemo } from 'react';
 import {
   colorBackgroundColumn,
   colorBackgroundHover,
@@ -27,6 +27,153 @@ function ProjectPage(props: ProjectPageProps) {
   const [title, setTitle] = useState(props.title);
   const [canEditTitle, setCanEditTitle] = useState(false);
   const [isScrolledList, setIsScrolledList] = useState(false);
+
+  // Delete After
+  const [columnList, setColumnList] = useState([
+    {
+      title: 'dev',
+      type: 'common',
+      _id: '63dbe5ffdcf3ffd695adb4d4'
+    },
+    {
+      title: 'exa_column',
+      type: 'common',
+      _id: '63dbe6d5dcf3ffd695adb4ea'
+    },
+    {
+      title: 'done',
+      type: 'final',
+      _id: '63dbe5ffdcf3ffd695adb4d5'
+    }
+  ]);
+
+  // Delete Adter
+  const [taskList, setTaskList] = useState([
+    {
+      _id: '63dbe5ffdcf3ffd695adb001',
+      id: 1,
+      title: 'Task 1',
+      columnId: '63dbe5ffdcf3ffd695adb4d4'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb002',
+      id: 2,
+      title: 'Task 2',
+      columnId: '63dbe6d5dcf3ffd695adb4ea'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb003',
+      id: 3,
+      title: 'Task 3',
+      columnId: '63dbe5ffdcf3ffd695adb4d5'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb004',
+      id: 4,
+      title: 'Task 4',
+      columnId: '63dbe5ffdcf3ffd695adb4d4'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb005',
+      id: 5,
+      title: 'Task 5',
+      columnId: '63dbe6d5dcf3ffd695adb4ea'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb006',
+      id: 6,
+      title: 'Task 6',
+      columnId: '63dbe5ffdcf3ffd695adb4d4'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb007',
+      id: 7,
+      title: 'Task 7',
+      columnId: '63dbe5ffdcf3ffd695adb4d5'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb008',
+      id: 8,
+      title: 'Task 8',
+      columnId: '63dbe6d5dcf3ffd695adb4ea'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb009',
+      id: 9,
+      title: 'Task 9',
+      columnId: '63dbe5ffdcf3ffd695adb4d4'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb010',
+      id: 10,
+      title: 'Task 10',
+      columnId: '63dbe6d5dcf3ffd695adb4ea'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb011',
+      id: 11,
+      title: 'Task 11',
+      columnId: '63dbe5ffdcf3ffd695adb4d4'
+    },
+    {
+      _id: '63dbe5ffdcf3ffd695adb012',
+      id: 12,
+      title: 'Task 12',
+      columnId: '63dbe5ffdcf3ffd695adb4d5'
+    }
+  ]);
+
+  const [currentTask, setCurrentTask] = useState('');
+  const currentTaskElem = useRef<HTMLDivElement | null>(null);
+
+  const dragStartHandlerTask = useCallback(
+    (event: React.DragEvent<HTMLDivElement>, task: string) => {
+      setCurrentTask(task);
+      currentTaskElem.current = event.target as HTMLDivElement;
+      setTimeout(() => {
+        if (currentTaskElem.current) currentTaskElem.current.style.display = 'none';
+      }, 0);
+    },
+    []
+  );
+  const dragEndHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
+  }, []);
+  const dragLeaveHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    // if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
+  }, []);
+  const dragOverHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  }, []);
+  const dropHandlerTask = useCallback(
+    (event: React.DragEvent<HTMLDivElement>, column: string) => {
+      event.preventDefault();
+      if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
+      setTaskList(
+        taskList.map((task) => {
+          if (task._id === currentTask) task.columnId = column;
+          return task;
+        })
+      );
+    },
+    [currentTask]
+  );
+  const dragHandlersTask = useMemo(
+    () => ({
+      dragStartHandlerTask,
+      dragEndHandlerTask,
+      dragLeaveHandlerTask,
+      dragOverHandlerTask,
+      dropHandlerTask
+    }),
+    [
+      dragStartHandlerTask,
+      dragOverHandlerTask,
+      dropHandlerTask,
+      dragEndHandlerTask,
+      dragLeaveHandlerTask
+    ]
+  );
 
   const refSearchBlock = useRef<HTMLDivElement>(null);
   const refSearchInput = useRef<HTMLInputElement>(null);
@@ -139,16 +286,16 @@ function ProjectPage(props: ProjectPageProps) {
         <div className={styles['column-list']}>
           <div className={styles['curtain'] + ' ' + styles['left']}></div>
           <div className={styles['list']}>
-            <Column
-              title="In Dev"
-              stickyHeader={isScrolledList}
-              tasks={[1, 2, 3, 4, 6, 7, 2, 7, 2]}
-            />
-            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[1, 2, 3, 4]} />
-            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
-            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
-            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
-            <Column title="Done" stickyHeader={isScrolledList} tasks={[]} />
+            {columnList.map((column) => (
+              <Column
+                id={column._id}
+                title={column.title}
+                stickyHeader={isScrolledList}
+                key={column._id}
+                tasks={taskList.filter((task) => task.columnId === column._id)}
+                dragHandlersTask={dragHandlersTask}
+              />
+            ))}
           </div>
           <div className={styles['btn-add-container']}>
             <div className={styles['btn-add']}>

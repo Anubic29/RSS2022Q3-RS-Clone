@@ -6,9 +6,22 @@ import BtnMenuAction from '../BtnMenuAction/BtnMenuAction';
 import styles from './Column.module.scss';
 
 interface ColumnProps {
+  id: string;
   title: string;
-  tasks: number[];
+  tasks: {
+    _id: string;
+    id: number;
+    title: string;
+    columnId: string;
+  }[];
   stickyHeader?: boolean;
+  dragHandlersTask: {
+    dragStartHandlerTask: (event: React.DragEvent<HTMLDivElement>, task: string) => void;
+    dragEndHandlerTask: (event: React.DragEvent<HTMLDivElement>) => void;
+    dragLeaveHandlerTask: (event: React.DragEvent<HTMLDivElement>) => void;
+    dragOverHandlerTask: (event: React.DragEvent<HTMLDivElement>) => void;
+    dropHandlerTask: (event: React.DragEvent<HTMLDivElement>, column: string) => void;
+  };
 }
 
 function Column(props: ColumnProps) {
@@ -23,7 +36,10 @@ function Column(props: ColumnProps) {
 
   return (
     <div className={styles['column-container']}>
-      <div className={styles.column}>
+      <div
+        className={styles.column}
+        onDragOver={(event) => props.dragHandlersTask.dragOverHandlerTask(event)}
+        onDrop={(event) => props.dragHandlersTask.dropHandlerTask(event, props.id)}>
         <div
           className={HeaderBlockStyles}
           onMouseOver={() => setHoverColumnHeader(true)}
@@ -66,7 +82,15 @@ function Column(props: ColumnProps) {
         </div>
         <div className={styles['task-list']}>
           {props.tasks.map((task, idx) => (
-            <Task title="Title" keyTask={`key-${task}`} key={idx} />
+            <div
+              className={styles['task-block']}
+              key={idx}
+              onDragStart={(event) => props.dragHandlersTask.dragStartHandlerTask(event, task._id)}
+              onDragLeave={(event) => props.dragHandlersTask.dragLeaveHandlerTask(event)}
+              onDragEnd={(event) => props.dragHandlersTask.dragEndHandlerTask(event)}
+              draggable={true}>
+              <Task title={task.title} keyTask={`key-${task.id}`} />
+            </div>
           ))}
         </div>
         <div className={styles['add-field']}>+ Create Task</div>

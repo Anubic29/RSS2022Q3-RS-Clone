@@ -186,6 +186,7 @@
 .column-list {
   display: flex;
   width: fit-content;
+  min-width: 100%;
 
   .list {
     display: flex;
@@ -213,6 +214,7 @@
   .btn-add-container {
     padding: 0 5px;
     position: relative;
+    margin-right: auto;
   }
 
   .btn-add {
