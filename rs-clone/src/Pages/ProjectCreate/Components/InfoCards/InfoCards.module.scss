@@ -1,0 +1,20 @@
+.InfoCards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 16px;
+  background: #fafbfc;
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Subtitle {
+  font-size: 14px;
+  stroke-width: 500;
+  color: #6B778C;
+}
