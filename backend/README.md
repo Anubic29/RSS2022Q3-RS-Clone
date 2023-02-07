@@ -17,6 +17,20 @@ Data Params:
 None
 
 
+- Get Current User
+URL:
+/api/users/current
+
+URL Params:
+None
+
+Query Params:
+None
+
+Data Params:
+None
+
+
 - Get User
 URL:
 /api/users/:id/info

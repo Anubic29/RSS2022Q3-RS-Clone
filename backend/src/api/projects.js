@@ -1,6 +1,7 @@
 const express = require('express');
 const Project = require('../models/Project');
 const User = require('../models/User');
+const authenticateToken = require('../func/authenticateToken');
 const router = express.Router();
 
 function isCorrectProjectInfo(body) {
@@ -23,7 +24,7 @@ function isCorrectProjectColumn(body) {
 
 // Get Methods
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     let projects = await Project.find({});
     if (req.query.user) {
@@ -39,7 +40,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id/info', async (req, res) => {
+router.get('/:id/info', authenticateToken, async (req, res) => {
   try {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found');
@@ -51,7 +52,7 @@ router.get('/:id/info', async (req, res) => {
   }
 });
 
-router.get('/:id/columns', async (req, res) => {
+router.get('/:id/columns', authenticateToken, async (req, res) => {
   try {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found');
@@ -66,7 +67,7 @@ router.get('/:id/columns', async (req, res) => {
 
 // Post Methods
 
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectProjectInfo(req.body)) throw new Error('Not found property');
 
@@ -98,7 +99,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/:id/team', async (req, res) => {
+router.post('/:id/team', authenticateToken, async (req, res) => {
   try {
     if (typeof req.body.userId !== 'string' && req.body.userId === '') throw new Error('Not found property');
 
@@ -118,7 +119,7 @@ router.post('/:id/team', async (req, res) => {
   }
 });
 
-router.post('/:id/columns', async (req, res) => {
+router.post('/:id/columns', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectProjectColumn(req.body)) throw new Error('Not found property');
 
@@ -141,7 +142,7 @@ router.post('/:id/columns', async (req, res) => {
 
 // Put Methods
 
-router.put('/:id/info', async (req, res) => {
+router.put('/:id/info', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectProjectInfo(req.body)) throw new Error('Not found property');
 
@@ -162,7 +163,7 @@ router.put('/:id/info', async (req, res) => {
   }
 });
 
-router.put('/:id/columns/:columnId', async (req, res) => {
+router.put('/:id/columns/:columnId', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectProjectColumn(req.body)) throw new Error('Not found property');
 
@@ -186,7 +187,7 @@ router.put('/:id/columns/:columnId', async (req, res) => {
 
 // Delete Methods
 
-router.delete('/:id/info', async (req, res) => {
+router.delete('/:id/info', authenticateToken, async (req, res) => {
   try {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found');
@@ -199,7 +200,7 @@ router.delete('/:id/info', async (req, res) => {
   }
 });
 
-router.delete('/:id/team/:userId', async (req, res) => {
+router.delete('/:id/team/:userId', authenticateToken, async (req, res) => {
   try {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found project');
@@ -217,7 +218,7 @@ router.delete('/:id/team/:userId', async (req, res) => {
   }
 });
 
-router.delete('/:id/columns/:columnId', async (req, res) => {
+router.delete('/:id/columns/:columnId', authenticateToken, async (req, res) => {
   try {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found project');

@@ -4,7 +4,12 @@ import api from './api';
 import './App.scss';
 
 async function asReq() {
-  const response = await api.records.getData('users');
+  const responseLogin = await api.records.signIn({
+    mail: 'example@gmail.com',
+    password: 'exa_password'
+  });
+  localStorage.setItem('accessToken', responseLogin.data);
+  const response = await api.records.getData('users/current');
   const data = response.data;
   console.log(data);
 }
