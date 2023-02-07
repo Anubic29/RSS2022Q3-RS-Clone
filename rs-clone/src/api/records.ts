@@ -1,18 +1,21 @@
-import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosInstance } from 'axios';
 
 export default function (instance: AxiosInstance) {
   return {
     getData(path: string) {
       return instance.get(`api/${path}`);
     },
-    postData(path: string, config: AxiosRequestConfig) {
-      return instance.post(`api/${path}`, config);
+    postData(path: string, payload: { [key: string]: string }) {
+      return instance.post(`api/${path}`, payload);
     },
-    updateData(path: string, config: AxiosRequestConfig) {
-      return instance.put(`api/${path}`, config);
+    updateData(path: string, payload: { [key: string]: string }) {
+      return instance.put(`api/${path}`, payload);
     },
     deleteData(path: string) {
       return instance.delete(`api/${path}`);
+    },
+    signIn(payload: { [key: string]: string }) {
+      return instance.post<string>('func/auth', payload);
     }
   };
 }

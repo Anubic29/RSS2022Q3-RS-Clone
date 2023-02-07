@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const users = require('./api/users');
 const projects = require('./api/projects');
 const tasks = require('./api/tasks');
+const auth = require('./api/auth');
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Methods","PUT, POST, GET, DELETE, PATCH, OPTIONS");
   next();
 });
@@ -23,6 +24,7 @@ app.use(function(req, res, next) {
 app.use("/api/users", users);
 app.use("/api/projects", projects);
 app.use("/api/tasks", tasks);
+app.use("/func/auth", auth)
 
 async function start() {
   try {
