@@ -14,7 +14,7 @@ interface ColumnProps {
 function Column(props: ColumnProps) {
   const [title, setTitle] = useState(props.title);
   const [canEditTitle, setCanEditTitle] = useState(false);
-  const [hoverColumn, setHoverColumn] = useState(false);
+  const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
 
   const HeaderBlockStyles = props.stickyHeader
@@ -23,11 +23,11 @@ function Column(props: ColumnProps) {
 
   return (
     <div className={styles['column-container']}>
-      <div
-        className={styles.column}
-        onMouseOver={() => setHoverColumn(true)}
-        onMouseOut={() => setHoverColumn(false)}>
-        <div className={HeaderBlockStyles}>
+      <div className={styles.column}>
+        <div
+          className={HeaderBlockStyles}
+          onMouseOver={() => setHoverColumnHeader(true)}
+          onMouseOut={() => setHoverColumnHeader(false)}>
           <form className={styles['title__form']} action="">
             {!canEditTitle ? (
               <span className={styles['title__form__text-backgr']}>
@@ -53,7 +53,7 @@ function Column(props: ColumnProps) {
               />
             )}
           </form>
-          {!canEditTitle && (isActiveMenu || hoverColumn) && (
+          {!canEditTitle && (isActiveMenu || hoverColumnHeader) && (
             <div className={styles['btn-more']}>
               <BtnMenuAction
                 options={['Change', 'Remove']}
