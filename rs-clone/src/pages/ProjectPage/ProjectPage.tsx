@@ -137,14 +137,19 @@ function ProjectPage(props: ProjectPageProps) {
         className={styles['column-list-container']}
         onScroll={(event) => setIsScrolledList((event.target as HTMLDivElement).scrollTop > 0)}>
         <div className={styles['column-list']}>
-          <Column
-            title="In Dev"
-            stickyHeader={isScrolledList}
-            tasks={[1, 2, 3, 4, 6, 7, 2, 7, 2]}
-          />
-          <Column title="In Dev" stickyHeader={isScrolledList} tasks={[1, 2, 3, 4]} />
-          <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
-          <Column title="Done" stickyHeader={isScrolledList} tasks={[]} />
+          <div className={styles['curtain'] + ' ' + styles['left']}></div>
+          <div className={styles['list']}>
+            <Column
+              title="In Dev"
+              stickyHeader={isScrolledList}
+              tasks={[1, 2, 3, 4, 6, 7, 2, 7, 2]}
+            />
+            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[1, 2, 3, 4]} />
+            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
+            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
+            <Column title="In Dev" stickyHeader={isScrolledList} tasks={[3, 4]} />
+            <Column title="Done" stickyHeader={isScrolledList} tasks={[]} />
+          </div>
           <div className={styles['btn-add-container']}>
             <div className={styles['btn-add']}>
               <BtnAction
@@ -156,6 +161,7 @@ function ProjectPage(props: ProjectPageProps) {
               />
             </div>
           </div>
+          <div className={styles['curtain'] + ' ' + styles['right']}></div>
         </div>
       </div>
     </div>

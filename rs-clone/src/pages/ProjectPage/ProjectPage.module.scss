@@ -2,7 +2,6 @@
 
 .wrapper {
   padding: 0 40px;
-  height: 100vh;
 }
 
 .info-block {
@@ -180,12 +179,36 @@
 .column-list-container {
   overflow: auto;
   position: relative;
-  height: 100%;
+  height: 550px;
+  padding: 0 0 20px;
 }
 
 .column-list {
   display: flex;
-  padding-right: 30px;
+  width: fit-content;
+
+  .list {
+    display: flex;
+  }
+
+  .curtain {
+    position: sticky;
+    z-index: 16;
+    width: 20px;
+    background-color: $colorBackground;
+
+    &.left {
+      left: 0;
+      box-shadow: 10px 0 15px -5px $colorBackgroundHover;
+      margin-right: 20px;
+    }
+
+    &.right {
+      right: 0;
+      box-shadow: -10px 0 15px -5px $colorBackgroundHover;
+      margin-left: 20px;
+    }
+  }
 
   .btn-add-container {
     padding: 0 5px;
