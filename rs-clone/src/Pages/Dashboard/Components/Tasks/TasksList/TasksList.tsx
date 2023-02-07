@@ -1,15 +1,15 @@
-import { TasksListItem } from '../..';
+// import { TasksListItem } from '../..';
+import { EmptyData } from '../../../../../Components';
 
 import Styles from './TasksList.module.scss';
 
 function TasksList() {
   return (
     <ul className={Styles.TasksList}>
-      <TasksListItem />
-      <TasksListItem />
-      <TasksListItem />
-      <TasksListItem />
-      <TasksListItem />
+      {/* <TasksListItem /> */}
+      <div className={Styles.Empty}>
+        <EmptyData text="There are no tasks assigned to you" />
+      </div>
     </ul>
   );
 }
