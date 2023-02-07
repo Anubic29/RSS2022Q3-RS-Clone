@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TasksList } from '../..';
+import { MarkedItemsList, TasksList } from '../..';
 
 import Styles from './TasksSection.module.scss';
 
@@ -18,7 +18,7 @@ function TasksSection() {
     if (target.id === TabsIds.TASKS) {
       setView(<TasksList />);
     } else {
-      setView(<h1>Marked items list</h1>);
+      setView(<MarkedItemsList />);
     }
 
     setIsActive({ tasks: !isActive.tasks, marked: !isActive.marked });
