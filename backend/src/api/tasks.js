@@ -1,5 +1,6 @@
 const express = require('express');
 const Task = require('../models/Task');
+const authenticateToken = require('../func/authenticateToken');
 const router = express.Router();
 
 function isCorrectTaskInfo(body) {
@@ -26,7 +27,7 @@ function isCorrectTaskComment(body) {
 
 // Get Methods
 
-router.get('/', async(req, res) => {
+router.get('/', authenticateToken, async(req, res) => {
   try {
     let tasks = await Task.find({});
     if (req.query.author) {
@@ -48,7 +49,7 @@ router.get('/', async(req, res) => {
   }
 });
 
-router.get('/:id/info', async(req, res) => {
+router.get('/:id/info', authenticateToken, async(req, res) => {
   try {
     const task = await Task.find({ _id: req.params.id });
     if (!task) throw new Error('Not found');
@@ -60,7 +61,7 @@ router.get('/:id/info', async(req, res) => {
   }
 });
 
-router.get('/:id/comments', async(req, res) => {
+router.get('/:id/comments', authenticateToken, async(req, res) => {
   try {
     const task = await Task.find({ _id: req.params.id });
     if (!task) throw new Error('Not found');
@@ -75,7 +76,7 @@ router.get('/:id/comments', async(req, res) => {
 
 // Post Methods
 
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectTaskInfo(req.body)) throw new Error('Not found property');
 
@@ -100,7 +101,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/:id/comments', async (req, res) => {
+router.post('/:id/comments', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectTaskComment(req.body)) throw new Error('Not found property');
 
@@ -124,7 +125,7 @@ router.post('/:id/comments', async (req, res) => {
 
 // Put Methods
 
-router.put('/:id/info', async (req, res) => {
+router.put('/:id/info', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectTaskInfo(req.body)) throw new Error('Not found property');
 
@@ -149,7 +150,7 @@ router.put('/:id/info', async (req, res) => {
 
 // Delete Methods
 
-router.delete('/:id/info', async (req, res) => {
+router.delete('/:id/info', authenticateToken, async (req, res) => {
   try {
     const task = (await Task.find({ _id: req.params.id }))[0];
     if (!task) throw new Error('Not found');
@@ -162,7 +163,7 @@ router.delete('/:id/info', async (req, res) => {
   }
 });
 
-router.delete('/:id/comments/:commentId', async (req, res) => {
+router.delete('/:id/comments/:commentId', authenticateToken, async (req, res) => {
   try {
     const task = (await Task.find({ _id: req.params.id }))[0];
     if (!task) throw new Error('Not found task');

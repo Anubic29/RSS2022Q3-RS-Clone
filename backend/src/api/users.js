@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
+const authenticateToken = require('../func/authenticateToken');
 const router = express.Router();
 
 function isCorrectUserInfo(body) {
@@ -17,7 +18,7 @@ function isCorrectUserNoted(body) {
 
 // Get Methods
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     const users = await User.find({})
     res.json(users);
@@ -27,7 +28,17 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id/info', async (req, res) => {
+router.get('/current', authenticateToken, async (req, res) => {
+  try {
+    const user = (await User.find({ mail: req.user.mail, password: req.user.password }))[0];
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
+router.get('/:id/info', authenticateToken, async (req, res) => {
   try {
     const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found');
@@ -39,7 +50,7 @@ router.get('/:id/info', async (req, res) => {
   }
 });
 
-router.get('/:id/noted', async (req, res) => {
+router.get('/:id/noted', authenticateToken, async (req, res) => {
   try {
     const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found');
@@ -54,7 +65,7 @@ router.get('/:id/noted', async (req, res) => {
 
 // Post Methods
 
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectUserInfo(req.body)) throw new Error('Not found property');
 
@@ -74,7 +85,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/:id/noted', async (req, res) => {
+router.post('/:id/noted', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectUserNoted(req.body)) throw new Error('Not found property');
 
@@ -97,7 +108,7 @@ router.post('/:id/noted', async (req, res) => {
 
 // Put Methods
 
-router.put('/:id/info', async (req, res) => {
+router.put('/:id/info', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectUserInfo(req.body)) throw new Error('Not found property');
 
@@ -120,7 +131,7 @@ router.put('/:id/info', async (req, res) => {
 
 // Delete Methods
 
-router.delete('/:id/info', async (req, res) => {
+router.delete('/:id/info', authenticateToken, async (req, res) => {
   try {
     const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found')
@@ -133,7 +144,7 @@ router.delete('/:id/info', async (req, res) => {
   }
 });
 
-router.delete('/:id/noted/:notedId', async (req, res) => {
+router.delete('/:id/noted/:notedId', authenticateToken, async (req, res) => {
   try {
     const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found')
