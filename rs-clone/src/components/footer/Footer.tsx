@@ -1,17 +1,15 @@
-import React from 'react';
 import DeveloperItem from './devItem/DeveloperItem';
 import classes from './footer.module.scss';
+
+import RSLogo from '../../assets/icons/rs_logo.svg';
 
 const Footer = () => {
   return (
     <footer className={classes.footer}>
       <div className={classes.footer_inner}>
-        <a
-          href="https://rs.school/js/"
-          target="_blank"
-          className={classes.footer_logo}
-          rel="noreferrer"></a>
-        <div className={classes.footer_year}>2023</div>
+        <a href="https://rs.school/js/" target="_blank" rel="noreferrer">
+          <img className={classes.footer_logo} src={RSLogo} alt="RSSchool" />
+        </a>
         <div className={classes.footer_devs}>
           <div className={classes.footer_devsWrap}>
             <DeveloperItem
@@ -19,6 +17,8 @@ const Footer = () => {
               dev=" Alexander Sitailo"></DeveloperItem>
             <DeveloperItem href="https://github.com/ElenaDatso" dev="Olena Datso"></DeveloperItem>
             <DeveloperItem href="https://github.com/vvant97" dev="Vlad Antonov"></DeveloperItem>
+            <span>|</span>
+            <div className={classes.footer_year}>2023</div>
           </div>
         </div>
       </div>

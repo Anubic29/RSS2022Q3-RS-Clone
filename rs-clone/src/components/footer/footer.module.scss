@@ -1,10 +1,8 @@
 @import '../../theme/variables.scss';
 
 .footer {
-  width: 100%;
-  height: 120px;
-  position: fixed;
-  bottom: 0;
+  padding: 10px 40px;
+  background: #f4f5f7;
 
   &::before {
     height: 4px;
@@ -18,21 +16,19 @@
 }
 
 .footer_inner {
-  padding-top: 20px;
   display: flex;
   justify-content: space-between;
   margin: auto;
-  margin-left: 30px;
-  margin-right: 30px;
   align-items: center;
 }
 
 .footer_logo {
-  width: 190px;
-  height: 71px;
-  background-image: url('../../assets/icons/rs_logo.svg');
-  background-size: cover;
-  margin-right: 26px;
+  width: 80px;
+}
+
+.footer_devsWrap {
+  display: flex;
+  gap: 20px;
 }
 
 .footer_profileWrap {
