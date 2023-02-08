@@ -64,6 +64,7 @@ function ColumnList(props: ColumnListProps) {
           return task;
         })
       );
+      setCurrentTask('');
     },
     [currentTask]
   );
@@ -84,6 +85,52 @@ function ColumnList(props: ColumnListProps) {
     ]
   );
 
+  const [currentColumn, setCurrentColumn] = useState('');
+
+  const dragStartHandlerColumn = useCallback(
+    (event: React.DragEvent<HTMLDivElement>, column: string) => {
+      if (
+        event.target instanceof HTMLElement &&
+        event.target.classList.contains(styles['column-block'])
+      ) {
+        setCurrentColumn(column);
+        setTimeout(() => {
+          if (event.target instanceof HTMLElement) event.target.style.display = 'none';
+        }, 0);
+      }
+    },
+    []
+  );
+  const dragEndHandlerColumn = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    if (
+      event.target instanceof HTMLElement &&
+      event.target.classList.contains(styles['column-block'])
+    ) {
+      event.target.style.display = 'block';
+    }
+  }, []);
+  const dragLeaveHandlerColumn = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    // if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
+  }, []);
+  const dragOverHandlerColumn = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  }, []);
+  const dropHandlerColumn = useCallback(
+    (event: React.DragEvent<HTMLDivElement>, column: string) => {
+      if (currentColumn !== '') {
+        event.preventDefault();
+        const activeIdx = props.columnList.findIndex((data) => data._id === currentColumn);
+        const overIdx = props.columnList.findIndex((data) => data._id === column);
+        const result = [...props.columnList];
+        const activeColumn = result.splice(activeIdx, 1)[0];
+        result.splice(overIdx - 1 >= 0 ? overIdx - 1 : overIdx, 0, activeColumn);
+        props.setColumnList(result);
+        setCurrentColumn('');
+      }
+    },
+    [currentColumn]
+  );
+
   return (
     <div
       className={styles['column-list-container']}
@@ -92,14 +139,23 @@ function ColumnList(props: ColumnListProps) {
         <div className={styles['curtain'] + ' ' + styles['left']}></div>
         <div className={styles['list']}>
           {props.columnList.map((column) => (
-            <Column
-              id={column._id}
-              title={column.title}
-              stickyHeader={isScrolledList}
+            <div
+              className={styles['column-block']}
               key={column._id}
-              tasks={props.taskList.filter((task) => task.columnId === column._id)}
-              dragHandlersTask={dragHandlersTask}
-            />
+              onDragStart={(event) => dragStartHandlerColumn(event, column._id)}
+              onDragLeave={(event) => dragLeaveHandlerColumn(event)}
+              onDragEnd={(event) => dragEndHandlerColumn(event)}
+              onDragOver={(event) => dragOverHandlerColumn(event)}
+              onDrop={(event) => dropHandlerColumn(event, column._id)}
+              draggable={true}>
+              <Column
+                id={column._id}
+                title={column.title}
+                stickyHeader={isScrolledList}
+                tasks={props.taskList.filter((task) => task.columnId === column._id)}
+                dragHandlersTask={dragHandlersTask}
+              />
+            </div>
           ))}
         </div>
         <div className={styles['btn-add-container']}>

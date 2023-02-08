@@ -35,6 +35,11 @@
     }
   }
 
+  .column-block {
+    transition: padding ease .3s;
+    height: 100%;
+  }
+
   .btn-add-container {
     padding: 0 5px;
     position: relative;
