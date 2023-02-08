@@ -35,27 +35,24 @@ function ColumnList(props: ColumnListProps) {
   const [currentTask, setCurrentTask] = useState('');
   const currentTaskElem = useRef<HTMLDivElement | null>(null);
 
-  const dragStartHandlerTask = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, task: string) => {
-      setCurrentTask(task);
-      currentTaskElem.current = event.target as HTMLDivElement;
-      setTimeout(() => {
-        if (currentTaskElem.current) currentTaskElem.current.style.display = 'none';
-      }, 0);
-    },
-    []
-  );
-  const dragEndHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+  const dragStartHandlerTask = useCallback((event: React.DragEvent, task: string) => {
+    setCurrentTask(task);
+    currentTaskElem.current = event.target as HTMLDivElement;
+    setTimeout(() => {
+      if (currentTaskElem.current) currentTaskElem.current.style.display = 'none';
+    }, 0);
+  }, []);
+  const dragEndHandlerTask = useCallback((event: React.DragEvent) => {
     if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
   }, []);
-  const dragLeaveHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+  const dragLeaveHandlerTask = useCallback((event: React.DragEvent) => {
     // if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
   }, []);
-  const dragOverHandlerTask = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+  const dragOverHandlerTask = useCallback((event: React.DragEvent) => {
     event.preventDefault();
   }, []);
   const dropHandlerTask = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, column: string) => {
+    (event: React.DragEvent, column: string) => {
       event.preventDefault();
       if (currentTask !== '') {
         if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
