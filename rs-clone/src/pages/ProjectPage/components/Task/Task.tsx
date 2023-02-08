@@ -25,7 +25,7 @@ function Task(props: TaskProps) {
             options={['Change', 'Remove']}
             btnBackgrColorHover={colorBackgroundHover}
             btnBackgrColorActive={colorSecondaryLight}
-            onAciveMenu={(value) => setIsActiveMenu(value)}
+            onActiveMenu={(value) => setIsActiveMenu(value)}
           />
         </div>
       )}

@@ -11,14 +11,14 @@ interface BtnMenuActionProps {
   btnBackgrColorDefault?: string;
   btnBackgrColorHover: string;
   btnBackgrColorActive: string;
-  onAciveMenu?: (value: boolean) => void;
+  onActiveMenu?: (value: boolean) => void;
 }
 
 function BtnMenuAction(props: BtnMenuActionProps) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 
   useEffect(() => {
-    if (props.onAciveMenu) props.onAciveMenu(isComponentVisible);
+    if (props.onActiveMenu) props.onActiveMenu(isComponentVisible);
   }, [isComponentVisible]);
 
   return (
