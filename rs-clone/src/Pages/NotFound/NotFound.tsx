@@ -1,7 +1,15 @@
+import { Link } from 'react-router-dom';
+import { Button } from '../../Components';
+import './NotFound.scss';
+
 function NotFound() {
   return (
-    <div className="404">
-      <h1>Not Found 404</h1>
+    <div className="NotFound">
+      <p className="NotFound-code">404</p>
+      <h1 className="NotFound-title">The page you are looking for is not exist</h1>
+      <Link className="NotFound-link" to="/">
+        <Button>Go to homepage</Button>
+      </Link>
     </div>
   );
 }
