@@ -17,11 +17,11 @@ function TasksSection() {
 
     if (target.id === TabsIds.TASKS) {
       setView(<TasksList />);
+      setIsActive({ tasks: true, marked: false });
     } else {
       setView(<MarkedItemsList />);
+      setIsActive({ tasks: false, marked: true });
     }
-
-    setIsActive({ tasks: !isActive.tasks, marked: !isActive.marked });
   };
 
   return (
