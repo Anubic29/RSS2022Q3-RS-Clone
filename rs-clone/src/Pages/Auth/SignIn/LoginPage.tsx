@@ -1,18 +1,18 @@
 import React from 'react';
-import BoxWithShadow from '../components/boxWithShadow/BoxWithShadow';
-import LoginForm from '../components/LoginForm/LoginForm';
+import BoxWithShadow from '../../../Components/boxWithShadow/BoxWithShadow';
+import LoginForm from './Components/LoginForm';
 import classes from './LoginPage.module.scss';
-import Modal from '../components/Modal/Modal';
+import Modal from '../../../Components/Modal/Modal';
 
 const LoginPage = () => {
   return (
     <>
-      <Modal>
+      <Modal translate="half">
         <div className="login-wrap">
           <BoxWithShadow>
             <LoginForm />
           </BoxWithShadow>
-          <div className={classes.img}></div>
+          <div className={classes.logo}></div>
         </div>
       </Modal>
       <div>

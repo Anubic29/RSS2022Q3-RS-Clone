@@ -3,7 +3,7 @@ import AuthRoute from './AuthRoute';
 import NonAuthRoute from './NonAuthRoute';
 
 function Routing() {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   return <BrowserRouter>{isAuthenticated ? <AuthRoute /> : <NonAuthRoute />}</BrowserRouter>;
 }

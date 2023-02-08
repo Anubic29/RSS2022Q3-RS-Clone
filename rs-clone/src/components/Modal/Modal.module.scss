@@ -21,5 +21,13 @@
   display: flex;
   align-self: center;
   margin: auto;
+
+}
+
+.half {
   transform: translateY(-50%);
+}
+
+.twenty {
+  transform: translateY(-20%);
 }
