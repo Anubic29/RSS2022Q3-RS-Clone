@@ -86,36 +86,33 @@ function ColumnList(props: ColumnListProps) {
 
   const [currentColumn, setCurrentColumn] = useState('');
 
-  const dragStartHandlerColumn = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, column: string) => {
-      if (
-        event.target instanceof HTMLElement &&
-        event.target.classList.contains(styles['column-block'])
-      ) {
-        setCurrentColumn(column);
-        setTimeout(() => {
-          if (event.target instanceof HTMLElement) event.target.style.display = 'none';
-        }, 0);
-      }
-    },
-    []
-  );
-  const dragEndHandlerColumn = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    if (
-      event.target instanceof HTMLElement &&
-      event.target.classList.contains(styles['column-block'])
-    ) {
-      event.target.style.display = 'block';
+  const dragStartHandlerColumn = useCallback((event: React.DragEvent, column: string) => {
+    let element: HTMLElement | null = event.target as HTMLElement;
+    while (element instanceof HTMLElement && !element.classList.contains(styles['column-block']))
+      element = element.parentElement;
+    if (element instanceof HTMLElement) {
+      setCurrentColumn(column);
+      setTimeout(() => {
+        if (element instanceof HTMLElement) element.style.display = 'none';
+      }, 0);
     }
   }, []);
-  const dragLeaveHandlerColumn = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+  const dragEndHandlerColumn = useCallback((event: React.DragEvent) => {
+    let element: HTMLElement | null = event.target as HTMLElement;
+    while (element instanceof HTMLElement && !element.classList.contains(styles['column-block']))
+      element = element.parentElement;
+    if (element instanceof HTMLElement) {
+      element.style.display = 'block';
+    }
+  }, []);
+  const dragLeaveHandlerColumn = useCallback((event: React.DragEvent) => {
     // if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
   }, []);
-  const dragOverHandlerColumn = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+  const dragOverHandlerColumn = useCallback((event: React.DragEvent) => {
     event.preventDefault();
   }, []);
   const dropHandlerColumn = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, column: string) => {
+    (event: React.DragEvent, column: string) => {
       event.preventDefault();
       if (currentColumn !== '') {
         const activeIdx = props.columnList.findIndex((data) => data._id === currentColumn);
@@ -141,18 +138,17 @@ function ColumnList(props: ColumnListProps) {
             <div
               className={styles['column-block']}
               key={column._id}
-              onDragStart={(event) => dragStartHandlerColumn(event, column._id)}
-              onDragLeave={(event) => dragLeaveHandlerColumn(event)}
-              onDragEnd={(event) => dragEndHandlerColumn(event)}
               onDragOver={(event) => dragOverHandlerColumn(event)}
-              onDrop={(event) => dropHandlerColumn(event, column._id)}
-              draggable={true}>
+              onDrop={(event) => dropHandlerColumn(event, column._id)}>
               <Column
                 id={column._id}
                 title={column.title}
                 stickyHeader={isScrolledList}
                 tasks={props.taskList.filter((task) => task.columnId === column._id)}
                 dragHandlersTask={dragHandlersTask}
+                dragStartHandlerColumn={dragStartHandlerColumn}
+                dragLeaveHandlerColumn={dragLeaveHandlerColumn}
+                dragEndHandlerColumn={dragEndHandlerColumn}
               />
             </div>
           ))}

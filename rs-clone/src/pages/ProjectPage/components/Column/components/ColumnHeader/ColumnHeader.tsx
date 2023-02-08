@@ -16,6 +16,9 @@ interface ColumnHeaderProps {
   title: string;
   tasksCount: number;
   stickyHeader?: boolean;
+  dragStartHandlerColumn: (event: React.DragEvent, column: string) => void;
+  dragLeaveHandlerColumn: (event: React.DragEvent) => void;
+  dragEndHandlerColumn: (event: React.DragEvent) => void;
 }
 
 function ColumnHeader(props: ColumnHeaderProps) {
@@ -37,7 +40,11 @@ function ColumnHeader(props: ColumnHeaderProps) {
     <div
       className={HeaderBlockStyles}
       onMouseOver={() => setHoverColumnHeader(true)}
-      onMouseOut={() => setHoverColumnHeader(false)}>
+      onMouseOut={() => setHoverColumnHeader(false)}
+      onDragStart={(event) => props.dragStartHandlerColumn(event, props.id)}
+      onDragLeave={(event) => props.dragLeaveHandlerColumn(event)}
+      onDragEnd={(event) => props.dragEndHandlerColumn(event)}
+      draggable={true}>
       <form className={styles['title__form']} action="">
         {!isInputHeaderVisible ? (
           <span className={styles['title__form__text-backgr']}>

@@ -19,6 +19,9 @@ interface ColumnProps {
     dragOverHandlerTask: (event: React.DragEvent) => void;
     dropHandlerTask: (event: React.DragEvent, column: string) => void;
   };
+  dragStartHandlerColumn: (event: React.DragEvent, column: string) => void;
+  dragLeaveHandlerColumn: (event: React.DragEvent) => void;
+  dragEndHandlerColumn: (event: React.DragEvent) => void;
 }
 
 function Column(props: ColumnProps) {
@@ -30,6 +33,9 @@ function Column(props: ColumnProps) {
           title={props.title}
           tasksCount={props.tasks.length}
           stickyHeader={props.stickyHeader}
+          dragStartHandlerColumn={props.dragStartHandlerColumn}
+          dragLeaveHandlerColumn={props.dragLeaveHandlerColumn}
+          dragEndHandlerColumn={props.dragEndHandlerColumn}
         />
         <ColumnBody id={props.id} tasks={props.tasks} dragHandlersTask={props.dragHandlersTask} />
       </div>
