@@ -1,4 +1,4 @@
-import BtnAction from '../BtnAction/BtnAction';
+import { BtnAction } from '../';
 import { colorBackgroundActiveMenu, colorContentActiveMenu } from '../../../../theme/variables';
 import { MdMoreHoriz } from 'react-icons/md';
 import useComponentVisible from '../../../../hooks/useComponentVisible/useComponentVisible';

@@ -4,9 +4,8 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../../theme/variables';
-import BtnAction from '../BtnAction/BtnAction';
+import { BtnAction, Column } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
-import Column from '../Column/Column';
 
 import styles from './ColumnList.module.scss';
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MdDone, MdAccountCircle } from 'react-icons/md';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../theme/variables';
-import BtnMenuAction from '../BtnMenuAction/BtnMenuAction';
+import { BtnMenuAction } from '../';
 
 import styles from './Task.module.scss';
 

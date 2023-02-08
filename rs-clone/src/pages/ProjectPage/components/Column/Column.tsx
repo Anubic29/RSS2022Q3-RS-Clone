@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../theme/variables';
-import Task from '../Task/Task';
-import BtnMenuAction from '../BtnMenuAction/BtnMenuAction';
+import { Task, BtnMenuAction } from '../';
 
 import styles from './Column.module.scss';
 

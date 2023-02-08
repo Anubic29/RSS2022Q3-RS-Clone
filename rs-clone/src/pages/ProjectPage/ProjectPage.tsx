@@ -1,10 +1,6 @@
 import { useRef, useState } from 'react';
 import { colorBackgroundColumn, colorSecondaryLight } from '../../theme/variables';
-import BtnAction from './components/BtnAction/BtnAction';
-import BtnMenuAction from './components/BtnMenuAction/BtnMenuAction';
-import UserBtn from './components/UserBtn/UserBtn';
-import SelectPanel from './components/SelectPanel/SelectPanel';
-import ColumnList from './components/ColumnList/ColumnList';
+import { BtnAction, BtnMenuAction, UserBtn, SelectPanel, ColumnList } from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd } from 'react-icons/md';
 
 import styles from './ProjectPage.module.scss';
