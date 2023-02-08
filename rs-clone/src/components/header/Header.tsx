@@ -4,6 +4,8 @@ import UserIcon from '../userIcon/UserIcon';
 import SubmenuItem from '../submenuItem/SubmenuItem';
 import MenuSpan from '../submenuItem/menuSpan/MenuSpan';
 import classes from './header.module.scss';
+import Button from '../Button/Button';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
@@ -32,7 +34,7 @@ const Header = () => {
   return (
     <header className={classes.header}>
       <div className={classes.header_inner}>
-        <div className={classes.header_logo}></div>
+        <Link className={classes.header_logo} to="/" />
         <nav className={classes.header_menu}>
           <ul className={classes.header_menuList}>
             <li className={classes.header_menuItem}>
@@ -59,7 +61,7 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <button className={classes.header_createBtn}>Create</button>
+        <Button className={classes.header_createBtn}>Create</Button>
         <UserIcon user="OD"></UserIcon>
       </div>
     </header>
