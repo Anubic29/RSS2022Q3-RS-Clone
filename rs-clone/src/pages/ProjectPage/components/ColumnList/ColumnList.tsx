@@ -57,14 +57,16 @@ function ColumnList(props: ColumnListProps) {
   const dropHandlerTask = useCallback(
     (event: React.DragEvent<HTMLDivElement>, column: string) => {
       event.preventDefault();
-      if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
-      props.setTaskList(
-        props.taskList.map((task) => {
-          if (task._id === currentTask) task.columnId = column;
-          return task;
-        })
-      );
-      setCurrentTask('');
+      if (currentTask !== '') {
+        if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
+        props.setTaskList(
+          props.taskList.map((task) => {
+            if (task._id === currentTask) task.columnId = column;
+            return task;
+          })
+        );
+        setCurrentTask('');
+      }
     },
     [currentTask]
   );
@@ -117,8 +119,8 @@ function ColumnList(props: ColumnListProps) {
   }, []);
   const dropHandlerColumn = useCallback(
     (event: React.DragEvent<HTMLDivElement>, column: string) => {
+      event.preventDefault();
       if (currentColumn !== '') {
-        event.preventDefault();
         const activeIdx = props.columnList.findIndex((data) => data._id === currentColumn);
         const overIdx = props.columnList.findIndex((data) => data._id === column);
         const result = [...props.columnList];
