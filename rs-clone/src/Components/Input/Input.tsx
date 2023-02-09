@@ -10,6 +10,8 @@ interface InputProps {
   placeholder?: string;
   value?: string;
   required?: boolean;
+  minLength?: number;
+  maxLength?: number;
 }
 
 function Input(props: InputProps) {

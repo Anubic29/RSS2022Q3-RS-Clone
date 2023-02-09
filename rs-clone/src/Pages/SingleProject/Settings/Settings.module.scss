@@ -1,0 +1,53 @@
+.Settings {
+  flex: 1;
+  padding: 24px;
+}
+
+.Breadcrumbs {
+  display: flex;
+  gap: 8px;
+}
+
+.Breadcrumb {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6b778c;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:last-child:hover {
+    text-decoration: none;
+  }
+}
+
+.Divider {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6b778c;
+}
+
+.Title {
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #172b4d;
+}
+
+.ProjectDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.ButtonAvatar {
+  margin-top: 15px;
+  color: #42526E;
+  background: rgba(9, 30, 66, 0.04);
+
+  &:hover {
+    background: rgba(9, 30, 66, 0.08);
+  }
+}

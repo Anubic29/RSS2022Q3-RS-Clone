@@ -6,5 +6,16 @@ import SignUp from './Auth/SignUp/SignUp';
 import Projects from './Projects/Projects';
 import ProjectCreate from './ProjectCreate/ProjectCreate';
 import SingleProject from './SingleProject/SingleProject';
+import Settings from './SingleProject/Settings/Settings';
 
-export { Dashboard, NotFound, Auth, SignIn, SignUp, Projects, ProjectCreate, SingleProject };
+export {
+  Dashboard,
+  NotFound,
+  Auth,
+  SignIn,
+  SignUp,
+  Projects,
+  ProjectCreate,
+  SingleProject,
+  Settings
+};
