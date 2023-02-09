@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { App } from '../Components';
-import { Dashboard, NotFound, Projects } from '../Pages';
+import { Dashboard, NotFound, Projects, LoginPage } from '../Pages';
 
 function AuthRoute() {
   return (

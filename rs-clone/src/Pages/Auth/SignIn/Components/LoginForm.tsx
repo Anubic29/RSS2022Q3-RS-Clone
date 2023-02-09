@@ -1,13 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './LoginForm.module.scss';
 import api from '../../../../api';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { IsAuthContex } from '../../../../context';
+import { changeIsLoading } from '../../Auth';
 
 type ServerError = { errorMessage: string };
 
 const LoginForm = () => {
+  const contextValue = useContext(IsAuthContex);
+  const [change, changeMessage, setText] = changeIsLoading();
+
   const passwRegEx = new RegExp('[0-9A-Za-z]{4,}$');
   const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
 
@@ -23,27 +28,44 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const checkUser = async (email: string, password: string) => {
+    change(true);
     const payload = { mail: email, password: password }; //{ mail: 'example@gmail.com', password: 'exa_password' };
-    try {
-      const response = await api.auth.signIn(payload);
-      if (response.status === 200) {
-        setUserExist(true);
-        localStorage.setItem('accessToken', JSON.stringify(response.data));
-        navigate('/');
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const serverError = error as AxiosError<ServerError>;
-        if (serverError && serverError.response) {
-          if (serverError.response.status === 400) {
-            setUserExist(false);
-            return;
-          }
-          return serverError.response.data;
+    setTimeout(async () => {
+      try {
+        const response = await api.auth.signIn(payload);
+        if (response.status == 200) {
+          change(false);
+          changeMessage(true);
+          setText('Success!');
+          setTimeout(() => {
+            changeMessage(false);
+          }, 1000);
+          localStorage.setItem('accessToken', JSON.stringify(response.data));
+          setUserExist(true);
+          contextValue.setIsAuthenticated(true);
+          navigate('/');
         }
+      } catch (error) {
+        change(false);
+        changeMessage(true);
+        setText('Failed!');
+        setTimeout(() => {
+          changeMessage(false);
+        }, 1000);
+        contextValue.setIsAuthenticated(false);
+        if (axios.isAxiosError(error)) {
+          const serverError = error as AxiosError<ServerError>;
+          if (serverError && serverError.response) {
+            if (serverError.response.status === 400) {
+              setUserExist(false);
+              return;
+            }
+            return serverError.response.data;
+          }
+        }
+        return { errorMessage: 'Something went wrong...' };
       }
-      return { errorMessage: 'Something went wrong...' };
-    }
+    }, 1500);
   };
 
   const submitHandler = async (event: React.SyntheticEvent) => {

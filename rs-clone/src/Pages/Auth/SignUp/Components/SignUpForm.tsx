@@ -1,15 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useContext, Dispatch } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import classes from './SignUpForm.module.scss';
 import api from '../../../../api';
 import axios, { AxiosError } from 'axios';
-import LoaderImg from '../../../../Components/Loader/Loader';
+import { IsAuthContex } from '../../../../context';
+import { changeIsLoading } from '../../Auth';
 
 type ServerError = { errorMessage: string };
 
 const LoginForm = () => {
+  const contextValue = useContext(IsAuthContex);
+  const [change, changeMessage, setText] = changeIsLoading();
+
   const passwRegEx = new RegExp('[0-9A-Za-z]{4,}$');
   const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+  const navigate = useNavigate();
 
   const [emailInputValue, setEmailInputValue] = useState('');
   const [passwordInputValue, setPasswInputValue] = useState('');
@@ -18,9 +23,10 @@ const LoginForm = () => {
 
   const [loginIsAvailable, setloginIsAvailable] = useState(true);
   const [isNoEmtyFiels, setIsNoEmptyFields] = useState(true);
-  const [isCreatedUser, setIsCreatedUser] = useState(false);
   const [passwIsMatch, setPasswIsMatch] = useState(true);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [responseResult, setResponseResult] = useState('Unknown');
+
+  const [isCreatedUser, setIsCreatedUser] = useState(false);
 
   const confirmPassRef = useRef<HTMLInputElement>(null);
   const passwInpRef = useRef<HTMLInputElement>(null);
@@ -29,33 +35,45 @@ const LoginForm = () => {
   const lastNameRef = useRef<HTMLInputElement>(null);
 
   const setUser = async (firstName: string, lastName: string, email: string, password: string) => {
+    change(true);
     const payload = { firstName: firstName, lastName: lastName, mail: email, password: password };
-    try {
-      console.log(isLoadingData);
-      const response = await api.auth.signUp(payload);
-      setIsLoadingData(true);
-      useEffect(() => {
-        setTimeout(() => {
-          console.log(isLoadingData);
-          setIsLoadingData(false);
-        }, 2000);
-      }, [isLoadingData]);
-      if (response.status === 200) {
-        setIsCreatedUser(true);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const serverError = error as AxiosError<ServerError>;
-        if (serverError && serverError.response) {
-          if (serverError.response.status === 412) {
-            setloginIsAvailable(false);
-            return;
-          }
-          return serverError.response.data;
+    const payloadLogIn = { mail: email, password: password };
+    setTimeout(async () => {
+      try {
+        const response = await api.auth.signUp(payload);
+        if (response.status === 200) {
+          const responseSignIn = await api.auth.signIn(payloadLogIn);
+          console.log(await responseSignIn.data);
+          localStorage.setItem('accessToken', JSON.stringify(responseSignIn.data));
+          setIsCreatedUser(true);
+          contextValue.setIsAuthenticated(true);
+          navigate('/');
         }
+      } catch (error) {
+        change(false);
+        changeMessage(true);
+        setText('Failed');
+        setTimeout(() => {
+          changeMessage(false);
+        }, 1000);
+        contextValue.setIsAuthenticated(false);
+        changeMessage(true);
+        setTimeout(() => {
+          changeMessage(false);
+        }, 1000);
+        if (axios.isAxiosError(error)) {
+          const serverError = error as AxiosError<ServerError>;
+          if (serverError && serverError.response) {
+            if (serverError.response.status === 412) {
+              setloginIsAvailable(false);
+              return;
+            }
+            return serverError.response.data;
+          }
+        }
+        return { errorMessage: 'Something went wrong...' };
       }
-      return { errorMessage: 'Something went wrong...' };
-    }
+    }, 1500);
   };
 
   const submitHandler = async (event: React.SyntheticEvent) => {
@@ -111,7 +129,6 @@ const LoginForm = () => {
 
   return (
     <>
-      {isLoadingData && <LoaderImg />}
       <form method="post" className={classes.login_formWrap} onSubmit={submitHandler}>
         <div className={classes.login_logoWrap}></div>
         <p className={classes.login_subTitle}>Login or create user to continue</p>
