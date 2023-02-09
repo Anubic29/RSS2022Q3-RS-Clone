@@ -30,7 +30,9 @@ function Task(props: TaskProps) {
         </div>
       )}
       <div className={styles['task__title-block']}>
-        <span className={styles.title}>{props.title}</span>
+        <span className={styles.title}>
+          {props.title.length >= 24 ? props.title.substring(0, 24) + '...' : props.title}
+        </span>
       </div>
       <div className={styles['task__info-block']}>
         <div className={styles.info}>
