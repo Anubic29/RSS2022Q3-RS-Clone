@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button, ProjectAvatar } from '../../../Components';
+import { Button, DropdownButton, ProjectAvatar } from '../../../Components';
 import cardsData from '../../../Data/FakeProjectCard';
 import { SettingsForm } from './Components';
 import Styles from './Settings.module.scss';
@@ -21,7 +21,10 @@ function Settings() {
         <li className={Styles.Breadcrumb}>Project settings</li>
       </ul>
 
-      <p className={Styles.Title}>Details</p>
+      <div className={Styles.TitleArea}>
+        <span className={Styles.Title}>Details</span>
+        <DropdownButton />
+      </div>
 
       <div className={Styles.ProjectDetails}>
         <ProjectAvatar {...testData} size={128} />
