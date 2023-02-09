@@ -37,7 +37,13 @@ function BtnMenuAction(props: BtnMenuActionProps) {
       {isComponentVisible && (
         <div className={styles['menu__list']}>
           {props.options.map((option, idx) => (
-            <div className={styles['menu__option']} key={idx} onClick={option.callback}>
+            <div
+              className={styles['menu__option']}
+              key={idx}
+              onClick={() => {
+                option.callback();
+                setIsComponentVisible(false);
+              }}>
               {option.title}
             </div>
           ))}
