@@ -3,32 +3,6 @@
   padding: 24px 72px;
 }
 
-.Breadcrumbs {
-  display: flex;
-  gap: 8px;
-}
-
-.Breadcrumb {
-  margin-bottom: 10px;
-  font-size: 14px;
-  font-weight: 400;
-  color: #6b778c;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:last-child:hover {
-    text-decoration: none;
-  }
-}
-
-.Divider {
-  font-size: 14px;
-  font-weight: 400;
-  color: #6b778c;
-}
-
 .Title {
   font-size: 24px;
   font-weight: 500;
@@ -44,7 +18,7 @@
 
 .ButtonAvatar {
   margin-top: 15px;
-  color: #42526E;
+  color: #42526e;
   background: rgba(9, 30, 66, 0.04);
 
   &:hover {

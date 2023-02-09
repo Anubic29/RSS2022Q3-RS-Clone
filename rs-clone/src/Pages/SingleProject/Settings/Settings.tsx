@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
-import { Button, DropdownButton, ProjectAvatar } from '../../../Components';
+import { Button, Dropdown, ProjectAvatar } from '../../../Components';
 import cardsData from '../../../Data/FakeProjectCard';
-import { SettingsForm } from './Components';
+import { SettingsBreadcrumbs, SettingsForm } from './Components';
 import Styles from './Settings.module.scss';
 
 function Settings() {
@@ -9,21 +8,18 @@ function Settings() {
 
   return (
     <div className={Styles.Settings}>
-      <ul className={Styles.Breadcrumbs}>
-        <li className={Styles.Breadcrumb}>
-          <Link to="/">Homepage</Link>
-        </li>
-        <span className={Styles.Divider}>/</span>
-        <li className={Styles.Breadcrumb}>
-          <Link to="/projects">Projects</Link>
-        </li>
-        <span className={Styles.Divider}>/</span>
-        <li className={Styles.Breadcrumb}>Project settings</li>
-      </ul>
+      <SettingsBreadcrumbs />
 
       <div className={Styles.TitleArea}>
         <span className={Styles.Title}>Details</span>
-        <DropdownButton />
+        <Dropdown
+          childElements={[
+            {
+              title: 'Remove project',
+              onClick: () => console.log(true)
+            }
+          ]}
+        />
       </div>
 
       <div className={Styles.ProjectDetails}>

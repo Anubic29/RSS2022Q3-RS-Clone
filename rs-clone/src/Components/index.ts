@@ -6,6 +6,6 @@ import Label from './Label/Label';
 import Button from './Button/Button';
 import InfoCard from './InfoCard/InfoCard';
 import Preloader from './Preloader/Preloader';
-import DropdownButton from './DropdownButton/DropdownButton';
+import Dropdown from './Dropdown/Dropdown';
 
-export { ProjectAvatar, App, Input, Label, Button, InfoCard, EmptyData, Preloader, DropdownButton };
+export { ProjectAvatar, App, Input, Label, Button, InfoCard, EmptyData, Preloader, Dropdown };
