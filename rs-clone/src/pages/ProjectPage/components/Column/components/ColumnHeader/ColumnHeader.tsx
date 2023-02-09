@@ -59,11 +59,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
     <div
       className={HeaderBlockStyles}
       onMouseOver={() => setHoverColumnHeader(true)}
-      onMouseOut={() => setHoverColumnHeader(false)}
-      onDragStart={(event) => props.dragStartHandlerColumn(event, props.id)}
-      onDragLeave={(event) => props.dragLeaveHandlerColumn(event)}
-      onDragEnd={(event) => props.dragEndHandlerColumn(event)}
-      draggable={true}>
+      onMouseOut={() => setHoverColumnHeader(false)}>
       <form
         className={styles['title__form']}
         action=""
@@ -72,7 +68,12 @@ function ColumnHeader(props: ColumnHeaderProps) {
           onSubmitHandler();
         }}>
         {!isInputHeaderVisible ? (
-          <span className={styles['title__form__text-backgr']}>
+          <span
+            className={styles['title__form__text-backgr']}
+            onDragStart={(event) => props.dragStartHandlerColumn(event, props.id)}
+            onDragLeave={(event) => props.dragLeaveHandlerColumn(event)}
+            onDragEnd={(event) => props.dragEndHandlerColumn(event)}
+            draggable={true}>
             <span className={styles['title__form__container']}>
               <span
                 className={styles['title__form__text']}
