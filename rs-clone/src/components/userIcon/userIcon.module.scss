@@ -1,10 +1,12 @@
 
-.header_profile-wrap {
+@import '../../theme/variables.scss';
+
+.header_profileWrap {
   margin-left: auto;
   padding-left: 16px;
 }
 
-.header_profile-inner {
+.header_profileInner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,12 +19,16 @@
     }
 }
 
-.header_profile-icon {
+.header_profileIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  color: #ffffff;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   background-color: $colorSecondary;
-  line-height: 30px;
   text-align: center;
   font-weight: 500;
   cursor: pointer;

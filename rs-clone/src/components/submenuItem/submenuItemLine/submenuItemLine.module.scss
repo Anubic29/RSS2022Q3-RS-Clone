@@ -1,3 +1,5 @@
+@import '../../../theme/variables.scss';
+
 .submenu_line {
   display: flex;
   align-items: center;
@@ -11,13 +13,13 @@
   }
 }
 
-.submenu_item-details {
+.submenu_itemDetails {
   display: flex;
   color: $colorGreyText;
   line-height: 20px;
 }
 
-.submenu_item-details :first-child:after {
+.submenu_itemDetails :first-child:after {
     display: inline-block;
     width: 16px;
     color: $colorGreyText;
@@ -33,7 +35,7 @@
   margin-left: 15px;
 }
 
-.submenu_img-wrap {
+.submenu_imgWrap {
   width: 30px;
   height: 30px;
   background-repeat: no-repeat;

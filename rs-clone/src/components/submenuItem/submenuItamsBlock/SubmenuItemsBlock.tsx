@@ -1,5 +1,6 @@
 import React from 'react';
 import SubmenuItemLine from '../submenuItemLine/SubmenuItemLine';
+import classes from '../submenuItem.module.scss';
 
 const bd = [
   {
@@ -120,9 +121,9 @@ const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (
   const block = menuItem === 'work' ? contentWork : contentProject;
 
   return (
-    <div className="items-block">
-      <p className="submenu_subtitle">{block.subtitle}</p>
-      <ul className="submenu_items-list">
+    <div className={classes.itemsBlock}>
+      <p className={classes.submenu_subtitle}>{block.subtitle}</p>
+      <ul className={classes.submenu_itemsList}>
         {block.base.map((item, i) => (
           <SubmenuItemLine
             key={i}

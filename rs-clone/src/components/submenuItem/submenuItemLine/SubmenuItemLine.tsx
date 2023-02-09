@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import classes from './submenuItemLine.module.scss';
 
 const SubmenuItemLine: React.FC<{
   title: string;
@@ -10,18 +11,18 @@ const SubmenuItemLine: React.FC<{
 }> = (props) => {
   return (
     <li>
-      <Link to="/" className="submenu_line">
+      <Link to="/" className={classes.submenu_line}>
         <div
-          className="submenu_img-wrap"
+          className={classes.submenu_imgWrap}
           style={{
             backgroundColor: `${props.bgColor}`,
             backgroundImage: `url(${props.src})`
           }}></div>
-        <div className="submenu_texts">
-          <p className="submenu_item-title">{props.title}</p>
-          <div className="submenu_item-details">
-            <span className="item-details">{props.article}</span>
-            <span className="item-details">{props.project}</span>
+        <div className={classes.submenu_texts}>
+          <p className={classes.submenu_itemTitles}>{props.title}</p>
+          <div className={classes.submenu_itemDetails}>
+            <span className={classes.itemDetails}>{props.article}</span>
+            <span className={classes.itemDetails}>{props.project}</span>
           </div>
         </div>
       </Link>
