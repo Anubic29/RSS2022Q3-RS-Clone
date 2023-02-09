@@ -1,31 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
+import ProjectType from '../../Types/Project/ProjectType';
+import ColumnProjectType from '../../Types/Project/ColumnProjectType';
+import TaskType from '../../Types/Task/TaskType';
 import { colorBackgroundColumn, colorSecondaryLight } from '../../theme/variables';
 import { BtnAction, BtnMenuAction, UserBtn, SelectPanel, ColumnList } from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd } from 'react-icons/md';
+import { BoardState } from '../../Context/BoardContext';
 
 import styles from './ProjectPage.module.scss';
 
 // Delete After
-import { columnListData, taskListData } from '../../Data/FakeProjectPageData';
+import { projectData, taskListData } from '../../Data/FakeProjectPageData';
 
 const options = [
   { value: '', text: 'No' },
   { value: 'executor', text: 'Executor' },
   { value: 'tasks', text: 'Tasks' }
 ];
-
-type ColumnType = {
-  title: string;
-  type: string;
-  _id: string;
-};
-
-type TaskType = {
-  _id: string;
-  id: number;
-  title: string;
-  columnId: string;
-};
 
 interface ProjectPageProps {
   title: string;
@@ -35,12 +26,14 @@ function ProjectPage(props: ProjectPageProps) {
   const [title, setTitle] = useState(props.title);
   const [canEditTitle, setCanEditTitle] = useState(false);
 
-  const [columnList, setColumnList] = useState<ColumnType[]>([]);
+  const [projectInfo, setProjectInfo] = useState<ProjectType | null>(null);
+  const [columnList, setColumnList] = useState<ColumnProjectType[]>([]);
   const [taskList, setTaskList] = useState<TaskType[]>([]);
 
   useEffect(() => {
-    setColumnList(columnListData);
+    setColumnList(projectData.columnList);
     setTaskList(taskListData);
+    setProjectInfo(projectData);
   }, []);
 
   const refSearchBlock = useRef<HTMLDivElement>(null);
@@ -148,12 +141,17 @@ function ProjectPage(props: ProjectPageProps) {
           </div>
         </div>
       </div>
-      <ColumnList
-        columnList={columnList}
-        taskList={taskList}
-        setColumnList={(data) => setColumnList(data)}
-        setTaskList={(data) => setTaskList(data)}
-      />
+      <BoardState
+        projectId={projectInfo ? projectInfo._id : ''}
+        authorId={projectInfo ? projectInfo.author : ''}
+        addTaskToList={(data) => setTaskList([...taskList, data])}>
+        <ColumnList
+          columnList={columnList}
+          taskList={taskList.sort((a, b) => a.id - b.id)}
+          setColumnList={(data) => setColumnList(data)}
+          setTaskList={(data) => setTaskList(data)}
+        />
+      </BoardState>
     </div>
   );
 }

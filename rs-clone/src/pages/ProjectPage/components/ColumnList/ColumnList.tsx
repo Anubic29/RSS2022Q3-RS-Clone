@@ -1,4 +1,6 @@
 import { useState, useRef, useCallback, useMemo } from 'react';
+import ColumnProjectType from '../../../../Types/Project/ColumnProjectType';
+import TaskType from '../../../../Types/Task/TaskType';
 import {
   colorBackgroundColumn,
   colorBackgroundHover,
@@ -9,23 +11,10 @@ import { MdOutlineAddCircleOutline } from 'react-icons/md';
 
 import styles from './ColumnList.module.scss';
 
-type ColumnType = {
-  _id: string;
-  title: string;
-  type: string;
-};
-
-type TaskType = {
-  _id: string;
-  id: number;
-  title: string;
-  columnId: string;
-};
-
 interface ColumnListProps {
-  columnList: ColumnType[];
+  columnList: ColumnProjectType[];
   taskList: TaskType[];
-  setColumnList: (data: ColumnType[]) => void;
+  setColumnList: (data: ColumnProjectType[]) => void;
   setTaskList: (data: TaskType[]) => void;
 }
 

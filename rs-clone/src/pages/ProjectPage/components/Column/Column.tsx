@@ -1,3 +1,4 @@
+import TaskType from '../../../../Types/Task/TaskType';
 import { ColumnHeader, ColumnBody } from './components';
 
 import styles from './Column.module.scss';
@@ -5,12 +6,7 @@ import styles from './Column.module.scss';
 interface ColumnProps {
   id: string;
   title: string;
-  tasks: {
-    _id: string;
-    id: number;
-    title: string;
-    columnId: string;
-  }[];
+  tasks: TaskType[];
   stickyHeader?: boolean;
   dragHandlersTask: {
     dragStartHandlerTask: (event: React.DragEvent, task: string) => void;

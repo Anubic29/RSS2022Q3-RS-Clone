@@ -1,15 +1,20 @@
-import { Task } from '../../../';
+import { useState, useEffect, useContext } from 'react';
+import TaskType from '../../../../../../Types/Task/TaskType';
+import { MdClose, MdDone } from 'react-icons/md';
+import { BtnAction, Task } from '../../../';
+import useComponentVisible from '../../../../../../hooks/useComponentVisible/useComponentVisible';
+import {
+  colorBackgroundColumn,
+  colorBackgroundHover,
+  colorSecondaryLight
+} from '../../../../../../theme/variables';
+import { BoardContext } from '../../../../../../Context/BoardContext';
 
 import styles from './ColumnBody.module.scss';
 
 interface ColumnBodyProps {
   id: string;
-  tasks: {
-    _id: string;
-    id: number;
-    title: string;
-    columnId: string;
-  }[];
+  tasks: TaskType[];
   dragHandlersTask: {
     dragStartHandlerTask: (event: React.DragEvent, task: string) => void;
     dragEndHandlerTask: (event: React.DragEvent) => void;
@@ -20,6 +25,20 @@ interface ColumnBodyProps {
 }
 
 function ColumnBody(props: ColumnBodyProps) {
+  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+
+  const { createTask } = useContext(BoardContext);
+
+  useEffect(() => {
+    if (!isComponentVisible) setNewTaskTitle('');
+  }, [isComponentVisible]);
+
+  const onSubmitHandler = () => {
+    createTask(props.id, newTaskTitle);
+    setIsComponentVisible(false);
+  };
+
   return (
     <div
       className={styles['task-list-block']}
@@ -38,7 +57,43 @@ function ColumnBody(props: ColumnBodyProps) {
           </div>
         ))}
       </div>
-      <div className={styles['add-field']}>+ Create Task</div>
+      <div ref={ref} className={styles['add-task-block']}>
+        {!isComponentVisible ? (
+          <div className={styles['add-task__field']} onClick={() => setIsComponentVisible(true)}>
+            + Create Task
+          </div>
+        ) : (
+          <form className={styles['add-task__form']} action="">
+            <div className={styles['add-task__textarea-block']}>
+              <textarea
+                name="title"
+                value={newTaskTitle}
+                autoFocus={true}
+                className={styles['add-task__textarea']}
+                placeholder="Enter task title"
+                onChange={(event) => setNewTaskTitle(event.target.value)}></textarea>
+            </div>
+            <div className={styles['add-task__btns-block']}>
+              <div className={styles['btn-block']} onClick={() => onSubmitHandler()}>
+                <BtnAction
+                  image={MdDone}
+                  backgrColorDefault={colorBackgroundColumn}
+                  backgrColorHover={colorBackgroundHover}
+                  backgrColorActive={colorSecondaryLight}
+                />
+              </div>
+              <div className={styles['btn-block']} onClick={() => setIsComponentVisible(false)}>
+                <BtnAction
+                  image={MdClose}
+                  backgrColorDefault={colorBackgroundColumn}
+                  backgrColorHover={colorBackgroundHover}
+                  backgrColorActive={colorSecondaryLight}
+                />
+              </div>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
