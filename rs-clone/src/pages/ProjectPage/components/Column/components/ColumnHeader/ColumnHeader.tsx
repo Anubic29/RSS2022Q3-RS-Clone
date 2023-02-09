@@ -28,6 +28,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
   const [title, setTitle] = useState(props.title);
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
+  const [titleError, setTitleError] = useState(props.title.length === 0);
   const { createColumn, updateColumn } = useContext(BoardContext);
 
   const {
@@ -41,12 +42,14 @@ function ColumnHeader(props: ColumnHeaderProps) {
     : styles['header-block'];
 
   const onSubmitHandler = () => {
-    if (props.typeCreate) {
-      createColumn(title);
-    } else {
-      updateColumn(props.id, title);
+    if (!titleError) {
+      if (props.typeCreate) {
+        createColumn(title);
+      } else {
+        updateColumn(props.id, title);
+      }
+      setIsInputHeaderVisible(false);
     }
-    setIsInputHeaderVisible(false);
   };
 
   useEffect(() => {
@@ -54,6 +57,10 @@ function ColumnHeader(props: ColumnHeaderProps) {
     if (props.setIsComponentVisibleCreate && !isInputHeaderVisible)
       props.setIsComponentVisibleCreate(false);
   }, [isInputHeaderVisible]);
+
+  useEffect(() => {
+    setTitleError(title.length === 0);
+  }, [title]);
 
   return (
     <div
@@ -67,7 +74,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
           event.preventDefault();
           onSubmitHandler();
         }}>
-        {!isInputHeaderVisible ? (
+        {!isInputHeaderVisible && (
           <span
             className={styles['title__form__text-backgr']}
             onDragStart={(event) => props.dragStartHandlerColumn(event, props.id)}
@@ -83,7 +90,8 @@ function ColumnHeader(props: ColumnHeaderProps) {
               </span>
             </span>
           </span>
-        ) : (
+        )}
+        {isInputHeaderVisible && (
           <div className={styles['content']} ref={ref}>
             <input
               className={styles['title__form__input']}
@@ -94,6 +102,9 @@ function ColumnHeader(props: ColumnHeaderProps) {
                 setTitle(event.target.value);
               }}
             />
+            {titleError && (
+              <span className={styles['error-message']}>Column title can&apos;t be empty</span>
+            )}
             <div className={styles['btns-block']}>
               <div className={styles['btn-block']} onClick={() => onSubmitHandler()}>
                 <BtnAction
