@@ -23,8 +23,8 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
     switch (props.menuItem) {
       case 'userMenu':
         return (
-          <Link to="/">
-            <p onClick={logOutHandler}>Log out</p>
+          <Link to="/" onClick={logOutHandler}>
+            <p>Log out</p>
           </Link>
         );
       case 'project':
