@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, Dispatch } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import classes from './SignUpForm.module.scss';
 import api from '../../../../api';
@@ -16,17 +16,16 @@ const LoginForm = () => {
   const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
   const navigate = useNavigate();
 
-  const [emailInputValue, setEmailInputValue] = useState('');
-  const [passwordInputValue, setPasswInputValue] = useState('');
+  const [, setEmailInputValue] = useState('');
+  const [, setPasswInputValue] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState(true);
   const [emailIsValid, setEmailIsValid] = useState(true);
 
   const [loginIsAvailable, setloginIsAvailable] = useState(true);
   const [isNoEmtyFiels, setIsNoEmptyFields] = useState(true);
   const [passwIsMatch, setPasswIsMatch] = useState(true);
-  const [responseResult, setResponseResult] = useState('Unknown');
 
-  const [isCreatedUser, setIsCreatedUser] = useState(false);
+  const [, setIsCreatedUser] = useState(false);
 
   const confirmPassRef = useRef<HTMLInputElement>(null);
   const passwInpRef = useRef<HTMLInputElement>(null);
