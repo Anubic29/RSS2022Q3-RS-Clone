@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   colorBackground,
   colorBackgroundColumn,
@@ -8,6 +8,7 @@ import {
 import { BtnMenuAction, BtnAction } from '../../../';
 import { MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../../../../hooks/useComponentVisible/useComponentVisible';
+import { BoardContext } from '../../../../../../Context/BoardContext';
 
 import styles from './ColumnHeader.module.scss';
 
@@ -19,22 +20,40 @@ interface ColumnHeaderProps {
   dragStartHandlerColumn: (event: React.DragEvent, column: string) => void;
   dragLeaveHandlerColumn: (event: React.DragEvent) => void;
   dragEndHandlerColumn: (event: React.DragEvent) => void;
+  typeCreate?: boolean;
+  setIsComponentVisibleCreate?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ColumnHeader(props: ColumnHeaderProps) {
   const [title, setTitle] = useState(props.title);
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
+  const { createColumn } = useContext(BoardContext);
 
   const {
     ref,
     isComponentVisible: isInputHeaderVisible,
     setIsComponentVisible: setIsInputHeaderVisible
-  } = useComponentVisible(false);
+  } = useComponentVisible(!!props.typeCreate);
 
   const HeaderBlockStyles = props.stickyHeader
     ? styles['header-block'] + ' ' + styles['sticky']
     : styles['header-block'];
+
+  const onSubmitHandler = () => {
+    if (props.typeCreate) {
+      createColumn(title);
+    } else {
+      console.log('Result2');
+    }
+    setIsInputHeaderVisible(false);
+  };
+
+  useEffect(() => {
+    if (!isInputHeaderVisible) setTitle(props.title);
+    if (props.setIsComponentVisibleCreate && !isInputHeaderVisible)
+      props.setIsComponentVisibleCreate(false);
+  }, [isInputHeaderVisible]);
 
   return (
     <div
@@ -45,7 +64,13 @@ function ColumnHeader(props: ColumnHeaderProps) {
       onDragLeave={(event) => props.dragLeaveHandlerColumn(event)}
       onDragEnd={(event) => props.dragEndHandlerColumn(event)}
       draggable={true}>
-      <form className={styles['title__form']} action="">
+      <form
+        className={styles['title__form']}
+        action=""
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmitHandler();
+        }}>
         {!isInputHeaderVisible ? (
           <span className={styles['title__form__text-backgr']}>
             <span className={styles['title__form__container']}>
@@ -69,7 +94,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
               }}
             />
             <div className={styles['btns-block']}>
-              <div className={styles['btn-block']}>
+              <div className={styles['btn-block']} onClick={() => onSubmitHandler()}>
                 <BtnAction
                   image={MdDone}
                   backgrColorDefault={colorBackground}
@@ -77,7 +102,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
                   backgrColorActive={colorSecondaryLight}
                 />
               </div>
-              <div className={styles['btn-block']}>
+              <div className={styles['btn-block']} onClick={() => setIsInputHeaderVisible(false)}>
                 <BtnAction
                   image={MdClose}
                   backgrColorDefault={colorBackground}

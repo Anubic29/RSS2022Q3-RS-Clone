@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useMemo } from 'react';
 import ColumnProjectType from '../../../../Types/Project/ColumnProjectType';
 import TaskType from '../../../../Types/Task/TaskType';
+import useComponentVisible from '../../../../hooks/useComponentVisible/useComponentVisible';
 import {
   colorBackgroundColumn,
   colorBackgroundHover,
@@ -10,6 +11,7 @@ import { BtnAction, Column } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 
 import styles from './ColumnList.module.scss';
+import { ColumnBody, ColumnHeader } from '../Column/components';
 
 interface ColumnListProps {
   columnList: ColumnProjectType[];
@@ -20,6 +22,8 @@ interface ColumnListProps {
 
 function ColumnList(props: ColumnListProps) {
   const [isScrolledList, setIsScrolledList] = useState(false);
+
+  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 
   const [currentTask, setCurrentTask] = useState('');
   const currentTaskElem = useRef<HTMLDivElement | null>(null);
@@ -129,30 +133,57 @@ function ColumnList(props: ColumnListProps) {
               key={column._id}
               onDragOver={(event) => dragOverHandlerColumn(event)}
               onDrop={(event) => dropHandlerColumn(event, column._id)}>
-              <Column
-                id={column._id}
-                title={column.title}
-                stickyHeader={isScrolledList}
-                tasks={props.taskList.filter((task) => task.columnId === column._id)}
-                dragHandlersTask={dragHandlersTask}
-                dragStartHandlerColumn={dragStartHandlerColumn}
-                dragLeaveHandlerColumn={dragLeaveHandlerColumn}
-                dragEndHandlerColumn={dragEndHandlerColumn}
-              />
+              <Column>
+                <ColumnHeader
+                  id={column._id}
+                  title={column.title}
+                  tasksCount={props.taskList.filter((task) => task.columnId === column._id).length}
+                  stickyHeader={isScrolledList}
+                  dragStartHandlerColumn={dragStartHandlerColumn}
+                  dragLeaveHandlerColumn={dragLeaveHandlerColumn}
+                  dragEndHandlerColumn={dragEndHandlerColumn}
+                />
+                <ColumnBody
+                  id={column._id}
+                  tasks={props.taskList.filter((task) => task.columnId === column._id)}
+                  dragHandlersTask={dragHandlersTask}
+                />
+              </Column>
             </div>
           ))}
+          {isComponentVisible && (
+            <div className={styles['column-block']}>
+              <Column>
+                <div>
+                  <ColumnHeader
+                    id={'new'}
+                    title={''}
+                    tasksCount={0}
+                    stickyHeader={isScrolledList}
+                    dragStartHandlerColumn={dragStartHandlerColumn}
+                    dragLeaveHandlerColumn={dragLeaveHandlerColumn}
+                    dragEndHandlerColumn={dragEndHandlerColumn}
+                    typeCreate={true}
+                    setIsComponentVisibleCreate={setIsComponentVisible}
+                  />
+                </div>
+              </Column>
+            </div>
+          )}
         </div>
-        <div className={styles['btn-add-container']}>
-          <div className={styles['btn-add']}>
-            <BtnAction
-              image={MdOutlineAddCircleOutline}
-              title="Create column"
-              backgrColorDefault={colorBackgroundColumn}
-              backgrColorHover={colorBackgroundHover}
-              backgrColorActive={colorSecondaryLight}
-            />
+        {props.columnList.length < 5 && (
+          <div className={styles['btn-add-container']}>
+            <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
+              <BtnAction
+                image={MdOutlineAddCircleOutline}
+                title="Create column"
+                backgrColorDefault={colorBackgroundColumn}
+                backgrColorHover={colorBackgroundHover}
+                backgrColorActive={colorSecondaryLight}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className={styles['curtain'] + ' ' + styles['right']}></div>
       </div>
     </div>

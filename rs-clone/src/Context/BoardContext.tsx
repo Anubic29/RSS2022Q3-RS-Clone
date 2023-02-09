@@ -1,12 +1,15 @@
 import { createContext } from 'react';
+import ColumnProjectType from '../Types/Project/ColumnProjectType';
 import TaskType from '../Types/Task/TaskType';
 
 interface IBoardContext {
   createTask: (columnId: string, taskTitle: string) => void;
+  createColumn: (title: string) => void;
 }
 
 export const BoardContext = createContext<IBoardContext>({
-  createTask: () => console.log('Error')
+  createTask: () => console.log('Error'),
+  createColumn: () => console.log('Error')
 });
 
 interface BoardStateProps {
@@ -14,6 +17,7 @@ interface BoardStateProps {
   projectId: string;
   authorId: string;
   addTaskToList: (data: TaskType) => void;
+  addColumnToList: (data: ColumnProjectType) => void;
 }
 
 export const BoardState = (props: BoardStateProps) => {
@@ -34,5 +38,19 @@ export const BoardState = (props: BoardStateProps) => {
     props.addTaskToList(task);
   };
 
-  return <BoardContext.Provider value={{ createTask }}>{props.children}</BoardContext.Provider>;
+  const createColumn = (title: string) => {
+    const column: ColumnProjectType = {
+      _id: '6234564adgasdasd4adsg',
+      title: title,
+      type: 'common'
+    };
+
+    props.addColumnToList(column);
+  };
+
+  return (
+    <BoardContext.Provider value={{ createTask, createColumn }}>
+      {props.children}
+    </BoardContext.Provider>
+  );
 };
