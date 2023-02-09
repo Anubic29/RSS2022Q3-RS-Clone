@@ -28,7 +28,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
   const [title, setTitle] = useState(props.title);
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
-  const { createColumn } = useContext(BoardContext);
+  const { createColumn, updateColumn } = useContext(BoardContext);
 
   const {
     ref,
@@ -44,7 +44,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
     if (props.typeCreate) {
       createColumn(title);
     } else {
-      console.log('Result2');
+      updateColumn(props.id, title);
     }
     setIsInputHeaderVisible(false);
   };

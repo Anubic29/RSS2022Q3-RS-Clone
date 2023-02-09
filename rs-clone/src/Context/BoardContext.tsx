@@ -5,19 +5,23 @@ import TaskType from '../Types/Task/TaskType';
 interface IBoardContext {
   createTask: (columnId: string, taskTitle: string) => void;
   createColumn: (title: string) => void;
+  updateColumn: (_id: string, title: string) => void;
 }
 
 export const BoardContext = createContext<IBoardContext>({
   createTask: () => console.log('Error'),
-  createColumn: () => console.log('Error')
+  createColumn: () => console.log('Error'),
+  updateColumn: () => console.log('Error')
 });
 
 interface BoardStateProps {
   children: React.ReactNode;
   projectId: string;
   authorId: string;
-  addTaskToList: (data: TaskType) => void;
-  addColumnToList: (data: ColumnProjectType) => void;
+  taskList: TaskType[];
+  columnList: ColumnProjectType[];
+  setTaskList: (data: TaskType[]) => void;
+  setColumnList: (data: ColumnProjectType[]) => void;
 }
 
 export const BoardState = (props: BoardStateProps) => {
@@ -35,7 +39,7 @@ export const BoardState = (props: BoardStateProps) => {
       __v: 0
     };
 
-    props.addTaskToList(task);
+    props.setTaskList([...props.taskList, task]);
   };
 
   const createColumn = (title: string) => {
@@ -45,11 +49,21 @@ export const BoardState = (props: BoardStateProps) => {
       type: 'common'
     };
 
-    props.addColumnToList(column);
+    props.setColumnList([...props.columnList, column]);
+  };
+
+  const updateColumn = (_id: string, title: string) => {
+    const arr = Array.from(props.columnList);
+    const idx = arr.findIndex((data) => data._id === _id);
+    const column = Object.assign({}, arr[idx]);
+    column.title = title;
+
+    arr.splice(idx, 1, column);
+    props.setColumnList([...arr]);
   };
 
   return (
-    <BoardContext.Provider value={{ createTask, createColumn }}>
+    <BoardContext.Provider value={{ createTask, createColumn, updateColumn }}>
       {props.children}
     </BoardContext.Provider>
   );

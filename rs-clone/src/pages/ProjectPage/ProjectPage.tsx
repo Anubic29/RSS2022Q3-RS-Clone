@@ -144,8 +144,10 @@ function ProjectPage(props: ProjectPageProps) {
       <BoardState
         projectId={projectInfo ? projectInfo._id : ''}
         authorId={projectInfo ? projectInfo.author : ''}
-        addTaskToList={(data) => setTaskList([...taskList, data])}
-        addColumnToList={(data) => setColumnList([...columnList, data])}>
+        taskList={taskList}
+        columnList={columnList}
+        setTaskList={(data: TaskType[]) => setTaskList(data)}
+        setColumnList={(data: ColumnProjectType[]) => setColumnList(data)}>
         <ColumnList
           columnList={columnList}
           taskList={taskList.sort((a, b) => a.id - b.id)}
