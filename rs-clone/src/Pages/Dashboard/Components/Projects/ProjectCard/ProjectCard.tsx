@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { MdOutlineClear, MdArrowRightAlt } from 'react-icons/md';
 import { ProjectAvatarProps } from '../../../../../Components/ProjectAvatar/ProjectAvatar';
 import { ProjectAvatar } from '../../../../../Components';
@@ -10,7 +11,7 @@ interface ProjectCardProps extends ProjectAvatarProps {
 }
 
 function ProjectCard(props: ProjectCardProps) {
-  const { title, description, size, source, bgColor } = props;
+  const { title, description, size, source, bgColor, id } = props;
 
   const cardStyles = {
     borderColor: `${bgColor}50`
@@ -22,13 +23,15 @@ function ProjectCard(props: ProjectCardProps) {
         <div className={Styles.TitleArea}>
           <ProjectAvatar className={Styles.Avatar} {...{ size, source, bgColor }} />
           <div className={Styles.ProjectInfo}>
-            <a className={Styles.ProjectTitle}>{title}</a>
+            <Link to={`projects/${id}`}>
+              <p className={Styles.ProjectTitle}>{title}</p>
+            </Link>
             <p className={Styles.ProjectDescription}>{description}</p>
           </div>
         </div>
         <div className={Styles.ActionsArea}>
           <div className={Styles.Actions}>
-            Move to project
+            <Link to={`projects/${id}`}>Move to project</Link>
             <MdArrowRightAlt />
           </div>
           <div className={Styles.Actions}>
