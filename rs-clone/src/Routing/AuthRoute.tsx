@@ -1,10 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { App } from '../Components';
-<<<<<<< HEAD
-import { Dashboard, NotFound, Projects, LoginPage } from '../Pages';
-=======
 import { Dashboard, NotFound, ProjectCreate, Projects } from '../Pages';
->>>>>>> develop
 
 function AuthRoute() {
   return (
