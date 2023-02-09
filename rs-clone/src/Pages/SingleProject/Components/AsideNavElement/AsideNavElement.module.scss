@@ -1,0 +1,52 @@
+.AsideNavElement {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background: #e6effc;
+  }
+}
+
+.AsideNavElementActive {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  background: #E6EFFC;
+  cursor: pointer;
+
+  & .Icon,
+  & .Title {
+    color: #0052CC;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 4px;
+    height: 40%;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background: #0052CC;
+    transform: translateY(-50%);
+  }
+}
+
+.Icon {
+  font-size: 25px;
+  color: #42526E;
+}
+
+.Title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #42526E;
+}
