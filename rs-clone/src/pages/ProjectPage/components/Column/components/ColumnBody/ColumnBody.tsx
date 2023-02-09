@@ -27,6 +27,7 @@ interface ColumnBodyProps {
 function ColumnBody(props: ColumnBodyProps) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [titleError, setTitleError] = useState(newTaskTitle.length === 0);
 
   const { createTask } = useContext(BoardContext);
 
@@ -34,9 +35,15 @@ function ColumnBody(props: ColumnBodyProps) {
     if (!isComponentVisible) setNewTaskTitle('');
   }, [isComponentVisible]);
 
+  useEffect(() => {
+    setTitleError(newTaskTitle.length === 0);
+  }, [newTaskTitle]);
+
   const onSubmitHandler = () => {
-    createTask(props.id, newTaskTitle);
-    setIsComponentVisible(false);
+    if (!titleError) {
+      createTask(props.id, newTaskTitle);
+      setIsComponentVisible(false);
+    }
   };
 
   return (
@@ -73,6 +80,9 @@ function ColumnBody(props: ColumnBodyProps) {
                 placeholder="Enter task title"
                 onChange={(event) => setNewTaskTitle(event.target.value)}></textarea>
             </div>
+            {titleError && (
+              <span className={styles['error-message']}>Column title can&apos;t be empty</span>
+            )}
             <div className={styles['add-task__btns-block']}>
               <div className={styles['btn-block']} onClick={() => onSubmitHandler()}>
                 <BtnAction
