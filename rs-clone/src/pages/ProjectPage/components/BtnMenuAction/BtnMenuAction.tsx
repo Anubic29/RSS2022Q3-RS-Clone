@@ -7,7 +7,7 @@ import styles from './BtnMenuAction.module.scss';
 import { useEffect } from 'react';
 
 interface BtnMenuActionProps {
-  options: string[];
+  options: { title: string; callback: () => void }[];
   btnBackgrColorDefault?: string;
   btnBackgrColorHover: string;
   btnBackgrColorActive: string;
@@ -37,8 +37,8 @@ function BtnMenuAction(props: BtnMenuActionProps) {
       {isComponentVisible && (
         <div className={styles['menu__list']}>
           {props.options.map((option, idx) => (
-            <div className={styles['menu__option']} key={idx}>
-              {option}
+            <div className={styles['menu__option']} key={idx} onClick={option.callback}>
+              {option.title}
             </div>
           ))}
         </div>

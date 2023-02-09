@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import ProjectType from '../../Types/Project/ProjectType';
 import ColumnProjectType from '../../Types/Project/ColumnProjectType';
 import TaskType from '../../Types/Task/TaskType';
@@ -29,6 +29,19 @@ function ProjectPage(props: ProjectPageProps) {
   const [projectInfo, setProjectInfo] = useState<ProjectType | null>(null);
   const [columnList, setColumnList] = useState<ColumnProjectType[]>([]);
   const [taskList, setTaskList] = useState<TaskType[]>([]);
+
+  const optionsBtnMenu = useMemo(() => {
+    return [
+      {
+        title: 'Change',
+        callback: () => console.log()
+      },
+      {
+        title: 'Remove',
+        callback: () => console.log()
+      }
+    ];
+  }, []);
 
   useEffect(() => {
     setColumnList(projectData.columnList);
@@ -92,7 +105,7 @@ function ProjectPage(props: ProjectPageProps) {
                 backgrColorActive={colorSecondaryLight}
               />
               <BtnMenuAction
-                options={['Change', 'Remove']}
+                options={optionsBtnMenu}
                 btnBackgrColorHover={colorBackgroundColumn}
                 btnBackgrColorActive={colorSecondaryLight}
               />

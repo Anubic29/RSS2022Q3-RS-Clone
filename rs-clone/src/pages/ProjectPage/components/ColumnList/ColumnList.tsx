@@ -23,7 +23,7 @@ interface ColumnListProps {
 function ColumnList(props: ColumnListProps) {
   const [isScrolledList, setIsScrolledList] = useState(false);
 
-  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
+  const { isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 
   const [currentTask, setCurrentTask] = useState('');
   const currentTaskElem = useRef<HTMLDivElement | null>(null);

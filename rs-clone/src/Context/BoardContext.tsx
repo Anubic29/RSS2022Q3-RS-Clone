@@ -4,12 +4,14 @@ import TaskType from '../Types/Task/TaskType';
 
 interface IBoardContext {
   createTask: (columnId: string, taskTitle: string) => void;
+  deleteTask: (taskId: string) => void;
   createColumn: (title: string) => void;
   updateColumn: (_id: string, title: string) => void;
 }
 
 export const BoardContext = createContext<IBoardContext>({
   createTask: () => console.log('Error'),
+  deleteTask: () => console.log('Error'),
   createColumn: () => console.log('Error'),
   updateColumn: () => console.log('Error')
 });
@@ -42,6 +44,13 @@ export const BoardState = (props: BoardStateProps) => {
     props.setTaskList([...props.taskList, task]);
   };
 
+  const deleteTask = (taskId: string) => {
+    const idx = props.taskList.findIndex((data) => data._id === taskId);
+    props.taskList.splice(idx, 1);
+
+    props.setTaskList([...props.taskList]);
+  };
+
   const createColumn = (title: string) => {
     const column: ColumnProjectType = {
       _id: '6234564adgasdasd4adsg',
@@ -63,7 +72,7 @@ export const BoardState = (props: BoardStateProps) => {
   };
 
   return (
-    <BoardContext.Provider value={{ createTask, createColumn, updateColumn }}>
+    <BoardContext.Provider value={{ createTask, deleteTask, createColumn, updateColumn }}>
       {props.children}
     </BoardContext.Provider>
   );

@@ -60,7 +60,7 @@ function ColumnBody(props: ColumnBodyProps) {
             onDragLeave={(event) => props.dragHandlersTask.dragLeaveHandlerTask(event)}
             onDragEnd={(event) => props.dragHandlersTask.dragEndHandlerTask(event)}
             draggable={true}>
-            <Task title={task.title} keyTask={`key-${task.id}`} />
+            <Task _id={task._id} title={task.title} keyTask={`key-${task.id}`} />
           </div>
         ))}
       </div>

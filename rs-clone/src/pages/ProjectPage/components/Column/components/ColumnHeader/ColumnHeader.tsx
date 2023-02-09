@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 import {
   colorBackground,
   colorBackgroundColumn,
@@ -30,6 +30,19 @@ function ColumnHeader(props: ColumnHeaderProps) {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const [titleError, setTitleError] = useState(props.title.length === 0);
   const { createColumn, updateColumn } = useContext(BoardContext);
+
+  const optionsBtnMenu = useMemo(() => {
+    return [
+      {
+        title: 'Change',
+        callback: () => console.log()
+      },
+      {
+        title: 'Remove',
+        callback: () => console.log()
+      }
+    ];
+  }, []);
 
   const {
     ref,
@@ -129,7 +142,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
       {!isInputHeaderVisible && (isActiveMenu || hoverColumnHeader) && (
         <div className={styles['btn-more']}>
           <BtnMenuAction
-            options={['Change', 'Remove']}
+            options={optionsBtnMenu}
             btnBackgrColorHover={colorBackgroundHover}
             btnBackgrColorActive={colorSecondaryLight}
             onActiveMenu={(value) => setIsActiveMenu(value)}
