@@ -7,6 +7,7 @@ import { IsAuthContex } from '../context';
 
 function Routing() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  isAuthenticated;
   const isToken = localStorage.getItem('accessToken');
   return (
     <>

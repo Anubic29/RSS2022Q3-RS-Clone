@@ -7,6 +7,7 @@
   padding: 0 30px;
   color: $colorContent;
   cursor: pointer;
+  min-height: 40px;
 
   &:hover {
     background-color: $colorLightGrey;
@@ -19,15 +20,15 @@
   line-height: 20px;
 }
 
-.submenu_itemDetails :first-child:after {
-    display: inline-block;
-    width: 16px;
-    color: $colorGreyText;
-    content: "·";
-    text-align: center;
-    vertical-align: middle;
-    padding-bottom: 5px;
-  }
+// .submenu_itemDetails :first-child:after {
+//     display: inline-block;
+//     width: 16px;
+//     color: $colorGreyText;
+//     content: "·";
+//     text-align: center;
+//     vertical-align: middle;
+//     padding-bottom: 5px;
+//   }
 
 .submenu_texts {
   display: flex;
@@ -41,4 +42,10 @@
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 5px;
+}
+
+.submenu_imgWrap__round {
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
 }

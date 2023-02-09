@@ -9,8 +9,6 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
-  const isActiveMenu = activeItem === 'work' || activeItem === 'project';
-
   const [submenu, setSubmenu] = useState('');
 
   const workMenuHandler = () => {
@@ -24,6 +22,15 @@ const Header = () => {
 
   const projectMenuHandler = () => {
     const item = 'project';
+    setActiveItem(item);
+    setSubmenu(item);
+    if (activeItem === item) {
+      setActiveItem('');
+    }
+  };
+
+  const userIconHandler = () => {
+    const item = 'userMenu';
     setActiveItem(item);
     setSubmenu(item);
     if (activeItem === item) {
@@ -62,7 +69,12 @@ const Header = () => {
           </ul>
         </nav>
         <Button className={classes.header_createBtn}>Create</Button>
-        <UserIcon user="OD"></UserIcon>
+        <div className={classes.header_userMenu}>
+          <div onClick={userIconHandler}>
+            <UserIcon user="OD"></UserIcon>
+          </div>
+          {activeItem === 'userMenu' && <SubmenuItem menuItem={submenu}></SubmenuItem>}
+        </div>
       </div>
     </header>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MenuSpan from '../menuSpan/MenuSpan';
 import classes from './submenuNav.module.scss';
 
@@ -16,7 +16,9 @@ const SubmenuNav: React.FC<{ onNavTabHandler: (tabValue: string) => string; menu
   };
 
   const assignedChosen = tab === 'assigned';
-  props.onNavTabHandler(tab);
+  useEffect(() => {
+    props.onNavTabHandler(tab);
+  }, [tab]);
 
   return (
     <>

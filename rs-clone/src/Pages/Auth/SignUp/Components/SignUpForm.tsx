@@ -42,7 +42,6 @@ const LoginForm = () => {
         const response = await api.auth.signUp(payload);
         if (response.status === 200) {
           const responseSignIn = await api.auth.signIn(payloadLogIn);
-          console.log(await responseSignIn.data);
           localStorage.setItem('accessToken', JSON.stringify(responseSignIn.data));
           setIsCreatedUser(true);
           contextValue.setIsAuthenticated(true);
@@ -77,6 +76,11 @@ const LoginForm = () => {
 
   const submitHandler = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+
+    setloginIsAvailable(true);
+    setIsNoEmptyFields(true);
+    setPasswIsMatch(true);
+
     const firstName = firstNameRef.current ? firstNameRef.current.value.trim() : '';
     const lastName = lastNameRef.current ? lastNameRef.current.value.trim() : '';
     const email = emailInpRef.current ? emailInpRef.current.value.trim() : '';
