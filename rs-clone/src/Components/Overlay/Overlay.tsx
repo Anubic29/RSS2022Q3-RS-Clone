@@ -11,8 +11,10 @@ function Overlay(props: OverlayProps) {
   const { children, isVisible } = props;
   const { setIsVisible } = useContext(OverlayContext);
 
-  const onClickHandler = () => {
-    setIsVisible(false);
+  const onClickHandler = (event: React.MouseEvent) => {
+    if ((event.target as HTMLElement).className === Styles.Overlay) {
+      setIsVisible(false);
+    }
   };
 
   return (
