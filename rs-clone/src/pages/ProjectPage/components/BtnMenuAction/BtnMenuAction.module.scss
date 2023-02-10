@@ -4,6 +4,7 @@
   position: relative;
 
   &__list {
+    width: fit-content;
     font-size: 14px;
     border: 1px solid $colorBorder;
     border-radius: 5px;
@@ -18,6 +19,7 @@
 
   &__option {
     padding: 8px 20px;
+    white-space: nowrap;
 
     &:hover {
       cursor: pointer;

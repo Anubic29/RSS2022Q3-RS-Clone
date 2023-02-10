@@ -24,7 +24,7 @@ interface ColumnHeaderProps {
 }
 
 function ColumnHeader(props: ColumnHeaderProps) {
-  const { createColumn, updateColumn } = useBoard();
+  const { createColumn, updateColumn, deleteAllTaskInColumn } = useBoard();
   const [title, setTitle] = useState(props.title);
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
@@ -37,11 +37,11 @@ function ColumnHeader(props: ColumnHeaderProps) {
         callback: () => console.log()
       },
       {
-        title: 'Remove',
-        callback: () => console.log()
+        title: 'Remove All Tasks',
+        callback: () => deleteAllTaskInColumn(props.id)
       }
     ];
-  }, []);
+  }, [props.id, deleteAllTaskInColumn]);
 
   const {
     ref,

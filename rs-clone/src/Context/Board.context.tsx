@@ -28,6 +28,7 @@ interface BoardContextType {
   createTask: (columnId: string, taskTitle: string) => void;
   updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
   deleteTask: (taskId: string) => void;
+  deleteAllTaskInColumn: (_id: string) => void;
   createColumn: (title: string) => void;
   updateColumn: (_id: string, title: string) => void;
   swapColumn: (_idActive: string, _id: string) => void;
@@ -42,6 +43,7 @@ export const BoardContext = createContext<BoardContextType>({
   createTask: () => console.log('Error'),
   updateTask: () => console.log('Error'),
   deleteTask: () => console.log('Error'),
+  deleteAllTaskInColumn: () => console.log('Error'),
   createColumn: () => console.log('Error'),
   updateColumn: () => console.log('Error'),
   swapColumn: () => console.log('Error')
@@ -119,6 +121,14 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [taskList]
   );
 
+  const deleteAllTaskInColumn = useCallback(
+    (_id: string) => {
+      const res = taskList.filter((data) => data.columnId !== _id);
+      setTaskList(res);
+    },
+    [taskList]
+  );
+
   const createColumn = useCallback(
     (title: string) => {
       const column: ColumnProjectType = {
@@ -166,6 +176,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       createTask,
       updateTask,
       deleteTask,
+      deleteAllTaskInColumn,
       createColumn,
       updateColumn,
       swapColumn
@@ -179,6 +190,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       createTask,
       updateTask,
       deleteTask,
+      deleteAllTaskInColumn,
       createColumn,
       updateColumn,
       swapColumn
