@@ -1,0 +1,25 @@
+.Breadcrumbs {
+  display: flex;
+  gap: 8px;
+}
+
+.Breadcrumb {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #6b778c;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:last-child:hover {
+    text-decoration: none;
+  }
+}
+
+.Divider {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6b778c;
+}

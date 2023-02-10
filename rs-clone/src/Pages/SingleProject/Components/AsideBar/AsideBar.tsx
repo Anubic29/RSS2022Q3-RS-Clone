@@ -4,9 +4,15 @@ import { ProjectAvatar } from '../../../../Components';
 import { AsideNavElement } from '../';
 import cardsData from '../../../../Data/FakeProjectCard';
 import Styles from './AsideBar.module.scss';
+import { useLocation } from 'react-router-dom';
 
 function AsideBar() {
-  const [isActive, setIsActive] = useState({ board: true, settings: false });
+  const location = useLocation();
+  const currentPath = location.pathname.split('/').at(-1);
+  const [isActive, setIsActive] = useState({
+    board: currentPath === 'settings' ? false : true,
+    settings: currentPath === 'settings' ? true : false
+  });
   const [isCollapsed, setIsCollapsed] = useState(false);
   const testProjectData = cardsData[0];
 
