@@ -1,10 +1,17 @@
+import { useContext } from 'react';
 import { Button, Dropdown, ProjectAvatar } from '../../../Components';
+import { OverlayContext } from '../../../contexts';
 import cardsData from '../../../Data/FakeProjectCard';
 import { SettingsBreadcrumbs, SettingsForm } from './Components';
 import Styles from './Settings.module.scss';
 
 function Settings() {
   const testData = cardsData[0];
+  const { setIsVisible } = useContext(OverlayContext);
+
+  const showPopupHandler = () => {
+    setIsVisible(true);
+  };
 
   return (
     <div className={Styles.Settings}>
@@ -24,7 +31,9 @@ function Settings() {
 
       <div className={Styles.ProjectDetails}>
         <ProjectAvatar {...testData} size={128} />
-        <Button className={Styles.ButtonAvatar}>Change avatar</Button>
+        <Button className={Styles.ButtonAvatar} onClick={showPopupHandler}>
+          Change avatar
+        </Button>
 
         <SettingsForm />
       </div>
