@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import { Auth, NotFound, SignIn, SignUp } from '../Pages';
+import { Auth, NotFound, SignUp, LoginPage } from '../Pages';
 
 function NonAuthRoute() {
   return (
     <Routes>
       <Route path="/" element={<Auth />}>
-        <Route index element={<SignIn />} />
-        <Route path="sign-in" element={<SignIn />} />
+        <Route index element={<LoginPage />} />
+        <Route path="sign-in" element={<LoginPage />} />
         <Route path="sign-up" element={<SignUp />} />
       </Route>
       <Route path="*" element={<NotFound />} />

@@ -13,11 +13,15 @@ const SubmenuItemLine: React.FC<{
     <li>
       <Link to="/" className={classes.submenu_line}>
         <div
-          className={classes.submenu_imgWrap}
+          className={
+            classes.submenu_imgWrap + ' ' + (props.src === '' ? classes.submenu_imgWrap__round : '')
+          }
           style={{
             backgroundColor: `${props.bgColor}`,
             backgroundImage: `url(${props.src})`
-          }}></div>
+          }}>
+          {props.title === '' ? 'Profile' : props.src === '' ? 'OD' : ''}
+        </div>
         <div className={classes.submenu_texts}>
           <p className={classes.submenu_itemTitles}>{props.title}</p>
           <div className={classes.submenu_itemDetails}>

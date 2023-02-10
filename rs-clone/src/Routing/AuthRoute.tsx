@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { App } from '../Components';
 import { Dashboard, NotFound, ProjectCreate, Projects, Settings, SingleProject } from '../Pages';
 
@@ -8,6 +8,8 @@ function AuthRoute() {
       <Route path="/" element={<App />}>
         <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="sign-in" element={<Navigate to={'/'} />} />
+        <Route path="sign-up" element={<Navigate to={'/'} />} />
         <Route path="projects" element={<Projects />} />
         <Route path="projects/:id" element={<SingleProject />}>
           <Route index element={<h1>Board</h1>} />

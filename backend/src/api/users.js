@@ -65,9 +65,14 @@ router.get('/:id/noted', authenticateToken, async (req, res) => {
 
 // Post Methods
 
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     if (!isCorrectUserInfo(req.body)) throw new Error('Not found property');
+
+    const users = await User.find({ mail: req.body.mail })
+    if (users.length > 0) {
+      return res.status(412).send('Mail already used!');
+    }
 
     const user = new User({
       firstName: req.body.firstName,
