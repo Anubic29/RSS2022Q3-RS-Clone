@@ -22,6 +22,7 @@ export type UserDataForAvatar = {
 interface BoardContextType {
   userList: UserType[];
   projectInfo: ProjectType | null;
+  setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
   deleteUserFilter: (_id: string) => void;
   getTaskList: () => TaskType[];
@@ -39,6 +40,7 @@ interface BoardContextType {
 export const BoardContext = createContext<BoardContextType>({
   userList: [],
   projectInfo: null,
+  setSearchInputValue: () => console.log('Error'),
   addUserFilter: () => console.log('Error'),
   deleteUserFilter: () => console.log('Error'),
   getTaskList: () => [],
@@ -60,6 +62,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   const [taskList, setTaskList] = useState<TaskType[]>([]);
 
   const [userListFilter, setUserListFilter] = useState<string[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('');
 
   useEffect(() => {
     setUserList(
@@ -86,12 +89,16 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [userListFilter]
   );
 
+  const setSearchInputValue = useCallback((value: string) => {
+    setSearchValue(value);
+  }, []);
+
   const getTaskList = useCallback(() => {
-    let res = taskList;
+    let res = taskList.filter((data) => data.title.includes(searchValue));
     if (userListFilter.length > 0)
       res = res.filter((data) => userListFilter.includes(data.executor));
     return res;
-  }, [taskList, userListFilter]);
+  }, [taskList, userListFilter, searchValue]);
 
   const getFullNameUser = useCallback(
     (_id: string) => {
@@ -197,6 +204,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     () => ({
       userList,
       projectInfo,
+      setSearchInputValue,
       addUserFilter,
       deleteUserFilter,
       getTaskList,
@@ -213,6 +221,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [
       userList,
       projectInfo,
+      setSearchInputValue,
       addUserFilter,
       deleteUserFilter,
       getTaskList,

@@ -15,13 +15,18 @@ const options = [
 ];
 
 function Board() {
-  const { userList, projectInfo } = useBoard();
+  const { userList, projectInfo, setSearchInputValue } = useBoard();
   const [title, setTitle] = useState('');
   const [canEditTitle, setCanEditTitle] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     setTitle(projectInfo?.title ?? '');
   }, [projectInfo?.title]);
+
+  useEffect(() => {
+    setSearchInputValue(searchValue);
+  }, [searchValue]);
 
   const optionsBtnMenu = useMemo(() => {
     return [
@@ -112,7 +117,9 @@ function Board() {
                 ref={refSearchInput}
                 type="text"
                 className={styles['search__input']}
+                value={searchValue}
                 onBlur={() => refSearchBlock.current?.classList.remove(styles['focus'])}
+                onChange={(event) => setSearchValue(event.target.value)}
                 placeholder="Search..."
               />
               <div className={styles['search__btn']}>
