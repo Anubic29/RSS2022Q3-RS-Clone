@@ -7,6 +7,7 @@ import LoginPage from './Auth/SignIn/LoginPage';
 import ProjectCreate from './ProjectCreate/ProjectCreate';
 import SingleProject from './SingleProject/SingleProject';
 import Settings from './SingleProject/Settings/Settings';
+import Board from './SingleProject/Board/Board';
 
 export {
   Dashboard,
@@ -17,5 +18,6 @@ export {
   ProjectCreate,
   SingleProject,
   LoginPage,
-  Settings
+  Settings,
+  Board
 };
