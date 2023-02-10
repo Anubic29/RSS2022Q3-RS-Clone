@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import {
   colorBackground,
   colorBackgroundColumn,
@@ -8,7 +8,7 @@ import {
 import { BtnMenuAction, BtnAction } from '../../../';
 import { MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../../../../hooks/useComponentVisible/useComponentVisible';
-import { BoardContext } from '../../../../../../Context/BoardContext';
+import { useBoard } from '../../../../../../Context/Board.context';
 
 import styles from './ColumnHeader.module.scss';
 
@@ -18,18 +18,17 @@ interface ColumnHeaderProps {
   tasksCount: number;
   stickyHeader?: boolean;
   dragStartHandlerColumn: (event: React.DragEvent, column: string) => void;
-  dragLeaveHandlerColumn: (event: React.DragEvent) => void;
   dragEndHandlerColumn: (event: React.DragEvent) => void;
   typeCreate?: boolean;
   setIsComponentVisibleCreate?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ColumnHeader(props: ColumnHeaderProps) {
+  const { createColumn, updateColumn } = useBoard();
   const [title, setTitle] = useState(props.title);
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const [titleError, setTitleError] = useState(props.title.length === 0);
-  const { createColumn, updateColumn } = useContext(BoardContext);
 
   const optionsBtnMenu = useMemo(() => {
     return [
@@ -91,7 +90,6 @@ function ColumnHeader(props: ColumnHeaderProps) {
           <span
             className={styles['title__form__text-backgr']}
             onDragStart={(event) => props.dragStartHandlerColumn(event, props.id)}
-            onDragLeave={(event) => props.dragLeaveHandlerColumn(event)}
             onDragEnd={(event) => props.dragEndHandlerColumn(event)}
             draggable={true}>
             <span className={styles['title__form__container']}>

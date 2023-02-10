@@ -1,8 +1,9 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
-import { MdDone, MdAccountCircle } from 'react-icons/md';
+import { useCallback, useMemo, useState } from 'react';
+import { MdDone } from 'react-icons/md';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../theme/variables';
-import { BtnMenuAction } from '../';
-import { BoardContext } from '../../../../Context/BoardContext';
+import { BtnMenuAction, UserAvatar } from '../';
+import { useBoard } from '../../../../Context/Board.context';
+import { convertLetterToHex } from '../../../../utils/convertLetterToHex';
 
 import styles from './Task.module.scss';
 
@@ -10,15 +11,17 @@ interface TaskProps {
   _id: string;
   title: string;
   keyTask: string;
+  executor: string;
 }
 
 function Task(props: TaskProps) {
   const [hoverTask, setHoverTask] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
-  const { taskListCount, deleteTask } = useContext(BoardContext);
+  const { taskList, getFullNameUser, deleteTask } = useBoard();
 
-  const deleteTaskCallback = useCallback(() => deleteTask(props._id), [props._id, taskListCount]);
+  const user = useMemo(() => getFullNameUser(props.executor), [props.executor]);
 
+  const deleteTaskCallback = useCallback(() => deleteTask(props._id), [props._id, taskList.length]);
   const optionsBtnMenu = useMemo(() => {
     return [
       {
@@ -56,7 +59,17 @@ function Task(props: TaskProps) {
           <div className={styles['info__key']}>{props.keyTask}</div>
         </div>
         <div className={styles['user-block']}>
-          <MdAccountCircle size={24} />
+          {props.executor !== 'auto' && user && (
+            <UserAvatar
+              title={`${user.firstName} ${user.lastName}`}
+              content={user.firstName[0] + user.lastName[0]}
+              color={`#${convertLetterToHex(user.firstName[0], 3, '9')}${convertLetterToHex(
+                user.lastName[0],
+                3,
+                '9'
+              )}`}
+            />
+          )}
         </div>
       </div>
     </div>

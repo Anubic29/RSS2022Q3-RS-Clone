@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import TaskType from '../../../../../../Types/Task/TaskType';
 import { MdClose, MdDone } from 'react-icons/md';
 import { BtnAction, Task } from '../../../';
@@ -8,7 +8,7 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../../../../theme/variables';
-import { BoardContext } from '../../../../../../Context/BoardContext';
+import { useBoard } from '../../../../../../Context/Board.context';
 
 import styles from './ColumnBody.module.scss';
 
@@ -17,19 +17,17 @@ interface ColumnBodyProps {
   tasks: TaskType[];
   dragHandlersTask: {
     dragStartHandlerTask: (event: React.DragEvent, task: string) => void;
-    dragEndHandlerTask: (event: React.DragEvent) => void;
-    dragLeaveHandlerTask: (event: React.DragEvent) => void;
+    dragEndHandlerTask: () => void;
     dragOverHandlerTask: (event: React.DragEvent) => void;
     dropHandlerTask: (event: React.DragEvent, column: string) => void;
   };
 }
 
 function ColumnBody(props: ColumnBodyProps) {
+  const { createTask } = useBoard();
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [titleError, setTitleError] = useState(newTaskTitle.length === 0);
-
-  const { createTask } = useContext(BoardContext);
 
   useEffect(() => {
     if (!isComponentVisible) setNewTaskTitle('');
@@ -57,10 +55,14 @@ function ColumnBody(props: ColumnBodyProps) {
             className={styles['task-block']}
             key={idx}
             onDragStart={(event) => props.dragHandlersTask.dragStartHandlerTask(event, task._id)}
-            onDragLeave={(event) => props.dragHandlersTask.dragLeaveHandlerTask(event)}
-            onDragEnd={(event) => props.dragHandlersTask.dragEndHandlerTask(event)}
+            onDragEnd={() => props.dragHandlersTask.dragEndHandlerTask()}
             draggable={true}>
-            <Task _id={task._id} title={task.title} keyTask={`key-${task.id}`} />
+            <Task
+              _id={task._id}
+              title={task.title}
+              keyTask={`key-${task.id}`}
+              executor={task.executor}
+            />
           </div>
         ))}
       </div>

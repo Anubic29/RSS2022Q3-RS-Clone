@@ -29,20 +29,6 @@
     outline-offset: 0;
   }
 
-  &__title {
-    padding: 2px 5px;
-    white-space: nowrap;
-    border-radius: 5px;
-    color: white;
-    background-color: black;
-    font-size: 12px;
-    position: absolute;
-    z-index: 5;
-    left: 50%;
-    bottom: -50%;
-    transform: translate(-50%);
-  }
-
   &:hover {
     z-index: 1;
     cursor: pointer;

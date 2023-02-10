@@ -1,5 +1,39 @@
+import UserType from '../Types/User/UserType';
 import ProjectType from '../Types/Project/ProjectType';
 import TaskType from '../Types/Task/TaskType';
+
+const userListData: UserType[] = [
+  {
+    _id: '63daa3099b11296c39649dea',
+    firstName: 'User',
+    lastName: 'Murk',
+    __v: 0
+  },
+  {
+    _id: '63dba1bfde4b0f15ce259c6e',
+    firstName: 'Randy',
+    lastName: 'Cooper',
+    __v: 0
+  },
+  {
+    _id: '63dba1cbde4b0f15ce259c71',
+    firstName: 'Silver',
+    lastName: 'Action',
+    __v: 0
+  },
+  {
+    _id: '63dcf19d551e2829cd5fd110',
+    firstName: 'Roman',
+    lastName: 'Terran',
+    __v: 0
+  },
+  {
+    _id: '63e40861c180dbdbe97db805',
+    firstName: 'Swarm',
+    lastName: 'Bee',
+    __v: 0
+  }
+];
 
 const projectData: ProjectType = {
   _id: '63dbe5ffdcf3ffd695adb4d3',
@@ -7,7 +41,7 @@ const projectData: ProjectType = {
   description: 'common description',
   key: 'P1',
   author: '63daa3099b11296c39649dea',
-  team: [],
+  team: ['63dba1bfde4b0f15ce259c6e', '63dba1cbde4b0f15ce259c71', '63dcf19d551e2829cd5fd110'],
   columnList: [
     {
       title: 'dev',
@@ -36,7 +70,7 @@ const taskListData: TaskType[] = [
     title: 'Task 1',
     description: '',
     author: '63daa3099b11296c39649dea',
-    executor: 'auto',
+    executor: '63dcf19d551e2829cd5fd110',
     projectId: '63dbe5ffdcf3ffd695adb4d3',
     columnId: '63dbe5ffdcf3ffd695adb4d4',
     commentList: [],
@@ -48,7 +82,7 @@ const taskListData: TaskType[] = [
     title: 'Task 2',
     description: '',
     author: '63daa3099b11296c39649dea',
-    executor: 'auto',
+    executor: '63dba1bfde4b0f15ce259c6e',
     projectId: '63dbe5ffdcf3ffd695adb4d3',
     columnId: '63dbe5ffdcf3ffd695adb4d5',
     commentList: [],
@@ -60,7 +94,7 @@ const taskListData: TaskType[] = [
     title: 'Task 3',
     description: '',
     author: '63daa3099b11296c39649dea',
-    executor: 'auto',
+    executor: '63dba1cbde4b0f15ce259c71',
     projectId: '63dbe5ffdcf3ffd695adb4d3',
     columnId: '63dbe5ffdcf3ffd695adb4d4',
     commentList: [],
@@ -72,7 +106,7 @@ const taskListData: TaskType[] = [
     title: 'Task 4',
     description: '',
     author: '63daa3099b11296c39649dea',
-    executor: 'auto',
+    executor: '63dcf19d551e2829cd5fd110',
     projectId: '63dbe5ffdcf3ffd695adb4d3',
     columnId: '63dbe6d5dcf3ffd695adb4ea',
     commentList: [],
@@ -84,7 +118,7 @@ const taskListData: TaskType[] = [
     title: 'Task 5',
     description: '',
     author: '63daa3099b11296c39649dea',
-    executor: 'auto',
+    executor: '63dba1bfde4b0f15ce259c6e',
     projectId: '63dbe5ffdcf3ffd695adb4d3',
     columnId: '63dbe5ffdcf3ffd695adb4d5',
     commentList: [],
@@ -92,4 +126,4 @@ const taskListData: TaskType[] = [
   }
 ];
 
-export { projectData, taskListData };
+export { userListData, projectData, taskListData };

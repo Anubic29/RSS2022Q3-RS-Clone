@@ -1,16 +1,12 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
-import ProjectType from '../../Types/Project/ProjectType';
-import ColumnProjectType from '../../Types/Project/ColumnProjectType';
-import TaskType from '../../Types/Task/TaskType';
 import { colorBackgroundColumn, colorSecondaryLight } from '../../theme/variables';
 import { BtnAction, BtnMenuAction, UserBtn, SelectPanel, ColumnList } from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd } from 'react-icons/md';
-import { BoardState } from '../../Context/BoardContext';
+
+import { convertLetterToHex } from '../../utils/convertLetterToHex';
+import { useBoard } from '../../Context/Board.context';
 
 import styles from './ProjectPage.module.scss';
-
-// Delete After
-import { projectData, taskListData } from '../../Data/FakeProjectPageData';
 
 const options = [
   { value: '', text: 'No' },
@@ -18,17 +14,14 @@ const options = [
   { value: 'tasks', text: 'Tasks' }
 ];
 
-interface ProjectPageProps {
-  title: string;
-}
-
-function ProjectPage(props: ProjectPageProps) {
-  const [title, setTitle] = useState(props.title);
+function ProjectPage() {
+  const { userList, projectInfo } = useBoard();
+  const [title, setTitle] = useState('');
   const [canEditTitle, setCanEditTitle] = useState(false);
 
-  const [projectInfo, setProjectInfo] = useState<ProjectType | null>(null);
-  const [columnList, setColumnList] = useState<ColumnProjectType[]>([]);
-  const [taskList, setTaskList] = useState<TaskType[]>([]);
+  useEffect(() => {
+    setTitle(projectInfo?.title ?? '');
+  }, [projectInfo?.title]);
 
   const optionsBtnMenu = useMemo(() => {
     return [
@@ -41,12 +34,6 @@ function ProjectPage(props: ProjectPageProps) {
         callback: () => console.log()
       }
     ];
-  }, []);
-
-  useEffect(() => {
-    setColumnList(projectData.columnList);
-    setTaskList(taskListData);
-    setProjectInfo(projectData);
   }, []);
 
   const refSearchBlock = useRef<HTMLDivElement>(null);
@@ -134,10 +121,23 @@ function ProjectPage(props: ProjectPageProps) {
             </div>
             <div className={styles['user-list-container']}>
               <div className={styles['user-list']}>
-                <UserBtn type="checkbox" title="User 1" content="U1" color="green" />
-                <UserBtn type="checkbox" title="User 2" content="U2" color="red" />
-                <UserBtn type="checkbox" title="User 3" content="U3" color="yellow" />
-                <UserBtn type="checkbox" title="User 4" content="U4" color="blue" />
+                {projectInfo &&
+                  [projectInfo.author, ...projectInfo.team].map((userId) => {
+                    const user = userList.find((data) => data._id === userId);
+                    if (user) {
+                      const colorPart1 = convertLetterToHex(user.firstName[0], 3, '9');
+                      const colorPart2 = convertLetterToHex(user.lastName[0], 3, '9');
+                      return (
+                        <UserBtn
+                          key={user._id}
+                          type="checkbox"
+                          title={`${user.firstName} ${user.lastName}`}
+                          content={user.firstName[0] + user.lastName[0]}
+                          color={`#${colorPart1}${colorPart2}`}
+                        />
+                      );
+                    }
+                  })}
               </div>
               <div className={styles['btn-add-user']}>
                 <UserBtn
@@ -154,20 +154,7 @@ function ProjectPage(props: ProjectPageProps) {
           </div>
         </div>
       </div>
-      <BoardState
-        projectId={projectInfo ? projectInfo._id : ''}
-        authorId={projectInfo ? projectInfo.author : ''}
-        taskList={taskList}
-        columnList={columnList}
-        setTaskList={(data: TaskType[]) => setTaskList(data)}
-        setColumnList={(data: ColumnProjectType[]) => setColumnList(data)}>
-        <ColumnList
-          columnList={columnList}
-          taskList={taskList.sort((a, b) => a.id - b.id)}
-          setColumnList={(data) => setColumnList(data)}
-          setTaskList={(data) => setTaskList(data)}
-        />
-      </BoardState>
+      <ColumnList />
     </div>
   );
 }

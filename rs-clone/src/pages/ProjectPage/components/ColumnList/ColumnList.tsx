@@ -1,6 +1,4 @@
 import { useState, useRef, useCallback, useMemo } from 'react';
-import ColumnProjectType from '../../../../Types/Project/ColumnProjectType';
-import TaskType from '../../../../Types/Task/TaskType';
 import useComponentVisible from '../../../../hooks/useComponentVisible/useComponentVisible';
 import {
   colorBackgroundColumn,
@@ -9,18 +7,13 @@ import {
 } from '../../../../theme/variables';
 import { BtnAction, Column } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
+import { useBoard } from '../../../../Context/Board.context';
 
 import styles from './ColumnList.module.scss';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 
-interface ColumnListProps {
-  columnList: ColumnProjectType[];
-  taskList: TaskType[];
-  setColumnList: (data: ColumnProjectType[]) => void;
-  setTaskList: (data: TaskType[]) => void;
-}
-
-function ColumnList(props: ColumnListProps) {
+function ColumnList() {
+  const { taskList, columnList, updateTask, swapColumn } = useBoard();
   const [isScrolledList, setIsScrolledList] = useState(false);
 
   const { isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
@@ -35,11 +28,8 @@ function ColumnList(props: ColumnListProps) {
       if (currentTaskElem.current) currentTaskElem.current.style.display = 'none';
     }, 0);
   }, []);
-  const dragEndHandlerTask = useCallback((event: React.DragEvent) => {
+  const dragEndHandlerTask = useCallback(() => {
     if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
-  }, []);
-  const dragLeaveHandlerTask = useCallback((event: React.DragEvent) => {
-    // if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
   }, []);
   const dragOverHandlerTask = useCallback((event: React.DragEvent) => {
     event.preventDefault();
@@ -48,33 +38,20 @@ function ColumnList(props: ColumnListProps) {
     (event: React.DragEvent, column: string) => {
       event.preventDefault();
       if (currentTask !== '') {
-        if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
-        props.setTaskList(
-          props.taskList.map((task) => {
-            if (task._id === currentTask) task.columnId = column;
-            return task;
-          })
-        );
+        updateTask(currentTask, { columnId: column });
         setCurrentTask('');
       }
     },
-    [currentTask]
+    [currentTask, updateTask]
   );
   const dragHandlersTask = useMemo(
     () => ({
       dragStartHandlerTask,
       dragEndHandlerTask,
-      dragLeaveHandlerTask,
       dragOverHandlerTask,
       dropHandlerTask
     }),
-    [
-      dragStartHandlerTask,
-      dragOverHandlerTask,
-      dropHandlerTask,
-      dragEndHandlerTask,
-      dragLeaveHandlerTask
-    ]
+    [dragStartHandlerTask, dragEndHandlerTask, dragOverHandlerTask, dropHandlerTask]
   );
 
   const [currentColumn, setCurrentColumn] = useState('');
@@ -98,9 +75,6 @@ function ColumnList(props: ColumnListProps) {
       element.style.display = 'block';
     }
   }, []);
-  const dragLeaveHandlerColumn = useCallback((event: React.DragEvent) => {
-    // if (currentTaskElem.current) currentTaskElem.current.style.display = 'block';
-  }, []);
   const dragOverHandlerColumn = useCallback((event: React.DragEvent) => {
     event.preventDefault();
   }, []);
@@ -108,12 +82,7 @@ function ColumnList(props: ColumnListProps) {
     (event: React.DragEvent, column: string) => {
       event.preventDefault();
       if (currentColumn !== '') {
-        const activeIdx = props.columnList.findIndex((data) => data._id === currentColumn);
-        const overIdx = props.columnList.findIndex((data) => data._id === column);
-        const result = [...props.columnList];
-        const activeColumn = result.splice(activeIdx, 1)[0];
-        result.splice(overIdx - 1 >= 0 ? overIdx - 1 : overIdx, 0, activeColumn);
-        props.setColumnList(result);
+        swapColumn(currentColumn, column);
         setCurrentColumn('');
       }
     },
@@ -127,7 +96,7 @@ function ColumnList(props: ColumnListProps) {
       <div className={styles['column-list']}>
         <div className={styles['curtain'] + ' ' + styles['left']}></div>
         <div className={styles['list']}>
-          {props.columnList.map((column) => (
+          {columnList.map((column) => (
             <div
               className={styles['column-block']}
               key={column._id}
@@ -137,15 +106,14 @@ function ColumnList(props: ColumnListProps) {
                 <ColumnHeader
                   id={column._id}
                   title={column.title}
-                  tasksCount={props.taskList.filter((task) => task.columnId === column._id).length}
+                  tasksCount={taskList.filter((task) => task.columnId === column._id).length}
                   stickyHeader={isScrolledList}
                   dragStartHandlerColumn={dragStartHandlerColumn}
-                  dragLeaveHandlerColumn={dragLeaveHandlerColumn}
                   dragEndHandlerColumn={dragEndHandlerColumn}
                 />
                 <ColumnBody
                   id={column._id}
-                  tasks={props.taskList.filter((task) => task.columnId === column._id)}
+                  tasks={taskList.filter((task) => task.columnId === column._id)}
                   dragHandlersTask={dragHandlersTask}
                 />
               </Column>
@@ -161,7 +129,6 @@ function ColumnList(props: ColumnListProps) {
                     tasksCount={0}
                     stickyHeader={isScrolledList}
                     dragStartHandlerColumn={dragStartHandlerColumn}
-                    dragLeaveHandlerColumn={dragLeaveHandlerColumn}
                     dragEndHandlerColumn={dragEndHandlerColumn}
                     typeCreate={true}
                     setIsComponentVisibleCreate={setIsComponentVisible}
@@ -171,7 +138,7 @@ function ColumnList(props: ColumnListProps) {
             </div>
           )}
         </div>
-        {props.columnList.length < 5 && (
+        {columnList.length < 5 && (
           <div className={styles['btn-add-container']}>
             <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
               <BtnAction
