@@ -1,0 +1,39 @@
+.InfoCard {
+  display: flex;
+  border-radius: 8px;
+  box-shadow: 0px 1px 1px rgba(9, 30, 66, 0.13), 0px 0px 1px rgba(9, 30, 66, 0.13);
+}
+
+.InfoCard-picture-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 25%;
+  padding: 20px;
+  background: #f4f5f7;
+}
+
+.InfoCard-picture {
+  width: 80%;
+}
+
+.InfoCard-info-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+  padding: 16px 50px 16px 24px;
+  background: #ffffff;
+}
+
+.InfoCard-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #172B4D;
+}
+
+.InfoCard-description {
+  font-size: 11px;
+  font-weight: 500;
+  color: #6B778C;
+}

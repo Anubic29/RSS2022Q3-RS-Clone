@@ -1,0 +1,63 @@
+.TaskItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(9, 30, 66, 0.04);
+  }
+}
+
+.IconsContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.TypeIcon {
+  width: 24px;
+  height: 24px;
+  color: #172b4d;
+}
+
+.StarIcon {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  border-radius: 3px;
+  color: #ffab00;
+  
+  &:hover {
+    color: #ffc400;
+    background: rgba(9, 30, 66, 0.08);
+  }
+}
+
+.TitleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.Title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #172b4d;
+}
+
+.Info {
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b778c;
+}
+
+.Separator {
+  padding: 0 7px;
+
+  &:after {
+    content: '-';
+  }
+}
