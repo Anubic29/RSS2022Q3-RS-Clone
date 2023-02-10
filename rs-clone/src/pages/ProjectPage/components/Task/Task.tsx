@@ -15,9 +15,9 @@ interface TaskProps {
 function Task(props: TaskProps) {
   const [hoverTask, setHoverTask] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
-  const { deleteTask } = useContext(BoardContext);
+  const { taskListCount, deleteTask } = useContext(BoardContext);
 
-  const deleteTaskCallback = useCallback(() => deleteTask(props._id), [props._id]);
+  const deleteTaskCallback = useCallback(() => deleteTask(props._id), [props._id, taskListCount]);
 
   const optionsBtnMenu = useMemo(() => {
     return [

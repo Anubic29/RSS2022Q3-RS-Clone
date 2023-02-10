@@ -1,8 +1,9 @@
-import { createContext } from 'react';
+import { createContext, useMemo } from 'react';
 import ColumnProjectType from '../Types/Project/ColumnProjectType';
 import TaskType from '../Types/Task/TaskType';
 
 interface IBoardContext {
+  taskListCount: number;
   createTask: (columnId: string, taskTitle: string) => void;
   deleteTask: (taskId: string) => void;
   createColumn: (title: string) => void;
@@ -10,6 +11,7 @@ interface IBoardContext {
 }
 
 export const BoardContext = createContext<IBoardContext>({
+  taskListCount: 0,
   createTask: () => console.log('Error'),
   deleteTask: () => console.log('Error'),
   createColumn: () => console.log('Error'),
@@ -27,6 +29,10 @@ interface BoardStateProps {
 }
 
 export const BoardState = (props: BoardStateProps) => {
+  const taskListCount = useMemo(() => {
+    return props.taskList.length;
+  }, [props.taskList]);
+
   const createTask = (columnId: string, taskTitle: string) => {
     const task: TaskType = {
       _id: '6234564adgasdasd4adsg',
@@ -72,7 +78,8 @@ export const BoardState = (props: BoardStateProps) => {
   };
 
   return (
-    <BoardContext.Provider value={{ createTask, deleteTask, createColumn, updateColumn }}>
+    <BoardContext.Provider
+      value={{ taskListCount, createTask, deleteTask, createColumn, updateColumn }}>
       {props.children}
     </BoardContext.Provider>
   );
