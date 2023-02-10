@@ -17,11 +17,14 @@ interface TaskProps {
 function Task(props: TaskProps) {
   const [hoverTask, setHoverTask] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
-  const { taskList, getFullNameUser, deleteTask } = useBoard();
+  const { getTaskList, getFullNameUser, deleteTask } = useBoard();
 
   const user = useMemo(() => getFullNameUser(props.executor), [props.executor]);
 
-  const deleteTaskCallback = useCallback(() => deleteTask(props._id), [props._id, taskList.length]);
+  const deleteTaskCallback = useCallback(
+    () => deleteTask(props._id),
+    [props._id, getTaskList().length]
+  );
   const optionsBtnMenu = useMemo(() => {
     return [
       {

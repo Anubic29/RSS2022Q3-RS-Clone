@@ -131,6 +131,7 @@ function ProjectPage() {
                         <UserBtn
                           key={user._id}
                           type="checkbox"
+                          _id={user._id}
                           title={`${user.firstName} ${user.lastName}`}
                           content={user.firstName[0] + user.lastName[0]}
                           color={`#${colorPart1}${colorPart2}`}

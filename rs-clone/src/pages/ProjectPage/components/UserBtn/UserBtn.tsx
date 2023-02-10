@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { UserAvatar } from '../';
 import { IconType } from 'react-icons';
+import { useBoard } from '../../../../Context/Board.context';
 
 import styles from './UserBtn.module.scss';
 
 interface UserBtnProps {
+  _id?: string;
   type: 'checkbox' | 'btn';
   title: string;
   content: string | IconType;
@@ -12,11 +14,14 @@ interface UserBtnProps {
 }
 
 function UserBtn(props: UserBtnProps) {
+  const { addUserFilter, deleteUserFilter } = useBoard();
   const [checked, setChecked] = useState(false);
 
   const onClick = () => {
-    if (props.type === 'checkbox') {
+    if (props.type === 'checkbox' && props._id) {
       setChecked(!checked);
+      if (!checked) addUserFilter(props._id);
+      else deleteUserFilter(props._id);
     }
   };
 

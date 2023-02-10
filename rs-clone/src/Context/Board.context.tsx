@@ -22,7 +22,9 @@ export type UserDataForAvatar = {
 interface BoardContextType {
   userList: UserType[];
   projectInfo: ProjectType | null;
-  taskList: TaskType[];
+  addUserFilter: (_id: string) => void;
+  deleteUserFilter: (_id: string) => void;
+  getTaskList: () => TaskType[];
   columnList: ColumnProjectType[];
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
   createTask: (columnId: string, taskTitle: string) => void;
@@ -37,7 +39,9 @@ interface BoardContextType {
 export const BoardContext = createContext<BoardContextType>({
   userList: [],
   projectInfo: null,
-  taskList: [],
+  addUserFilter: () => console.log('Error'),
+  deleteUserFilter: () => console.log('Error'),
+  getTaskList: () => [],
   columnList: [],
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
   createTask: () => console.log('Error'),
@@ -55,6 +59,8 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   const [columnList, setColumnList] = useState<ColumnProjectType[]>([]);
   const [taskList, setTaskList] = useState<TaskType[]>([]);
 
+  const [userListFilter, setUserListFilter] = useState<string[]>([]);
+
   useEffect(() => {
     setUserList(
       userListData.filter(
@@ -65,6 +71,27 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     setTaskList(taskListData);
     setProjectInfo(projectData);
   }, []);
+
+  const addUserFilter = useCallback(
+    (_id: string) => {
+      setUserListFilter([...userListFilter, _id]);
+    },
+    [userListFilter]
+  );
+
+  const deleteUserFilter = useCallback(
+    (_id: string) => {
+      setUserListFilter(userListFilter.filter((data) => data !== _id));
+    },
+    [userListFilter]
+  );
+
+  const getTaskList = useCallback(() => {
+    let res = taskList;
+    if (userListFilter.length > 0)
+      res = res.filter((data) => userListFilter.includes(data.executor));
+    return res;
+  }, [taskList, userListFilter]);
 
   const getFullNameUser = useCallback(
     (_id: string) => {
@@ -170,7 +197,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     () => ({
       userList,
       projectInfo,
-      taskList,
+      addUserFilter,
+      deleteUserFilter,
+      getTaskList,
       columnList,
       getFullNameUser,
       createTask,
@@ -184,7 +213,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [
       userList,
       projectInfo,
-      taskList,
+      addUserFilter,
+      deleteUserFilter,
+      getTaskList,
       columnList,
       getFullNameUser,
       createTask,

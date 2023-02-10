@@ -13,7 +13,7 @@ import styles from './ColumnList.module.scss';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 
 function ColumnList() {
-  const { taskList, columnList, updateTask, swapColumn } = useBoard();
+  const { getTaskList, columnList, updateTask, swapColumn } = useBoard();
   const [isScrolledList, setIsScrolledList] = useState(false);
 
   const { isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
@@ -106,14 +106,14 @@ function ColumnList() {
                 <ColumnHeader
                   id={column._id}
                   title={column.title}
-                  tasksCount={taskList.filter((task) => task.columnId === column._id).length}
+                  tasksCount={getTaskList().filter((task) => task.columnId === column._id).length}
                   stickyHeader={isScrolledList}
                   dragStartHandlerColumn={dragStartHandlerColumn}
                   dragEndHandlerColumn={dragEndHandlerColumn}
                 />
                 <ColumnBody
                   id={column._id}
-                  tasks={taskList.filter((task) => task.columnId === column._id)}
+                  tasks={getTaskList().filter((task) => task.columnId === column._id)}
                   dragHandlersTask={dragHandlersTask}
                 />
               </Column>
