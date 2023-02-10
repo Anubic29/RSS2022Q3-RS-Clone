@@ -1,9 +1,8 @@
+import SignUpForm from './Components/SignUpForm';
+import classes from './SignUp.module.scss';
+
 function SignUp() {
-  return (
-    <div className="Sign-Up">
-      <h1>Sign Up</h1>
-    </div>
-  );
+  return <SignUpForm />;
 }
 
 export default SignUp;

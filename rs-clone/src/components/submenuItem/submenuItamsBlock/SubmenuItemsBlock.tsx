@@ -2,11 +2,22 @@ import React from 'react';
 import SubmenuItemLine from '../submenuItemLine/SubmenuItemLine';
 import classes from '../submenuItem.module.scss';
 
+type blockType = {
+  subtitle: string;
+  base: {
+    src: string;
+    title: string;
+    article: string;
+    project: string;
+    bgColor: string;
+  }[];
+};
+
 const bd = [
   {
     src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
     title: 'Header & Footer',
-    article: 'CBC - 3',
+    article: 'CBC3',
     project: 'BDCS',
     bgColor: '#4cade8'
   },
@@ -30,14 +41,14 @@ const bd2 = [
   {
     src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
     title: 'Доска CBC',
-    article: 'in',
+    article: '',
     project: 'Company BDSM',
     bgColor: '#4cade8'
   },
   {
     src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
     title: 'Доска PER',
-    article: 'in',
+    article: '',
     project: 'Lena&&Alex',
     bgColor: '#4cade8'
   }
@@ -104,6 +115,17 @@ const projects = [
   }
 ];
 
+const user = [
+  {
+    id: 0,
+    title: 'Olena Datso',
+    article: '',
+    src: '',
+    bgColor: '#00FF00',
+    project: 'email@tt.ua'
+  }
+];
+
 const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (props) => {
   const menuItem = props.menuItem;
   const tab = props.onTabChange;
@@ -118,23 +140,56 @@ const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (
     base: tab === 'assigned' ? bd : bd2
   };
 
-  const block = menuItem === 'work' ? contentWork : contentProject;
+  const contenUserMenu = {
+    subtitle: 'ACCOUNT',
+    base: user
+  };
+
+  const block = () => {
+    switch (menuItem) {
+      case 'work':
+        return contentWork;
+      case 'userMenu':
+        return contenUserMenu;
+      case 'project':
+        return contentProject;
+    }
+  };
 
   return (
-    <div className={classes.itemsBlock}>
-      <p className={classes.submenu_subtitle}>{block.subtitle}</p>
-      <ul className={classes.submenu_itemsList}>
-        {block.base.map((item, i) => (
+    <>
+      <div className={classes.itemsBlock}>
+        <p className={classes.submenu_subtitle}>{(block() as blockType).subtitle}</p>
+        <ul className={classes.submenu_itemsList}>
+          {(block() as blockType).base.map((item, i) => {
+            if (menuItem === 'work' && tab === 'assigned') {
+              item.article = item.article + '-';
+            }
+            return (
+              <SubmenuItemLine
+                key={i}
+                title={item.title}
+                article={item.article}
+                project={item.project}
+                src={item.src}
+                bgColor={item.bgColor ? item.bgColor : ''}></SubmenuItemLine>
+            );
+          })}
+        </ul>
+      </div>
+      {menuItem === 'userMenu' && (
+        <div className={classes.itemsBlock + ' ' + classes.itemsBlock__jira}>
+          <p className={classes.submenu_subtitle}>JIRA</p>
           <SubmenuItemLine
-            key={i}
-            title={item.title}
-            article={item.article}
-            project={item.project}
-            src={item.src}
-            bgColor={item.bgColor ? item.bgColor : ''}></SubmenuItemLine>
-        ))}
-      </ul>
-    </div>
+            key=""
+            title=""
+            article=""
+            project=""
+            src=""
+            bgColor=""></SubmenuItemLine>
+        </div>
+      )}
+    </>
   );
 };
 
