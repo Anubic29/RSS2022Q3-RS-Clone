@@ -14,6 +14,15 @@ type TaskDataToUpdate = {
   columnId?: string;
 };
 
+type ProjectDataToUpdate = {
+  title?: string;
+  description?: string;
+  key?: string;
+  boardTitle?: string;
+  author?: string;
+  pathImage?: string;
+};
+
 export type UserDataForAvatar = {
   firstName: string;
   lastName: string;
@@ -22,6 +31,7 @@ export type UserDataForAvatar = {
 interface BoardContextType {
   userList: UserType[];
   projectInfo: ProjectType | null;
+  updateProject: (updateData: ProjectDataToUpdate) => void;
   setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
   deleteUserFilter: (_id: string) => void;
@@ -40,6 +50,7 @@ interface BoardContextType {
 export const BoardContext = createContext<BoardContextType>({
   userList: [],
   projectInfo: null,
+  updateProject: () => console.log('Error'),
   setSearchInputValue: () => console.log('Error'),
   addUserFilter: () => console.log('Error'),
   deleteUserFilter: () => console.log('Error'),
@@ -74,6 +85,14 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     setTaskList(taskListData);
     setProjectInfo(projectData);
   }, []);
+
+  const updateProject = useCallback(
+    (updateData: ProjectDataToUpdate) => {
+      const res = Object.assign(projectInfo ?? {}, updateData) as ProjectType | null;
+      setProjectInfo(res);
+    },
+    [projectInfo]
+  );
 
   const addUserFilter = useCallback(
     (_id: string) => {
@@ -204,6 +223,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     () => ({
       userList,
       projectInfo,
+      updateProject,
       setSearchInputValue,
       addUserFilter,
       deleteUserFilter,
@@ -221,6 +241,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [
       userList,
       projectInfo,
+      updateProject,
       setSearchInputValue,
       addUserFilter,
       deleteUserFilter,

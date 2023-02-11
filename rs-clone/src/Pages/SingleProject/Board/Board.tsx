@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
-import { colorBackgroundColumn, colorSecondaryLight } from '../../../theme/variables';
+import {
+  colorBackgroundColumn,
+  colorBackgroundHover,
+  colorSecondaryLight
+} from '../../../theme/variables';
 import { BtnAction, BtnMenuAction, UserBtn, SelectPanel, ColumnList } from './components';
-import { MdStarOutline, MdSearch, MdPersonAdd } from 'react-icons/md';
+import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-icons/md';
 
 import { convertLetterToHex } from '../../../utils/convertLetterToHex';
 import { useBoard } from '../../../contexts/Board.context';
 
 import styles from './Board.module.scss';
+import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 
 const options = [
   { value: '', text: 'No' },
@@ -15,18 +20,28 @@ const options = [
 ];
 
 function Board() {
-  const { userList, projectInfo, setSearchInputValue } = useBoard();
-  const [title, setTitle] = useState('');
-  const [canEditTitle, setCanEditTitle] = useState(false);
+  const { userList, projectInfo, updateProject, setSearchInputValue } = useBoard();
+  const [boardTitle, setBoardTitle] = useState('');
+  const [titleError, setTitleError] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
+  const {
+    ref,
+    isComponentVisible: isInputTitleVisible,
+    setIsComponentVisible: setIsInputTitleVisible
+  } = useComponentVisible(false);
+
   useEffect(() => {
-    setTitle(projectInfo?.title ?? '');
-  }, [projectInfo?.title]);
+    setBoardTitle(projectInfo?.boardTitle ?? '');
+  }, [projectInfo?.boardTitle]);
 
   useEffect(() => {
     setSearchInputValue(searchValue);
   }, [searchValue]);
+
+  useEffect(() => {
+    setTitleError(boardTitle.length === 0);
+  }, [boardTitle]);
 
   const optionsBtnMenu = useMemo(() => {
     return [
@@ -43,6 +58,17 @@ function Board() {
 
   const refSearchBlock = useRef<HTMLDivElement>(null);
   const refSearchInput = useRef<HTMLInputElement>(null);
+
+  const onSubmitHandler = () => {
+    if (!titleError) {
+      updateProject({ boardTitle: boardTitle });
+      setIsInputTitleVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isInputTitleVisible) setBoardTitle(`${projectInfo?.boardTitle}`);
+  }, [isInputTitleVisible]);
 
   return (
     <div className={styles.wrapper}>
@@ -65,28 +91,52 @@ function Board() {
         </div>
         <div className={styles.info}>
           <div className={styles['info__title']}>
-            <form className={styles['info__title__form']} action="">
-              {!canEditTitle ? (
+            <div ref={ref} className={styles['info__title__form']}>
+              {!isInputTitleVisible ? (
                 <span className={styles['info__title__form__text-backgr']}>
                   <span
                     className={styles['info__title__form__text']}
-                    onClick={() => setCanEditTitle(true)}>
-                    {title.length >= 34 ? title.substring(0, 33) + '...' : title}
+                    onClick={() => setIsInputTitleVisible(true)}>
+                    {boardTitle.length >= 34 ? boardTitle.substring(0, 33) + '...' : boardTitle}
                   </span>
                 </span>
               ) : (
-                <input
-                  className={styles['info__title__form__input']}
-                  type="text"
-                  autoFocus
-                  value={title}
-                  onChange={(event) => {
-                    setTitle(event.target.value);
-                  }}
-                  onBlur={() => setCanEditTitle(false)}
-                />
+                <div className={styles['content']}>
+                  <input
+                    className={styles['info__title__form__input']}
+                    type="text"
+                    autoFocus
+                    value={boardTitle}
+                    onChange={(event) => {
+                      setBoardTitle(event.target.value);
+                    }}
+                  />
+                  {titleError && (
+                    <span className={styles['error-message']}>Board title can&apos;t be empty</span>
+                  )}
+                  <div className={styles['btns-block']}>
+                    <div className={styles['btn-block']} onClick={() => onSubmitHandler()}>
+                      <BtnAction
+                        image={MdDone}
+                        backgrColorDefault={colorBackgroundColumn}
+                        backgrColorHover={colorBackgroundHover}
+                        backgrColorActive={colorSecondaryLight}
+                      />
+                    </div>
+                    <div
+                      className={styles['btn-block']}
+                      onClick={() => setIsInputTitleVisible(false)}>
+                      <BtnAction
+                        image={MdClose}
+                        backgrColorDefault={colorBackgroundColumn}
+                        backgrColorHover={colorBackgroundHover}
+                        backgrColorActive={colorSecondaryLight}
+                      />
+                    </div>
+                  </div>
+                </div>
               )}
-            </form>
+            </div>
           </div>
           <div className={styles['info__actions']}>
             <div className={styles['actions__list']}>

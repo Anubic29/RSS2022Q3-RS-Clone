@@ -5,6 +5,7 @@ type ProjectType = {
   title: string;
   description: string;
   key: string;
+  boardTitle: string;
   author: string;
   team: string[];
   columnList: ColumnProjectType[];

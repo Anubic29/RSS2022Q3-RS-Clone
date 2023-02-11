@@ -40,6 +40,7 @@ const projectData: ProjectType = {
   title: 'Project_1',
   description: 'common description',
   key: 'P1',
+  boardTitle: 'Board Project',
   author: '63daa3099b11296c39649dea',
   team: ['63dba1bfde4b0f15ce259c6e', '63dba1cbde4b0f15ce259c71', '63dcf19d551e2829cd5fd110'],
   columnList: [
