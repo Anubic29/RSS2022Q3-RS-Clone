@@ -18,16 +18,10 @@
   padding: 0;
   overflow: hidden;
   z-index: 1;
-  display: flex;
-  align-self: center;
   margin: auto;
-
-}
-
-.half {
-  transform: translateY(-50%);
+  margin-top: 40px;
 }
 
 .twenty {
-  transform: translateY(-20%);
+  top: 10%;
 }
