@@ -21,7 +21,7 @@ function Auth() {
   };
 
   return (
-    <div className="Auth">
+    <div className={classes.backdrop}>
       <div className={classes.modal_wrap}>
         <Modal translate={'twenty'}>
           <div className={classes['login-wrap']}>
