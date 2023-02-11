@@ -1,0 +1,25 @@
+@import '../../../../../theme/variables.scss';
+
+h6 {
+  color: $colorContent;
+  font-size: 14px;
+}
+
+.taskDetails_wrap {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+}
+
+.taskDetails_col__left {
+  width: 60%
+}
+
+.taskDetails_topLine {
+  padding-left: 10px;
+}
+
+.taskDetails_descr__title {
+  padding-left: 10px;
+}

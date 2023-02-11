@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction } from 'react';
+import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
 interface OverlayContextInitialValue {
   isVisible: boolean;
@@ -17,3 +17,7 @@ const overlayContextInitialValue: OverlayContextInitialValue = {
 const OverlayContext = createContext(overlayContextInitialValue);
 
 export default OverlayContext;
+
+export const useOverlay = () => {
+  return useContext(OverlayContext);
+};
