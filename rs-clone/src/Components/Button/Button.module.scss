@@ -11,3 +11,9 @@
     background: #0065FF;
   }
 }
+
+.Button:disabled {
+  color: #A5ADBA;
+  background: rgba(9, 30, 66, 0.04);
+  cursor: not-allowed;
+}

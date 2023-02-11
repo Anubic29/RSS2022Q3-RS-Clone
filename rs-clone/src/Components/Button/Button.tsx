@@ -5,6 +5,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   form?: string;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
