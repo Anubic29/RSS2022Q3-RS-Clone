@@ -36,14 +36,17 @@ interface BoardContextType {
   addUserFilter: (_id: string) => void;
   deleteUserFilter: (_id: string) => void;
   getTaskList: () => TaskType[];
-  columnList: ColumnProjectType[];
+  getColumnList: () => ColumnProjectType[];
+  getColumnCount: () => number;
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
   createTask: (columnId: string, taskTitle: string) => void;
   updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
   deleteTask: (taskId: string) => void;
   deleteAllTaskInColumn: (_id: string) => void;
+  moveTasksToColumn: (_cuurId: string, _newId: string) => void;
   createColumn: (title: string) => void;
   updateColumn: (_id: string, title: string) => void;
+  deleteColumn: (_id: string) => void;
   swapColumn: (_idActive: string, _id: string) => void;
 }
 
@@ -55,14 +58,17 @@ export const BoardContext = createContext<BoardContextType>({
   addUserFilter: () => console.log('Error'),
   deleteUserFilter: () => console.log('Error'),
   getTaskList: () => [],
-  columnList: [],
+  getColumnList: () => [],
+  getColumnCount: () => 0,
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
   createTask: () => console.log('Error'),
   updateTask: () => console.log('Error'),
   deleteTask: () => console.log('Error'),
   deleteAllTaskInColumn: () => console.log('Error'),
+  moveTasksToColumn: () => console.log('Error'),
   createColumn: () => console.log('Error'),
   updateColumn: () => console.log('Error'),
+  deleteColumn: () => console.log('Error'),
   swapColumn: () => console.log('Error')
 });
 
@@ -119,6 +125,14 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     return res;
   }, [taskList, userListFilter, searchValue]);
 
+  const getColumnList = useCallback(() => {
+    return columnList;
+  }, [columnList]);
+
+  const getColumnCount = useCallback(() => {
+    return columnList.length;
+  }, [columnList]);
+
   const getFullNameUser = useCallback(
     (_id: string) => {
       const user = userList.find((data) => data._id === _id);
@@ -174,6 +188,18 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [taskList]
   );
 
+  const moveTasksToColumn = useCallback(
+    (_currId: string, _newId: string) => {
+      const res = taskList.map((task) => {
+        if (task.columnId === _currId) task.columnId = _newId;
+        return task;
+      });
+
+      setTaskList(res);
+    },
+    [taskList]
+  );
+
   const deleteAllTaskInColumn = useCallback(
     (_id: string) => {
       const res = taskList.filter((data) => data.columnId !== _id);
@@ -207,6 +233,16 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [columnList]
   );
 
+  const deleteColumn = useCallback(
+    (_id: string) => {
+      const idx = columnList.findIndex((data) => data._id === _id);
+      columnList.splice(idx, 1);
+
+      setColumnList([...columnList]);
+    },
+    [columnList]
+  );
+
   const swapColumn = useCallback(
     (_idActive: string, _id: string) => {
       const activeIdx = columnList.findIndex((data) => data._id === _idActive);
@@ -228,14 +264,17 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       addUserFilter,
       deleteUserFilter,
       getTaskList,
-      columnList,
+      getColumnList,
+      getColumnCount,
       getFullNameUser,
       createTask,
       updateTask,
       deleteTask,
       deleteAllTaskInColumn,
+      moveTasksToColumn,
       createColumn,
       updateColumn,
+      deleteColumn,
       swapColumn
     }),
     [
@@ -246,14 +285,17 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       addUserFilter,
       deleteUserFilter,
       getTaskList,
-      columnList,
+      getColumnList,
+      getColumnCount,
       getFullNameUser,
       createTask,
       updateTask,
       deleteTask,
       deleteAllTaskInColumn,
+      moveTasksToColumn,
       createColumn,
       updateColumn,
+      deleteColumn,
       swapColumn
     ]
   );

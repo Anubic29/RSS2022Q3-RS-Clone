@@ -18,12 +18,20 @@
   }
 
   &__option {
+    user-select: none;
     padding: 8px 20px;
     white-space: nowrap;
 
     &:hover {
       cursor: pointer;
       background-color: $colorBackgroundColumn;
+    }
+
+    &--blocked {
+
+      &:hover {
+        cursor: not-allowed;
+      }
     }
   }
 }

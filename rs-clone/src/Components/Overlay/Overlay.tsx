@@ -1,29 +1,31 @@
-import { useContext } from 'react';
-import { OverlayContext } from '../../contexts';
+import { useOverlay } from '../../contexts';
 import Styles from './Overlay.module.scss';
 
 interface OverlayProps {
-  children: React.ReactNode;
-  isVisible: boolean;
+  scope: 'App' | 'Board';
 }
 
 function Overlay(props: OverlayProps) {
-  const { children, isVisible } = props;
-  const { setIsVisible } = useContext(OverlayContext);
+  const { scope } = props;
+  const values = useOverlay();
 
   const onClickHandler = (event: React.MouseEvent) => {
     if ((event.target as HTMLElement).className === Styles.Overlay) {
-      setIsVisible(false);
+      values[`setIsVisible${scope}`](false);
     }
   };
 
   return (
-    <div
-      className={Styles.Overlay}
-      style={{ display: isVisible ? 'block' : 'none' }}
-      onClick={onClickHandler}>
-      {children}
-    </div>
+    <>
+      {values[`isVisible${scope}`] && (
+        <div
+          className={Styles.Overlay}
+          style={{ display: values[`isVisible${scope}`] ? 'block' : 'none' }}
+          onClick={onClickHandler}>
+          {values[`children${scope}`]}
+        </div>
+      )}
+    </>
   );
 }
 

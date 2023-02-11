@@ -13,7 +13,7 @@ import styles from './ColumnList.module.scss';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 
 function ColumnList() {
-  const { getTaskList, columnList, updateTask, swapColumn } = useBoard();
+  const { getTaskList, getColumnList, updateTask, swapColumn } = useBoard();
   const [isScrolledList, setIsScrolledList] = useState(false);
 
   const { isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
@@ -96,7 +96,7 @@ function ColumnList() {
       <div className={styles['column-list']}>
         <div className={styles['curtain'] + ' ' + styles['left']}></div>
         <div className={styles['list']}>
-          {columnList.map((column) => (
+          {getColumnList().map((column) => (
             <div
               className={styles['column-block']}
               key={column._id}
@@ -138,7 +138,7 @@ function ColumnList() {
             </div>
           )}
         </div>
-        {columnList.length < 5 && (
+        {getColumnList().length < 5 && (
           <div className={styles['btn-add-container']}>
             <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
               <BtnAction
