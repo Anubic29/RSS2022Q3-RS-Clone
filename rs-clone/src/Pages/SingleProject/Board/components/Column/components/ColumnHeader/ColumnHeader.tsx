@@ -19,6 +19,7 @@ interface ColumnHeaderProps {
   stickyHeader?: boolean;
   dragStartHandlerColumn: (event: React.DragEvent, column: string) => void;
   dragEndHandlerColumn: (event: React.DragEvent) => void;
+  typeDone?: boolean;
   typeCreate?: boolean;
   setIsComponentVisibleCreate?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -99,6 +100,11 @@ function ColumnHeader(props: ColumnHeaderProps) {
                 <span>{title.length >= 10 ? title.substring(0, 9) + '...' : title}</span>
                 <span className={styles.tasks}>{props.tasksCount} tasks</span>
               </span>
+              {props.typeDone && (
+                <div className={styles['title__form__icon-done']}>
+                  <MdDone />
+                </div>
+              )}
             </span>
           </span>
         )}

@@ -108,11 +108,13 @@ function ColumnList() {
                   title={column.title}
                   tasksCount={getTaskList().filter((task) => task.columnId === column._id).length}
                   stickyHeader={isScrolledList}
+                  typeDone={column.type === 'final'}
                   dragStartHandlerColumn={dragStartHandlerColumn}
                   dragEndHandlerColumn={dragEndHandlerColumn}
                 />
                 <ColumnBody
                   id={column._id}
+                  type={column.type}
                   tasks={getTaskList().filter((task) => task.columnId === column._id)}
                   dragHandlersTask={dragHandlersTask}
                 />
@@ -122,18 +124,16 @@ function ColumnList() {
           {isComponentVisible && (
             <div className={styles['column-block']}>
               <Column>
-                <div>
-                  <ColumnHeader
-                    id={'new'}
-                    title={''}
-                    tasksCount={0}
-                    stickyHeader={isScrolledList}
-                    dragStartHandlerColumn={dragStartHandlerColumn}
-                    dragEndHandlerColumn={dragEndHandlerColumn}
-                    typeCreate={true}
-                    setIsComponentVisibleCreate={setIsComponentVisible}
-                  />
-                </div>
+                <ColumnHeader
+                  id={'new'}
+                  title={''}
+                  tasksCount={0}
+                  stickyHeader={isScrolledList}
+                  dragStartHandlerColumn={dragStartHandlerColumn}
+                  dragEndHandlerColumn={dragEndHandlerColumn}
+                  typeCreate={true}
+                  setIsComponentVisibleCreate={setIsComponentVisible}
+                />
               </Column>
             </div>
           )}
