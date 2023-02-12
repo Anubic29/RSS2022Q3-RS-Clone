@@ -29,9 +29,10 @@ export type UserDataForAvatar = {
 };
 
 interface BoardContextType {
-  userList: UserType[];
+  getUserList: () => UserType[];
   projectInfo: ProjectType | null;
   updateProject: (updateData: ProjectDataToUpdate) => void;
+  addUserToTeam: (_id: string) => void;
   setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
   deleteUserFilter: (_id: string) => void;
@@ -51,9 +52,10 @@ interface BoardContextType {
 }
 
 export const BoardContext = createContext<BoardContextType>({
-  userList: [],
+  getUserList: () => [],
   projectInfo: null,
   updateProject: () => console.log('Error'),
+  addUserToTeam: () => console.log('Error'),
   setSearchInputValue: () => console.log('Error'),
   addUserFilter: () => console.log('Error'),
   deleteUserFilter: () => console.log('Error'),
@@ -92,12 +94,28 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     setProjectInfo(projectData);
   }, []);
 
+  const getUserList = useCallback(() => {
+    return userList;
+  }, [userList]);
+
   const updateProject = useCallback(
     (updateData: ProjectDataToUpdate) => {
       const res = Object.assign(projectInfo ?? {}, updateData) as ProjectType | null;
       setProjectInfo(res);
     },
     [projectInfo]
+  );
+
+  const addUserToTeam = useCallback(
+    (_id: string) => {
+      const res = Object.assign({}, projectInfo);
+      res.team.push(_id);
+      setProjectInfo(res);
+      const user = userListData.find((data) => data._id === _id);
+      if (user) userList.push(user);
+      setUserList(userList);
+    },
+    [projectInfo, userList]
   );
 
   const addUserFilter = useCallback(
@@ -257,9 +275,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
   const values = useMemo(
     () => ({
-      userList,
+      getUserList,
       projectInfo,
       updateProject,
+      addUserToTeam,
       setSearchInputValue,
       addUserFilter,
       deleteUserFilter,
@@ -278,9 +297,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       swapColumn
     }),
     [
-      userList,
+      getUserList,
       projectInfo,
       updateProject,
+      addUserToTeam,
       setSearchInputValue,
       addUserFilter,
       deleteUserFilter,

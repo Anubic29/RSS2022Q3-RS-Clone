@@ -20,7 +20,7 @@ function Task(props: TaskProps) {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const { getTaskList, getFullNameUser, deleteTask } = useBoard();
 
-  const user = useMemo(() => getFullNameUser(props.executor), [props.executor]);
+  const user = useMemo(() => getFullNameUser(props.executor), [props.executor, getFullNameUser]);
 
   const deleteTaskCallback = useCallback(
     () => deleteTask(props._id),

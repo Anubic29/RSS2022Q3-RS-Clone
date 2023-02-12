@@ -145,7 +145,6 @@
 
         &:focus {
           outline-width: 0;
-          // transition: width ease 3s;
         }
 
         &:placeholder-shown {
@@ -187,14 +186,6 @@
     .user-list-container {
       display: flex;
       margin-left: 10px;
-
-      .user-list {
-        display: flex;
-
-        & > *:not(:nth-child(1)) {
-          margin-left: -10px;
-        }
-      }
 
       .btn-add-user {
         margin-left: 10px;

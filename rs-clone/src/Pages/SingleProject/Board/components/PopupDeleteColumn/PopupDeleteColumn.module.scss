@@ -83,14 +83,14 @@
 
       &--danger {
         color: $colorBackground;
-        background-color: $colorBackgroundDanger;
+        background-color: $colorBtnDanger;
 
         &:hover {
-          background-color: $colorBackgroundDangerHover;
+          background-color: $colorBtnDangerHover;
         }
 
         &:active {
-          background-color: $colorBackgroundDangerActive;
+          background-color: $colorBtnDangerActive;
         }
       }
     }

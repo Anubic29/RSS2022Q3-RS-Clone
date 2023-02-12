@@ -11,6 +11,7 @@ interface UserBtnProps {
   title: string;
   content: string | IconType;
   color: string;
+  onClick?: () => void;
 }
 
 function UserBtn(props: UserBtnProps) {
@@ -22,6 +23,8 @@ function UserBtn(props: UserBtnProps) {
       setChecked(!checked);
       if (!checked) addUserFilter(props._id);
       else deleteUserFilter(props._id);
+    } else if (props.type === 'btn' && props.onClick) {
+      props.onClick();
     }
   };
 

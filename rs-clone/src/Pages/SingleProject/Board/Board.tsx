@@ -4,11 +4,19 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../theme/variables';
-import { BtnAction, BtnMenuAction, UserBtn, SelectPanel, ColumnList } from './components';
+import {
+  BtnAction,
+  BtnMenuAction,
+  UserBtn,
+  SelectPanel,
+  ColumnList,
+  PopupAddUser,
+  UserList
+} from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
-import { convertLetterToHex } from '../../../utils/convertLetterToHex';
 import { useBoard } from '../../../contexts/Board.context';
+import { useOverlay } from '../../../contexts';
 import { Overlay } from '../../../Components';
 
 import styles from './Board.module.scss';
@@ -20,15 +28,24 @@ const options = [
 ];
 
 function Board() {
-  const { userList, projectInfo, updateProject, setSearchInputValue } = useBoard();
+  const { projectInfo, updateProject, setSearchInputValue } = useBoard();
+  const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
+  const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
 
   useEffect(() => {
     console.log(selectedGroup);
   }, [selectedGroup]);
+
+  useEffect(() => {
+    const author = projectInfo?.author;
+    const users = [...(projectInfo?.team ?? [])];
+    if (author) users.unshift(author);
+    setUserListDisplay(users);
+  }, [projectInfo]);
 
   const {
     ref,
@@ -185,32 +202,17 @@ function Board() {
                 </div>
               </div>
               <div className={styles['user-list-container']}>
-                <div className={styles['user-list']}>
-                  {projectInfo &&
-                    [projectInfo.author, ...projectInfo.team].map((userId) => {
-                      const user = userList.find((data) => data._id === userId);
-                      if (user) {
-                        const colorPart1 = convertLetterToHex(user.firstName[0], 3, '9');
-                        const colorPart2 = convertLetterToHex(user.lastName[0], 3, '9');
-                        return (
-                          <UserBtn
-                            key={user._id}
-                            type="checkbox"
-                            _id={user._id}
-                            title={`${user.firstName} ${user.lastName}`}
-                            content={user.firstName[0] + user.lastName[0]}
-                            color={`#${colorPart1}${colorPart2}`}
-                          />
-                        );
-                      }
-                    })}
-                </div>
+                <UserList userIdList={userListDisplay} />
                 <div className={styles['btn-add-user']}>
                   <UserBtn
                     type="btn"
                     title="Add user"
                     content={MdPersonAdd}
                     color="rgb(242, 242, 242)"
+                    onClick={() => {
+                      setChildrenBoard(<PopupAddUser />);
+                      setIsVisibleBoard(true);
+                    }}
                   />
                 </div>
               </div>

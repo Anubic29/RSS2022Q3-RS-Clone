@@ -1,0 +1,7 @@
+.user-list {
+  display: flex;
+
+  & > *:not(:nth-child(1)) {
+    margin-left: -10px;
+  }
+}
