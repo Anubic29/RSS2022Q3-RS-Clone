@@ -1,14 +1,13 @@
-import { useContext } from 'react';
 import { Button } from '../../../../../Components';
-import { OverlayContext } from '../../../../../contexts';
+import { useOverlay } from '../../../../../contexts';
 import projectBadges from '../../../../../Data/project-badges';
 import Styles from './ProjectBadgesPopup.module.scss';
 
 function ProjectBadgesPopup() {
-  const { setIsVisible } = useContext(OverlayContext);
+  const { setIsVisibleApp } = useOverlay();
 
   const onClickHandler = () => {
-    setIsVisible(false);
+    setIsVisibleApp(false);
   };
 
   return (

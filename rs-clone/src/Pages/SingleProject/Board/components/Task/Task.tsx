@@ -14,6 +14,7 @@ interface TaskProps {
   title: string;
   keyTask: string;
   executor: string;
+  typeDone?: boolean;
 }
 
 function Task(props: TaskProps) {
@@ -22,7 +23,7 @@ function Task(props: TaskProps) {
   const { getTaskList, getFullNameUser, deleteTask } = useBoard();
   const { ...item } = useOverlay();
 
-  const user = useMemo(() => getFullNameUser(props.executor), [props.executor]);
+  const user = useMemo(() => getFullNameUser(props.executor), [props.executor, getFullNameUser]);
 
   const showModal = () => {
     item.setIsVisible(true);
@@ -70,18 +71,25 @@ function Task(props: TaskProps) {
           </div>
           <div className={styles['info__key']}>{props.keyTask}</div>
         </div>
-        <div className={styles['user-block']}>
-          {props.executor !== 'auto' && user && (
-            <UserAvatar
-              title={`${user.firstName} ${user.lastName}`}
-              content={user.firstName[0] + user.lastName[0]}
-              color={`#${convertLetterToHex(user.firstName[0], 3, '9')}${convertLetterToHex(
-                user.lastName[0],
-                3,
-                '9'
-              )}`}
-            />
+        <div className={styles['sub-info']}>
+          {props.typeDone && (
+            <div className={styles['sub-info__icon-done']}>
+              <MdDone />
+            </div>
           )}
+          <div className={styles['user-block']}>
+            {props.executor !== 'auto' && user && (
+              <UserAvatar
+                title={`${user.firstName} ${user.lastName}`}
+                content={user.firstName[0] + user.lastName[0]}
+                color={`#${convertLetterToHex(user.firstName[0], 3, '9')}${convertLetterToHex(
+                  user.lastName[0],
+                  3,
+                  '9'
+                )}`}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

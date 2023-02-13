@@ -15,6 +15,7 @@ import styles from './ColumnBody.module.scss';
 interface ColumnBodyProps {
   id: string;
   tasks: TaskType[];
+  type: string;
   dragHandlersTask: {
     dragStartHandlerTask: (event: React.DragEvent, task: string) => void;
     dragEndHandlerTask: () => void;
@@ -62,6 +63,7 @@ function ColumnBody(props: ColumnBodyProps) {
               title={task.title}
               keyTask={`key-${task.id}`}
               executor={task.executor}
+              typeDone={props.type === 'final'}
             />
           </div>
         ))}

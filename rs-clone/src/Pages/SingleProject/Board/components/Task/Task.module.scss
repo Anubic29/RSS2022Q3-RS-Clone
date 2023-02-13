@@ -47,6 +47,20 @@
       }
     }
 
+    .sub-info {
+      display: flex;
+
+      &__icon-done {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5px;
+        font-size: 14px;
+        color: $colorIconDone;
+        margin-right: 15px;
+      }
+    }
+
     .user-block {
       width: 24px;
       height: 24px;

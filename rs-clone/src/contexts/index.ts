@@ -1,3 +1,3 @@
-import OverlayContext from './OverlayContext';
+import { OverlayProvider, useOverlay } from './Overlay.context';
 
-export { OverlayContext };
+export { OverlayProvider, useOverlay };
