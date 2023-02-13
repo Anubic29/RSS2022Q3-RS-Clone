@@ -13,13 +13,21 @@
 
   &__select {
     height: 32px;
+    flex: 1;
     padding: 0 10px;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     background-color: $colorBackgroundColumn;
     transition: background-color ease .3s;
     border-radius: 5px;
     font-size: 14px;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+    }
 
     &:hover {
       cursor: pointer;

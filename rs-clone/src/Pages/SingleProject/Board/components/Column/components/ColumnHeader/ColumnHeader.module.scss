@@ -23,6 +23,7 @@
 
     &__container {
       max-width: calc(100% - 45px);
+      display: flex;
     }
 
     &__text {
@@ -43,6 +44,12 @@
         background-color: $colorBackgroundHover;
         cursor: text;
       }
+    }
+
+    &__icon-done {
+      margin-left: 5px;
+      font-size: 14px;
+      color: $colorIconDone;
     }
 
     .content {

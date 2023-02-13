@@ -1,17 +1,16 @@
-import { useContext } from 'react';
 import { Button, Dropdown, ProjectAvatar } from '../../../Components';
-import { OverlayContext } from '../../../contexts';
+import { useOverlay } from '../../../contexts';
 import cardsData from '../../../Data/FakeProjectCard';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './Components';
 import Styles from './Settings.module.scss';
 
 function Settings() {
   const testData = cardsData[0];
-  const { setIsVisible, setChildren } = useContext(OverlayContext);
+  const { setIsVisibleApp, setChildrenApp } = useOverlay();
 
   const showPopupHandler = () => {
-    setChildren(<ProjectBadgesPopup />);
-    setIsVisible(true);
+    setChildrenApp(<ProjectBadgesPopup />);
+    setIsVisibleApp(true);
   };
 
   return (

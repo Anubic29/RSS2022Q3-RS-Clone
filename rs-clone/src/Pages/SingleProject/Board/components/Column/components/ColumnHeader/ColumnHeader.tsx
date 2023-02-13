@@ -9,6 +9,8 @@ import { BtnMenuAction, BtnAction } from '../../../';
 import { MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../../../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../../../../../contexts/Board.context';
+import { useOverlay } from '../../../../../../../contexts';
+import { PopupDeleteColumn } from '../../../';
 
 import styles from './ColumnHeader.module.scss';
 
@@ -19,12 +21,15 @@ interface ColumnHeaderProps {
   stickyHeader?: boolean;
   dragStartHandlerColumn: (event: React.DragEvent, column: string) => void;
   dragEndHandlerColumn: (event: React.DragEvent) => void;
+  typeDone?: boolean;
   typeCreate?: boolean;
   setIsComponentVisibleCreate?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ColumnHeader(props: ColumnHeaderProps) {
-  const { createColumn, updateColumn, deleteAllTaskInColumn } = useBoard();
+  const { createColumn, updateColumn, deleteAllTaskInColumn, deleteColumn, getColumnCount } =
+    useBoard();
+  const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [title, setTitle] = useState(props.title);
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
@@ -39,9 +44,21 @@ function ColumnHeader(props: ColumnHeaderProps) {
       {
         title: 'Remove All Tasks',
         callback: () => deleteAllTaskInColumn(props.id)
+      },
+      {
+        title: 'Remove',
+        callback: () => {
+          if (props.tasksCount > 0) {
+            setChildrenBoard(<PopupDeleteColumn _id={props.id} title={props.title} />);
+            setIsVisibleBoard(true);
+          } else {
+            deleteColumn(props.id);
+          }
+        },
+        blocked: getColumnCount() === 1
       }
     ];
-  }, [props.id, deleteAllTaskInColumn]);
+  }, [props.id, props.tasksCount, deleteAllTaskInColumn, deleteColumn, getColumnCount]);
 
   const {
     ref,
@@ -99,6 +116,11 @@ function ColumnHeader(props: ColumnHeaderProps) {
                 <span>{title.length >= 10 ? title.substring(0, 9) + '...' : title}</span>
                 <span className={styles.tasks}>{props.tasksCount} tasks</span>
               </span>
+              {props.typeDone && (
+                <div className={styles['title__form__icon-done']}>
+                  <MdDone />
+                </div>
+              )}
             </span>
           </span>
         )}

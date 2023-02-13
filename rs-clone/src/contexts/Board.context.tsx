@@ -14,42 +14,63 @@ type TaskDataToUpdate = {
   columnId?: string;
 };
 
+type ProjectDataToUpdate = {
+  title?: string;
+  description?: string;
+  key?: string;
+  boardTitle?: string;
+  author?: string;
+  pathImage?: string;
+};
+
 export type UserDataForAvatar = {
   firstName: string;
   lastName: string;
 };
 
 interface BoardContextType {
-  userList: UserType[];
+  getUserList: () => UserType[];
   projectInfo: ProjectType | null;
+  updateProject: (updateData: ProjectDataToUpdate) => void;
+  addUserToTeam: (_id: string) => void;
+  setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
   deleteUserFilter: (_id: string) => void;
   getTaskList: () => TaskType[];
-  columnList: ColumnProjectType[];
+  getColumnList: () => ColumnProjectType[];
+  getColumnCount: () => number;
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
   createTask: (columnId: string, taskTitle: string) => void;
   updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
   deleteTask: (taskId: string) => void;
   deleteAllTaskInColumn: (_id: string) => void;
+  moveTasksToColumn: (_cuurId: string, _newId: string) => void;
   createColumn: (title: string) => void;
   updateColumn: (_id: string, title: string) => void;
+  deleteColumn: (_id: string) => void;
   swapColumn: (_idActive: string, _id: string) => void;
 }
 
 export const BoardContext = createContext<BoardContextType>({
-  userList: [],
+  getUserList: () => [],
   projectInfo: null,
+  updateProject: () => console.log('Error'),
+  addUserToTeam: () => console.log('Error'),
+  setSearchInputValue: () => console.log('Error'),
   addUserFilter: () => console.log('Error'),
   deleteUserFilter: () => console.log('Error'),
   getTaskList: () => [],
-  columnList: [],
+  getColumnList: () => [],
+  getColumnCount: () => 0,
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
   createTask: () => console.log('Error'),
   updateTask: () => console.log('Error'),
   deleteTask: () => console.log('Error'),
   deleteAllTaskInColumn: () => console.log('Error'),
+  moveTasksToColumn: () => console.log('Error'),
   createColumn: () => console.log('Error'),
   updateColumn: () => console.log('Error'),
+  deleteColumn: () => console.log('Error'),
   swapColumn: () => console.log('Error')
 });
 
@@ -60,6 +81,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   const [taskList, setTaskList] = useState<TaskType[]>([]);
 
   const [userListFilter, setUserListFilter] = useState<string[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('');
 
   useEffect(() => {
     setUserList(
@@ -71,6 +93,30 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     setTaskList(taskListData);
     setProjectInfo(projectData);
   }, []);
+
+  const getUserList = useCallback(() => {
+    return userList;
+  }, [userList]);
+
+  const updateProject = useCallback(
+    (updateData: ProjectDataToUpdate) => {
+      const res = Object.assign(projectInfo ?? {}, updateData) as ProjectType | null;
+      setProjectInfo(res);
+    },
+    [projectInfo]
+  );
+
+  const addUserToTeam = useCallback(
+    (_id: string) => {
+      const res = Object.assign({}, projectInfo);
+      res.team.push(_id);
+      setProjectInfo(res);
+      const user = userListData.find((data) => data._id === _id);
+      if (user) userList.push(user);
+      setUserList(userList);
+    },
+    [projectInfo, userList]
+  );
 
   const addUserFilter = useCallback(
     (_id: string) => {
@@ -86,12 +132,24 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [userListFilter]
   );
 
+  const setSearchInputValue = useCallback((value: string) => {
+    setSearchValue(value);
+  }, []);
+
   const getTaskList = useCallback(() => {
-    let res = taskList;
+    let res = taskList.filter((data) => data.title.includes(searchValue));
     if (userListFilter.length > 0)
       res = res.filter((data) => userListFilter.includes(data.executor));
     return res;
-  }, [taskList, userListFilter]);
+  }, [taskList, userListFilter, searchValue]);
+
+  const getColumnList = useCallback(() => {
+    return columnList;
+  }, [columnList]);
+
+  const getColumnCount = useCallback(() => {
+    return columnList.length;
+  }, [columnList]);
 
   const getFullNameUser = useCallback(
     (_id: string) => {
@@ -148,6 +206,18 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [taskList]
   );
 
+  const moveTasksToColumn = useCallback(
+    (_currId: string, _newId: string) => {
+      const res = taskList.map((task) => {
+        if (task.columnId === _currId) task.columnId = _newId;
+        return task;
+      });
+
+      setTaskList(res);
+    },
+    [taskList]
+  );
+
   const deleteAllTaskInColumn = useCallback(
     (_id: string) => {
       const res = taskList.filter((data) => data.columnId !== _id);
@@ -181,6 +251,16 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [columnList]
   );
 
+  const deleteColumn = useCallback(
+    (_id: string) => {
+      const idx = columnList.findIndex((data) => data._id === _id);
+      columnList.splice(idx, 1);
+
+      setColumnList([...columnList]);
+    },
+    [columnList]
+  );
+
   const swapColumn = useCallback(
     (_idActive: string, _id: string) => {
       const activeIdx = columnList.findIndex((data) => data._id === _idActive);
@@ -195,35 +275,47 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
   const values = useMemo(
     () => ({
-      userList,
+      getUserList,
       projectInfo,
+      updateProject,
+      addUserToTeam,
+      setSearchInputValue,
       addUserFilter,
       deleteUserFilter,
       getTaskList,
-      columnList,
+      getColumnList,
+      getColumnCount,
       getFullNameUser,
       createTask,
       updateTask,
       deleteTask,
       deleteAllTaskInColumn,
+      moveTasksToColumn,
       createColumn,
       updateColumn,
+      deleteColumn,
       swapColumn
     }),
     [
-      userList,
+      getUserList,
       projectInfo,
+      updateProject,
+      addUserToTeam,
+      setSearchInputValue,
       addUserFilter,
       deleteUserFilter,
       getTaskList,
-      columnList,
+      getColumnList,
+      getColumnCount,
       getFullNameUser,
       createTask,
       updateTask,
       deleteTask,
       deleteAllTaskInColumn,
+      moveTasksToColumn,
       createColumn,
       updateColumn,
+      deleteColumn,
       swapColumn
     ]
   );
