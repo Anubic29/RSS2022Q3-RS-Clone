@@ -6,8 +6,14 @@ import useComponentVisible from '../../../../../hooks/useComponentVisible/useCom
 import styles from './BtnMenuAction.module.scss';
 import { useEffect } from 'react';
 
+type Option = {
+  title: string;
+  callback: () => void;
+  blocked?: boolean;
+};
+
 interface BtnMenuActionProps {
-  options: { title: string; callback: () => void }[];
+  options: Option[];
   btnBackgrColorDefault?: string;
   btnBackgrColorHover: string;
   btnBackgrColorActive: string;
@@ -36,17 +42,24 @@ function BtnMenuAction(props: BtnMenuActionProps) {
       </div>
       {isComponentVisible && (
         <div className={styles['menu__list']}>
-          {props.options.map((option, idx) => (
-            <div
-              className={styles['menu__option']}
-              key={idx}
-              onClick={() => {
-                option.callback();
-                setIsComponentVisible(false);
-              }}>
-              {option.title}
-            </div>
-          ))}
+          {props.options.map((option, idx) => {
+            const attributes = {
+              className: !option.blocked
+                ? styles['menu__option']
+                : `${styles['menu__option']} ${styles['menu__option--blocked']}`,
+              onClick: !option.blocked
+                ? () => {
+                    option.callback();
+                    setIsComponentVisible(false);
+                  }
+                : undefined
+            };
+            return (
+              <div key={idx} {...attributes}>
+                {option.title}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

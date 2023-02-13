@@ -13,7 +13,7 @@ import styles from './ColumnList.module.scss';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 
 function ColumnList() {
-  const { getTaskList, columnList, updateTask, swapColumn } = useBoard();
+  const { getTaskList, getColumnList, updateTask, swapColumn } = useBoard();
   const [isScrolledList, setIsScrolledList] = useState(false);
 
   const { isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
@@ -96,7 +96,7 @@ function ColumnList() {
       <div className={styles['column-list']}>
         <div className={styles['curtain'] + ' ' + styles['left']}></div>
         <div className={styles['list']}>
-          {columnList.map((column) => (
+          {getColumnList().map((column) => (
             <div
               className={styles['column-block']}
               key={column._id}
@@ -108,11 +108,13 @@ function ColumnList() {
                   title={column.title}
                   tasksCount={getTaskList().filter((task) => task.columnId === column._id).length}
                   stickyHeader={isScrolledList}
+                  typeDone={column.type === 'final'}
                   dragStartHandlerColumn={dragStartHandlerColumn}
                   dragEndHandlerColumn={dragEndHandlerColumn}
                 />
                 <ColumnBody
                   id={column._id}
+                  type={column.type}
                   tasks={getTaskList().filter((task) => task.columnId === column._id)}
                   dragHandlersTask={dragHandlersTask}
                 />
@@ -122,23 +124,21 @@ function ColumnList() {
           {isComponentVisible && (
             <div className={styles['column-block']}>
               <Column>
-                <div>
-                  <ColumnHeader
-                    id={'new'}
-                    title={''}
-                    tasksCount={0}
-                    stickyHeader={isScrolledList}
-                    dragStartHandlerColumn={dragStartHandlerColumn}
-                    dragEndHandlerColumn={dragEndHandlerColumn}
-                    typeCreate={true}
-                    setIsComponentVisibleCreate={setIsComponentVisible}
-                  />
-                </div>
+                <ColumnHeader
+                  id={'new'}
+                  title={''}
+                  tasksCount={0}
+                  stickyHeader={isScrolledList}
+                  dragStartHandlerColumn={dragStartHandlerColumn}
+                  dragEndHandlerColumn={dragEndHandlerColumn}
+                  typeCreate={true}
+                  setIsComponentVisibleCreate={setIsComponentVisible}
+                />
               </Column>
             </div>
           )}
         </div>
-        {columnList.length < 5 && (
+        {getColumnList().length < 5 && (
           <div className={styles['btn-add-container']}>
             <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
               <BtnAction
