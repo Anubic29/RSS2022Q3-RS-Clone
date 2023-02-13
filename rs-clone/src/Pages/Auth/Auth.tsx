@@ -21,17 +21,19 @@ function Auth() {
   };
 
   return (
-    <div className="Auth">
-      <Modal translate={'twenty'}>
-        <div className="login-wrap">
-          <BoxWithShadow>
-            {isLoadingData && <LoaderImg />}
-            {showResult && <Message text={text} />}
-            <Outlet context={[change, changeMessage, setMessageText]} />
-          </BoxWithShadow>
-          <div className={classes.logo}></div>
-        </div>
-      </Modal>
+    <div className={classes.backdrop}>
+      <div className={classes.modal_wrap}>
+        <Modal translate={'twenty'}>
+          <div className={classes['login-wrap']}>
+            <BoxWithShadow>
+              {isLoadingData && <LoaderImg />}
+              {showResult && <Message text={text} />}
+              <Outlet context={[change, changeMessage, setMessageText]} />
+            </BoxWithShadow>
+            <div className={classes.logo}></div>
+          </div>
+        </Modal>
+      </div>
       <div>
         <img
           className={classes.login_bgimg__left}

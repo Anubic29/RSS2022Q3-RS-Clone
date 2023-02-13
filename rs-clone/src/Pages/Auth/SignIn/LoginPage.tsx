@@ -1,7 +1,12 @@
 import LoginForm from './Components/LoginForm';
+import classes from './LoginPage.module.scss';
 
 const LoginPage = () => {
-  return <LoginForm />;
+  return (
+    <div className={classes.login_outerWrap}>
+      <LoginForm />
+    </div>
+  );
 };
 
 export default LoginPage;
