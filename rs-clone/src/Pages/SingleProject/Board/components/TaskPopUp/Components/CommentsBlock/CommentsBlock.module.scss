@@ -1,0 +1,69 @@
+@import '../../../../../../../theme/variables.scss';
+
+.commentsWrap {
+  display: block;
+}
+
+.commentDetails_editorWrap {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 10px;
+  position: sticky;
+  top: 31px;
+  background-color: white;
+  z-index: 2;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $colorLightGrey;
+}
+.commentDetails_savedDescript {
+  padding-left: 15px;
+  list-style-position: inside;
+  padding-left: 15px;
+  list-style-position: inside;
+  height: auto;
+  transition: all ease-in 200ms;
+  line-height: 40px;
+  vertical-align: middle;
+  border: $colorLightGrey 1px solid;
+  border-radius: 5px;
+    &:hover {
+      border-color: $colorBorder;
+    }
+}
+
+.commentDetails_commentColumn {
+  width: 100%;
+}
+
+.editor {
+  overflow: hidden;
+}
+
+.commentDetails_savedDescript * li::marker {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    text-indent: 0px !important;
+    text-align: right !important;
+    text-align-last: start !important;
+}
+
+.commentDetails_savedDescript > ol >li {
+  list-style-type: decimal !important;
+}
+
+.commentDetails_savedDescript > ul >li {
+  list-style-type: disc !important;
+}
+
+.commentDetails_savedDescript > u {
+  text-decoration: underline;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}

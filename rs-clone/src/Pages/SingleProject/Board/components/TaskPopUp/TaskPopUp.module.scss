@@ -3,17 +3,44 @@
 h6 {
   color: $colorContent;
   font-size: 14px;
+  margin-top: 20px;
 }
 
 .taskDetails_wrap {
   padding: 30px;
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 1100px;
+
 }
 
 .taskDetails_col__left {
-  width: 60%
+  width: 60%;
+  max-height: 500px;
+  overflow: scroll;
+  padding-right: 20px;
+    
+  &::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+}
+
+/* Track */
+  &::-webkit-scrollbar-track {
+  background: $colorWhite;
+}
+
+/* Handle */
+  &::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 }
 
 .taskDetails_topLine {
@@ -22,4 +49,12 @@ h6 {
 
 .taskDetails_descr__title {
   padding-left: 10px;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
 }

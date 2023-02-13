@@ -49,7 +49,7 @@ function Task(props: TaskProps) {
       onMouseOver={() => setHoverTask(true)}
       onMouseOut={() => setHoverTask(false)}>
       {(hoverTask || isActiveMenu) && (
-        <div className={styles['btn-more']}>
+        <div onClick={(e) => e.stopPropagation()} className={styles['btn-more']}>
           <BtnMenuAction
             options={optionsBtnMenu}
             btnBackgrColorHover={colorBackgroundHover}

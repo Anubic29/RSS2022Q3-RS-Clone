@@ -1,8 +1,15 @@
+import { ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsLink45Deg } from 'react-icons/bs';
 import Modal from '../../../../../Components/Modal/Modal';
 import EditableTitle from '../../../../../Components/EditableTitle/EditableTitle';
 import classes from './TaskPopUp.module.scss';
+import DescriptionBlock from './Components/DescriptionBlock/DescriptionBlock';
+import CommentsBlock from './Components/CommentsBlock/CommentsBlock';
+
+// interface SavedValue {
+//   descriptValue: string | JsxElement | JsxElement[];
+// }
 
 const TaskPopUp = () => {
   const data = {
@@ -27,8 +34,12 @@ const TaskPopUp = () => {
               <div className={classes.taskDetails_taskActions}></div>
               <div className={classes.taskDetails_taskDescriptionBlock}>
                 <h6 className={classes.taskDetails_descr__title}>Description</h6>
+                <DescriptionBlock />
               </div>
-              <div className={classes.taskDetails_commentsBlock}></div>
+              <div className={classes.taskDetails_commentsBlock}>
+                <h6 className={classes.taskDetails_descr__title}>Comments</h6>
+                <CommentsBlock />
+              </div>
             </div>
             <div className={classes.taskDetails_col__right}>
               <div className={classes.taskDetails_topLine}></div>
