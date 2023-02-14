@@ -11,7 +11,8 @@ const schema = new Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false,
+    default: ''
   },
   author: {
     type: String,
