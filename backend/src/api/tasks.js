@@ -181,5 +181,15 @@ router.delete('/:id/comments/:commentId', authenticateToken, async (req, res) =>
   }
 });
 
+router.delete('/by-project/:projectId', authenticateToken, async (req, res) => {
+  try {
+    await Task.deleteMany({ projectId: req.params.projectId });
+    res.json(true);
+  } catch(error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+})
+
 
 module.exports = router;
