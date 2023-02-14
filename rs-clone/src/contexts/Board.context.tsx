@@ -40,7 +40,7 @@ interface BoardContextType {
   getColumnList: () => ColumnProjectType[];
   getColumnCount: () => number;
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
-  createTask: (columnId: string, taskTitle: string) => void;
+  createTask: (columnId: string, taskTitle: string, userId?: string) => void;
   updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
   deleteTask: (taskId: string) => void;
   deleteAllTaskInColumn: (_id: string) => void;
@@ -165,14 +165,14 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const createTask = useCallback(
-    (columnId: string, taskTitle: string) => {
+    (columnId: string, taskTitle: string, userId?: string) => {
       const task: TaskType = {
         _id: '6234564adgasdasd4adsg',
         id: 0,
         title: taskTitle,
         description: '',
         author: projectInfo?.author ?? '',
-        executor: 'auto',
+        executor: userId ?? 'auto',
         projectId: projectInfo?._id ?? '',
         columnId: columnId,
         commentList: [],

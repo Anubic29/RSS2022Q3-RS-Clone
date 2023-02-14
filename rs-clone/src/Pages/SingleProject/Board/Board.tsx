@@ -21,12 +21,6 @@ import { Overlay } from '../../../Components';
 
 import styles from './Board.module.scss';
 
-const options = [
-  { value: '', text: 'No' },
-  { value: 'executor', text: 'Executor' },
-  { value: 'tasks', text: 'Tasks' }
-];
-
 function Board() {
   const { projectInfo, updateProject, setSearchInputValue } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
@@ -35,10 +29,6 @@ function Board() {
   const [searchValue, setSearchValue] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
-
-  useEffect(() => {
-    console.log(selectedGroup);
-  }, [selectedGroup]);
 
   useEffect(() => {
     const author = projectInfo?.author;
@@ -64,6 +54,13 @@ function Board() {
   useEffect(() => {
     setTitleError(boardTitle.length === 0);
   }, [boardTitle]);
+
+  const optionsGroupSelect = useMemo(() => {
+    return [
+      { value: '', text: 'No' },
+      { value: 'Executor', text: 'Executor' }
+    ];
+  }, []);
 
   const optionsBtnMenu = useMemo(() => {
     return [
@@ -220,13 +217,13 @@ function Board() {
             <div className={styles['command-panel__group-block']}>
               <SelectPanel
                 title="Group by: "
-                options={options}
+                options={optionsGroupSelect}
                 setSelectedValue={setSelectedGroup}
               />
             </div>
           </div>
         </div>
-        <ColumnList />
+        <ColumnList group={selectedGroup === 'Executor' ? selectedGroup : ''} />
       </div>
       <Overlay scope={'Board'} />
     </>
