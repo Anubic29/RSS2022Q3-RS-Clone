@@ -466,3 +466,31 @@ None
 
 Data Params:
 None
+
+
+- Delete Tasks By Column
+URL:
+/api/tasks/by-column/:columnId
+
+URL Params:
+columnId - String
+
+Query Params:
+None
+
+Data Params:
+None
+
+
+- Delete Tasks By Project
+URL:
+/api/tasks/by-project/:projectId
+
+URL Params:
+projectId - String
+
+Query Params:
+None
+
+Data Params:
+None
