@@ -75,6 +75,7 @@ router.post('/', authenticateToken, async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       key: req.body.key,
+      boardTitle: `Board ${req.body.title}`,
       author: req.body.author,
       team: [],
       pathImage: req.body.pathImage,

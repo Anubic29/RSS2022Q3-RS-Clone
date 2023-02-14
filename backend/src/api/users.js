@@ -21,7 +21,15 @@ function isCorrectUserNoted(body) {
 router.get('/', authenticateToken, async (req, res) => {
   try {
     const users = await User.find({})
-    res.json(users);
+    const userList = users.map((data) => {
+      return {
+        _id: data._id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        mail: data.mail
+      };
+    });
+    res.json(userList);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
@@ -43,7 +51,14 @@ router.get('/:id/info', authenticateToken, async (req, res) => {
     const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found');
 
-    res.json(user);
+    const data = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      mail: user.mail
+    }
+
+    res.json(data);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
