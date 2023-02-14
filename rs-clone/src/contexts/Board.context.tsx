@@ -1,5 +1,6 @@
 import { useContext, createContext, useState, useMemo, useEffect, useCallback } from 'react';
-import { projectData, taskListData, userListData } from '../Data/FakeProjectPageData';
+import { projectData, userListData, CurrentUserId } from '../Data/FakeProjectPageData';
+import api from '../api';
 import ColumnProjectType from '../Types/Project/ColumnProjectType';
 import ProjectType from '../Types/Project/ProjectType';
 import TaskType from '../Types/Task/TaskType';
@@ -29,6 +30,8 @@ export type UserDataForAvatar = {
 };
 
 interface BoardContextType {
+  setProjectDataBack: (ProjectId: string) => void;
+  setTasksDataBack: (ProjectId: string) => void;
   getUserList: () => UserType[];
   projectInfo: ProjectType | null;
   updateProject: (updateData: ProjectDataToUpdate) => void;
@@ -52,6 +55,8 @@ interface BoardContextType {
 }
 
 export const BoardContext = createContext<BoardContextType>({
+  setProjectDataBack: () => console.log('Error'),
+  setTasksDataBack: () => console.log('Error'),
   getUserList: () => [],
   projectInfo: null,
   updateProject: () => console.log('Error'),
@@ -89,9 +94,19 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         (data) => data._id === projectData.author || projectData.team.includes(data._id)
       )
     );
-    setColumnList(projectData.columnList);
-    setTaskList(taskListData);
-    setProjectInfo(projectData);
+  }, []);
+
+  const setProjectDataBack = useCallback(async (ProjectId: string) => {
+    const response = await api.projects.getData(ProjectId);
+    const data = response.data;
+    setProjectInfo(data);
+    setColumnList(data.columnList);
+  }, []);
+
+  const setTasksDataBack = useCallback(async (ProjectId: string) => {
+    const response = await api.tasks.getAllData(`?project=${ProjectId}`);
+    const data = response.data;
+    setTaskList(data);
   }, []);
 
   const getUserList = useCallback(() => {
@@ -165,43 +180,57 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const createTask = useCallback(
-    (columnId: string, taskTitle: string, userId?: string) => {
-      const task: TaskType = {
-        _id: '6234564adgasdasd4adsg',
-        id: 0,
-        title: taskTitle,
-        description: '',
-        author: projectInfo?.author ?? '',
-        executor: userId ?? 'auto',
-        projectId: projectInfo?._id ?? '',
-        columnId: columnId,
-        commentList: [],
-        __v: 0
-      };
-
-      setTaskList([...taskList, task]);
+    async (columnId: string, taskTitle: string, userId?: string) => {
+      if (projectInfo) {
+        const payload = {
+          title: taskTitle,
+          description: '',
+          author: CurrentUserId,
+          executor: userId ?? 'auto',
+          projectId: projectInfo._id,
+          columnId: columnId
+        };
+        const response = await api.tasks.postData(payload);
+        if (response.status === 200) {
+          setTaskList([...taskList, response.data]);
+        }
+      }
     },
     [taskList, projectInfo]
   );
 
   const updateTask = useCallback(
-    (_id: string, updateData: TaskDataToUpdate) => {
+    async (_id: string, updateData: TaskDataToUpdate) => {
       const idx = taskList.findIndex((data) => data._id === _id);
-      const task = Object.assign({}, taskList[idx]);
-      const updatedTask = Object.assign(task, updateData);
 
-      taskList.splice(idx, 1, updatedTask);
-      setTaskList([...taskList]);
+      const payload = {
+        title: updateData.title ?? taskList[idx].title,
+        description: updateData.description ?? taskList[idx].description,
+        author: updateData.author ?? taskList[idx].author,
+        executor: updateData.executor ?? taskList[idx].executor,
+        projectId: updateData.projectId ?? taskList[idx].projectId,
+        columnId: updateData.columnId ?? taskList[idx].columnId
+      };
+      const response = await api.tasks.updateData(_id, payload);
+
+      if (response.status === 200) {
+        taskList.splice(idx, 1, response.data);
+        setTaskList([...taskList]);
+      }
     },
     [taskList]
   );
 
   const deleteTask = useCallback(
-    (taskId: string) => {
-      const idx = taskList.findIndex((data) => data._id === taskId);
-      taskList.splice(idx, 1);
+    async (taskId: string) => {
+      const response = await api.tasks.deleteData(taskId);
 
-      setTaskList([...taskList]);
+      if (response.status === 200 && response.data) {
+        const idx = taskList.findIndex((data) => data._id === taskId);
+        taskList.splice(idx, 1);
+
+        setTaskList([...taskList]);
+      }
     },
     [taskList]
   );
@@ -275,6 +304,8 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
   const values = useMemo(
     () => ({
+      setProjectDataBack,
+      setTasksDataBack,
       getUserList,
       projectInfo,
       updateProject,
@@ -297,6 +328,8 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       swapColumn
     }),
     [
+      setProjectDataBack,
+      setTasksDataBack,
       getUserList,
       projectInfo,
       updateProject,

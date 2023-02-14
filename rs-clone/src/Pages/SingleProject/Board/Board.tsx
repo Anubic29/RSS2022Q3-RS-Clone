@@ -18,17 +18,24 @@ import useComponentVisible from '../../../hooks/useComponentVisible/useComponent
 import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
 import { Overlay } from '../../../Components';
+import { ProjectId } from '../../../Data/FakeProjectPageData';
 
 import styles from './Board.module.scss';
 
 function Board() {
-  const { projectInfo, updateProject, setSearchInputValue } = useBoard();
+  const { projectInfo, updateProject, setSearchInputValue, setProjectDataBack, setTasksDataBack } =
+    useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
+
+  useEffect(() => {
+    setProjectDataBack(ProjectId);
+    setTasksDataBack(ProjectId);
+  }, []);
 
   useEffect(() => {
     const author = projectInfo?.author;
