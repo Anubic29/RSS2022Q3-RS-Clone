@@ -241,13 +241,17 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const moveTasksToColumn = useCallback(
-    (_currId: string, _newId: string) => {
-      const res = taskList.map((task) => {
-        if (task.columnId === _currId) task.columnId = _newId;
-        return task;
-      });
+    async (currId: string, newId: string) => {
+      const response = await api.tasks.updateAllDataColumn({ currId, newId });
 
-      setTaskList(res);
+      if (response.status === 200 && response.data) {
+        const res = taskList.map((task) => {
+          if (task.columnId === currId) task.columnId = newId;
+          return task;
+        });
+
+        setTaskList(res);
+      }
     },
     [taskList]
   );

@@ -12,6 +12,9 @@ export default function (instance: AxiosInstance) {
     updateData(taskId: string, payload: { [key: string]: string }) {
       return instance.put<TaskType>(`api/tasks/${taskId}/info`, payload);
     },
+    updateAllDataColumn(payload: { currId: string; newId: string }) {
+      return instance.put<boolean>('api/tasks/by-column', payload);
+    },
     deleteData(taskId: string) {
       return instance.delete<boolean>(`api/tasks/${taskId}/info`);
     },
