@@ -20,4 +20,8 @@
 
 .container {
   padding: 0 40px;
+  
+  @media screen and (max-width: 479px) {
+    padding: 0 15px;
+  }
 }

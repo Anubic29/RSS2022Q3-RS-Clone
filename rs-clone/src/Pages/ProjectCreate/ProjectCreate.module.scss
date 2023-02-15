@@ -9,15 +9,28 @@
   flex: 0 1 900px;
   max-width: 900px;
   margin: 0 auto;
+
+  @media screen and (max-width: 1023px) {
+    max-width: initial;
+    padding: 15px;
+  }
 }
 
 .Row {
   display: flex;
   gap: 60px;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
 }
 
 .Col {
   width: 40%;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 }
 
 .ColRight {

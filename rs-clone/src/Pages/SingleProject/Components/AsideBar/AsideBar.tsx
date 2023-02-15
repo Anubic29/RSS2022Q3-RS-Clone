@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../Components';
 import { AsideNavElement } from '../';
@@ -7,13 +7,14 @@ import Styles from './AsideBar.module.scss';
 import { useLocation } from 'react-router-dom';
 
 function AsideBar() {
+  const currentScreenWidth = window.screen.width;
   const location = useLocation();
   const currentPath = location.pathname.split('/').at(-1);
   const [isActive, setIsActive] = useState({
-    board: currentPath === 'settings' ? false : true,
-    settings: currentPath === 'settings' ? true : false
+    board: currentPath !== 'settings',
+    settings: currentPath === 'settings'
   });
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= 767);
   const testProjectData = cardsData[0];
 
   const changeActiveStateHandler = (event: React.MouseEvent<HTMLElement>) => {

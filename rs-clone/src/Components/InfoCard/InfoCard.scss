@@ -11,6 +11,10 @@
   flex: 0 0 25%;
   padding: 20px;
   background: #f4f5f7;
+
+  @media screen and (max-width: 479px) {
+    padding: 10px;
+  }
 }
 
 .InfoCard-picture {
@@ -24,6 +28,10 @@
   gap: 5px;
   padding: 16px 50px 16px 24px;
   background: #ffffff;
+
+  @media screen and (max-width: 479px) {
+    padding: 15px;
+  }
 }
 
 .InfoCard-title {

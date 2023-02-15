@@ -12,6 +12,11 @@
       display: flex;
     }
   }
+
+  @media screen and (max-width: 767px) {
+    position: absolute;
+    height: 100%;
+  }
 }
 
 .AsideBarCollapsed {
@@ -31,6 +36,11 @@
 
   .CollapseButton {
     display: flex;
+  }
+
+  @media screen and (max-width: 767px) {
+    position: absolute;
+    height: 100%;
   }
 }
 
@@ -107,5 +117,9 @@
     & > * {
       color: #ffffff;
     }
+  }
+
+  @media screen and (max-width: 767px) {
+    display: flex;
   }
 }
