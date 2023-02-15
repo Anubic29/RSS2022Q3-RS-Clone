@@ -11,7 +11,8 @@ URL Params:
 None
 
 Query Params:
-None
+mail: String (optional)
+limit: Number (optional)
 
 Data Params:
 None
