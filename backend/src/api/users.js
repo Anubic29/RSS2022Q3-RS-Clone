@@ -21,7 +21,7 @@ function isCorrectUserNoted(body) {
 router.get('/', authenticateToken, async (req, res) => {
   try {
     const users = await User.find({})
-    const userList = users.map((data) => {
+    let userList = users.map((data) => {
       return {
         _id: data._id,
         firstName: data.firstName,
@@ -29,6 +29,12 @@ router.get('/', authenticateToken, async (req, res) => {
         mail: data.mail
       };
     });
+    if (req.query.mail) {
+      userList = userList.filter((data) => data.mail.includes(req.query.mail));
+    }
+    if (req.query.limit && !Number.isNaN(+req.query.limit)) {
+      userList = userList.slice(0, +req.query.limit);
+    }
     res.json(userList);
   } catch (error) {
     console.error(error);
