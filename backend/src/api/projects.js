@@ -167,6 +167,26 @@ router.put('/:id/info', authenticateToken, async (req, res) => {
   }
 });
 
+router.put('/:id/columns', authenticateToken, async (req, res) => {
+  try {
+    if (!req.body.columnList) throw new Error('Not found property');
+    req.body.columnList.forEach((column, idx) => {
+      if (!isCorrectProjectColumn(column)) throw new Error(`Incorrect column #${idx}`);
+    });
+
+    const project = (await Project.find({ _id: req.params.id }))[0];
+    if (!project) throw new Error('Not found');
+
+    project.columnList = req.body.columnList;
+
+    await project.save();
+    res.json(project.columnList);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
 router.put('/:id/columns/:columnId', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectProjectColumn(req.body)) throw new Error('Not found property');
