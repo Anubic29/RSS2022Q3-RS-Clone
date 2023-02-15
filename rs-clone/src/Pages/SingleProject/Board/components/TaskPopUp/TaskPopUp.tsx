@@ -14,6 +14,7 @@ import useComponentVisible from '../../../../../hooks/useComponentVisible/useCom
 import DetailsBlock from './Components/DetailsBlock/DetailsBlock';
 import { useOverlay } from '../../../../../contexts/Overlay.context';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useClipboard } from 'use-clipboard-copy';
 
 const TaskPopUp = () => {
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
@@ -21,9 +22,9 @@ const TaskPopUp = () => {
     title: 'Editable Title'
   };
 
+  const clipboard = useClipboard();
   const params = useParams();
   const projectkId = params.id;
-  console.log('params', projectkId);
   const navigate = useNavigate();
 
   const taskStates = ['dev ready', 'in review', 'in dev', 'done'];
@@ -55,9 +56,10 @@ const TaskPopUp = () => {
   const taskStateHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     e.stopPropagation();
     const target = e.target as HTMLTextAreaElement;
-    console.log(target.getAttribute('value'));
     setTaskState(() => target.getAttribute('value') as string);
   };
+
+  const url = window.location.href;
 
   return (
     <>
@@ -68,8 +70,11 @@ const TaskPopUp = () => {
               <div className={classes.taskDetails_topLine}>
                 <Link to="/">
                   <span className={classes.taskDetails_code}>CBC-18</span>
-                  <BsLink45Deg />
                 </Link>
+                <input className={classes.copy_input} ref={clipboard.target} value={url} readOnly />
+                <button className={classes.copy_button} onClick={clipboard.copy}>
+                  <BsLink45Deg className={classes.copy_icon} />
+                </button>
               </div>
               <div className={classes.taskDetails_taskName}>
                 <EditableTitle titleProp={data.title} />

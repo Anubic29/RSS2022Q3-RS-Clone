@@ -48,6 +48,7 @@
       text-align: center;
       background-color: $colorPrimary;
       border-radius: 5px;
+      z-index: 22;
       content: attr(data-title);
     }
   }
