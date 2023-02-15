@@ -8,6 +8,8 @@ function isCorrectProjectInfo(body) {
   return typeof body.title === 'string' 
     && body.title !== ''
     && typeof body.description === 'string' 
+    && typeof body.boardTitle === 'string'
+    && body.boardTitle !== ''
     && typeof body.key === 'string' 
     && body.key !== ''
     && typeof body.author === 'string'
@@ -152,6 +154,7 @@ router.put('/:id/info', authenticateToken, async (req, res) => {
 
     project.title = req.body.title;
     project.description = req.body.description;
+    project.boardTitle = req.body.boardTitle;
     project.key = req.body.key;
     project.author = req.body.author;
     project.pathImage = req.body.pathImage;
@@ -171,14 +174,14 @@ router.put('/:id/columns/:columnId', authenticateToken, async (req, res) => {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found project');
 
-    const idx = project.columnList.findIndex((column) => column._id === req.params.columnId);
+    const idx = project.columnList.findIndex((column) => column._id.toString() === req.params.columnId);
     if (idx < 0) throw new Error('Not found column');
 
     project.columnList[idx].title = req.body.title;
     project.columnList[idx].type = req.body.type;
 
     await project.save();
-    res.json(true);
+    res.json(project.columnList[idx]);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
@@ -224,7 +227,7 @@ router.delete('/:id/columns/:columnId', authenticateToken, async (req, res) => {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found project');
 
-    const idx = project.columnList.findIndex((column) => column._id === req.params.columnId);
+    const idx = project.columnList.findIndex((column) => column._id.toString() === req.params.columnId);
     if (idx < 0) throw new Error('Not found column');
 
     project.columnList.splice(idx, 1);
