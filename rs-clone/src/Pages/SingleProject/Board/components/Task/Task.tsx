@@ -39,7 +39,7 @@ function Task(props: TaskProps) {
         keyTask={props.keyTask}
       />
     );
-    navigate(`selected-task/${props._id}`);
+    navigate(`selected-task/${props.keyTask}`);
   };
   useEffect(() => {
     if (params.taskId) {
