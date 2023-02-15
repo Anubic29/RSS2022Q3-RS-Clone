@@ -15,6 +15,11 @@ type TaskDataToUpdate = {
   columnId?: string;
 };
 
+type ColumnDataToUpdate = {
+  title?: string;
+  type?: string;
+};
+
 type ProjectDataToUpdate = {
   title?: string;
   description?: string;
@@ -48,8 +53,8 @@ interface BoardContextType {
   deleteTask: (taskId: string) => void;
   deleteAllTaskInColumn: (_id: string) => void;
   moveTasksToColumn: (_cuurId: string, _newId: string) => void;
-  createColumn: (title: string) => void;
-  updateColumn: (_id: string, title: string) => void;
+  createColumn: (columnTitle: string) => void;
+  updateColumn: (_id: string, updateData: ColumnDataToUpdate) => void;
   deleteColumn: (_id: string) => void;
   swapColumn: (_idActive: string, _id: string) => void;
 }
@@ -248,44 +253,65 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const deleteAllTaskInColumn = useCallback(
-    (_id: string) => {
-      const res = taskList.filter((data) => data.columnId !== _id);
-      setTaskList(res);
+    async (_id: string) => {
+      const response = await api.tasks.deleteAllDataByColumn(_id);
+      if (response.status === 200 && response.data) {
+        const res = taskList.filter((data) => data.columnId !== _id);
+        setTaskList(res);
+      }
     },
     [taskList]
   );
 
   const createColumn = useCallback(
-    (title: string) => {
-      const column: ColumnProjectType = {
-        _id: '6234564adgasdasd4adsg',
-        title: title,
-        type: 'common'
-      };
+    async (columnTitle: string) => {
+      if (projectInfo) {
+        const payload = {
+          title: columnTitle,
+          type: 'common'
+        };
+        const response = await api.projects.postColumnData(projectInfo._id, payload);
 
-      setColumnList([...columnList, column]);
+        if (response.status === 200) {
+          setColumnList(response.data);
+        }
+      }
     },
     [columnList]
   );
 
   const updateColumn = useCallback(
-    (_id: string, title: string) => {
-      const idx = columnList.findIndex((data) => data._id === _id);
-      const column = Object.assign({}, columnList[idx]);
-      column.title = title;
+    async (_id: string, updateData: ColumnDataToUpdate) => {
+      if (projectInfo) {
+        const idx = columnList.findIndex((data) => data._id === _id);
 
-      columnList.splice(idx, 1, column);
-      setColumnList([...columnList]);
+        const payload = {
+          title: updateData.title ?? columnList[idx].title,
+          type: updateData.type ?? columnList[idx].type
+        };
+        const response = await api.projects.updateColumnData(projectInfo._id, _id, payload);
+
+        if (response.status === 200) {
+          columnList.splice(idx, 1, response.data);
+          setColumnList([...columnList]);
+        }
+      }
     },
     [columnList]
   );
 
   const deleteColumn = useCallback(
-    (_id: string) => {
-      const idx = columnList.findIndex((data) => data._id === _id);
-      columnList.splice(idx, 1);
+    async (_id: string) => {
+      if (projectInfo) {
+        const response = await api.projects.deleteColumnData(projectInfo._id, _id);
 
-      setColumnList([...columnList]);
+        if (response.status === 200 && response.data) {
+          const idx = columnList.findIndex((data) => data._id === _id);
+          columnList.splice(idx, 1);
+
+          setColumnList([...columnList]);
+        }
+      }
     },
     [columnList]
   );

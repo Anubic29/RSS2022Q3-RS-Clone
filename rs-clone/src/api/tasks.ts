@@ -14,6 +14,9 @@ export default function (instance: AxiosInstance) {
     },
     deleteData(taskId: string) {
       return instance.delete<boolean>(`api/tasks/${taskId}/info`);
+    },
+    deleteAllDataByColumn(columnId: string) {
+      return instance.delete<boolean>(`api/tasks/by-column/${columnId}`);
     }
   };
 }
