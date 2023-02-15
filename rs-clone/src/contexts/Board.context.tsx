@@ -1,5 +1,5 @@
-import { useContext, createContext, useState, useMemo, useEffect, useCallback } from 'react';
-import { projectData, userListData, CurrentUserId } from '../Data/FakeProjectPageData';
+import { useContext, createContext, useState, useMemo, useCallback } from 'react';
+import { userListData, CurrentUserId } from '../Data/FakeProjectPageData';
 import api from '../api';
 import ColumnProjectType from '../Types/Project/ColumnProjectType';
 import ProjectType from '../Types/Project/ProjectType';
@@ -35,8 +35,9 @@ export type UserDataForAvatar = {
 };
 
 interface BoardContextType {
-  setProjectDataBack: (ProjectId: string) => void;
-  setTasksDataBack: (ProjectId: string) => void;
+  setProjectDataBack: (ProjectId: string) => Promise<ProjectType | null>;
+  setTasksDataBack: (ProjectId: string) => Promise<boolean>;
+  setUsersDataBack: (usersId: string[]) => Promise<boolean>;
   getUserList: () => UserType[];
   projectInfo: ProjectType | null;
   updateProject: (updateData: ProjectDataToUpdate) => void;
@@ -60,8 +61,9 @@ interface BoardContextType {
 }
 
 export const BoardContext = createContext<BoardContextType>({
-  setProjectDataBack: () => console.log('Error'),
-  setTasksDataBack: () => console.log('Error'),
+  setProjectDataBack: () => Promise.resolve(null),
+  setTasksDataBack: () => Promise.resolve(false),
+  setUsersDataBack: () => Promise.resolve(false),
   getUserList: () => [],
   projectInfo: null,
   updateProject: () => console.log('Error'),
@@ -93,26 +95,30 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   const [userListFilter, setUserListFilter] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
 
-  useEffect(() => {
-    setUserList(
-      userListData.filter(
-        (data) => data._id === projectData.author || projectData.team.includes(data._id)
-      )
-    );
-  }, []);
-
   const setProjectDataBack = useCallback(async (ProjectId: string) => {
     const response = await api.projects.getData(ProjectId);
-    const data = response.data;
-    setProjectInfo(data);
-    setColumnList(data.columnList);
+    setProjectInfo(response.data);
+    setColumnList(response.data.columnList);
+    return response.data;
   }, []);
 
-  const setTasksDataBack = useCallback(async (ProjectId: string) => {
-    const response = await api.tasks.getAllData(`?project=${ProjectId}`);
-    const data = response.data;
-    setTaskList(data);
-  }, []);
+  const setTasksDataBack = useCallback(
+    async (ProjectId: string) => {
+      const response = await api.tasks.getAllData(`?project=${ProjectId}`);
+      setTaskList(response.data);
+      return true;
+    },
+    [projectInfo]
+  );
+
+  const setUsersDataBack = useCallback(
+    async (usersId: string[]) => {
+      const users = await Promise.all(usersId.map((user) => api.users.getData(user)));
+      setUserList(users.map((data) => data.data));
+      return true;
+    },
+    [projectInfo]
+  );
 
   const getUserList = useCallback(() => {
     return userList;
@@ -341,6 +347,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     () => ({
       setProjectDataBack,
       setTasksDataBack,
+      setUsersDataBack,
       getUserList,
       projectInfo,
       updateProject,
@@ -365,6 +372,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     [
       setProjectDataBack,
       setTasksDataBack,
+      setUsersDataBack,
       getUserList,
       projectInfo,
       updateProject,

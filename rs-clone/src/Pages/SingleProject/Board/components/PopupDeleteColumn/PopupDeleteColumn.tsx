@@ -15,16 +15,12 @@ interface PopupDeleteColumnProps {
 function PopupDeleteColumn(props: PopupDeleteColumnProps) {
   const { getColumnList, moveTasksToColumn, deleteColumn } = useBoard();
   const { setIsVisibleBoard } = useOverlay();
-  const [columnListJson, setColumnListJson] = useState('');
   const [selectedColumn, setSelectedColumn] = useState('');
   const [options, setOptions] = useState<Option[]>([]);
 
   useEffect(() => {
-    if (JSON.stringify(getColumnList()) !== columnListJson) {
-      setColumnListJson(JSON.stringify(getColumnList()));
-      const res = getColumnList().filter((data) => data._id !== props._id);
-      setOptions(res.map((data) => ({ text: data.title, value: data._id })));
-    }
+    const res = getColumnList().filter((data) => data._id !== props._id);
+    setOptions(res.map((data) => ({ text: data.title, value: data._id })));
   }, [getColumnList, props._id, props.title]);
 
   const onSubmitHandler = useCallback(() => {

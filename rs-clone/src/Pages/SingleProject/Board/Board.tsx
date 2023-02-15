@@ -23,8 +23,14 @@ import { ProjectId } from '../../../Data/FakeProjectPageData';
 import styles from './Board.module.scss';
 
 function Board() {
-  const { projectInfo, updateProject, setSearchInputValue, setProjectDataBack, setTasksDataBack } =
-    useBoard();
+  const {
+    projectInfo,
+    updateProject,
+    setSearchInputValue,
+    setProjectDataBack,
+    setTasksDataBack,
+    setUsersDataBack
+  } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
@@ -33,8 +39,17 @@ function Board() {
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
 
   useEffect(() => {
-    setProjectDataBack(ProjectId);
-    setTasksDataBack(ProjectId);
+    (async () => {
+      const data = await setProjectDataBack(ProjectId);
+      if (data) {
+        await setTasksDataBack(data._id);
+        await setUsersDataBack([data.author, ...data.team]);
+      }
+    })();
+    console.log('Render Board');
+    // setProjectDataBack(ProjectId);
+    // setTasksDataBack(ProjectId);
+    // setUsersDataBack();
   }, []);
 
   useEffect(() => {
