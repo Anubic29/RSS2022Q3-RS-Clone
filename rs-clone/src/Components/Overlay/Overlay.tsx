@@ -8,6 +8,7 @@ interface OverlayProps {
 function Overlay(props: OverlayProps) {
   const { scope } = props;
   const values = useOverlay();
+  const originPath = window.location.pathname;
 
   const onClickHandler = (event: React.MouseEvent) => {
     if ((event.target as HTMLElement).className === Styles.Overlay) {

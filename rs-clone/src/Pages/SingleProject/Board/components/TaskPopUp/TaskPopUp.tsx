@@ -42,6 +42,7 @@ const TaskPopUp = (props: TaskProps) => {
 
   const [isActive, setIsActive] = useState(false);
   const [taskState, setTaskState] = useState('in dev');
+  const [dotsMenuActive, setDotsMenuActive] = useState(false);
 
   const {
     ref,
@@ -68,6 +69,11 @@ const TaskPopUp = (props: TaskProps) => {
     e.stopPropagation();
     const target = e.target as HTMLTextAreaElement;
     setTaskState(() => target.getAttribute('value') as string);
+  };
+
+  const dotsHandler = () => {
+    setIsActive(isActive ? false : true);
+    if (!isActive) setIsMenuVisible(true);
   };
 
   const url = window.location.href;
@@ -102,7 +108,19 @@ const TaskPopUp = (props: TaskProps) => {
             </div>
             <div className={classes.taskDetails_col__right}>
               <div className={classes.taskDetails_topLine}>
-                <TbDots className={classes.taskDetails_nav} />
+                <div className={classes.dotsMenu} ref={ref}>
+                  <TbDots className={classes.taskDetails_nav} onClick={dotsHandler} />
+                  {dotsMenuActive && (
+                    <div className={classes.dotsMenu_wrap}>
+                      <BoxWithShadow>
+                        <ul className={classes.taskDetails_currentStatusUl}>
+                          <li className={classes.taskDetails_currentStatusLi}>Clone</li>
+                          <li className={classes.taskDetails_currentStatusLi}>delete</li>
+                        </ul>
+                      </BoxWithShadow>
+                    </div>
+                  )}
+                </div>
                 <GrClose
                   className={classes.taskDetails_nav + ' ' + classes.stroke}
                   onClick={closeHandler}

@@ -187,10 +187,20 @@ h6 {
   }
 }
 
+.dotsMenu {
+  position: relative;
+}
+
 .copy_icon {
   height: 100%;
   width: 20px;
   transition: 200ms all ease-in;
   position: relative;
 }
+
+.dotsMenu_wrap {
+  position: absolute;
+  right: 0;
+}
+
 
