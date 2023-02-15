@@ -16,10 +16,21 @@ import { useOverlay } from '../../../../../contexts/Overlay.context';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
 
-const TaskPopUp = () => {
+interface TaskProps {
+  _id: string;
+  title: string;
+  keyTask: string;
+  executor: string;
+  typeDone?: boolean;
+}
+
+const TaskPopUp = (props: TaskProps) => {
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const data = {
-    title: 'Editable Title'
+    title: props.title,
+    keyTask: props.keyTask,
+    id: props._id,
+    executor: props.executor
   };
 
   const clipboard = useClipboard();
@@ -69,7 +80,7 @@ const TaskPopUp = () => {
             <div className={classes.taskDetails_col__left}>
               <div className={classes.taskDetails_topLine}>
                 <Link to="/">
-                  <span className={classes.taskDetails_code}>CBC-18</span>
+                  <span className={classes.taskDetails_code}>{data.keyTask}</span>
                 </Link>
                 <input className={classes.copy_input} ref={clipboard.target} value={url} readOnly />
                 <button className={classes.copy_button} onClick={clipboard.copy}>
