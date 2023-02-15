@@ -29,7 +29,8 @@ function Board() {
     setSearchInputValue,
     setProjectDataBack,
     setTasksDataBack,
-    setUsersDataBack
+    setUsersDataBack,
+    getUserList
   } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
@@ -57,7 +58,7 @@ function Board() {
     const users = [...(projectInfo?.team ?? [])];
     if (author) users.unshift(author);
     setUserListDisplay(users);
-  }, [projectInfo]);
+  }, [projectInfo, getUserList]);
 
   const {
     ref,

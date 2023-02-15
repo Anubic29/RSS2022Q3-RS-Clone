@@ -10,6 +10,9 @@ export default function (instance: AxiosInstance) {
     postColumnData(projectId: string, payload: { [key: string]: string }) {
       return instance.post<ColumnProjectType[]>(`api/projects/${projectId}/columns`, payload);
     },
+    postTeamData(projectId: string, payload: { userId: string }) {
+      return instance.post<string[]>(`api/projects/${projectId}/team`, payload);
+    },
     updateAllColumnData(projectId: string, payload: { columnList: ColumnProjectType[] }) {
       return instance.put<ColumnProjectType[]>(`api/projects/${projectId}/columns`, payload);
     },

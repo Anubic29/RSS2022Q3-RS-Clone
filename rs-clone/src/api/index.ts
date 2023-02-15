@@ -1,7 +1,7 @@
 import instance from './instance';
 
 import recordsModule from './records';
-import projectsModule from './project';
+import projectsModule from './projects';
 import tasksModule from './tasks';
 import usersModule from './users';
 import authModule from './auth';

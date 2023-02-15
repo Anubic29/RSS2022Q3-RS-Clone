@@ -1,5 +1,5 @@
 import { useContext, createContext, useState, useMemo, useCallback } from 'react';
-import { userListData, CurrentUserId } from '../Data/FakeProjectPageData';
+import { CurrentUserId } from '../Data/FakeProjectPageData';
 import api from '../api';
 import ColumnProjectType from '../Types/Project/ColumnProjectType';
 import ProjectType from '../Types/Project/ProjectType';
@@ -133,13 +133,17 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const addUserToTeam = useCallback(
-    (_id: string) => {
-      const res = Object.assign({}, projectInfo);
-      res.team.push(_id);
-      setProjectInfo(res);
-      const user = userListData.find((data) => data._id === _id);
-      if (user) userList.push(user);
-      setUserList(userList);
+    async (_id: string) => {
+      if (projectInfo) {
+        const response = await api.projects.postTeamData(projectInfo._id, { userId: _id });
+        if (response.status === 200) {
+          projectInfo.team = response.data;
+          const usersId = [projectInfo.author, ...response.data];
+          const users = await Promise.all(usersId.map((user) => api.users.getData(user)));
+          setProjectInfo(projectInfo);
+          setUserList(users.map((data) => data.data));
+        }
+      }
     },
     [projectInfo, userList]
   );
