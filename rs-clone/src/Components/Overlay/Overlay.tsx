@@ -1,5 +1,6 @@
 import { useOverlay } from '../../contexts';
 import Styles from './Overlay.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface OverlayProps {
   scope: 'App' | 'Board';
@@ -7,12 +8,15 @@ interface OverlayProps {
 
 function Overlay(props: OverlayProps) {
   const { scope } = props;
+
   const values = useOverlay();
-  const originPath = window.location.pathname;
+  const navigate = useNavigate();
 
   const onClickHandler = (event: React.MouseEvent) => {
     if ((event.target as HTMLElement).className === Styles.Overlay) {
       values[`setIsVisible${scope}`](false);
+      const path = window.location.pathname.split('/').slice(0, -2).join('/');
+      navigate(path);
     }
   };
 
