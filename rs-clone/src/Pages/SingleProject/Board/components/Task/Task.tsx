@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { MdDone } from 'react-icons/md';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../../theme/variables';
 import { BtnMenuAction, UserAvatar } from '../';
@@ -6,6 +6,7 @@ import { useBoard } from '../../../../../contexts/Board.context';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 import { useOverlay } from '../../../../../contexts/Overlay.context';
 import TaskPopUp from '../TaskPopUp/TaskPopUp';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from './Task.module.scss';
 
@@ -25,10 +26,20 @@ function Task(props: TaskProps) {
 
   const user = useMemo(() => getFullNameUser(props.executor), [props.executor, getFullNameUser]);
 
+  const navigate = useNavigate();
+  const params = useParams();
+
   const showModal = () => {
     setIsVisibleBoard(true);
     setChildrenBoard(<TaskPopUp />);
+    navigate(`selected-task/${props._id}`);
   };
+  useEffect(() => {
+    if (params.taskId) {
+      setIsVisibleBoard(true);
+      setChildrenBoard(<TaskPopUp />);
+    }
+  }, []);
 
   const deleteTaskCallback = useCallback(
     () => deleteTask(props._id),

@@ -13,12 +13,18 @@ import BoxWithShadow from '../../../../../Components/boxWithShadow/BoxWithShadow
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './Components/DetailsBlock/DetailsBlock';
 import { useOverlay } from '../../../../../contexts/Overlay.context';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const TaskPopUp = () => {
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const data = {
     title: 'Editable Title'
   };
+
+  const params = useParams();
+  const projectkId = params.id;
+  console.log('params', projectkId);
+  const navigate = useNavigate();
 
   const taskStates = ['dev ready', 'in review', 'in dev', 'done'];
 
@@ -43,6 +49,7 @@ const TaskPopUp = () => {
   const closeHandler = () => {
     setIsVisibleBoard(false);
     setChildrenBoard(null);
+    navigate(`/projects/${projectkId}`);
   };
 
   const taskStateHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {

@@ -37,6 +37,14 @@ function AuthRoute() {
               </BoardProvider>
             }
           />
+          <Route
+            path="selected-task/:taskId"
+            element={
+              <BoardProvider>
+                <Board />
+              </BoardProvider>
+            }
+          />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Route>
