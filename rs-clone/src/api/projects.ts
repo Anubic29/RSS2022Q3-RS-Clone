@@ -13,6 +13,9 @@ export default function (instance: AxiosInstance) {
     postTeamData(projectId: string, payload: { userId: string }) {
       return instance.post<string[]>(`api/projects/${projectId}/team`, payload);
     },
+    updateData(projectId: string, payload: { [key: string]: string }) {
+      return instance.put<ProjectType>(`api/projects/${projectId}/info`, payload);
+    },
     updateAllColumnData(projectId: string, payload: { columnList: ColumnProjectType[] }) {
       return instance.put<ColumnProjectType[]>(`api/projects/${projectId}/columns`, payload);
     },

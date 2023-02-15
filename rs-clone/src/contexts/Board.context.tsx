@@ -125,9 +125,21 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   }, [userList]);
 
   const updateProject = useCallback(
-    (updateData: ProjectDataToUpdate) => {
-      const res = Object.assign(projectInfo ?? {}, updateData) as ProjectType | null;
-      setProjectInfo(res);
+    async (updateData: ProjectDataToUpdate) => {
+      if (projectInfo) {
+        const payload = {
+          title: updateData.title ?? projectInfo.title,
+          description: updateData.description ?? projectInfo.description,
+          boardTitle: updateData.boardTitle ?? projectInfo.boardTitle,
+          key: updateData.key ?? projectInfo.key,
+          author: updateData.author ?? projectInfo.author,
+          pathImage: updateData.pathImage ?? projectInfo.pathImage
+        };
+        const response = await api.projects.updateData(projectInfo._id, payload);
+        if (response.status === 200) {
+          setProjectInfo(response.data);
+        }
+      }
     },
     [projectInfo]
   );
