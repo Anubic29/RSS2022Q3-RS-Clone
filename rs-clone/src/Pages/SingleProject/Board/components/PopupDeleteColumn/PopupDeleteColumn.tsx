@@ -35,10 +35,20 @@ function PopupDeleteColumn(props: PopupDeleteColumnProps) {
         <span className={styles['icon']}>
           <MdWarningAmber />
         </span>
-        Move tasks from column &#34;{props.title.toUpperCase()}&#34;
+        Move tasks from column &#34;
+        {(props.title.length >= 10
+          ? props.title.substring(0, 9) + '...'
+          : props.title
+        ).toUpperCase()}
+        &#34;
       </div>
       <div className={styles['pop-up__description']}>
-        Select a new location for all {props.title.toUpperCase()} jobs.
+        Select a new location for all{' '}
+        {(props.title.length >= 10
+          ? props.title.substring(0, 9) + '...'
+          : props.title
+        ).toUpperCase()}{' '}
+        jobs.
       </div>
       <div className={styles['pop-up__content']}>
         <div className={styles['pop-up__content__row']}>
@@ -52,7 +62,9 @@ function PopupDeleteColumn(props: PopupDeleteColumnProps) {
         </div>
         <div className={styles['pop-up__content__row']}>
           <div className={styles['pop-up__content__col']}>
-            <div className={styles['value']}>{props.title}</div>
+            <div className={styles['value']}>
+              {props.title.length >= 10 ? props.title.substring(0, 9) + '...' : props.title}
+            </div>
           </div>
           <div className={styles['separator']}>
             <MdArrowForward />
