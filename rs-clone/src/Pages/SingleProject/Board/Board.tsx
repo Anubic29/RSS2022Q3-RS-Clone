@@ -4,15 +4,7 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../theme/variables';
-import {
-  BtnAction,
-  BtnMenuAction,
-  UserBtn,
-  SelectPanel,
-  ColumnList,
-  PopupAddUser,
-  UserList
-} from './components';
+import { BtnAction, UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../contexts/Board.context';
@@ -82,19 +74,6 @@ function Board() {
     return [
       { value: '', text: 'No' },
       { value: 'Executor', text: 'Executor' }
-    ];
-  }, []);
-
-  const optionsBtnMenu = useMemo(() => {
-    return [
-      {
-        title: 'Change',
-        callback: () => console.log()
-      },
-      {
-        title: 'Remove',
-        callback: () => console.log()
-      }
     ];
   }, []);
 
@@ -190,11 +169,6 @@ function Board() {
                   title="Add to the list"
                   backgrColorHover={colorBackgroundColumn}
                   backgrColorActive={colorSecondaryLight}
-                />
-                <BtnMenuAction
-                  options={optionsBtnMenu}
-                  btnBackgrColorHover={colorBackgroundColumn}
-                  btnBackgrColorActive={colorSecondaryLight}
                 />
               </div>
             </div>
