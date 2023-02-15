@@ -52,7 +52,7 @@ const TaskPopUp = (props: TaskProps) => {
 
   const isActiveHandler = () => {
     setIsActive(isActive ? false : true);
-    if (!isActive) setIsMenuVisible(true);
+    setIsMenuVisible(isActive ? false : true);
   };
 
   useEffect(() => {
@@ -69,11 +69,15 @@ const TaskPopUp = (props: TaskProps) => {
     e.stopPropagation();
     const target = e.target as HTMLTextAreaElement;
     setTaskState(() => target.getAttribute('value') as string);
+    setIsMenuVisible(false);
   };
 
+  // window.onclick = function () {
+  //   if (isMenuVisible) setIsMenuVisible(false);
+  // };
+
   const dotsHandler = () => {
-    setIsActive(isActive ? false : true);
-    if (!isActive) setIsMenuVisible(true);
+    setDotsMenuActive(dotsMenuActive ? false : true);
   };
 
   const url = window.location.href;
@@ -108,7 +112,7 @@ const TaskPopUp = (props: TaskProps) => {
             </div>
             <div className={classes.taskDetails_col__right}>
               <div className={classes.taskDetails_topLine}>
-                <div className={classes.dotsMenu} ref={ref}>
+                <div className={classes.dotsMenu}>
                   <TbDots className={classes.taskDetails_nav} onClick={dotsHandler} />
                   {dotsMenuActive && (
                     <div className={classes.dotsMenu_wrap}>
@@ -126,13 +130,13 @@ const TaskPopUp = (props: TaskProps) => {
                   onClick={closeHandler}
                 />
               </div>
-              <div className={classes.taskDetails_changeStatusBlock}>
+              <div ref={ref} className={classes.taskDetails_changeStatusBlock}>
                 <button className={classes.taskDetails_changeStatusBtn} onClick={isActiveHandler}>
                   <p className={classes.taskDetails_currentStatusActive}>{taskState}</p>
                   <MdExpandMore className={classes.expandArrow} />
                 </button>
                 {isMenuVisible && (
-                  <div ref={ref} className={classes.submenu}>
+                  <div className={classes.submenu}>
                     <BoxWithShadow>
                       <ul className={classes.taskDetails_currentStatusUl}>
                         {taskStates.map((state) => {
