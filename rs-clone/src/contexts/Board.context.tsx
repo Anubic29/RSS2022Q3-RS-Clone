@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { useContext, createContext, useState, useMemo, useCallback } from 'react';
 import { CurrentUserId } from '../Data/FakeProjectPageData';
 import api from '../api';
@@ -66,24 +67,24 @@ export const BoardContext = createContext<BoardContextType>({
   setUsersDataBack: () => Promise.resolve(false),
   getUserList: () => [],
   projectInfo: null,
-  updateProject: () => console.log('Error'),
-  addUserToTeam: () => console.log('Error'),
-  setSearchInputValue: () => console.log('Error'),
-  addUserFilter: () => console.log('Error'),
-  deleteUserFilter: () => console.log('Error'),
+  updateProject: () => {},
+  addUserToTeam: () => {},
+  setSearchInputValue: () => {},
+  addUserFilter: () => {},
+  deleteUserFilter: () => {},
   getTaskList: () => [],
   getColumnList: () => [],
   getColumnCount: () => 0,
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
-  createTask: () => console.log('Error'),
-  updateTask: () => console.log('Error'),
-  deleteTask: () => console.log('Error'),
-  deleteAllTaskInColumn: () => console.log('Error'),
-  moveTasksToColumn: () => console.log('Error'),
-  createColumn: () => console.log('Error'),
-  updateColumn: () => console.log('Error'),
-  deleteColumn: () => console.log('Error'),
-  swapColumn: () => console.log('Error')
+  createTask: () => {},
+  updateTask: () => {},
+  deleteTask: () => {},
+  deleteAllTaskInColumn: () => {},
+  moveTasksToColumn: () => {},
+  createColumn: () => {},
+  updateColumn: () => {},
+  deleteColumn: () => {},
+  swapColumn: () => {}
 });
 
 export const BoardProvider = (props: { children: React.ReactNode }) => {

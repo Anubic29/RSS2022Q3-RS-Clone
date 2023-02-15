@@ -29,7 +29,6 @@ function PopupDeleteColumn(props: PopupDeleteColumnProps) {
     setIsVisibleBoard(false);
   }, [selectedColumn]);
 
-  // {title.length >= 10 ? title.substring(0, 9) + '...' : title}
   return (
     <div className={styles['pop-up']}>
       <div className={styles['pop-up__title']}>

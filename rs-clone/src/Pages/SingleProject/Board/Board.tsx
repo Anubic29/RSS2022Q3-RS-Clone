@@ -39,10 +39,6 @@ function Board() {
         await setUsersDataBack([data.author, ...data.team]);
       }
     })();
-    console.log('Render Board');
-    // setProjectDataBack(ProjectId);
-    // setTasksDataBack(ProjectId);
-    // setUsersDataBack();
   }, []);
 
   useEffect(() => {
