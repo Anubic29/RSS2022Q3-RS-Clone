@@ -317,13 +317,18 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const swapColumn = useCallback(
-    (_idActive: string, _id: string) => {
-      const activeIdx = columnList.findIndex((data) => data._id === _idActive);
-      const overIdx = columnList.findIndex((data) => data._id === _id);
-      const result = [...columnList];
-      const activeColumn = result.splice(activeIdx, 1)[0];
-      result.splice(activeIdx > overIdx ? overIdx : overIdx - 1, 0, activeColumn);
-      setColumnList(result);
+    async (_idActive: string, _id: string) => {
+      if (projectInfo) {
+        const activeIdx = columnList.findIndex((data) => data._id === _idActive);
+        const overIdx = columnList.findIndex((data) => data._id === _id);
+        const activeColumn = columnList.splice(activeIdx, 1)[0];
+        columnList.splice(activeIdx > overIdx ? overIdx : overIdx - 1, 0, activeColumn);
+        const response = await api.projects.updateAllColumnData(projectInfo._id, { columnList });
+
+        if (response.status === 200) {
+          setColumnList(response.data);
+        }
+      }
     },
     [columnList]
   );
