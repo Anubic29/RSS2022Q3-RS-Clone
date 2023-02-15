@@ -14,7 +14,6 @@ const CommentRow = (props: {
   const getTimeDifference = (timeCreated: number) => {
     const diffMs = Math.abs(Date.now() - timeCreated);
     const minutes = Math.floor((diffMs / 1000 / 60) << 0);
-    console.log(diffMs);
     if (minutes < 0) return 'unknown';
     if (minutes < 2) return `posted just now`;
     if (minutes >= 2 && minutes < 60) return `posted ${minutes} min ago`;

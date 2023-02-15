@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import TextRedactorBlock from '../../../../../../../Components/TextRedactorBlock/TextRedactorBlock';
 import CommentRow from '../CommentRow/CommentRow';
 import UserIcon from '../../../../../../../Components/userIcon/UserIcon';
+import { BiSortDown, BiSortUp } from 'react-icons/bi';
 
 export type commentDetails = {
   id: string;
@@ -14,6 +15,7 @@ export type commentDetails = {
 const CommentsBlock = () => {
   const [savedDescr, setSavedDescr] = useState<commentDetails[]>([]);
   const [editorMode, setEditorMode] = useState(false);
+  const [newestFirst, setNewestFirt] = useState(true);
 
   const onTextValueHandler = (val: string) => {
     const comment: commentDetails = {
@@ -42,6 +44,9 @@ const CommentsBlock = () => {
       return array.filter((el) => el.id !== id);
     });
   };
+  const sortHandler = () => {
+    setNewestFirt(newestFirst ? false : true);
+  };
 
   return (
     <div className={classes.commentsWrap}>
@@ -69,17 +74,36 @@ const CommentsBlock = () => {
           </div>
         </div>
       </div>
+      {savedDescr.length > 1 && (
+        <div className={classes.comments_sortDiv} onClick={sortHandler}>
+          {newestFirst ? (
+            <>
+              <p>Show oldest first</p>
+              <BiSortDown />
+            </>
+          ) : (
+            <>
+              <p>Show newest first</p>
+              <BiSortUp />
+            </>
+          )}
+        </div>
+      )}
       {savedDescr.length > 0 &&
-        savedDescr.map((comment) => (
-          <CommentRow
-            id={comment.id}
-            userName={comment.userName}
-            body={comment.body}
-            dateCreated={comment.dateCreated}
-            key={comment.id}
-            onDelete={deleteHandler}
-          />
-        ))}
+        savedDescr
+          .sort((a, b) =>
+            newestFirst ? b.dateCreated - a.dateCreated : a.dateCreated - b.dateCreated
+          )
+          .map((comment) => (
+            <CommentRow
+              id={comment.id}
+              userName={comment.userName}
+              body={comment.body}
+              dateCreated={comment.dateCreated}
+              key={comment.id}
+              onDelete={deleteHandler}
+            />
+          ))}
     </div>
   );
 };

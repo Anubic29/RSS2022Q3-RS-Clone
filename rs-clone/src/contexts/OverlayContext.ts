@@ -8,7 +8,7 @@ interface OverlayContextInitialValue {
 }
 
 const overlayContextInitialValue: OverlayContextInitialValue = {
-  isVisible: false,
+  isVisible: true,
   setIsVisible: () => undefined,
   children: null,
   setChildren: () => undefined

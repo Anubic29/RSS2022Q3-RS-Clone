@@ -34,8 +34,6 @@ const TextRedactorBlock = ({
     if (onIsEdited) onIsEdited(Date.now());
   };
 
-  console.log('redactor', initialValue);
-
   return (
     <div>
       <ReactQuill

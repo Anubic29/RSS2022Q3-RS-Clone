@@ -4,7 +4,7 @@ import { colorBackgroundHover, colorSecondaryLight } from '../../../../../theme/
 import { BtnMenuAction, UserAvatar } from '../';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
-import { useOverlay } from '../../../../../contexts/OverlayContext';
+import { useOverlay } from '../../../../../contexts/Overlay.context';
 import TaskPopUp from '../TaskPopUp/TaskPopUp';
 
 import styles from './Task.module.scss';
@@ -21,13 +21,13 @@ function Task(props: TaskProps) {
   const [hoverTask, setHoverTask] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const { getTaskList, getFullNameUser, deleteTask } = useBoard();
-  const { ...item } = useOverlay();
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
 
   const user = useMemo(() => getFullNameUser(props.executor), [props.executor, getFullNameUser]);
 
   const showModal = () => {
-    item.setIsVisible(true);
-    item.setChildren(<TaskPopUp></TaskPopUp>);
+    setIsVisibleBoard(true);
+    setChildrenBoard(<TaskPopUp />);
   };
 
   const deleteTaskCallback = useCallback(

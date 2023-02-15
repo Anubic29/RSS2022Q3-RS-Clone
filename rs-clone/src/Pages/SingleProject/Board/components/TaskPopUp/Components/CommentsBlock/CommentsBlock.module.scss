@@ -67,3 +67,15 @@
 .hidden {
   display: none;
 }
+
+.comments_sortDiv {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: $colorSecondary;
+  margin-top: 20px;
+  cursor: pointer;
+  & > p {
+    padding-right: 10px;
+  }
+}

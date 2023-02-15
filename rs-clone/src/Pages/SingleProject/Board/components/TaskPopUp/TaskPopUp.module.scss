@@ -9,9 +9,38 @@ h6 {
 .taskDetails_wrap {
   padding: 30px;
   display: flex;
-  flex-direction: column;
+  flex-direction:row;
   width: 1100px;
+}
 
+
+.taskDetails_col__right  {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  padding-left: 15px;
+
+  .taskDetails_topLine {
+    margin-left: auto;
+  }
+}
+
+.taskDetails_nav {
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  color: $colorBorder;
+  margin-left: 15px;
+  transition: 200ms all ease-in;
+  &:hover {
+    cursor: pointer;
+    background-color: $colorLightGrey;
+  }
+  &.stroke > * {
+    stroke: $colorBorder;
+  }
 }
 
 .taskDetails_col__left {
@@ -19,9 +48,9 @@ h6 {
   max-height: 500px;
   overflow: scroll;
   padding-right: 20px;
-    
+
   &::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
   height: 0;
 }
 
@@ -58,3 +87,52 @@ h6 {
 .hidden {
   display: none;
 }
+
+.taskDetails_changeStatusBlock {
+  max-width: 150px;
+}
+
+.taskDetails_changeStatusBtn {
+  background-color: $colorPrimary;
+  color: $colorWhite;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  display: flex;
+  font-size: 16px;
+  font-weight: 600;
+  align-items: center;
+  min-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+    &:hover {
+      background-color: $colorSecondary;
+    }
+}
+
+.taskDetails_currentStatusActive {
+  padding-right: 5px;
+}
+
+.taskDetails_currentStatusLi {
+  padding: 5px;
+  padding: 10px 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: $colorGreyText;
+  font-size: 14px;
+    &:hover {
+      background-color: $colorLightGrey;
+    }
+}
+
+.submenu {
+  position: absolute;
+  z-index: 20;
+}
+
+.expandArrow {
+  margin-left: auto;
+}
+
