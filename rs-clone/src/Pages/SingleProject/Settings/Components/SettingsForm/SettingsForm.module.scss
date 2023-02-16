@@ -1,3 +1,5 @@
+@import '../../../../../theme/variables.scss';
+
 .Form {
   display: flex;
   flex-direction: column;
@@ -25,4 +27,17 @@
 
 .Button {
   align-self: flex-start;
+}
+
+.form-row {
+  display: flex;
+}
+
+.form-loader {
+  margin-left: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $colorIconDone;
+  font-size: 25px;
 }

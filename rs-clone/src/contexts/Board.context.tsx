@@ -42,7 +42,7 @@ interface BoardContextType {
   setUsersDataBack: (usersId: string[]) => Promise<boolean>;
   getUserList: () => UserType[];
   projectInfo: ProjectType | null;
-  updateProject: (updateData: ProjectDataToUpdate) => void;
+  updateProject: (updateData: ProjectDataToUpdate) => Promise<boolean>;
   addUserToTeam: (_id: string) => void;
   setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
@@ -68,7 +68,7 @@ export const BoardContext = createContext<BoardContextType>({
   setUsersDataBack: () => Promise.resolve(false),
   getUserList: () => [],
   projectInfo: null,
-  updateProject: () => {},
+  updateProject: () => Promise.resolve(false),
   addUserToTeam: () => {},
   setSearchInputValue: () => {},
   addUserFilter: () => {},
@@ -141,8 +141,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         const response = await api.projects.updateData(projectInfo._id, payload);
         if (response.status === 200) {
           setProjectInfo(response.data);
+          return true;
         }
       }
+      return false;
     },
     [projectInfo]
   );
