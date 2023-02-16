@@ -188,7 +188,7 @@ router.delete('/:id/comments/:commentId', authenticateToken, async (req, res) =>
     const task = (await Task.find({ _id: req.params.id }))[0];
     if (!task) throw new Error('Not found task');
 
-    const idx = task.commentList.findIndex((comment) => comment._id === req.params.commentId);
+    const idx = task.commentList.findIndex((comment) => comment._id.toString() === req.params.commentId);
     if (idx < 0) throw new Error('Not found comment');
 
     task.commentList.splice(idx, 1);
