@@ -14,6 +14,15 @@
 
   .list {
     display: flex;
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+
+      &__row {
+        display: flex;
+      }
+    }
   }
 
   .curtain {

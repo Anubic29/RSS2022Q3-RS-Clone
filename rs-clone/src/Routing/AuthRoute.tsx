@@ -20,23 +20,15 @@ function AuthRoute() {
         <Route path="sign-in" element={<Navigate to={'/'} />} />
         <Route path="sign-up" element={<Navigate to={'/'} />} />
         <Route path="projects" element={<Projects />} />
-        <Route path="projects/:id" element={<SingleProject />}>
-          <Route
-            index
-            element={
-              <BoardProvider>
-                <Board />
-              </BoardProvider>
-            }
-          />
-          <Route
-            path="board"
-            element={
-              <BoardProvider>
-                <Board />
-              </BoardProvider>
-            }
-          />
+        <Route
+          path="projects/:id"
+          element={
+            <BoardProvider>
+              <SingleProject />
+            </BoardProvider>
+          }>
+          <Route index element={<Board />} />
+          <Route path="board" element={<Board />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Route>

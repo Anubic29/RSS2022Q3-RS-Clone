@@ -4,31 +4,26 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../theme/variables';
-import {
-  BtnAction,
-  BtnMenuAction,
-  UserBtn,
-  SelectPanel,
-  ColumnList,
-  PopupAddUser,
-  UserList
-} from './components';
+import { BtnAction, UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
 import { Overlay } from '../../../Components';
+import { ProjectId } from '../../../Data/FakeProjectPageData';
 
 import styles from './Board.module.scss';
 
-const options = [
-  { value: '', text: 'No' },
-  { value: 'executor', text: 'Executor' },
-  { value: 'tasks', text: 'Tasks' }
-];
-
 function Board() {
-  const { projectInfo, updateProject, setSearchInputValue } = useBoard();
+  const {
+    projectInfo,
+    updateProject,
+    setSearchInputValue,
+    setProjectDataBack,
+    setTasksDataBack,
+    setUsersDataBack,
+    getUserList
+  } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
@@ -37,15 +32,21 @@ function Board() {
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log(selectedGroup);
-  }, [selectedGroup]);
+    (async () => {
+      const data = await setProjectDataBack(ProjectId);
+      if (data) {
+        await setTasksDataBack(data._id);
+        await setUsersDataBack([data.author, ...data.team]);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const author = projectInfo?.author;
     const users = [...(projectInfo?.team ?? [])];
     if (author) users.unshift(author);
     setUserListDisplay(users);
-  }, [projectInfo]);
+  }, [projectInfo, getUserList]);
 
   const {
     ref,
@@ -65,16 +66,10 @@ function Board() {
     setTitleError(boardTitle.length === 0);
   }, [boardTitle]);
 
-  const optionsBtnMenu = useMemo(() => {
+  const optionsGroupSelect = useMemo(() => {
     return [
-      {
-        title: 'Change',
-        callback: () => console.log()
-      },
-      {
-        title: 'Remove',
-        callback: () => console.log()
-      }
+      { value: '', text: 'No' },
+      { value: 'Executor', text: 'Executor' }
     ];
   }, []);
 
@@ -171,11 +166,6 @@ function Board() {
                   backgrColorHover={colorBackgroundColumn}
                   backgrColorActive={colorSecondaryLight}
                 />
-                <BtnMenuAction
-                  options={optionsBtnMenu}
-                  btnBackgrColorHover={colorBackgroundColumn}
-                  btnBackgrColorActive={colorSecondaryLight}
-                />
               </div>
             </div>
           </div>
@@ -220,13 +210,13 @@ function Board() {
             <div className={styles['command-panel__group-block']}>
               <SelectPanel
                 title="Group by: "
-                options={options}
+                options={optionsGroupSelect}
                 setSelectedValue={setSelectedGroup}
               />
             </div>
           </div>
         </div>
-        <ColumnList />
+        <ColumnList group={selectedGroup === 'Executor' ? selectedGroup : ''} />
       </div>
       <Overlay scope={'Board'} />
     </>

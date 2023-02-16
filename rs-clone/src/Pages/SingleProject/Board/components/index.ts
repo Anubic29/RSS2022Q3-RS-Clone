@@ -2,6 +2,7 @@ import BtnAction from './BtnAction/BtnAction';
 import BtnMenuAction from './BtnMenuAction/BtnMenuAction';
 import Column from './Column/Column';
 import ColumnList from './ColumnList/ColumnList';
+import ColumnRowUser from './ColumnRowUser/ColumnRowUser';
 import PopupAddUser from './PopupAddUser/PopupAddUser';
 import PopupDeleteColumn from './PopupDeleteColumn/PopupDeleteColumn';
 import SelectPanel from './SelectPanel/SelectPanel';
@@ -15,6 +16,7 @@ export {
   BtnMenuAction,
   Column,
   ColumnList,
+  ColumnRowUser,
   PopupAddUser,
   PopupDeleteColumn,
   SelectPanel,

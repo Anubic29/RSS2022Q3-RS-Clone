@@ -30,10 +30,12 @@ function ColumnHeader(props: ColumnHeaderProps) {
   const { createColumn, updateColumn, deleteAllTaskInColumn, deleteColumn, getColumnCount } =
     useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
-  const [title, setTitle] = useState(props.title);
+  const [title, setTitle] = useState('');
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
-  const [titleError, setTitleError] = useState(props.title.length === 0);
+  const [titleError, setTitleError] = useState(false);
+
+  useEffect(() => setTitle(props.title), [props.title]);
 
   const optionsBtnMenu = useMemo(() => {
     return [
@@ -75,7 +77,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
       if (props.typeCreate) {
         createColumn(title);
       } else {
-        updateColumn(props.id, title);
+        updateColumn(props.id, { title });
       }
       setIsInputHeaderVisible(false);
     }

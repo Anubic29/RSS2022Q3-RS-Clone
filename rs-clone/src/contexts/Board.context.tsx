@@ -1,5 +1,7 @@
-import { useContext, createContext, useState, useMemo, useEffect, useCallback } from 'react';
-import { projectData, taskListData, userListData } from '../Data/FakeProjectPageData';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { useContext, createContext, useState, useMemo, useCallback } from 'react';
+import { CurrentUserId } from '../Data/FakeProjectPageData';
+import api from '../api';
 import ColumnProjectType from '../Types/Project/ColumnProjectType';
 import ProjectType from '../Types/Project/ProjectType';
 import TaskType from '../Types/Task/TaskType';
@@ -12,6 +14,11 @@ type TaskDataToUpdate = {
   executor?: string;
   projectId?: string;
   columnId?: string;
+};
+
+type ColumnDataToUpdate = {
+  title?: string;
+  type?: string;
 };
 
 type ProjectDataToUpdate = {
@@ -29,6 +36,9 @@ export type UserDataForAvatar = {
 };
 
 interface BoardContextType {
+  setProjectDataBack: (ProjectId: string) => Promise<ProjectType | null>;
+  setTasksDataBack: (ProjectId: string) => Promise<boolean>;
+  setUsersDataBack: (usersId: string[]) => Promise<boolean>;
   getUserList: () => UserType[];
   projectInfo: ProjectType | null;
   updateProject: (updateData: ProjectDataToUpdate) => void;
@@ -40,38 +50,41 @@ interface BoardContextType {
   getColumnList: () => ColumnProjectType[];
   getColumnCount: () => number;
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
-  createTask: (columnId: string, taskTitle: string) => void;
+  createTask: (columnId: string, taskTitle: string, userId?: string) => void;
   updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
   deleteTask: (taskId: string) => void;
   deleteAllTaskInColumn: (_id: string) => void;
   moveTasksToColumn: (_cuurId: string, _newId: string) => void;
-  createColumn: (title: string) => void;
-  updateColumn: (_id: string, title: string) => void;
+  createColumn: (columnTitle: string) => void;
+  updateColumn: (_id: string, updateData: ColumnDataToUpdate) => void;
   deleteColumn: (_id: string) => void;
   swapColumn: (_idActive: string, _id: string) => void;
 }
 
 export const BoardContext = createContext<BoardContextType>({
+  setProjectDataBack: () => Promise.resolve(null),
+  setTasksDataBack: () => Promise.resolve(false),
+  setUsersDataBack: () => Promise.resolve(false),
   getUserList: () => [],
   projectInfo: null,
-  updateProject: () => console.log('Error'),
-  addUserToTeam: () => console.log('Error'),
-  setSearchInputValue: () => console.log('Error'),
-  addUserFilter: () => console.log('Error'),
-  deleteUserFilter: () => console.log('Error'),
+  updateProject: () => {},
+  addUserToTeam: () => {},
+  setSearchInputValue: () => {},
+  addUserFilter: () => {},
+  deleteUserFilter: () => {},
   getTaskList: () => [],
   getColumnList: () => [],
   getColumnCount: () => 0,
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
-  createTask: () => console.log('Error'),
-  updateTask: () => console.log('Error'),
-  deleteTask: () => console.log('Error'),
-  deleteAllTaskInColumn: () => console.log('Error'),
-  moveTasksToColumn: () => console.log('Error'),
-  createColumn: () => console.log('Error'),
-  updateColumn: () => console.log('Error'),
-  deleteColumn: () => console.log('Error'),
-  swapColumn: () => console.log('Error')
+  createTask: () => {},
+  updateTask: () => {},
+  deleteTask: () => {},
+  deleteAllTaskInColumn: () => {},
+  moveTasksToColumn: () => {},
+  createColumn: () => {},
+  updateColumn: () => {},
+  deleteColumn: () => {},
+  swapColumn: () => {}
 });
 
 export const BoardProvider = (props: { children: React.ReactNode }) => {
@@ -83,37 +96,67 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   const [userListFilter, setUserListFilter] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
 
-  useEffect(() => {
-    setUserList(
-      userListData.filter(
-        (data) => data._id === projectData.author || projectData.team.includes(data._id)
-      )
-    );
-    setColumnList(projectData.columnList);
-    setTaskList(taskListData);
-    setProjectInfo(projectData);
+  const setProjectDataBack = useCallback(async (ProjectId: string) => {
+    const response = await api.projects.getData(ProjectId);
+    setProjectInfo(response.data);
+    setColumnList(response.data.columnList);
+    return response.data;
   }, []);
+
+  const setTasksDataBack = useCallback(
+    async (ProjectId: string) => {
+      const response = await api.tasks.getAllData(`?project=${ProjectId}`);
+      setTaskList(response.data);
+      return true;
+    },
+    [projectInfo]
+  );
+
+  const setUsersDataBack = useCallback(
+    async (usersId: string[]) => {
+      const users = await Promise.all(usersId.map((user) => api.users.getData(user)));
+      setUserList(users.map((data) => data.data));
+      return true;
+    },
+    [projectInfo]
+  );
 
   const getUserList = useCallback(() => {
     return userList;
   }, [userList]);
 
   const updateProject = useCallback(
-    (updateData: ProjectDataToUpdate) => {
-      const res = Object.assign(projectInfo ?? {}, updateData) as ProjectType | null;
-      setProjectInfo(res);
+    async (updateData: ProjectDataToUpdate) => {
+      if (projectInfo) {
+        const payload = {
+          title: updateData.title ?? projectInfo.title,
+          description: updateData.description ?? projectInfo.description,
+          boardTitle: updateData.boardTitle ?? projectInfo.boardTitle,
+          key: updateData.key ?? projectInfo.key,
+          author: updateData.author ?? projectInfo.author,
+          pathImage: updateData.pathImage ?? projectInfo.pathImage
+        };
+        const response = await api.projects.updateData(projectInfo._id, payload);
+        if (response.status === 200) {
+          setProjectInfo(response.data);
+        }
+      }
     },
     [projectInfo]
   );
 
   const addUserToTeam = useCallback(
-    (_id: string) => {
-      const res = Object.assign({}, projectInfo);
-      res.team.push(_id);
-      setProjectInfo(res);
-      const user = userListData.find((data) => data._id === _id);
-      if (user) userList.push(user);
-      setUserList(userList);
+    async (_id: string) => {
+      if (projectInfo) {
+        const response = await api.projects.postTeamData(projectInfo._id, { userId: _id });
+        if (response.status === 200) {
+          projectInfo.team = response.data;
+          const usersId = [projectInfo.author, ...response.data];
+          const users = await Promise.all(usersId.map((user) => api.users.getData(user)));
+          setProjectInfo(projectInfo);
+          setUserList(users.map((data) => data.data));
+        }
+      }
     },
     [projectInfo, userList]
   );
@@ -165,116 +208,163 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const createTask = useCallback(
-    (columnId: string, taskTitle: string) => {
-      const task: TaskType = {
-        _id: '6234564adgasdasd4adsg',
-        id: 0,
-        title: taskTitle,
-        description: '',
-        author: projectInfo?.author ?? '',
-        executor: 'auto',
-        projectId: projectInfo?._id ?? '',
-        columnId: columnId,
-        commentList: [],
-        __v: 0
-      };
-
-      setTaskList([...taskList, task]);
+    async (columnId: string, taskTitle: string, userId?: string) => {
+      if (projectInfo) {
+        const payload = {
+          title: taskTitle,
+          description: '',
+          author: CurrentUserId,
+          executor: userId ?? 'auto',
+          projectId: projectInfo._id,
+          columnId: columnId
+        };
+        const response = await api.tasks.postData(payload);
+        if (response.status === 200) {
+          setTaskList([...taskList, response.data]);
+        }
+      }
     },
     [taskList, projectInfo]
   );
 
   const updateTask = useCallback(
-    (_id: string, updateData: TaskDataToUpdate) => {
+    async (_id: string, updateData: TaskDataToUpdate) => {
       const idx = taskList.findIndex((data) => data._id === _id);
-      const task = Object.assign({}, taskList[idx]);
-      const updatedTask = Object.assign(task, updateData);
 
-      taskList.splice(idx, 1, updatedTask);
-      setTaskList([...taskList]);
+      const payload = {
+        title: updateData.title ?? taskList[idx].title,
+        description: updateData.description ?? taskList[idx].description,
+        author: updateData.author ?? taskList[idx].author,
+        executor: updateData.executor ?? taskList[idx].executor,
+        projectId: updateData.projectId ?? taskList[idx].projectId,
+        columnId: updateData.columnId ?? taskList[idx].columnId
+      };
+      const response = await api.tasks.updateData(_id, payload);
+
+      if (response.status === 200) {
+        taskList.splice(idx, 1, response.data);
+        setTaskList([...taskList]);
+      }
     },
     [taskList]
   );
 
   const deleteTask = useCallback(
-    (taskId: string) => {
-      const idx = taskList.findIndex((data) => data._id === taskId);
-      taskList.splice(idx, 1);
+    async (taskId: string) => {
+      const response = await api.tasks.deleteData(taskId);
 
-      setTaskList([...taskList]);
+      if (response.status === 200 && response.data) {
+        const idx = taskList.findIndex((data) => data._id === taskId);
+        taskList.splice(idx, 1);
+
+        setTaskList([...taskList]);
+      }
     },
     [taskList]
   );
 
   const moveTasksToColumn = useCallback(
-    (_currId: string, _newId: string) => {
-      const res = taskList.map((task) => {
-        if (task.columnId === _currId) task.columnId = _newId;
-        return task;
-      });
+    async (currId: string, newId: string) => {
+      const response = await api.tasks.updateAllDataColumn({ currId, newId });
 
-      setTaskList(res);
+      if (response.status === 200 && response.data) {
+        const res = taskList.map((task) => {
+          if (task.columnId === currId) task.columnId = newId;
+          return task;
+        });
+
+        setTaskList(res);
+      }
     },
     [taskList]
   );
 
   const deleteAllTaskInColumn = useCallback(
-    (_id: string) => {
-      const res = taskList.filter((data) => data.columnId !== _id);
-      setTaskList(res);
+    async (_id: string) => {
+      const response = await api.tasks.deleteAllDataByColumn(_id);
+      if (response.status === 200 && response.data) {
+        const res = taskList.filter((data) => data.columnId !== _id);
+        setTaskList(res);
+      }
     },
     [taskList]
   );
 
   const createColumn = useCallback(
-    (title: string) => {
-      const column: ColumnProjectType = {
-        _id: '6234564adgasdasd4adsg',
-        title: title,
-        type: 'common'
-      };
+    async (columnTitle: string) => {
+      if (projectInfo) {
+        const payload = {
+          title: columnTitle,
+          type: 'common'
+        };
+        const response = await api.projects.postColumnData(projectInfo._id, payload);
 
-      setColumnList([...columnList, column]);
+        if (response.status === 200) {
+          setColumnList(response.data);
+        }
+      }
     },
     [columnList]
   );
 
   const updateColumn = useCallback(
-    (_id: string, title: string) => {
-      const idx = columnList.findIndex((data) => data._id === _id);
-      const column = Object.assign({}, columnList[idx]);
-      column.title = title;
+    async (_id: string, updateData: ColumnDataToUpdate) => {
+      if (projectInfo) {
+        const idx = columnList.findIndex((data) => data._id === _id);
 
-      columnList.splice(idx, 1, column);
-      setColumnList([...columnList]);
+        const payload = {
+          title: updateData.title ?? columnList[idx].title,
+          type: updateData.type ?? columnList[idx].type
+        };
+        const response = await api.projects.updateColumnData(projectInfo._id, _id, payload);
+
+        if (response.status === 200) {
+          columnList.splice(idx, 1, response.data);
+          setColumnList([...columnList]);
+        }
+      }
     },
     [columnList]
   );
 
   const deleteColumn = useCallback(
-    (_id: string) => {
-      const idx = columnList.findIndex((data) => data._id === _id);
-      columnList.splice(idx, 1);
+    async (_id: string) => {
+      if (projectInfo) {
+        const response = await api.projects.deleteColumnData(projectInfo._id, _id);
 
-      setColumnList([...columnList]);
+        if (response.status === 200 && response.data) {
+          const idx = columnList.findIndex((data) => data._id === _id);
+          columnList.splice(idx, 1);
+
+          setColumnList([...columnList]);
+        }
+      }
     },
     [columnList]
   );
 
   const swapColumn = useCallback(
-    (_idActive: string, _id: string) => {
-      const activeIdx = columnList.findIndex((data) => data._id === _idActive);
-      const overIdx = columnList.findIndex((data) => data._id === _id);
-      const result = [...columnList];
-      const activeColumn = result.splice(activeIdx, 1)[0];
-      result.splice(activeIdx > overIdx ? overIdx : overIdx - 1, 0, activeColumn);
-      setColumnList(result);
+    async (_idActive: string, _id: string) => {
+      if (projectInfo) {
+        const activeIdx = columnList.findIndex((data) => data._id === _idActive);
+        const overIdx = columnList.findIndex((data) => data._id === _id);
+        const activeColumn = columnList.splice(activeIdx, 1)[0];
+        columnList.splice(activeIdx > overIdx ? overIdx : overIdx - 1, 0, activeColumn);
+        const response = await api.projects.updateAllColumnData(projectInfo._id, { columnList });
+
+        if (response.status === 200) {
+          setColumnList(response.data);
+        }
+      }
     },
     [columnList]
   );
 
   const values = useMemo(
     () => ({
+      setProjectDataBack,
+      setTasksDataBack,
+      setUsersDataBack,
       getUserList,
       projectInfo,
       updateProject,
@@ -297,6 +387,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       swapColumn
     }),
     [
+      setProjectDataBack,
+      setTasksDataBack,
+      setUsersDataBack,
       getUserList,
       projectInfo,
       updateProject,

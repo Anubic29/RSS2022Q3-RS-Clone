@@ -3,12 +3,12 @@ import { Input } from '../../../../../Components';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { useOverlay } from '../../../../../contexts';
 import { MdSearch } from 'react-icons/md';
-import { userListData } from '../../../../../Data/FakeProjectPageData';
 import { UserAvatar } from '../';
 import UserType from '../../../../../Types/User/UserType';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 
 import styles from './PopupAddUser.module.scss';
+import api from '../../../../../api';
 
 function PopupAddUser() {
   const { addUserToTeam, getUserList } = useBoard();
@@ -23,12 +23,15 @@ function PopupAddUser() {
 
   useEffect(() => {
     if (value.length > 0) {
-      const usersId = getUserList().map((data) => data._id);
-      const users = userListData.filter(
-        (user) => !usersId.includes(user._id) && user.mail.includes(value)
-      );
-      if (users.length === 1 && users[0].mail === value) setUserList([]);
-      else setUserList(users);
+      (async () => {
+        const usersId = getUserList().map((data) => data._id);
+        const response = await api.users.getAllData(`?mail=${value}&limit=5`);
+        if (response.status === 200) {
+          const users = response.data.filter((user) => !usersId.includes(user._id));
+          if (users.length === 1 && users[0].mail === value) setUserList([]);
+          else setUserList(users);
+        } else setUserList([]);
+      })();
     } else setUserList([]);
     if (selectedUser && selectedUser.mail !== value) setSelectedUser(undefined);
   }, [value]);
