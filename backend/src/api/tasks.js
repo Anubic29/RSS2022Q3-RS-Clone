@@ -147,6 +147,26 @@ router.put('/:id/info', authenticateToken, async (req, res) => {
   }
 });
 
+router.put('/by-column', authenticateToken, async(req, res) => {
+  try {
+    if (!typeof req.body.currId === 'string' || !req.body.currId) throw new Error('Not found property currId');
+    if (!typeof req.body.newId === 'string' || !req.body.newId) throw new Error('Not found property newId');
+
+    const tasks = await Task.find({ columnId: req.body.currId })
+    if (!tasks) throw new Error('Not found tasks');
+
+    tasks.forEach(async (task) => {
+      task.columnId = req.body.newId;
+      await task.save();
+    })
+
+    res.json(true);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
 
 // Delete Methods
 
@@ -176,6 +196,26 @@ router.delete('/:id/comments/:commentId', authenticateToken, async (req, res) =>
     await task.save();
     res.json(true);
   } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
+router.delete('/by-column/:columnId', authenticateToken, async (req, res) => {
+  try {
+    await Task.deleteMany({ columnId: req.params.columnId });
+    res.json(true);
+  } catch(error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
+router.delete('/by-project/:projectId', authenticateToken, async (req, res) => {
+  try {
+    await Task.deleteMany({ projectId: req.params.projectId });
+    res.json(true);
+  } catch(error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
   }

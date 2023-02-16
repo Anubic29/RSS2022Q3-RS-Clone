@@ -11,7 +11,8 @@ URL Params:
 None
 
 Query Params:
-None
+mail: String (optional)
+limit: Number (optional)
 
 Data Params:
 None
@@ -460,6 +461,34 @@ URL:
 URL Params:
 id - String
 commentId - String
+
+Query Params:
+None
+
+Data Params:
+None
+
+
+- Delete Tasks By Column
+URL:
+/api/tasks/by-column/:columnId
+
+URL Params:
+columnId - String
+
+Query Params:
+None
+
+Data Params:
+None
+
+
+- Delete Tasks By Project
+URL:
+/api/tasks/by-project/:projectId
+
+URL Params:
+projectId - String
 
 Query Params:
 None
