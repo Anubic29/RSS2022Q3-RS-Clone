@@ -28,112 +28,139 @@ import badge_26 from '../assets/project-badges/26.svg';
 interface ProjectBadge {
   id: number;
   src: string;
+  bg: string;
 }
 
 const projectBadges: readonly ProjectBadge[] = [
   {
     id: 1,
-    src: badge_1
+    src: badge_1,
+    bg: '#2785ff'
   },
   {
     id: 2,
-    src: badge_2
+    src: badge_2,
+    bg: '#06c7e7'
   },
   {
     id: 3,
-    src: badge_3
+    src: badge_3,
+    bg: '#6556c0'
   },
   {
     id: 4,
-    src: badge_4
+    src: badge_4,
+    bg: '#ff5630'
   },
   {
     id: 5,
-    src: badge_5
+    src: badge_5,
+    bg: '#ff5630'
   },
   {
     id: 6,
-    src: badge_6
+    src: badge_6,
+    bg: '#6556c0'
   },
   {
     id: 7,
-    src: badge_7
+    src: badge_7,
+    bg: '#253858'
   },
   {
     id: 8,
-    src: badge_8
+    src: badge_8,
+    bg: '#6556c0'
   },
   {
     id: 9,
-    src: badge_9
+    src: badge_9,
+    bg: '#ffc400'
   },
   {
     id: 10,
-    src: badge_10
+    src: badge_10,
+    bg: '#06c7e7'
   },
   {
     id: 11,
-    src: badge_11
+    src: badge_11,
+    bg: '#06c7e7'
   },
   {
     id: 12,
-    src: badge_12
+    src: badge_12,
+    bg: '#06c7e7'
   },
   {
     id: 13,
-    src: badge_13
+    src: badge_13,
+    bg: '#2785ff'
   },
   {
     id: 14,
-    src: badge_14
+    src: badge_14,
+    bg: '#ff5630'
   },
   {
     id: 15,
-    src: badge_15
+    src: badge_15,
+    bg: '#ffc400'
   },
   {
     id: 16,
-    src: badge_16
+    src: badge_16,
+    bg: '#2785ff'
   },
   {
     id: 17,
-    src: badge_17
+    src: badge_17,
+    bg: '#2785ff'
   },
   {
     id: 18,
-    src: badge_18
+    src: badge_18,
+    bg: '#ffc400'
   },
   {
     id: 19,
-    src: badge_19
+    src: badge_19,
+    bg: '#6556c0'
   },
   {
     id: 20,
-    src: badge_20
+    src: badge_20,
+    bg: '#ffc400'
   },
   {
     id: 21,
-    src: badge_21
+    src: badge_21,
+    bg: '#06c7e7'
   },
   {
     id: 22,
-    src: badge_22
+    src: badge_22,
+    bg: '#ff5630'
   },
   {
     id: 23,
-    src: badge_23
+    src: badge_23,
+    bg: '#ff5630'
   },
   {
     id: 24,
-    src: badge_24
+    src: badge_24,
+    bg: '#2785ff'
   },
   {
     id: 25,
-    src: badge_25
+    src: badge_25,
+    bg: '#6556c0'
   },
   {
     id: 26,
-    src: badge_26
+    src: badge_26,
+    bg: '#06c7e7'
   }
 ];
 

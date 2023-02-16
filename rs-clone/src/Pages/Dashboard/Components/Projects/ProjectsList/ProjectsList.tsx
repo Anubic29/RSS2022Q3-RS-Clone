@@ -1,22 +1,54 @@
 import { ProjectCard } from '../..';
-import { EmptyData } from '../../../../../Components';
-import cardsData from '../../../../../Data/FakeProjectCard';
+import { EmptyData, Preloader } from '../../../../../Components';
+import { useProjects } from '../../../../../contexts';
+import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
 import Styles from './ProjectsList.module.scss';
+import { useEffect, useState } from 'react';
+import { getProjects } from '../../../../../api/allProjects';
 
 function ProjectsList() {
-  const cardsTestData = [...cardsData];
+  const [isLoading, setIsLoading] = useState(true);
+  const [customMessage, setCustomMessage] = useState('There are no projects');
+  const { projects, setProjects } = useProjects() as ProjectsContextValue;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const fetchedProjects = await getProjects();
+        setProjects(fetchedProjects);
+      } catch (err) {
+        setCustomMessage(`Server error`);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   return (
     <>
-      {cardsTestData.length ? (
+      {isLoading ? (
+        <div className={Styles.Empty}>
+          <Preloader text={'Loading data...'} />
+        </div>
+      ) : projects.length ? (
         <ul className={Styles.ProjectsList}>
-          {cardsTestData.map((card) => {
-            return <ProjectCard {...card} key={card.id} />;
+          {projects.map((project) => {
+            return (
+              <ProjectCard
+                id={project._id}
+                title={project.title}
+                description={project.description}
+                source={project.pathImage}
+                bgColor={'#ffff00'}
+                size={24}
+                key={project._id}
+              />
+            );
           })}
         </ul>
       ) : (
         <div className={Styles.Empty}>
-          <EmptyData text="There are no projects" iconSizeInPx="24px" />
+          <EmptyData text={customMessage} iconSizeInPx="24px" />
         </div>
       )}
     </>

@@ -10,11 +10,18 @@ import {
   Settings,
   SingleProject
 } from '../Pages';
+import { ProjectsProvider } from '../contexts';
 
 function AuthRoute() {
   return (
     <Routes>
-      <Route path="/" element={<App />}>
+      <Route
+        path="/"
+        element={
+          <ProjectsProvider>
+            <App />
+          </ProjectsProvider>
+        }>
         <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="sign-in" element={<Navigate to={'/'} />} />
