@@ -1,6 +1,6 @@
 import { Button, Dropdown, ProjectAvatar } from '../../../Components';
 import { useOverlay } from '../../../contexts';
-import cardsData from '../../../Data/FakeProjectCard';
+// import cardsData from '../../../Data/FakeProjectCard';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './Components';
 import Styles from './Settings.module.scss';
 import { useBoard } from '../../../contexts/Board.context';
@@ -8,17 +8,17 @@ import { ProjectId } from '../../../Data/FakeProjectPageData';
 import { useEffect } from 'react';
 
 function Settings() {
-  const { setProjectDataBack } = useBoard();
-  const testData = cardsData[0];
-  const { setIsVisibleApp, setChildrenApp } = useOverlay();
+  const { setProjectDataBack, projectInfo } = useBoard();
+  // const testData = cardsData[0];
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
 
   useEffect(() => {
     setProjectDataBack(ProjectId);
   }, []);
 
   const showPopupHandler = () => {
-    setChildrenApp(<ProjectBadgesPopup />);
-    setIsVisibleApp(true);
+    setChildrenBoard(<ProjectBadgesPopup />);
+    setIsVisibleBoard(true);
   };
 
   return (
@@ -38,7 +38,11 @@ function Settings() {
       </div>
 
       <div className={Styles.ProjectDetails}>
-        <ProjectAvatar {...testData} size={128} />
+        <ProjectAvatar
+          source={projectInfo?.pathImage ?? ''}
+          bgColor={projectInfo?.color ?? 'transparent'}
+          size={128}
+        />
         <Button className={Styles.ButtonAvatar} onClick={showPopupHandler}>
           Change avatar
         </Button>

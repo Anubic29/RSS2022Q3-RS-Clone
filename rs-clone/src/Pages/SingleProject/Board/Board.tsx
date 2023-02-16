@@ -9,7 +9,6 @@ import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-ico
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
-import { Overlay } from '../../../Components';
 import { ProjectId } from '../../../Data/FakeProjectPageData';
 
 import styles from './Board.module.scss';
@@ -88,138 +87,133 @@ function Board() {
   }, [isInputTitleVisible]);
 
   return (
-    <>
-      <div className={styles.wrapper}>
-        <div className={styles['info-block']}>
-          <div className={styles['breadcrumbs-block']}>
-            <nav className={styles.breadcrumbs}>
-              <ul className={styles['breadcrumbs__list']}>
-                <li className={styles['breadcrumbs__item']}>
-                  <a className={styles['breadcrumbs__link']} href="">
-                    Projects
-                  </a>
-                </li>
-                <li className={styles['breadcrumbs__item']}>
-                  <a className={styles['breadcrumbs__link']} href="">
-                    Current
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <div className={styles.info}>
-            <div className={styles['info__title']}>
-              <div ref={ref} className={styles['info__title__form']}>
-                {!isInputTitleVisible ? (
-                  <span className={styles['info__title__form__text-backgr']}>
-                    <span
-                      className={styles['info__title__form__text']}
-                      onClick={() => setIsInputTitleVisible(true)}>
-                      {boardTitle.length >= 34 ? boardTitle.substring(0, 33) + '...' : boardTitle}
-                    </span>
+    <div className={styles.wrapper}>
+      <div className={styles['info-block']}>
+        <div className={styles['breadcrumbs-block']}>
+          <nav className={styles.breadcrumbs}>
+            <ul className={styles['breadcrumbs__list']}>
+              <li className={styles['breadcrumbs__item']}>
+                <a className={styles['breadcrumbs__link']} href="">
+                  Projects
+                </a>
+              </li>
+              <li className={styles['breadcrumbs__item']}>
+                <a className={styles['breadcrumbs__link']} href="">
+                  Current
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div className={styles.info}>
+          <div className={styles['info__title']}>
+            <div ref={ref} className={styles['info__title__form']}>
+              {!isInputTitleVisible ? (
+                <span className={styles['info__title__form__text-backgr']}>
+                  <span
+                    className={styles['info__title__form__text']}
+                    onClick={() => setIsInputTitleVisible(true)}>
+                    {boardTitle.length >= 34 ? boardTitle.substring(0, 33) + '...' : boardTitle}
                   </span>
-                ) : (
-                  <div className={styles['content']}>
-                    <input
-                      className={styles['info__title__form__input']}
-                      type="text"
-                      autoFocus
-                      value={boardTitle}
-                      onChange={(event) => {
-                        setBoardTitle(event.target.value);
-                      }}
-                    />
-                    {titleError && (
-                      <span className={styles['error-message']}>
-                        Board title can&apos;t be empty
-                      </span>
-                    )}
-                    <div className={styles['btns-block']}>
-                      <div className={styles['btn-block']} onClick={() => onSubmitHandler()}>
-                        <BtnAction
-                          image={MdDone}
-                          backgrColorDefault={colorBackgroundColumn}
-                          backgrColorHover={colorBackgroundHover}
-                          backgrColorActive={colorSecondaryLight}
-                        />
-                      </div>
-                      <div
-                        className={styles['btn-block']}
-                        onClick={() => setIsInputTitleVisible(false)}>
-                        <BtnAction
-                          image={MdClose}
-                          backgrColorDefault={colorBackgroundColumn}
-                          backgrColorHover={colorBackgroundHover}
-                          backgrColorActive={colorSecondaryLight}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className={styles['info__actions']}>
-              <div className={styles['actions__list']}>
-                <BtnAction
-                  image={MdStarOutline}
-                  title="Add to the list"
-                  backgrColorHover={colorBackgroundColumn}
-                  backgrColorActive={colorSecondaryLight}
-                />
-              </div>
-            </div>
-          </div>
-          <div className={styles['command-panel']}>
-            <div className={styles['command-panel__users-block']}>
-              <div
-                ref={refSearchBlock}
-                className={styles['command-panel__users-block__search-block']}
-                onClick={() => {
-                  refSearchBlock.current?.classList.add(styles['focus']);
-                  refSearchInput.current?.focus();
-                }}>
-                <input
-                  ref={refSearchInput}
-                  type="text"
-                  className={styles['search__input']}
-                  value={searchValue}
-                  onBlur={() => refSearchBlock.current?.classList.remove(styles['focus'])}
-                  onChange={(event) => setSearchValue(event.target.value)}
-                  placeholder="Search..."
-                />
-                <div className={styles['search__btn']}>
-                  <MdSearch />
-                </div>
-              </div>
-              <div className={styles['user-list-container']}>
-                <UserList userIdList={userListDisplay} />
-                <div className={styles['btn-add-user']}>
-                  <UserBtn
-                    type="btn"
-                    title="Add user"
-                    content={MdPersonAdd}
-                    color="rgb(242, 242, 242)"
-                    onClick={() => {
-                      setChildrenBoard(<PopupAddUser />);
-                      setIsVisibleBoard(true);
+                </span>
+              ) : (
+                <div className={styles['content']}>
+                  <input
+                    className={styles['info__title__form__input']}
+                    type="text"
+                    autoFocus
+                    value={boardTitle}
+                    onChange={(event) => {
+                      setBoardTitle(event.target.value);
                     }}
                   />
+                  {titleError && (
+                    <span className={styles['error-message']}>Board title can&apos;t be empty</span>
+                  )}
+                  <div className={styles['btns-block']}>
+                    <div className={styles['btn-block']} onClick={() => onSubmitHandler()}>
+                      <BtnAction
+                        image={MdDone}
+                        backgrColorDefault={colorBackgroundColumn}
+                        backgrColorHover={colorBackgroundHover}
+                        backgrColorActive={colorSecondaryLight}
+                      />
+                    </div>
+                    <div
+                      className={styles['btn-block']}
+                      onClick={() => setIsInputTitleVisible(false)}>
+                      <BtnAction
+                        image={MdClose}
+                        backgrColorDefault={colorBackgroundColumn}
+                        backgrColorHover={colorBackgroundHover}
+                        backgrColorActive={colorSecondaryLight}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
-            <div className={styles['command-panel__group-block']}>
-              <SelectPanel
-                title="Group by: "
-                options={optionsGroupSelect}
-                setSelectedValue={setSelectedGroup}
+          </div>
+          <div className={styles['info__actions']}>
+            <div className={styles['actions__list']}>
+              <BtnAction
+                image={MdStarOutline}
+                title="Add to the list"
+                backgrColorHover={colorBackgroundColumn}
+                backgrColorActive={colorSecondaryLight}
               />
             </div>
           </div>
         </div>
-        <ColumnList group={selectedGroup === 'Executor' ? selectedGroup : ''} />
+        <div className={styles['command-panel']}>
+          <div className={styles['command-panel__users-block']}>
+            <div
+              ref={refSearchBlock}
+              className={styles['command-panel__users-block__search-block']}
+              onClick={() => {
+                refSearchBlock.current?.classList.add(styles['focus']);
+                refSearchInput.current?.focus();
+              }}>
+              <input
+                ref={refSearchInput}
+                type="text"
+                className={styles['search__input']}
+                value={searchValue}
+                onBlur={() => refSearchBlock.current?.classList.remove(styles['focus'])}
+                onChange={(event) => setSearchValue(event.target.value)}
+                placeholder="Search..."
+              />
+              <div className={styles['search__btn']}>
+                <MdSearch />
+              </div>
+            </div>
+            <div className={styles['user-list-container']}>
+              <UserList userIdList={userListDisplay} />
+              <div className={styles['btn-add-user']}>
+                <UserBtn
+                  type="btn"
+                  title="Add user"
+                  content={MdPersonAdd}
+                  color="rgb(242, 242, 242)"
+                  onClick={() => {
+                    setChildrenBoard(<PopupAddUser />);
+                    setIsVisibleBoard(true);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={styles['command-panel__group-block']}>
+            <SelectPanel
+              title="Group by: "
+              options={optionsGroupSelect}
+              setSelectedValue={setSelectedGroup}
+            />
+          </div>
+        </div>
       </div>
-      <Overlay scope={'Board'} />
-    </>
+      <ColumnList group={selectedGroup === 'Executor' ? selectedGroup : ''} />
+    </div>
   );
 }
 
