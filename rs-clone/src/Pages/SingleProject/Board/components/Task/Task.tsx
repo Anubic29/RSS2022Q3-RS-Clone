@@ -1,9 +1,12 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { MdDone } from 'react-icons/md';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../../theme/variables';
 import { BtnMenuAction, UserAvatar } from '../';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
+import { useOverlay } from '../../../../../contexts/Overlay.context';
+import TaskPopUp from '../TaskPopUp/TaskPopUp';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from './Task.module.scss';
 
@@ -19,8 +22,38 @@ function Task(props: TaskProps) {
   const [hoverTask, setHoverTask] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const { getTaskList, getFullNameUser, deleteTask } = useBoard();
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
 
   const user = useMemo(() => getFullNameUser(props.executor), [props.executor, getFullNameUser]);
+
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const showModal = () => {
+    setIsVisibleBoard(true);
+    setChildrenBoard(
+      <TaskPopUp
+        title={props.title}
+        executor={props.executor}
+        _id={props._id}
+        keyTask={props.keyTask}
+      />
+    );
+    navigate(`selected-task/${props.keyTask}`);
+  };
+  useEffect(() => {
+    if (params.taskId) {
+      setIsVisibleBoard(true);
+      setChildrenBoard(
+        <TaskPopUp
+          title={props.title}
+          executor={props.executor}
+          _id={props._id}
+          keyTask={props.keyTask}
+        />
+      );
+    }
+  }, []);
 
   const deleteTaskCallback = useCallback(
     () => deleteTask(props._id),
@@ -37,11 +70,12 @@ function Task(props: TaskProps) {
 
   return (
     <div
+      onClick={() => showModal()}
       className={styles.task}
       onMouseOver={() => setHoverTask(true)}
       onMouseOut={() => setHoverTask(false)}>
       {(hoverTask || isActiveMenu) && (
-        <div className={styles['btn-more']}>
+        <div onClick={(e) => e.stopPropagation()} className={styles['btn-more']}>
           <BtnMenuAction
             options={optionsBtnMenu}
             btnBackgrColorHover={colorBackgroundHover}

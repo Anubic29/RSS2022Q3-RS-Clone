@@ -29,6 +29,7 @@ function AuthRoute() {
           }>
           <Route index element={<Board />} />
           <Route path="board" element={<Board />} />
+          <Route path="selected-task/:taskId" element={<Board />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Route>

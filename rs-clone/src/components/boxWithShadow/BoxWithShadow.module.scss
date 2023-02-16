@@ -4,4 +4,9 @@
   width: auto;
   background-color: $colorWhite;
   box-shadow: $shadowSubMenu;
+  white-space: nowrap;
+}
+
+.submenu_block > * {
+  white-space: nowrap;
 }
