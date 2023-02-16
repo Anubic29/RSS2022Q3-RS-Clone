@@ -148,7 +148,7 @@ router.post('/:id/columns', authenticateToken, async (req, res) => {
 
 router.put('/:id/info', authenticateToken, async (req, res) => {
   try {
-    if (!isCorrectProjectInfo(req.body) || typeof body.boardTitle !== 'string' || body.boardTitle === '') throw new Error('Not found property');
+    if (!isCorrectProjectInfo(req.body) || typeof req.body.boardTitle !== 'string' || req.body.boardTitle === '') throw new Error('Not found property');
 
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found');
