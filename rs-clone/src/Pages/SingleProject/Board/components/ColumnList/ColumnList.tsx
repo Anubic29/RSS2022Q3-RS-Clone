@@ -5,15 +5,19 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../../../theme/variables';
-import { BtnAction, Column } from '../';
+import { BtnAction, Column, ColumnRowUser } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { useBoard } from '../../../../../contexts/Board.context';
 
 import styles from './ColumnList.module.scss';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 
-function ColumnList() {
-  const { getTaskList, getColumnList, updateTask, swapColumn } = useBoard();
+interface ColumnListProps {
+  group: '' | 'Executor';
+}
+
+function ColumnList(props: ColumnListProps) {
+  const { getUserList, getTaskList, getColumnList, updateTask, swapColumn } = useBoard();
   const [isScrolledList, setIsScrolledList] = useState(false);
 
   const { isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
@@ -96,31 +100,79 @@ function ColumnList() {
       <div className={styles['column-list']}>
         <div className={styles['curtain'] + ' ' + styles['left']}></div>
         <div className={styles['list']}>
-          {getColumnList().map((column) => (
-            <div
-              className={styles['column-block']}
-              key={column._id}
-              onDragOver={(event) => dragOverHandlerColumn(event)}
-              onDrop={(event) => dropHandlerColumn(event, column._id)}>
-              <Column>
-                <ColumnHeader
-                  id={column._id}
-                  title={column.title}
-                  tasksCount={getTaskList().filter((task) => task.columnId === column._id).length}
-                  stickyHeader={isScrolledList}
-                  typeDone={column.type === 'final'}
-                  dragStartHandlerColumn={dragStartHandlerColumn}
-                  dragEndHandlerColumn={dragEndHandlerColumn}
-                />
-                <ColumnBody
-                  id={column._id}
-                  type={column.type}
-                  tasks={getTaskList().filter((task) => task.columnId === column._id)}
-                  dragHandlersTask={dragHandlersTask}
-                />
-              </Column>
+          {props.group === '' &&
+            getColumnList().map((column) => (
+              <div
+                className={styles['column-block']}
+                key={column._id}
+                onDragOver={(event) => dragOverHandlerColumn(event)}
+                onDrop={(event) => dropHandlerColumn(event, column._id)}>
+                <Column>
+                  <ColumnHeader
+                    id={column._id}
+                    title={column.title}
+                    tasksCount={getTaskList().filter((task) => task.columnId === column._id).length}
+                    stickyHeader={isScrolledList}
+                    typeDone={column.type === 'final'}
+                    dragStartHandlerColumn={dragStartHandlerColumn}
+                    dragEndHandlerColumn={dragEndHandlerColumn}
+                  />
+                  <ColumnBody
+                    id={column._id}
+                    type={column.type}
+                    tasks={getTaskList().filter((task) => task.columnId === column._id)}
+                    dragHandlersTask={dragHandlersTask}
+                  />
+                </Column>
+              </div>
+            ))}
+          {props.group === 'Executor' && (
+            <div className={styles['list-content']}>
+              <div className={styles['list-content__row']}>
+                {getColumnList().map((column) => (
+                  <div
+                    className={styles['column-block']}
+                    key={column._id}
+                    onDragOver={(event) => dragOverHandlerColumn(event)}
+                    onDrop={(event) => dropHandlerColumn(event, column._id)}>
+                    <Column>
+                      <ColumnHeader
+                        id={column._id}
+                        title={column.title}
+                        tasksCount={
+                          getTaskList().filter((task) => task.columnId === column._id).length
+                        }
+                        stickyHeader={isScrolledList}
+                        typeDone={column.type === 'final'}
+                        dragStartHandlerColumn={dragStartHandlerColumn}
+                        dragEndHandlerColumn={dragEndHandlerColumn}
+                      />
+                    </Column>
+                  </div>
+                ))}
+              </div>
+              {getUserList().map((user) => {
+                const tasks = getTaskList().filter((task) => task.executor === user._id);
+                return (
+                  tasks.length > 0 && (
+                    <div key={user._id}>
+                      <ColumnRowUser
+                        userId={user._id}
+                        columnList={getColumnList()}
+                        taskList={tasks}
+                        dragHandlersTask={dragHandlersTask}
+                      />
+                    </div>
+                  )
+                );
+              })}
+              <ColumnRowUser
+                columnList={getColumnList()}
+                taskList={getTaskList().filter((task) => task.executor === 'auto')}
+                dragHandlersTask={dragHandlersTask}
+              />
             </div>
-          ))}
+          )}
           {isComponentVisible && (
             <div className={styles['column-block']}>
               <Column>

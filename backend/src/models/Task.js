@@ -11,7 +11,8 @@ const schema = new Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false,
+    default: ''
   },
   author: {
     type: String,
@@ -39,6 +40,10 @@ const schema = new Schema({
       required: true
     },
     date: {
+      type: Date,
+      required: true
+    },
+    dateUpdate: {
       type: Date,
       required: true
     }

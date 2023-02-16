@@ -40,7 +40,7 @@ const LoginForm = () => {
           setTimeout(() => {
             changeMessage(false);
           }, 1000);
-          localStorage.setItem('accessToken', JSON.stringify(response.data));
+          localStorage.setItem('accessToken', response.data);
           setUserExist(true);
           contextValue.setIsAuthenticated(true);
           navigate('/');

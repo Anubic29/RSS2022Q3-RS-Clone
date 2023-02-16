@@ -1,9 +1,10 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import UserType from '../Types/User/UserType';
 
 export default function (instance: AxiosInstance) {
   return {
-    getAllData() {
-      return instance.get('api/users');
+    getAllData(query: string) {
+      return instance.get<UserType[]>(`api/users/${query}`);
     },
     getData(userId: string) {
       return instance.get(`api/users/${userId}/info`);
@@ -21,7 +22,7 @@ export default function (instance: AxiosInstance) {
       return instance.delete(`api/users/${userId}/info`);
     },
     deleteNotedData(userId: string, noteId: string) {
-      return instance.delete(`api/users/${userId}/nodet/${noteId}`);
+      return instance.delete(`api/users/${userId}/noted/${noteId}`);
     }
   };
 }
