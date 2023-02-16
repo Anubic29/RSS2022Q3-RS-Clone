@@ -2,10 +2,18 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media screen and (max-width: 479px) {
+    width: 100%;
+  }
 }
 
 .Input {
   width: 350px;
+
+  @media screen and (max-width: 479px) {
+    width: 100%;
+  }
 }
 
 .Fieldset {
