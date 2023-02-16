@@ -26,6 +26,7 @@ type ProjectDataToUpdate = {
   description?: string;
   key?: string;
   boardTitle?: string;
+  color?: string;
   author?: string;
   pathImage?: string;
 };
@@ -132,6 +133,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
           title: updateData.title ?? projectInfo.title,
           description: updateData.description ?? projectInfo.description,
           boardTitle: updateData.boardTitle ?? projectInfo.boardTitle,
+          color: updateData.color ?? projectInfo.color,
           key: updateData.key ?? projectInfo.key,
           author: updateData.author ?? projectInfo.author,
           pathImage: updateData.pathImage ?? projectInfo.pathImage
