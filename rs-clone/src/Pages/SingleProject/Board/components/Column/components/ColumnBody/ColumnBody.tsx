@@ -14,6 +14,7 @@ import styles from './ColumnBody.module.scss';
 
 interface ColumnBodyProps {
   id: string;
+  userId?: string;
   tasks: TaskType[];
   type: string;
   dragHandlersTask: {
@@ -40,7 +41,7 @@ function ColumnBody(props: ColumnBodyProps) {
 
   const onSubmitHandler = () => {
     if (!titleError) {
-      createTask(props.id, newTaskTitle);
+      createTask(props.id, newTaskTitle, props.userId);
       setIsComponentVisible(false);
     }
   };

@@ -15,8 +15,10 @@ function Overlay(props: OverlayProps) {
   const onClickHandler = (event: React.MouseEvent) => {
     if ((event.target as HTMLElement).className === Styles.Overlay) {
       values[`setIsVisible${scope}`](false);
-      const path = window.location.pathname.split('/').slice(0, -2).join('/');
-      navigate(path);
+      if (window.location.pathname.includes('selected-task')) {
+        const path = window.location.pathname.split('/').slice(0, -2).join('/');
+        navigate(path);
+      }
     }
   };
 

@@ -17,7 +17,7 @@ const Footer = () => {
               dev=" Alexander Sitailo"></DeveloperItem>
             <DeveloperItem href="https://github.com/ElenaDatso" dev="Olena Datso"></DeveloperItem>
             <DeveloperItem href="https://github.com/vvant97" dev="Vlad Antonov"></DeveloperItem>
-            <span>|</span>
+            <span className={classes.Divider}>|</span>
             <div className={classes.footer_year}>2023</div>
           </div>
         </div>
