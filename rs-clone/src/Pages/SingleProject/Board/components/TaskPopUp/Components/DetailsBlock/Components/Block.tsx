@@ -25,8 +25,9 @@ const Block = (props: Block) => {
 
   return (
     <div className={classes.taskDetails_detailsBlock}>
-      <div className={classes.taskDetails_detailsHeader} onClick={(e) => moreDetailsHandler(e)}>
+      <div className={classes.taskDetails_detailsHeader}>
         <p
+          onClick={(e) => moreDetailsHandler(e)}
           className={`${classes.taskDetails_detailsHeaderText} ${
             moreDetails ? classes.taskDetails_detailsHeaderText__active : ''
           }`}>

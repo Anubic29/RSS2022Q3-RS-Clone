@@ -8,13 +8,14 @@ import EditableTitle from '../../../../../Components/EditableTitle/EditableTitle
 import DescriptionBlock from './Components/DescriptionBlock/DescriptionBlock';
 import CommentsBlock from './Components/CommentsBlock/CommentsBlock';
 import { GrClose } from 'react-icons/gr';
-import { TbDots } from 'react-icons/tb';
 import BoxWithShadow from '../../../../../Components/boxWithShadow/BoxWithShadow';
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './Components/DetailsBlock/DetailsBlock';
 import { useOverlay } from '../../../../../contexts/Overlay.context';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
+import FlipMenu from '../BtnMenuAction/BtnMenuAction';
+import { colorLightGrey } from '../../../../../theme/variables';
 
 interface TaskProps {
   _id: string;
@@ -42,7 +43,6 @@ const TaskPopUp = (props: TaskProps) => {
 
   const [isActive, setIsActive] = useState(false);
   const [taskState, setTaskState] = useState('in dev');
-  const [dotsMenuActive, setDotsMenuActive] = useState(false);
 
   const {
     ref,
@@ -72,12 +72,8 @@ const TaskPopUp = (props: TaskProps) => {
     setIsMenuVisible(false);
   };
 
-  // window.onclick = function () {
-  //   if (isMenuVisible) setIsMenuVisible(false);
-  // };
-
-  const dotsHandler = () => {
-    setDotsMenuActive(dotsMenuActive ? false : true);
+  const deleteHandler = () => {
+    console.log('4545');
   };
 
   const url = window.location.href;
@@ -112,19 +108,16 @@ const TaskPopUp = (props: TaskProps) => {
             </div>
             <div className={classes.taskDetails_col__right}>
               <div className={classes.taskDetails_topLine}>
-                <div className={classes.dotsMenu}>
-                  <TbDots className={classes.taskDetails_nav} onClick={dotsHandler} />
-                  {dotsMenuActive && (
-                    <div className={classes.dotsMenu_wrap}>
-                      <BoxWithShadow>
-                        <ul className={classes.taskDetails_currentStatusUl}>
-                          <li className={classes.taskDetails_currentStatusLi}>Clone</li>
-                          <li className={classes.taskDetails_currentStatusLi}>delete</li>
-                        </ul>
-                      </BoxWithShadow>
-                    </div>
-                  )}
-                </div>
+                <FlipMenu
+                  options={[
+                    {
+                      title: 'Delete',
+                      callback: deleteHandler
+                    }
+                  ]}
+                  btnBackgrColorHover={colorLightGrey}
+                  btnBackgrColorActive={colorLightGrey}
+                />
                 <GrClose
                   className={classes.taskDetails_nav + ' ' + classes.stroke}
                   onClick={closeHandler}
