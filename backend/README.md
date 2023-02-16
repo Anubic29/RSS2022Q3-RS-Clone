@@ -210,6 +210,7 @@ Data Params:
   key: String,
   author: String,
   pathImage: String,
+  color: String,
 }
 
 
@@ -264,6 +265,7 @@ Data Params:
   key: String,
   author: String,
   pathImage: String,
+  color: String,
 }
 
 
@@ -436,6 +438,41 @@ Data Params:
   executor: String,
   projectId: String,
   columnId: String,
+}
+
+
+- Update Comment
+URL:
+/api/tasks/:id/comments/:commentId
+
+URL Params:
+id - String
+commentId - String
+
+Query Params:
+None
+
+Data Params:
+{
+  text: String,
+  dateUpdate: Date,
+}
+
+
+- Update Comment
+URL:
+/api/tasks/by-column
+
+URL Params:
+None
+
+Query Params:
+None
+
+Data Params:
+{
+  currId: String,
+  newId: String,
 }
 
 

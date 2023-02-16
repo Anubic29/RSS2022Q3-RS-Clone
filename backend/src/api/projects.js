@@ -8,6 +8,8 @@ function isCorrectProjectInfo(body) {
   return typeof body.title === 'string' 
     && body.title !== ''
     && typeof body.description === 'string' 
+    && typeof body.color === 'string' 
+    && body.color !== ''
     && typeof body.key === 'string' 
     && body.key !== ''
     && typeof body.author === 'string'
@@ -75,6 +77,7 @@ router.post('/', authenticateToken, async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       key: req.body.key,
+      color: req.body.color,
       boardTitle: `Board ${req.body.title}`,
       author: req.body.author,
       team: [],
@@ -145,7 +148,7 @@ router.post('/:id/columns', authenticateToken, async (req, res) => {
 
 router.put('/:id/info', authenticateToken, async (req, res) => {
   try {
-    if (!isCorrectProjectInfo(req.body) || typeof body.boardTitle !== 'string' || body.boardTitle === '') throw new Error('Not found property');
+    if (!isCorrectProjectInfo(req.body) || typeof req.body.boardTitle !== 'string' || req.body.boardTitle === '') throw new Error('Not found property');
 
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found');
@@ -153,6 +156,7 @@ router.put('/:id/info', authenticateToken, async (req, res) => {
     project.title = req.body.title;
     project.description = req.body.description;
     project.boardTitle = req.body.boardTitle;
+    project.color = req.body.color;
     project.key = req.body.key;
     project.author = req.body.author;
     project.pathImage = req.body.pathImage;

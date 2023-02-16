@@ -111,7 +111,8 @@ router.post('/:id/comments', authenticateToken, async (req, res) => {
     task.commentList.push({
       text: req.body.text,
       author: req.body.author,
-      date: req.body.data
+      date: req.body.date,
+      dateUpdate: req.body.date
     });
 
     await task.save();
@@ -141,6 +142,28 @@ router.put('/:id/info', authenticateToken, async (req, res) => {
 
     await task.save();
     res.json(task);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
+router.put('/:id/comments/:commentId', authenticateToken, async (req, res) => {
+  try {
+    if (typeof req.body.text !== 'string' || req.body.text === '') throw new Error('Not found property text');
+    if (!(req.body.dateUpdate instanceof Date)) throw new Error('Not found property dateUpdate');
+    
+    const task = (await Task.find({ _id: req.params.id }))[0];
+    if (!task) throw new Error('Not found task');
+
+    const comment = task.commentList.find((data) => data._id.toString() === req.params.commentId);
+    if (!comment) throw new Error('Not found comment');
+
+    comment.text = req.body.text;
+    comment.dateUpdate = req.body.dateUpdate;
+
+    await task.save();
+    res.json(comment);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
@@ -188,7 +211,7 @@ router.delete('/:id/comments/:commentId', authenticateToken, async (req, res) =>
     const task = (await Task.find({ _id: req.params.id }))[0];
     if (!task) throw new Error('Not found task');
 
-    const idx = task.commentList.findIndex((comment) => comment._id === req.params.commentId);
+    const idx = task.commentList.findIndex((comment) => comment._id.toString() === req.params.commentId);
     if (idx < 0) throw new Error('Not found comment');
 
     task.commentList.splice(idx, 1);
