@@ -10,6 +10,7 @@ import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
 import styles from './ProjectCard.module.scss';
 
 interface ProjectCardProps extends ProjectAvatarProps {
+  _id: string;
   id: string;
   title: string;
   description: string;
@@ -18,7 +19,7 @@ interface ProjectCardProps extends ProjectAvatarProps {
 const getTransparentBorderColor = (color: string) => `${color}50`;
 
 function ProjectCard(props: ProjectCardProps) {
-  const { title, description, size, source, bgColor, id } = props;
+  const { title, description, size, source, bgColor, id, _id } = props;
   const { projects, setProjects } = useProjects() as ProjectsContextValue;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,7 +40,7 @@ function ProjectCard(props: ProjectCardProps) {
     <li
       className={styles.ProjectCard}
       style={{ borderColor: getTransparentBorderColor(bgColor) }}
-      id={id}>
+      id={_id}>
       {isLoading && (
         <div className={styles.PreloaderContainer}>
           <Preloader />
