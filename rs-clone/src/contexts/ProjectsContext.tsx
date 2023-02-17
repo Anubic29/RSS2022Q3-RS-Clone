@@ -3,9 +3,9 @@ import ProjectType from '../types/project/projectType';
 import {
   createProjectRequest,
   deleteProjectRequest,
-  getProjectsRequest,
-  ProjectCreateBody
+  getProjectsRequest
 } from '../api/allProjects';
+import { ProjectCreateBody } from '../types/project/projectCreateBody';
 
 export interface ProjectsContextValue {
   projects: ProjectType[] | [];

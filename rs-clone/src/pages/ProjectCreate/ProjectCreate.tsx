@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InfoCards, ProjectForm } from './components';
 import { Button } from '../../components';
-import { getCurrentUserId } from '../../api/allProjects';
 import { getRandomNum } from '../../utils';
 import { projectBadges } from '../../data';
 import { useProjects } from '../../contexts';
 import { ProjectsContextValue } from '../../contexts/ProjectsContext';
+import { getCurrentUserId } from '../../api/config';
 
 import styles from './ProjectCreate.module.scss';
 

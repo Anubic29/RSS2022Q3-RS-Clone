@@ -1,24 +1,6 @@
 import ProjectType from '../types/project/projectType';
-
-export type ProjectCreateBody = Pick<
-  ProjectType,
-  'title' | 'description' | 'author' | 'pathImage' | 'key' | 'color'
->;
-
-const BASE_URL = 'http://localhost:5050/api';
-const ACCESS_TOKEN = localStorage.getItem('accessToken');
-
-async function getCurrentUserId(): Promise<string> {
-  const res = await fetch(`${BASE_URL}/users/current`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${ACCESS_TOKEN}`
-    }
-  });
-  const user = await res.json();
-
-  return user._id;
-}
+import { ACCESS_TOKEN, BASE_URL, getCurrentUserId } from './config';
+import { ProjectCreateBody } from '../types/project/projectCreateBody';
 
 async function getProjectsRequest(): Promise<ProjectType[]> {
   const currentUserId = await getCurrentUserId();
@@ -52,4 +34,4 @@ async function createProjectRequest(body: ProjectCreateBody) {
   });
 }
 
-export { getProjectsRequest, deleteProjectRequest, createProjectRequest, getCurrentUserId };
+export { getProjectsRequest, deleteProjectRequest, createProjectRequest };
