@@ -10,6 +10,7 @@ import useComponentVisible from '../../../hooks/useComponentVisible/useComponent
 import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
 import { ProjectId } from '../../../Data/FakeProjectPageData';
+import { Preloader } from '../../../Components';
 
 import styles from './Board.module.scss';
 
@@ -29,6 +30,8 @@ function Board() {
   const [searchValue, setSearchValue] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
+  const [isLoaderGoing, setIsLoaderGoing] = useState(false);
+  const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -75,10 +78,16 @@ function Board() {
   const refSearchBlock = useRef<HTMLDivElement>(null);
   const refSearchInput = useRef<HTMLInputElement>(null);
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async () => {
     if (!titleError) {
-      updateProject({ boardTitle: boardTitle });
       setIsInputTitleVisible(false);
+      setIsLoaderGoing(true);
+      const answer = await updateProject({ boardTitle: boardTitle });
+      setIsLoaderGoing(false);
+      if (answer) {
+        setAfterLoadingIcon(true);
+        setTimeout(() => setAfterLoadingIcon(false), 1500);
+      }
     }
   };
 
@@ -113,7 +122,11 @@ function Board() {
                   <span
                     className={styles['info__title__form__text']}
                     onClick={() => setIsInputTitleVisible(true)}>
-                    {boardTitle.length >= 34 ? boardTitle.substring(0, 33) + '...' : boardTitle}
+                    {boardTitle.length >= 31 ? boardTitle.substring(0, 30) + '...' : boardTitle}
+                  </span>
+                  <span className={styles['form-loader']}>
+                    {isLoaderGoing && <Preloader text="" />}
+                    {afterLoadingIcon && <MdDone />}
                   </span>
                 </span>
               ) : (
