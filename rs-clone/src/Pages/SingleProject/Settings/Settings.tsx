@@ -1,16 +1,18 @@
+import { useEffect, useMemo } from 'react';
 import { Button, Dropdown, ProjectAvatar } from '../../../Components';
 import { useOverlay } from '../../../contexts';
-// import cardsData from '../../../Data/FakeProjectCard';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './Components';
-import Styles from './Settings.module.scss';
 import { useBoard } from '../../../contexts/Board.context';
 import { ProjectId } from '../../../Data/FakeProjectPageData';
-import { useEffect } from 'react';
+import Loader from '../../../Components/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
+
+import Styles from './Settings.module.scss';
 
 function Settings() {
-  const { setProjectDataBack, projectInfo } = useBoard();
-  // const testData = cardsData[0];
+  const { setProjectDataBack, deleteProject, projectInfo } = useBoard();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setProjectDataBack(ProjectId);
@@ -21,20 +23,28 @@ function Settings() {
     setIsVisibleBoard(true);
   };
 
+  const optionsBtnMenu = useMemo(() => {
+    return [
+      {
+        title: 'Remove',
+        onClick: async () => {
+          setChildrenBoard(<Loader />);
+          setIsVisibleBoard(true);
+          await deleteProject();
+          setIsVisibleBoard(false);
+          navigate('/');
+        }
+      }
+    ];
+  }, [deleteProject]);
+
   return (
     <div className={Styles.Settings}>
       <SettingsBreadcrumbs />
 
       <div className={Styles.TitleArea}>
         <span className={Styles.Title}>Details</span>
-        <Dropdown
-          childElements={[
-            {
-              title: 'Remove project',
-              onClick: () => console.log(true)
-            }
-          ]}
-        />
+        <Dropdown childElements={optionsBtnMenu} />
       </div>
 
       <div className={Styles.ProjectDetails}>

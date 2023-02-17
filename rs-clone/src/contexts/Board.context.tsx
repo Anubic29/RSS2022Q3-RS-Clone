@@ -43,6 +43,7 @@ interface BoardContextType {
   getUserList: () => UserType[];
   projectInfo: ProjectType | null;
   updateProject: (updateData: ProjectDataToUpdate) => Promise<boolean>;
+  deleteProject: () => Promise<boolean>;
   addUserToTeam: (_id: string) => void;
   setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
@@ -69,6 +70,7 @@ export const BoardContext = createContext<BoardContextType>({
   getUserList: () => [],
   projectInfo: null,
   updateProject: () => Promise.resolve(false),
+  deleteProject: () => Promise.resolve(false),
   addUserToTeam: () => {},
   setSearchInputValue: () => {},
   addUserFilter: () => {},
@@ -148,6 +150,16 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     },
     [projectInfo]
   );
+
+  const deleteProject = useCallback(async () => {
+    if (projectInfo) {
+      const response = await api.projects.deleteData(projectInfo._id);
+      if (response.status === 200 && response.data) {
+        return true;
+      }
+    }
+    return false;
+  }, [projectInfo]);
 
   const addUserToTeam = useCallback(
     async (_id: string) => {
@@ -372,6 +384,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       getUserList,
       projectInfo,
       updateProject,
+      deleteProject,
       addUserToTeam,
       setSearchInputValue,
       addUserFilter,
@@ -397,6 +410,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       getUserList,
       projectInfo,
       updateProject,
+      deleteProject,
       addUserToTeam,
       setSearchInputValue,
       addUserFilter,
