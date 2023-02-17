@@ -8,6 +8,7 @@ type ProjectType = {
   boardTitle: string;
   author: string;
   team: string[];
+  color: string;
   columnList: ColumnProjectType[];
   pathImage: string;
   __v: number;

@@ -1,17 +1,42 @@
+import { useEffect, useMemo } from 'react';
 import { Button, Dropdown, ProjectAvatar } from '../../../Components';
 import { useOverlay } from '../../../contexts';
-import cardsData from '../../../Data/FakeProjectCard';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './Components';
+import { useBoard } from '../../../contexts/Board.context';
+import { ProjectId } from '../../../Data/FakeProjectPageData';
+import Loader from '../../../Components/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
+
 import Styles from './Settings.module.scss';
 
 function Settings() {
-  const testData = cardsData[0];
-  const { setIsVisibleApp, setChildrenApp } = useOverlay();
+  const { setProjectDataBack, deleteProject, projectInfo } = useBoard();
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setProjectDataBack(ProjectId);
+  }, []);
 
   const showPopupHandler = () => {
-    setChildrenApp(<ProjectBadgesPopup />);
-    setIsVisibleApp(true);
+    setChildrenBoard(<ProjectBadgesPopup />);
+    setIsVisibleBoard(true);
   };
+
+  const optionsBtnMenu = useMemo(() => {
+    return [
+      {
+        title: 'Remove',
+        onClick: async () => {
+          setChildrenBoard(<Loader />);
+          setIsVisibleBoard(true);
+          await deleteProject();
+          setIsVisibleBoard(false);
+          navigate('/');
+        }
+      }
+    ];
+  }, [deleteProject]);
 
   return (
     <div className={Styles.Settings}>
@@ -19,18 +44,15 @@ function Settings() {
 
       <div className={Styles.TitleArea}>
         <span className={Styles.Title}>Details</span>
-        <Dropdown
-          childElements={[
-            {
-              title: 'Remove project',
-              onClick: () => console.log(true)
-            }
-          ]}
-        />
+        <Dropdown childElements={optionsBtnMenu} />
       </div>
 
       <div className={Styles.ProjectDetails}>
-        <ProjectAvatar {...testData} size={128} />
+        <ProjectAvatar
+          source={projectInfo?.pathImage ?? ''}
+          bgColor={projectInfo?.color ?? 'transparent'}
+          size={128}
+        />
         <Button className={Styles.ButtonAvatar} onClick={showPopupHandler}>
           Change avatar
         </Button>
