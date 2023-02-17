@@ -1,0 +1,41 @@
+@import "../../../../theme/variables";
+
+.submenu_line {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+  padding: 0 30px;
+  color: $colorContent;
+  cursor: pointer;
+  min-height: 40px;
+
+  &:hover {
+    background-color: $colorLightGrey;
+  }
+}
+
+.submenu_itemDetails {
+  display: flex;
+  color: $colorGreyText;
+  line-height: 20px;
+}
+
+.submenu_texts {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.submenu_imgWrap {
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 5px;
+}
+
+.submenu_imgWrap__round {
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}

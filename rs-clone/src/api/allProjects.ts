@@ -13,13 +13,14 @@ export interface Project {
   team: string[];
   pathImage: string;
   boardTitle: string;
+  color: string;
   columnList: ColumnList;
 }
 
-export interface ProjectCreateBody
-  extends Pick<Project, 'title' | 'description' | 'author' | 'pathImage' | 'key'> {
-  color: string;
-}
+export type ProjectCreateBody = Pick<
+  Project,
+  'title' | 'description' | 'author' | 'pathImage' | 'key' | 'color'
+>;
 
 const BASE_URL = 'http://localhost:5050/api';
 const ACCESS_TOKEN = JSON.parse(localStorage.getItem('accessToken') as string);

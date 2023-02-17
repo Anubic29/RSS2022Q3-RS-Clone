@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import UserType from '../Types/User/UserType';
+import UserType from '../types/user/userType';
 
 export default function (instance: AxiosInstance) {
   return {
