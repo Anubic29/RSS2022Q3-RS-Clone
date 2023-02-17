@@ -47,16 +47,24 @@ function ColumnHeader(props: ColumnHeaderProps) {
     return [
       {
         title: 'Remove All Tasks',
-        callback: () => deleteAllTaskInColumn(props.id)
+        callback: async () => {
+          setChildrenColumnList(<Loader />);
+          setIsVisibleColumnList(true);
+          await deleteAllTaskInColumn(props.id);
+          setIsVisibleColumnList(false);
+        }
       },
       {
         title: 'Remove',
-        callback: () => {
+        callback: async () => {
           if (props.tasksCount > 0) {
             setChildrenBoard(<PopupDeleteColumn _id={props.id} title={props.title} />);
             setIsVisibleBoard(true);
           } else {
-            deleteColumn(props.id);
+            setChildrenColumnList(<Loader />);
+            setIsVisibleColumnList(true);
+            await deleteColumn(props.id);
+            setIsVisibleColumnList(false);
           }
         },
         blocked: getColumnCount() === 1

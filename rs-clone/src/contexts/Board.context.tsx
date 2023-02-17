@@ -34,11 +34,11 @@ export const BoardContext = createContext<BoardContextType>({
   createTask: () => {},
   updateTask: () => {},
   deleteTask: () => {},
-  deleteAllTaskInColumn: () => {},
-  moveTasksToColumn: () => {},
+  deleteAllTaskInColumn: () => Promise.resolve(false),
+  moveTasksToColumn: () => Promise.resolve(false),
   createColumn: () => Promise.resolve(false),
   updateColumn: () => Promise.resolve(false),
-  deleteColumn: () => {},
+  deleteColumn: () => Promise.resolve(false),
   swapColumn: () => {}
 });
 
@@ -244,7 +244,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         });
 
         setTaskList(res);
+        return true;
       }
+      return false;
     },
     [taskList]
   );
@@ -255,7 +257,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       if (response.status === 200 && response.data) {
         const res = taskList.filter((data) => data.columnId !== _id);
         setTaskList(res);
+        return true;
       }
+      return false;
     },
     [taskList]
   );
@@ -311,8 +315,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
           columnList.splice(idx, 1);
 
           setColumnList([...columnList]);
+          return true;
         }
       }
+      return false;
     },
     [columnList]
   );
