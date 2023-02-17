@@ -1,0 +1,22 @@
+@import '../../theme/variables';
+
+.Input {
+  width: 100%;
+  padding: 10px 6px;
+  border: $borderInput;
+  border-radius: 3px;
+  outline: none;
+  font-size: 14px;
+  color: $colorInoutText;
+  background: $colorInoutBackground;
+  transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+
+  &:hover {
+    background: $colorInoutBackgroundHover;
+  }
+
+  &:focus {
+    border-color: $colorInputBorderFocus;
+    background: $colorInoutBackgroundFocus;
+  }
+}

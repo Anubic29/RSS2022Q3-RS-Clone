@@ -1,4 +1,4 @@
-import Styles from './ProjectAvatar.module.scss';
+import styles from './ProjectAvatar.module.scss';
 
 export interface ProjectAvatarProps {
   size: number;
@@ -15,17 +15,17 @@ function ProjectAvatar(props: ProjectAvatarProps) {
     backgroundColor: bgColor
   };
   const classNames = className
-    ? `${Styles.projectAvatarContainer} ${className}`
-    : Styles.projectAvatarContainer;
+    ? `${styles.projectAvatarContainer} ${className}`
+    : styles.projectAvatarContainer;
 
   return (
     <div className={classNames} style={containerStyles}>
       <img
-        className={Styles.projectAvatar}
+        className={styles.projectAvatar}
         src={source}
         alt="Project avatar"
-        width="75%"
-        height="75%"
+        width="100%"
+        height="100%"
       />
     </div>
   );

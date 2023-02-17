@@ -1,0 +1,127 @@
+@import '../../../../theme/variables';
+
+.AsideBar {
+  position: relative;
+  min-width: $widthAsideBarSingleProjectNormal;
+  max-width: $widthAsideBarSingleProjectNormal;
+  padding: 24px 8px;
+  border-right: $borderAsideBar;
+  background: $colorAsideBarBackground;
+  transition: all 0.25s ease;
+
+  &:hover {
+    .CollapseButton {
+      display: flex;
+    }
+  }
+
+  @media screen and (max-width: $mediaTablet) {
+    position: absolute;
+    height: 100%;
+  }
+}
+
+.AsideBarCollapsed {
+  position: relative;
+  min-width: $widthAsideBarSingleProjectHidden;
+  max-width: $widthAsideBarSingleProjectHidden;
+  width: 10px;
+  padding: 24px 8px;
+  border-right: $borderAsideBar;
+  background: $colorAsideBarBackground;
+  transition: all 0.25s ease;
+
+  .TitleArea,
+  .Navigation {
+    display: none;
+  }
+
+  .CollapseButton {
+    display: flex;
+  }
+
+  @media screen and (max-width: $mediaTablet) {
+    position: absolute;
+    height: 100%;
+  }
+}
+
+.TitleArea {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 16px 16px;
+  border-bottom: $borderAsideBar;
+}
+
+.ProjectInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ProjectTitle {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: $colorGreyText;
+}
+
+.ProjectDescription {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 400;
+  color: $colorSecondaryText;
+}
+
+.Navigation {
+  margin-top: 16px;
+}
+
+.NavTitle {
+  margin-bottom: 8px;
+  padding: 0 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $colorGreyText;
+}
+
+.CollapseButton {
+  position: absolute;
+  top: 30px;
+  right: -12px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: $colorBackground;
+  box-shadow: $boxShadowAsideBarCollapseButton;
+  transition: all 0.25s ease;
+  cursor: pointer;
+
+  & > * {
+    color: $colorGreyText;
+  }
+
+  &:hover {
+    background: $colorInputBorderFocus;
+
+    & > * {
+      color: $colorBackground;
+    }
+  }
+
+  @media screen and (max-width: $mediaTablet) {
+    display: flex;
+  }
+}
