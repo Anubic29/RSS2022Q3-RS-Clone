@@ -1,4 +1,4 @@
-@import '../../../../../theme/variables.scss';
+@import '../../../../../theme/variables';
 
 .ProjectBadgesPopup {
   position: absolute;
@@ -10,10 +10,10 @@
   width: 375px;
   padding: 16px;
   border-radius: 3px;
-  background: #ffffff;
+  background: $colorBackground;
   transform: translate(-50%, -50%);
 
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: $mediaMobile) {
     width: 300px;
   }
 }
@@ -21,7 +21,7 @@
 .Title {
   font-size: 20px;
   font-weight: 500;
-  color: #172b4d;
+  color: $colorContent;
 }
 
 .Buttons {
@@ -31,11 +31,11 @@
 }
 
 .ButtonCancel {
-  color: #42526E;
-  background: rgba(9, 30, 66, 0.04);
+  color: #42526e;
+  background: $colorButtonCancelBackground;
 
   &:hover {
-    background: rgba(9, 30, 66, 0.08);
+    background: $colorButtonCancelBackgroundHover;
   }
 }
 

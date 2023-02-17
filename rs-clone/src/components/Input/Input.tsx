@@ -1,4 +1,6 @@
-import Styles from './Input.module.scss';
+import React from 'react';
+
+import styles from './Input.module.scss';
 
 interface InputProps {
   id: string;
@@ -16,7 +18,7 @@ interface InputProps {
 
 function Input(props: InputProps) {
   const { className } = props;
-  const classNames = className ? `${Styles.Input} ${className}` : Styles.Input;
+  const classNames = className ? `${styles.Input} ${className}` : styles.Input;
 
   return <input {...props} className={classNames} />;
 }

@@ -1,3 +1,5 @@
+@import '../../theme/variables';
+
 .NotFound {
   position: absolute;
   left: 50%;
@@ -16,14 +18,14 @@
   z-index: 1;
   line-height: 0.8;
   font-size: 500px;
-  color: rgba(0, 0, 0, 0.05);
+  color: $colorNotFoundCodeText;
   transform: translate(-50%, -50%);
   user-select: none;
 }
 
 .NotFound-title {
   font-size: 30px;
-  color: #172B4D;
+  color: $colorContent;
   user-select: none;
 }
 .NotFound-title,

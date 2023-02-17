@@ -4,7 +4,8 @@ import Loader from '../../../../../components/Loader/Loader';
 import { useOverlay } from '../../../../../contexts';
 import { useBoard } from '../../../../../contexts/Board.context';
 import projectBadges from '../../../../../data/projectBadges';
-import Styles from './ProjectBadgesPopup.module.scss';
+
+import styles from './ProjectBadgesPopup.module.scss';
 
 function ProjectBadgesPopup() {
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
@@ -25,24 +26,25 @@ function ProjectBadgesPopup() {
   }, [projectBadges, updateProject, selectedImage]);
 
   return (
-    <div className={Styles.ProjectBadgesPopup}>
-      <p className={Styles.Title}>Choose badge</p>
-      <ul className={Styles.BadgesList}>
+    <div className={styles.ProjectBadgesPopup}>
+      <p className={styles.Title}>Choose badge</p>
+
+      <ul className={styles.BadgesList}>
         {projectBadges.map((badge) => {
           const className =
             badge.id === selectedImage
-              ? `${Styles.BadgeItem} ${Styles.selected}`
-              : Styles.BadgeItem;
+              ? `${styles.BadgeItem} ${styles.selected}`
+              : styles.BadgeItem;
           return (
             <li className={className} key={badge.id} onClick={() => setSelectedImage(badge.id)}>
-              <img className={Styles.Badge} src={badge.src} alt="Project badge" />
+              <img className={styles.Badge} src={badge.src} alt="Project badge" />
             </li>
           );
         })}
       </ul>
-      <div className={Styles.Buttons}>
+      <div className={styles.Buttons}>
         <Button onClick={onSubmitHandler}>Choose</Button>
-        <Button className={Styles.ButtonCancel} onClick={onClickHandler}>
+        <Button className={styles.ButtonCancel} onClick={onClickHandler}>
           Cancel
         </Button>
       </div>

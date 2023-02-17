@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Overlay } from '../../components';
 import { AsideBar } from './components';
+
 import './SingleProject.scss';
 
 function SingleProject() {

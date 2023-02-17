@@ -1,15 +1,14 @@
 $colorContent: #172b4d;
 $colorContentText: #344563;
-$colorBackground: #FFFFFF;
-$colorPrimary: #0052CC;
+$colorBackground: #ffffff;
+$colorPrimary: #0052cc;
 $colorSecondary: #3381f7;
 $colorHoverBlue: #e8f1ff;
-$shadowSubMenu: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
 $colorWhite: #ffffff;
 $colorLightGrey: #ebecf0;
-$colorGreyText: #42526E;
+$colorGreyText: #42526e;
 $colorSecondaryLight: #94bfff;
-$colorSecondaryText: #6B778C;
+$colorSecondaryText: #6b778c;
 $colorBackgroundColumn: rgb(242, 242, 242);
 $colorBackgroundHover: rgb(223, 223, 223);
 $colorBorder: #8a8a8a;
@@ -20,4 +19,74 @@ $colorBtnDangerActive: rgb(191 38 0);
 $colorBtnPrimaryHover: rgb(0 101 255);
 $colorBtnPrimaryActive: rgb(7 71 166);
 
-$minDesktopWidth: 1023px;
+$colorButtonText: #ffffff;
+$colorButtonCancelText: #42526e;
+$colorButtonCancelBackground: rgba(9, 30, 66, 0.04);
+$colorButtonCancelBackgroundHover: rgba(9, 30, 66, 0.08);
+$colorButtonTextDisabled: #a5adba;
+$colorButtonBackground: #0052cc;
+$colorButtonBackgroundHover: #0065ff;
+$colorButtonBackgroundDisabled: rgba(9, 30, 66, 0.04);
+
+$colorDropdownBackgroundHover: rgba(9, 30, 66, 0.08);
+$colorDropdownBackgroundActive: #263759;
+$colorDropdownItemBackground: #42526f;
+$colorDropdownItemBackgroundActive: #ffffff;
+$colorDropdownListBackground: #ffffff;
+$colorDropdownElementText: #172b4d;
+$colorDropdownElementBackgroundHover: #f4f5f7;
+
+$colorInfoCardPictureBackground: #f4f5f7;
+$colorInfoCardInfoBackground: #ffffff;
+
+$colorInputBorder: #dfe1e6;
+$colorInputBorderFocus: #4c9aff;
+$colorInoutText: #091e42;
+$colorInoutBackground: #fafbfc;
+$colorInoutBackgroundHover: #ebecf0;
+$colorInoutBackgroundFocus: transparent;
+
+$colorLabelMark: #ff0000;
+
+$colorOverlayBackground: rgba(9, 30, 66, 0.54);
+
+$colorProjectCardBackground: #ffffff;
+$colorProjectActionsAreaBorder: #ebecf0;
+$colorProjectActionsAreaBackgroundHover: rgba(9, 30, 66, 0.08);
+$colorProjectTitleHover: #0065ff;
+$colorProjectPreloaderContainerBackground: rgba(255, 255, 255, 0.7);
+$colorProjectsSectionBackground: #fafbfc;
+$colorProjectsCreateLinkText: #0065ff;
+
+$colorTaskBackgroundHover: rgba(9, 30, 66, 0.04);
+$colorTaskMarkedIconText: #ffab00;
+$colorTaskIcon: #4cade8;
+$colorTaskMarkedIconTextHover: #ffc400;
+$colorTaskMarkedIconBackgroundHover: rgba(9, 30, 66, 0.08);
+$colorTaskInfoText: #6b778c;
+$colorTaskTabsAfterBackground: #ebecf0;
+$colorTaskTabText: #42526e;
+$colorTaskTabTextHover: #0052cc;
+
+$colorNotFoundCodeText: rgba(0, 0, 0, 0.05);
+
+$colorAsideBarBackground: #fbfbfc;
+
+$borderInput: 2px solid $colorInputBorder;
+$borderProjectActionsArea: 1px solid $colorProjectActionsAreaBorder;
+$borderProjectCreateRowBottom: 1px solid rgba(9, 30, 66, 0.08);
+
+$borderAsideBar: 2px solid #e6e6e6;
+$borderAsideBarNavElementBackground: #e6effc;
+
+$boxShadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+$boxShadow2: 0px 1px 1px rgba(9, 30, 66, 0.13), 0px 0px 1px rgba(9, 30, 66, 0.13);
+$shadowSubMenu: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+$boxShadowProjectCard: 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+$boxShadowProjectCardHover: 0 2px 4px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+$boxShadowAsideBarCollapseButton: rgb(9 30 66 / 8%) 0px 0px 0px 1px,
+  rgb(9 30 66 / 8%) 0px 2px 4px 1px;
+
+$mediaDesktopSmall: 1023px;
+$mediaTablet: 767px;
+$mediaMobile: 479px;

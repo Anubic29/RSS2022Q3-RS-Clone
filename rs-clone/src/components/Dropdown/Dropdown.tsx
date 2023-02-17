@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import Styles from './Dropdown.module.scss';
+
+import styles from './Dropdown.module.scss';
 
 interface DropdownChild {
   title: string;
@@ -36,16 +37,17 @@ function DropdownButton(props: DropdownButtonProps) {
   }, [display]);
 
   return (
-    <div className={Styles.DropdownContainer}>
-      <div className={isActive ? Styles.DropdownActive : Styles.Dropdown} id="dropdown">
-        <span className={Styles.DropdownItem}></span>
-        <span className={Styles.DropdownItem}></span>
-        <span className={Styles.DropdownItem}></span>
+    <div className={styles.DropdownContainer}>
+      <div className={isActive ? styles.DropdownActive : styles.Dropdown} id="dropdown">
+        <span className={styles.DropdownItem}></span>
+        <span className={styles.DropdownItem}></span>
+        <span className={styles.DropdownItem}></span>
       </div>
-      <ul className={Styles.DropdownElementsList} style={{ display }}>
+
+      <ul className={styles.DropdownElementsList} style={{ display }}>
         {childElements.map((element, index) => {
           return (
-            <li className={Styles.DropdownElement} key={index} onClick={element.onClick}>
+            <li className={styles.DropdownElement} key={index} onClick={element.onClick}>
               {element.title}
             </li>
           );

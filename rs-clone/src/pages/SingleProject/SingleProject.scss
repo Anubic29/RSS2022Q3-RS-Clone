@@ -1,3 +1,5 @@
+@import '../../theme/variables';
+
 .App:has(.SingleProject) {
   display: flex;
 }
@@ -6,7 +8,7 @@
   display: flex;
   flex: 1;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaTablet) {
     position: relative;
   }
 }

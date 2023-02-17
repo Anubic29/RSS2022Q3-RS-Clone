@@ -7,7 +7,9 @@ import { ProjectId } from '../../../data/fakeProjectPageData';
 import Loader from '../../../components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 
-import Styles from './Settings.module.scss';
+import styles from './Settings.module.scss';
+
+const PROJECT_BADGE_SIZE = 128;
 
 function Settings() {
   const { setProjectDataBack, deleteProject, projectInfo } = useBoard();
@@ -39,21 +41,21 @@ function Settings() {
   }, [deleteProject]);
 
   return (
-    <div className={Styles.Settings}>
+    <div className={styles.Settings}>
       <SettingsBreadcrumbs />
 
-      <div className={Styles.TitleArea}>
-        <span className={Styles.Title}>Details</span>
+      <div className={styles.TitleArea}>
+        <span className={styles.Title}>Details</span>
         <Dropdown childElements={optionsBtnMenu} />
       </div>
 
-      <div className={Styles.ProjectDetails}>
+      <div className={styles.ProjectDetails}>
         <ProjectAvatar
           source={projectInfo?.pathImage ?? ''}
           bgColor={projectInfo?.color ?? 'transparent'}
-          size={128}
+          size={PROJECT_BADGE_SIZE}
         />
-        <Button className={Styles.ButtonAvatar} onClick={showPopupHandler}>
+        <Button className={styles.ButtonAvatar} onClick={showPopupHandler}>
           Change avatar
         </Button>
 
