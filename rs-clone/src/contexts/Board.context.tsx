@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useContext, createContext, useState, useMemo, useCallback } from 'react';
-import { CurrentUserId } from '../Data/FakeProjectPageData';
+import { CurrentUserId } from '../data/fakeProjectPageData';
 import api from '../api';
-import ColumnProjectType from '../Types/Project/ColumnProjectType';
-import ProjectType from '../Types/Project/ProjectType';
-import TaskType from '../Types/Task/TaskType';
-import UserType from '../Types/User/UserType';
+import ColumnProjectType from '../types/project/columnProjectType';
+import ProjectType from '../types/project/projectType';
+import TaskType from '../types/task/taskType';
+import UserType from '../types/user/userType';
 
 type TaskDataToUpdate = {
   title?: string;

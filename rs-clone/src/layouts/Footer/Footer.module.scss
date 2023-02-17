@@ -1,0 +1,79 @@
+@import "../../theme/variables";
+
+.footer {
+  padding: 10px 20px;
+  border-top: 2px solid #e6e6e6;
+  background: #f4f5f7;
+
+  &::before {
+    height: 4px;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    left: 0px;
+    background: linear-gradient(rgba(9, 30, 66, 0.13) 0px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px);
+    content: "";
+  }
+}
+
+.footer_inner {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.footer_logo {
+  width: 80px;
+}
+
+.footer_devsWrap {
+  display: flex;
+  gap: 20px;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+.footer_profileWrap {
+  padding-left: 16px;
+}
+
+.footer_profileInner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+    &:hover {
+      background-color: $colorHoverBlue;
+    }
+}
+
+.footer_profileIcon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: $colorSecondary;
+  line-height: 30px;
+  text-align: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.Divider {
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}

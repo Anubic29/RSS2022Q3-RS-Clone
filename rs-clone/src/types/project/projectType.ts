@@ -1,0 +1,16 @@
+import ColumnProjectType from './columnProjectType';
+
+type ProjectType = {
+  _id: string;
+  title: string;
+  description: string;
+  key: string;
+  boardTitle: string;
+  author: string;
+  team: string[];
+  columnList: ColumnProjectType[];
+  pathImage: string;
+  __v: number;
+};
+
+export default ProjectType;
