@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../Components';
 import { AsideNavElement } from '../';
-import cardsData from '../../../../Data/FakeProjectCard';
-import Styles from './AsideBar.module.scss';
 import { useLocation } from 'react-router-dom';
+import { useBoard } from '../../../../contexts/Board.context';
+
+import Styles from './AsideBar.module.scss';
 
 function AsideBar() {
+  const { projectInfo } = useBoard();
   const currentScreenWidth = window.screen.width;
   const location = useLocation();
   const currentPath = location.pathname.split('/').at(-1);
@@ -15,7 +17,6 @@ function AsideBar() {
     settings: currentPath === 'settings'
   });
   const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= 767);
-  const testProjectData = cardsData[0];
 
   const changeActiveStateHandler = (event: React.MouseEvent<HTMLElement>) => {
     const target = (event.target as HTMLElement).closest('a') as HTMLElement;
@@ -40,11 +41,15 @@ function AsideBar() {
       </div>
 
       <div className={Styles.TitleArea}>
-        <ProjectAvatar {...testProjectData} />
+        <ProjectAvatar
+          source={projectInfo?.pathImage ?? ''}
+          bgColor={projectInfo?.color ?? 'transparent'}
+          size={23}
+        />
 
         <div className={Styles.ProjectInfo}>
-          <p className={Styles.ProjectTitle}>{testProjectData.title}</p>
-          <p className={Styles.ProjectDescription}>{testProjectData.description}</p>
+          <p className={Styles.ProjectTitle}>{projectInfo?.title}</p>
+          <p className={Styles.ProjectDescription}>{projectInfo?.description}</p>
         </div>
       </div>
 
