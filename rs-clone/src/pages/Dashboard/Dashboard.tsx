@@ -1,11 +1,12 @@
 import { ProjectsSection, TasksSection } from './components';
 
-import Styles from './Dashboard.module.scss';
+import styles from './Dashboard.module.scss';
 
 function Dashboard() {
   return (
-    <main className={Styles.Dashboard}>
-      <h1 className={Styles.DashboardTitle}>Your work</h1>
+    <main className={styles.Dashboard}>
+      <h1 className={styles.DashboardTitle}>Your work</h1>
+
       <ProjectsSection />
       <TasksSection />
     </main>

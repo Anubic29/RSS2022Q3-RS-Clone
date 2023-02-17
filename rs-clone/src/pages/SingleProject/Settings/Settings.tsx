@@ -1,8 +1,11 @@
 import { Button, Dropdown, ProjectAvatar } from '../../../components';
 import { useOverlay } from '../../../contexts';
-import cardsData from '../../../data/fakeProjectCard';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './components';
-import Styles from './Settings.module.scss';
+import cardsData from '../../../data/fakeProjectCard';
+
+import styles from './Settings.module.scss';
+
+const PROJECT_BADGE_SIZE = 128;
 
 function Settings() {
   const testData = cardsData[0];
@@ -14,11 +17,12 @@ function Settings() {
   };
 
   return (
-    <div className={Styles.Settings}>
+    <div className={styles.Settings}>
       <SettingsBreadcrumbs />
 
-      <div className={Styles.TitleArea}>
-        <span className={Styles.Title}>Details</span>
+      <div className={styles.TitleArea}>
+        <span className={styles.Title}>Details</span>
+
         <Dropdown
           childElements={[
             {
@@ -29,9 +33,10 @@ function Settings() {
         />
       </div>
 
-      <div className={Styles.ProjectDetails}>
-        <ProjectAvatar {...testData} size={128} />
-        <Button className={Styles.ButtonAvatar} onClick={showPopupHandler}>
+      <div className={styles.ProjectDetails}>
+        <ProjectAvatar {...testData} size={PROJECT_BADGE_SIZE} />
+
+        <Button className={styles.ButtonAvatar} onClick={showPopupHandler}>
           Change avatar
         </Button>
 

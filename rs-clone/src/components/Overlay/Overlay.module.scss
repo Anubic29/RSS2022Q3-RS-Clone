@@ -1,3 +1,5 @@
+@import '../../theme/variables';
+
 .Overlay {
   top: 0;
   left: 0;
@@ -5,5 +7,5 @@
   z-index: 999;
   width: 100vw;
   height: 100vh;
-  background: rgba(9, 30, 66, 0.54);
+  background: $colorOverlayBackground;
 }

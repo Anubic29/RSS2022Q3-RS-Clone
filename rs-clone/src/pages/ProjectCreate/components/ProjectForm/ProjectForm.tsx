@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Label } from '../../../../components';
-import Styles from './ProjectForm.module.scss';
+
+import styles from './ProjectForm.module.scss';
 
 interface ProjectFormProps {
   projectName: string;
@@ -9,39 +10,47 @@ interface ProjectFormProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+enum InputIds {
+  NAME = 'name',
+  DESCRIPTION = 'description',
+  KEY = 'key'
+}
+
 function ProjectForm(props: ProjectFormProps) {
   const { projectName, projectKey, projectDescription, onChange } = props;
 
   return (
     <form>
-      <fieldset className={Styles.Fieldset}>
+      <fieldset className={styles.Fieldset}>
         <Label text="Name" required />
         <Input
-          id="name"
-          name="name"
+          id={InputIds.NAME}
+          name={InputIds.NAME}
           type="text"
           placeholder="Try to use team name or purpose of the project"
           value={projectName}
           onChange={onChange}
         />
       </fieldset>
-      <fieldset className={Styles.Fieldset}>
+
+      <fieldset className={styles.Fieldset}>
         <Label text="Description" required />
         <Input
-          id="description"
-          name="description"
+          id={InputIds.DESCRIPTION}
+          name={InputIds.DESCRIPTION}
           type="text"
           placeholder="Describe your project with few words"
           value={projectDescription}
           onChange={onChange}
         />
       </fieldset>
-      <fieldset className={Styles.Fieldset}>
+
+      <fieldset className={styles.Fieldset}>
         <Label text="Key" required />
         <Input
-          className={Styles.Key}
-          id="key"
-          name="key"
+          className={styles.Key}
+          id={InputIds.KEY}
+          name={InputIds.KEY}
           type="text"
           value={projectKey}
           onChange={onChange}

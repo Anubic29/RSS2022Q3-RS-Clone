@@ -1,8 +1,10 @@
+@import '../../../theme/variables';
+
 .Settings {
   flex: 1;
   padding: 24px 72px;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaTablet) {
     padding: 20px 20px 20px 50px;
   }
 }
@@ -10,7 +12,7 @@
 .Title {
   font-size: 24px;
   font-weight: 500;
-  color: #172b4d;
+  color: $colorContent;
 }
 
 .ProjectDetails {
@@ -22,11 +24,11 @@
 
 .ButtonAvatar {
   margin-top: 15px;
-  color: #42526e;
-  background: rgba(9, 30, 66, 0.04);
+  color: $colorGreyText;
+  background: $colorButtonCancelBackground;
 
   &:hover {
-    background: rgba(9, 30, 66, 0.08);
+    background: $colorButtonCancelBackgroundHover;
   }
 }
 

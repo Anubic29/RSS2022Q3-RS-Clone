@@ -1,23 +1,27 @@
 import { MdCheckBox } from 'react-icons/md';
 
-import Styles from './TasksListItem.module.scss';
+import styles from './TasksListItem.module.scss';
 
 function TasksListItem() {
   return (
-    <li className={Styles.TaskItem}>
-      <MdCheckBox className={Styles.TaskIcon} />
-      <div className={Styles.Content}>
-        <div className={Styles.TitleArea}>
-          <div className={Styles.TaskTitle}>Checkout popup</div>
-          <div className={Styles.ProjectInfo}>
+    <li className={styles.TaskItem}>
+      <MdCheckBox className={styles.TaskIcon} />
+
+      <div className={styles.Content}>
+        <div className={styles.TitleArea}>
+          <div className={styles.TaskTitle}>Checkout popup</div>
+
+          <div className={styles.ProjectInfo}>
             <span>CBC-3</span>
-            <span className={Styles.Separator}></span>
+            <span className={styles.Separator}></span>
             <span>Company BD Code</span>
           </div>
         </div>
-        <p className={Styles.ProjectColumn}>IN DEV</p>
+
+        <p className={styles.ProjectColumn}>IN DEV</p>
       </div>
-      <div className={Styles.Empty}></div>
+
+      <div className={styles.Empty}></div>
     </li>
   );
 }

@@ -1,3 +1,5 @@
+@import '../../../../../theme/variables';
+
 .Breadcrumbs {
   display: flex;
   gap: 8px;
@@ -7,7 +9,7 @@
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: 400;
-  color: #6b778c;
+  color: $colorSecondaryText;
 
   &:hover {
     text-decoration: underline;
@@ -17,7 +19,7 @@
     text-decoration: none;
   }
 
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: $mediaMobile) {
     font-size: 11px;
   }
 }
@@ -25,5 +27,5 @@
 .Divider {
   font-size: 14px;
   font-weight: 400;
-  color: #6b778c;
+  color: $colorSecondaryText;
 }

@@ -1,3 +1,5 @@
+@import '../../../../../theme/variables';
+
 .TaskItem {
   display: flex;
   align-items: center;
@@ -7,14 +9,14 @@
   cursor: pointer;
 
   &:hover {
-    background: rgba(9, 30, 66, 0.04);
+    background: $colorTaskBackgroundHover;
   }
 }
 
 .TaskIcon {
   width: 24px;
   height: 24px;
-  color: #4cade8;
+  color: $colorTaskIcon;
 }
 
 .Content {
@@ -27,7 +29,7 @@
 .Empty {
   flex: 0 0 40%;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaTablet) {
     display: none;
   }
 }
@@ -41,13 +43,13 @@
 .TaskTitle {
   font-size: 14px;
   font-weight: 700;
-  color: #172b4d;
+  color: $colorContent;
 }
 
 .ProjectInfo {
   font-size: 11px;
   font-weight: 500;
-  color: #6b778c;
+  color: $colorTaskInfoText;
 }
 
 .Separator {
@@ -62,5 +64,5 @@
   font-size: 11px;
   font-weight: 400;
   text-transform: uppercase;
-  color: #6b778c;
+  color: $colorTaskInfoText;
 }

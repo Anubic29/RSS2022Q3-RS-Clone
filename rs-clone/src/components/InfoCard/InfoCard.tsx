@@ -16,6 +16,7 @@ const InfoCard = (props: InfoCardProps) => {
       <div className="InfoCard-picture-container" style={{ backgroundColor: imgBackground }}>
         <img className="InfoCard-picture" src={src} alt={alt} />
       </div>
+
       <div className="InfoCard-info-container">
         <p className="InfoCard-title">{title}</p>
         <p className="InfoCard-description">{children}</p>

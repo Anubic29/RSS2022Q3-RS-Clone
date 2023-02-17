@@ -1,10 +1,12 @@
+@import '../../../../theme/variables';
+
 .InfoCards {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 20px;
   border-radius: 16px;
-  background: #fafbfc;
+  background: $colorProjectsSectionBackground;
 }
 
 .Container {
@@ -16,5 +18,5 @@
 .Subtitle {
   font-size: 14px;
   stroke-width: 500;
-  color: #6B778C;
+  color: $colorSecondaryText;
 }
