@@ -8,11 +8,10 @@ export interface ProjectAvatarProps {
 }
 
 function ProjectAvatar(props: ProjectAvatarProps) {
-  const { size, source, bgColor, className } = props;
+  const { size, source, className } = props;
   const containerStyles = {
     width: `${size}px`,
-    height: `${size}px`,
-    backgroundColor: bgColor
+    height: `${size}px`
   };
   const classNames = className
     ? `${styles.projectAvatarContainer} ${className}`
@@ -20,13 +19,7 @@ function ProjectAvatar(props: ProjectAvatarProps) {
 
   return (
     <div className={classNames} style={containerStyles}>
-      <img
-        className={styles.projectAvatar}
-        src={source}
-        alt="Project avatar"
-        width="100%"
-        height="100%"
-      />
+      <img className={styles.projectAvatar} src={source} alt="Project avatar" width="100%" />
     </div>
   );
 }

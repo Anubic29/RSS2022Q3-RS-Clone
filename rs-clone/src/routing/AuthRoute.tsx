@@ -40,7 +40,14 @@ function AuthRoute() {
           <Route path="settings" element={<Settings />} />
         </Route>
       </Route>
-      <Route path="create-project" element={<ProjectCreate />} />
+      <Route
+        path="create-project"
+        element={
+          <ProjectsProvider>
+            <ProjectCreate />
+          </ProjectsProvider>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

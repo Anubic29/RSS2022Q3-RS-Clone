@@ -4,7 +4,6 @@ import { MdOutlineClear, MdArrowRightAlt } from 'react-icons/md';
 import { ProjectAvatarProps } from '../../../../../components/ProjectAvatar/ProjectAvatar';
 import { Preloader, ProjectAvatar } from '../../../../../components';
 import { useProjects } from '../../../../../contexts';
-import { deleteProject } from '../../../../../api/allProjects';
 import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
 
 import styles from './ProjectCard.module.scss';
@@ -20,8 +19,8 @@ const getTransparentBorderColor = (color: string) => `${color}50`;
 
 function ProjectCard(props: ProjectCardProps) {
   const { title, description, size, source, bgColor, id, _id } = props;
-  const { projects, setProjects } = useProjects() as ProjectsContextValue;
   const [isLoading, setIsLoading] = useState(false);
+  const { deleteProject } = useProjects() as ProjectsContextValue;
 
   const deleteProjectHandler = async (event: React.MouseEvent) => {
     try {
@@ -30,7 +29,6 @@ function ProjectCard(props: ProjectCardProps) {
 
       setIsLoading(true);
       await deleteProject(id);
-      setProjects(projects.filter((project) => project._id !== id));
     } finally {
       setIsLoading(false);
     }
