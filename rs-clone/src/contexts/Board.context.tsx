@@ -58,7 +58,7 @@ interface BoardContextType {
   deleteAllTaskInColumn: (_id: string) => void;
   moveTasksToColumn: (_cuurId: string, _newId: string) => void;
   createColumn: (columnTitle: string) => void;
-  updateColumn: (_id: string, updateData: ColumnDataToUpdate) => void;
+  updateColumn: (_id: string, updateData: ColumnDataToUpdate) => Promise<boolean>;
   deleteColumn: (_id: string) => void;
   swapColumn: (_idActive: string, _id: string) => void;
 }
@@ -85,7 +85,7 @@ export const BoardContext = createContext<BoardContextType>({
   deleteAllTaskInColumn: () => {},
   moveTasksToColumn: () => {},
   createColumn: () => {},
-  updateColumn: () => {},
+  updateColumn: () => Promise.resolve(false),
   deleteColumn: () => {},
   swapColumn: () => {}
 });
@@ -337,8 +337,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         if (response.status === 200) {
           columnList.splice(idx, 1, response.data);
           setColumnList([...columnList]);
+          return true;
         }
       }
+      return false;
     },
     [columnList]
   );

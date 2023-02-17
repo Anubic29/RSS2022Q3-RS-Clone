@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import {
   colorBackground,
   colorBackgroundColumn,
@@ -11,6 +11,7 @@ import useComponentVisible from '../../../../../../../hooks/useComponentVisible/
 import { useBoard } from '../../../../../../../contexts/Board.context';
 import { useOverlay } from '../../../../../../../contexts';
 import { PopupDeleteColumn } from '../../../';
+import { Preloader } from '../../../../../../../components';
 
 import styles from './ColumnHeader.module.scss';
 
@@ -34,6 +35,8 @@ function ColumnHeader(props: ColumnHeaderProps) {
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const [titleError, setTitleError] = useState(false);
+  const [isLoaderGoing, setIsLoaderGoing] = useState(false);
+  const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
 
   useEffect(() => setTitle(props.title), [props.title]);
 
@@ -68,16 +71,23 @@ function ColumnHeader(props: ColumnHeaderProps) {
     ? styles['header-block'] + ' ' + styles['sticky']
     : styles['header-block'];
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = useCallback(async () => {
     if (!titleError) {
+      setIsInputHeaderVisible(false);
       if (props.typeCreate) {
         createColumn(title);
       } else {
-        updateColumn(props.id, { title });
+        setIsLoaderGoing(true);
+        console.log(title);
+        const answer = await updateColumn(props.id, { title });
+        setIsLoaderGoing(false);
+        if (answer) {
+          setAfterLoadingIcon(true);
+          setTimeout(() => setAfterLoadingIcon(false), 1000);
+        }
       }
-      setIsInputHeaderVisible(false);
     }
-  };
+  }, [createColumn, updateColumn, title, titleError, props.typeCreate, props.id]);
 
   useEffect(() => {
     if (!isInputHeaderVisible) setTitle(props.title);
@@ -113,6 +123,10 @@ function ColumnHeader(props: ColumnHeaderProps) {
                 onClick={() => setIsInputHeaderVisible(true)}>
                 <span>{title.length >= 10 ? title.substring(0, 9) + '...' : title}</span>
                 <span className={styles.tasks}>{props.tasksCount} tasks</span>
+              </span>
+              <span className={styles['form-loader']}>
+                {isLoaderGoing && <Preloader text="" />}
+                {afterLoadingIcon && <MdDone />}
               </span>
               {props.typeDone && (
                 <div className={styles['title__form__icon-done']}>
