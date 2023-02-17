@@ -40,10 +40,6 @@ function ColumnHeader(props: ColumnHeaderProps) {
   const optionsBtnMenu = useMemo(() => {
     return [
       {
-        title: 'Change',
-        callback: () => console.log()
-      },
-      {
         title: 'Remove All Tasks',
         callback: () => deleteAllTaskInColumn(props.id)
       },
