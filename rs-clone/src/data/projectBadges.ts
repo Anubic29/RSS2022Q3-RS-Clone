@@ -34,6 +34,7 @@ interface ProjectBadge {
 const BADGES_BG: Record<string, string> = {
   blue: '#2785ff',
   lightBlue: '#06c7e7',
+  darkBlue: '#253858',
   purple: '#6556c0',
   orange: '#ff5630',
   yellow: '#ffc400'
@@ -73,7 +74,7 @@ const projectBadges: readonly ProjectBadge[] = [
   {
     id: 7,
     src: badge_7,
-    bg: '#253858'
+    bg: BADGES_BG.darkBlue
   },
   {
     id: 8,
@@ -83,7 +84,7 @@ const projectBadges: readonly ProjectBadge[] = [
   {
     id: 9,
     src: badge_9,
-    bg: '#ffc400'
+    bg: BADGES_BG.yellow
   },
   {
     id: 10,
@@ -113,7 +114,7 @@ const projectBadges: readonly ProjectBadge[] = [
   {
     id: 15,
     src: badge_15,
-    bg: '#ffc400'
+    bg: BADGES_BG.yellow
   },
   {
     id: 16,
@@ -128,7 +129,7 @@ const projectBadges: readonly ProjectBadge[] = [
   {
     id: 18,
     src: badge_18,
-    bg: '#ffc400'
+    bg: BADGES_BG.yellow
   },
   {
     id: 19,
@@ -138,7 +139,7 @@ const projectBadges: readonly ProjectBadge[] = [
   {
     id: 20,
     src: badge_20,
-    bg: '#ffc400'
+    bg: BADGES_BG.yellow
   },
   {
     id: 21,

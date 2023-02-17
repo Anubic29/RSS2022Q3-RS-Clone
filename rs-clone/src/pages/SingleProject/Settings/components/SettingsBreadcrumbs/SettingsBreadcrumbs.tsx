@@ -1,22 +1,23 @@
 import { Link } from 'react-router-dom';
-import Styles from './SettingsBreadcrumbs.module.scss';
+
+import styles from './SettingsBreadcrumbs.module.scss';
 
 function SettingsBreadcrumbs() {
   return (
-    <ul className={Styles.Breadcrumbs}>
-      <li className={Styles.Breadcrumb}>
+    <ul className={styles.Breadcrumbs}>
+      <li className={styles.Breadcrumb}>
         <Link to="/">Homepage</Link>
       </li>
 
-      <span className={Styles.Divider}>/</span>
+      <span className={styles.Divider}>/</span>
 
-      <li className={Styles.Breadcrumb}>
+      <li className={styles.Breadcrumb}>
         <Link to="/projects">Projects</Link>
       </li>
 
-      <span className={Styles.Divider}>/</span>
+      <span className={styles.Divider}>/</span>
 
-      <li className={Styles.Breadcrumb}>Project settings</li>
+      <li className={styles.Breadcrumb}>Project settings</li>
     </ul>
   );
 }

@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react';
 import { ProjectCard } from '../..';
 import { EmptyData, Preloader } from '../../../../../components';
 import { useProjects } from '../../../../../contexts';
 import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
-import Styles from './ProjectsList.module.scss';
-import { useEffect, useState } from 'react';
 import { getProjects } from '../../../../../api/allProjects';
+
+import styles from './ProjectsList.module.scss';
 
 const PROJECT_BADGE_SIZE = 24;
 
@@ -17,8 +18,9 @@ function ProjectsList() {
     (async () => {
       try {
         const fetchedProjects = await getProjects();
+
         setProjects(fetchedProjects);
-      } catch (err) {
+      } catch {
         setCustomMessage(`Server error`);
       } finally {
         setIsLoading(false);
@@ -29,15 +31,15 @@ function ProjectsList() {
   return (
     <>
       {isLoading ? (
-        <div className={Styles.Empty}>
+        <div className={styles.Empty}>
           <Preloader text={'Loading data...'} />
         </div>
       ) : projects.length ? (
-        <ul className={Styles.ProjectsList}>
+        <ul className={styles.ProjectsList}>
           {projects.map((project) => {
             return (
               <ProjectCard
-                id={project._id}
+                id={project.key}
                 title={project.title}
                 description={project.description}
                 source={project.pathImage}
@@ -49,8 +51,8 @@ function ProjectsList() {
           })}
         </ul>
       ) : (
-        <div className={Styles.Empty}>
-          <EmptyData text={customMessage} iconSizeInPx="24px" />
+        <div className={styles.Empty}>
+          <EmptyData text={customMessage} />
         </div>
       )}
     </>

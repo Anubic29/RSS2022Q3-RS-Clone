@@ -1,20 +1,22 @@
+@import '../../theme/variables';
+
 .Input {
   width: 100%;
   padding: 10px 6px;
-  border: 2px solid #dfe1e6;
+  border: $borderInput;
   border-radius: 3px;
   outline: none;
   font-size: 14px;
-  color: #091e42;
-  background-color: #fafbfc;
+  color: $colorInoutText;
+  background: $colorInoutBackground;
   transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
 
   &:hover {
-    background-color: #EBECF0;
+    background: $colorInoutBackgroundHover;
   }
 
   &:focus {
-    border-color: #4C9AFF;
-    background-color: transparent;
+    border-color: $colorInputBorderFocus;
+    background: $colorInoutBackgroundFocus;
   }
 }

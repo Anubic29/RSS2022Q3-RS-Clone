@@ -1,3 +1,5 @@
+@import '../../../../../theme/variables';
+
 .TaskItem {
   display: flex;
   align-items: center;
@@ -7,7 +9,7 @@
   cursor: pointer;
 
   &:hover {
-    background: rgba(9, 30, 66, 0.04);
+    background: $colorTaskBackgroundHover;
   }
 }
 
@@ -20,7 +22,7 @@
 .TypeIcon {
   width: 24px;
   height: 24px;
-  color: #172b4d;
+  color: $colorContent;
 }
 
 .StarIcon {
@@ -28,11 +30,11 @@
   height: 24px;
   padding: 4px;
   border-radius: 3px;
-  color: #ffab00;
-  
+  color: $colorTaskMarkedIconText;
+
   &:hover {
-    color: #ffc400;
-    background: rgba(9, 30, 66, 0.08);
+    color: $colorTaskMarkedIconTextHover;
+    background: $colorTaskMarkedIconBackgroundHover;
   }
 }
 
@@ -45,13 +47,13 @@
 .Title {
   font-size: 14px;
   font-weight: 700;
-  color: #172b4d;
+  color: $colorContent;
 }
 
 .Info {
   font-size: 11px;
   font-weight: 500;
-  color: #6b778c;
+  color: $colorTaskInfoText;
 }
 
 .Separator {

@@ -1,6 +1,8 @@
+@import '../../../../../theme/variables';
+
 .Projects {
   padding: 24px 0 0;
-  background: #fafbfc;
+  background: $colorProjectsSectionBackground;
 }
 
 .ProjectsTitleArea {
@@ -11,16 +13,16 @@
 .ProjectsTitle {
   font-size: 16px;
   font-weight: 500;
-  color: #172b4d;
+  color: $colorContent;
 }
 
 .CreateProjectLink {
   font-size: 14px;
   font-weight: 500;
   text-decoration: underline;
-  color: #0065ff;
+  color: $colorProjectsCreateLinkText;
 
   &:hover {
-    color: #172b4d;
+    color: $colorContent;
   }
 }

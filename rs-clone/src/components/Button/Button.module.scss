@@ -1,19 +1,21 @@
+@import "../../theme/variables";
+
 .Button {
   padding: 7px 10px;
   border: none;
   border-radius: 3px;
   font-weight: 500;
-  color: #ffffff;
-  background: #0052CC;
+  color: $colorButtonText;
+  background: $colorButtonBackground;
   cursor: pointer;
 
   &:hover {
-    background: #0065FF;
+    background: $colorButtonBackgroundHover;
   }
 }
 
 .Button:disabled {
-  color: #A5ADBA;
-  background: rgba(9, 30, 66, 0.04);
+  color: $colorButtonTextDisabled;
+  background: $colorButtonBackgroundDisabled;
   cursor: not-allowed;
 }

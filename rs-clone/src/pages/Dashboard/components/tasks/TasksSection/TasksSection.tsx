@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { MarkedItemsList, TasksList } from '../..';
 
-import Styles from './TasksSection.module.scss';
+import styles from './TasksSection.module.scss';
 
 enum TabsIds {
   TASKS = 'tabs-tasks',
@@ -25,24 +25,26 @@ function TasksSection() {
   };
 
   return (
-    <section className={Styles.Tasks}>
-      <ul className={Styles.Tabs}>
+    <section className={styles.Tasks}>
+      <ul className={styles.Tabs}>
         <li
-          className={Styles.TabsItem}
+          className={styles.TabsItem}
           id={TabsIds.TASKS}
           onClick={changeViewHandler}
           data-is-active={isActive.tasks}>
           Your tasks
         </li>
+
         <li
-          className={Styles.TabsItem}
+          className={styles.TabsItem}
           id={TabsIds.MARKED}
           onClick={changeViewHandler}
           data-is-active={isActive.marked}>
           Marked
         </li>
       </ul>
-      <div className={Styles.Content}>{view}</div>
+
+      <div className={styles.Content}>{view}</div>
     </section>
   );
 }

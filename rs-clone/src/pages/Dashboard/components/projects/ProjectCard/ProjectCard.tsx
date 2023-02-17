@@ -6,13 +6,16 @@ import { Preloader, ProjectAvatar } from '../../../../../components';
 import { useProjects } from '../../../../../contexts';
 import { deleteProject } from '../../../../../api/allProjects';
 import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
-import Styles from './ProjectCard.module.scss';
+
+import styles from './ProjectCard.module.scss';
 
 interface ProjectCardProps extends ProjectAvatarProps {
   id: string;
   title: string;
   description: string;
 }
+
+const getTransparentBorderColor = (color: string) => `${color}50`;
 
 function ProjectCard(props: ProjectCardProps) {
   const { title, description, size, source, bgColor, id } = props;
@@ -22,7 +25,7 @@ function ProjectCard(props: ProjectCardProps) {
   const deleteProjectHandler = async (event: React.MouseEvent) => {
     try {
       const target = event.target as HTMLElement;
-      const id = (target.closest(`.${Styles.ProjectCard}`) as HTMLElement).id;
+      const id = (target.closest(`.${styles.ProjectCard}`) as HTMLElement).id;
 
       setIsLoading(true);
       await deleteProject(id);
@@ -32,40 +35,39 @@ function ProjectCard(props: ProjectCardProps) {
     }
   };
 
-  const cardStyles = {
-    borderColor: `${bgColor}50`
-  };
-
   return (
-    <li className={Styles.ProjectCard} style={cardStyles} id={id}>
+    <li
+      className={styles.ProjectCard}
+      style={{ borderColor: getTransparentBorderColor(bgColor) }}
+      id={id}>
       {isLoading && (
-        <div className={Styles.PreloaderContainer}>
+        <div className={styles.PreloaderContainer}>
           <Preloader />
         </div>
       )}
 
-      <div className={Styles.TitleArea}>
-        <ProjectAvatar className={Styles.Avatar} {...{ size, source, bgColor }} />
+      <div className={styles.TitleArea}>
+        <ProjectAvatar className={styles.Avatar} {...{ size, source, bgColor }} />
 
-        <div className={Styles.ProjectInfo}>
+        <div className={styles.ProjectInfo}>
           <Link to={`projects/${id}`}>
-            <p className={Styles.ProjectTitle}>{title}</p>
+            <p className={styles.ProjectTitle}>{title}</p>
           </Link>
 
-          <p className={Styles.ProjectDescription} title={description}>
+          <p className={styles.ProjectDescription} title={description}>
             {description}
           </p>
         </div>
       </div>
 
-      <div className={Styles.ActionsArea}>
-        <div className={Styles.Actions}>
+      <div className={styles.ActionsArea}>
+        <div className={styles.Actions}>
           <Link to={`projects/${id}`}>Move to project</Link>
           <MdArrowRightAlt />
         </div>
 
-        <div className={Styles.Actions} onClick={deleteProjectHandler}>
-          Delete
+        <div className={styles.Actions} onClick={deleteProjectHandler}>
+          <p>Delete</p>
           <MdOutlineClear />
         </div>
       </div>

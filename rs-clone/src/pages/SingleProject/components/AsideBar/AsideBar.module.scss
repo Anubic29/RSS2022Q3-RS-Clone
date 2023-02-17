@@ -1,10 +1,12 @@
+@import '../../../../theme/variables';
+
 .AsideBar {
   position: relative;
   min-width: 238px;
   max-width: 238px;
   padding: 24px 8px;
-  border-right: 2px solid #e6e6e6;
-  background: #fbfbfc;
+  border-right: $borderAsideBar;
+  background: $colorAsideBarBackground;
   transition: all 0.25s ease;
 
   &:hover {
@@ -13,7 +15,7 @@
     }
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaTablet) {
     position: absolute;
     height: 100%;
   }
@@ -25,8 +27,8 @@
   max-width: 30px;
   width: 10px;
   padding: 24px 8px;
-  border-right: 2px solid #e6e6e6;
-  background: #fbfbfc;
+  border-right: $borderAsideBar;
+  background: $colorAsideBarBackground;
   transition: all 0.25s ease;
 
   .TitleArea,
@@ -38,7 +40,7 @@
     display: flex;
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaTablet) {
     position: absolute;
     height: 100%;
   }
@@ -49,7 +51,7 @@
   align-items: center;
   gap: 15px;
   padding: 0 16px 16px;
-  border-bottom: 2px solid #e6e6e6;
+  border-bottom: $borderAsideBar;
 }
 
 .ProjectInfo {
@@ -66,7 +68,7 @@
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  color: #42526e;
+  color: $colorGreyText;
 }
 
 .ProjectDescription {
@@ -76,7 +78,7 @@
   white-space: nowrap;
   font-size: 12px;
   font-weight: 400;
-  color: #6b778c;
+  color: $colorSecondaryText;
 }
 
 .Navigation {
@@ -89,7 +91,7 @@
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #42526e;
+  color: $colorGreyText;
 }
 
 .CollapseButton {
@@ -102,24 +104,24 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #ffffff;
-  box-shadow: rgb(9 30 66 / 8%) 0px 0px 0px 1px, rgb(9 30 66 / 8%) 0px 2px 4px 1px;
+  background: $colorBackground;
+  box-shadow: $boxShadowAsideBarCollapseButton;
   transition: all 0.25s ease;
   cursor: pointer;
 
   & > * {
-    color: #42526e;
+    color: $colorGreyText;
   }
 
   &:hover {
-    background: #4C9AFF;
+    background: $colorInputBorderFocus;
 
     & > * {
-      color: #ffffff;
+      color: $colorBackground;
     }
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaTablet) {
     display: flex;
   }
 }
