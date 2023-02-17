@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../Components';
 import { AsideNavElement } from '../';
@@ -7,7 +7,11 @@ import { useBoard } from '../../../../contexts/Board.context';
 
 import Styles from './AsideBar.module.scss';
 
-function AsideBar() {
+interface AsideBarProps {
+  onChangeAsideState: (state: boolean) => void;
+}
+
+function AsideBar(props: AsideBarProps) {
   const { projectInfo } = useBoard();
   const currentScreenWidth = window.screen.width;
   const location = useLocation();
@@ -30,9 +34,10 @@ function AsideBar() {
     }
   };
 
-  const collapseHandler = () => {
+  const collapseHandler = useCallback(() => {
     setIsCollapsed(!isCollapsed);
-  };
+    props.onChangeAsideState(!isCollapsed);
+  }, [isCollapsed, props.onChangeAsideState]);
 
   return (
     <aside className={isCollapsed ? Styles.AsideBarCollapsed : Styles.AsideBar}>

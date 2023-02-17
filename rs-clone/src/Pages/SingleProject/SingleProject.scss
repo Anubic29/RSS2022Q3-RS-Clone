@@ -1,10 +1,21 @@
+@import '../../theme/variables.scss';
+
 .App:has(.SingleProject) {
   display: flex;
 }
 
 .SingleProject {
   display: flex;
-  flex: 1;
+  width: 100%;
+
+  .content {
+    width: calc(100% - $widthAsideBarSingleProjectNormal);
+    transition: all 0.25s ease;
+
+    &.aside-hidden {
+      width: calc(100% - $widthAsideBarSingleProjectHidden);
+    }
+  }
 
   @media screen and (max-width: 767px) {
     position: relative;
