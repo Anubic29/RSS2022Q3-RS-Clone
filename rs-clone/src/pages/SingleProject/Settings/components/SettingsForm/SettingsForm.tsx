@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Button, Input, Label } from '../../../../../components';
+import { useCallback, useEffect, useState } from 'react';
+import { Button, Input, Label, Preloader } from '../../../../../components';
+import { useBoard } from '../../../../../contexts/Board.context';
+import { MdDone } from 'react-icons/md';
 
 import styles from './SettingsForm.module.scss';
 
@@ -10,10 +12,19 @@ enum InputIds {
 }
 
 function SettingsForm() {
+  const { projectInfo, updateProject } = useBoard();
   const [name, setName] = useState('Project name');
   const [description, setDescription] = useState('Project description');
   const [key, setKey] = useState('PNP');
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isLoaderGoing, setIsLoaderGoing] = useState(false);
+  const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
+
+  useEffect(() => {
+    setName(projectInfo?.title ?? '');
+    setDescription(projectInfo?.description ?? '');
+    setKey(projectInfo?.key ?? '');
+  }, [projectInfo]);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -29,9 +40,20 @@ function SettingsForm() {
     setIsDisabled(false);
   };
 
-  const onSubmitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-  };
+  const onSubmitHandler = useCallback(
+    async (event: React.FormEvent) => {
+      event.preventDefault();
+      setIsDisabled(true);
+      setIsLoaderGoing(true);
+      const answer = await updateProject({ title: name, description, key });
+      setIsLoaderGoing(false);
+      if (answer) {
+        setAfterLoadingIcon(true);
+        setTimeout(() => setAfterLoadingIcon(false), 1500);
+      }
+    },
+    [updateProject, name, key, description]
+  );
 
   return (
     <form className={styles.Form} onSubmit={onSubmitHandler}>
@@ -68,9 +90,15 @@ function SettingsForm() {
         />
       </fieldset>
 
-      <Button className={styles.Button} type="submit" disabled={isDisabled}>
-        Save changes
-      </Button>
+      <div className={styles['form-row']}>
+        <Button className={styles.Button} type="submit" disabled={isDisabled}>
+          Save changes
+        </Button>
+        <div className={styles['form-loader']}>
+          {isLoaderGoing && <Preloader text="" />}
+          {afterLoadingIcon && <MdDone />}
+        </div>
+      </div>
     </form>
   );
 }

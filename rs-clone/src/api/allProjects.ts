@@ -23,7 +23,7 @@ export type ProjectCreateBody = Pick<
 >;
 
 const BASE_URL = 'http://localhost:5050/api';
-const ACCESS_TOKEN = JSON.parse(localStorage.getItem('accessToken') as string);
+const ACCESS_TOKEN = localStorage.getItem('accessToken');
 
 async function getCurrentUserId(): Promise<string> {
   const res = await fetch(`${BASE_URL}/users/current`, {

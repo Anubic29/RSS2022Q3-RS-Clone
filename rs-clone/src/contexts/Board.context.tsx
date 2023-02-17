@@ -26,6 +26,7 @@ type ProjectDataToUpdate = {
   description?: string;
   key?: string;
   boardTitle?: string;
+  color?: string;
   author?: string;
   pathImage?: string;
 };
@@ -41,7 +42,8 @@ interface BoardContextType {
   setUsersDataBack: (usersId: string[]) => Promise<boolean>;
   getUserList: () => UserType[];
   projectInfo: ProjectType | null;
-  updateProject: (updateData: ProjectDataToUpdate) => void;
+  updateProject: (updateData: ProjectDataToUpdate) => Promise<boolean>;
+  deleteProject: () => Promise<boolean>;
   addUserToTeam: (_id: string) => void;
   setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
@@ -67,7 +69,8 @@ export const BoardContext = createContext<BoardContextType>({
   setUsersDataBack: () => Promise.resolve(false),
   getUserList: () => [],
   projectInfo: null,
-  updateProject: () => {},
+  updateProject: () => Promise.resolve(false),
+  deleteProject: () => Promise.resolve(false),
   addUserToTeam: () => {},
   setSearchInputValue: () => {},
   addUserFilter: () => {},
@@ -132,6 +135,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
           title: updateData.title ?? projectInfo.title,
           description: updateData.description ?? projectInfo.description,
           boardTitle: updateData.boardTitle ?? projectInfo.boardTitle,
+          color: updateData.color ?? projectInfo.color,
           key: updateData.key ?? projectInfo.key,
           author: updateData.author ?? projectInfo.author,
           pathImage: updateData.pathImage ?? projectInfo.pathImage
@@ -139,11 +143,23 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         const response = await api.projects.updateData(projectInfo._id, payload);
         if (response.status === 200) {
           setProjectInfo(response.data);
+          return true;
         }
       }
+      return false;
     },
     [projectInfo]
   );
+
+  const deleteProject = useCallback(async () => {
+    if (projectInfo) {
+      const response = await api.projects.deleteData(projectInfo._id);
+      if (response.status === 200 && response.data) {
+        return true;
+      }
+    }
+    return false;
+  }, [projectInfo]);
 
   const addUserToTeam = useCallback(
     async (_id: string) => {
@@ -368,6 +384,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       getUserList,
       projectInfo,
       updateProject,
+      deleteProject,
       addUserToTeam,
       setSearchInputValue,
       addUserFilter,
@@ -393,6 +410,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       getUserList,
       projectInfo,
       updateProject,
+      deleteProject,
       addUserToTeam,
       setSearchInputValue,
       addUserFilter,

@@ -69,8 +69,8 @@ function ColumnHeader(props: ColumnHeaderProps) {
   } = useComponentVisible(!!props.typeCreate);
 
   const HeaderBlockStyles = props.stickyHeader
-    ? styles['Header-block'] + ' ' + styles['sticky']
-    : styles['Header-block'];
+    ? styles['header-block'] + ' ' + styles['sticky']
+    : styles['header-block'];
 
   const onSubmitHandler = () => {
     if (!titleError) {
