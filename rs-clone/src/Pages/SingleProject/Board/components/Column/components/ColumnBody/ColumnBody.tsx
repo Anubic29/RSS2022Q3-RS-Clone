@@ -26,7 +26,7 @@ interface ColumnBodyProps {
 }
 
 function ColumnBody(props: ColumnBodyProps) {
-  const { createTask } = useBoard();
+  const { createTask, projectInfo } = useBoard();
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [titleError, setTitleError] = useState(newTaskTitle.length === 0);
@@ -62,7 +62,7 @@ function ColumnBody(props: ColumnBodyProps) {
             <Task
               _id={task._id}
               title={task.title}
-              keyTask={`key-${task.id}`}
+              keyTask={`${projectInfo?.key ?? 'key'}-${task.id}`}
               executor={task.executor}
               typeDone={props.type === 'final'}
             />
