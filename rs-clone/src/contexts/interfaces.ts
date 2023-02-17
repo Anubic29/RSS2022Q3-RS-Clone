@@ -53,7 +53,7 @@ export interface BoardContextType {
   deleteTask: (taskId: string) => void;
   deleteAllTaskInColumn: (_id: string) => void;
   moveTasksToColumn: (_cuurId: string, _newId: string) => void;
-  createColumn: (columnTitle: string) => void;
+  createColumn: (columnTitle: string) => Promise<boolean>;
   updateColumn: (_id: string, updateData: ColumnDataToUpdate) => Promise<boolean>;
   deleteColumn: (_id: string) => void;
   swapColumn: (_idActive: string, _id: string) => void;

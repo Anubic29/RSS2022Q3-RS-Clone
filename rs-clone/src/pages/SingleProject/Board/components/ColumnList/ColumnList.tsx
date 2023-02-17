@@ -8,9 +8,9 @@ import {
 import { BtnAction, Column, ColumnRowUser } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { useBoard } from '../../../../../contexts/Board.context';
+import { ColumnBody, ColumnHeader } from '../Column/components';
 
 import styles from './ColumnList.module.scss';
-import { ColumnBody, ColumnHeader } from '../Column/components';
 
 interface ColumnListProps {
   group: '' | 'Executor';

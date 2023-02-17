@@ -12,6 +12,8 @@ import { useBoard } from '../../../../../../../contexts/Board.context';
 import { useOverlay } from '../../../../../../../contexts';
 import { PopupDeleteColumn } from '../../../';
 import { Preloader } from '../../../../../../../components';
+import { usePartOverlay } from '../../../../../../../contexts';
+import Loader from '../../../../../../../components/Loader/Loader';
 
 import styles from './ColumnHeader.module.scss';
 
@@ -31,6 +33,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
   const { createColumn, updateColumn, deleteAllTaskInColumn, deleteColumn, getColumnCount } =
     useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
+  const { setChildrenColumnList, setIsVisibleColumnList } = usePartOverlay();
   const [title, setTitle] = useState('');
   const [hoverColumnHeader, setHoverColumnHeader] = useState(false);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
@@ -75,7 +78,10 @@ function ColumnHeader(props: ColumnHeaderProps) {
     if (!titleError) {
       setIsInputHeaderVisible(false);
       if (props.typeCreate) {
-        createColumn(title);
+        setChildrenColumnList(<Loader />);
+        setIsVisibleColumnList(true);
+        await createColumn(title);
+        setIsVisibleColumnList(false);
       } else {
         setIsLoaderGoing(true);
         console.log(title);

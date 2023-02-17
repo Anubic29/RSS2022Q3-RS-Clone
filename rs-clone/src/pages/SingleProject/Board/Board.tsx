@@ -11,6 +11,7 @@ import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
 import { ProjectId } from '../../../data/fakeProjectPageData';
 import { Preloader } from '../../../components';
+import PartOverlay from '../../../components/PartOverlay/PartOverlay';
 
 import styles from './Board.module.scss';
 
@@ -225,7 +226,10 @@ function Board() {
           </div>
         </div>
       </div>
-      <ColumnList group={selectedGroup === 'Executor' ? selectedGroup : ''} />
+      <div className={styles['column-list-block']}>
+        <ColumnList group={selectedGroup === 'Executor' ? selectedGroup : ''} />
+        <PartOverlay scope={'ColumnList'} />
+      </div>
     </div>
   );
 }

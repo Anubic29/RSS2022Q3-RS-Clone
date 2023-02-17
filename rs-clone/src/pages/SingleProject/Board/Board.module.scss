@@ -3,6 +3,7 @@
 .wrapper {
   padding: 0 40px;
   flex: 1;
+  margin-bottom: 25px;
 }
 
 .info-block {
@@ -208,4 +209,8 @@
   &__group-block {
     background-color: white;
   }
+}
+
+.column-list-block {
+  position: relative;
 }

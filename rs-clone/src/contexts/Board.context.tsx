@@ -36,7 +36,7 @@ export const BoardContext = createContext<BoardContextType>({
   deleteTask: () => {},
   deleteAllTaskInColumn: () => {},
   moveTasksToColumn: () => {},
-  createColumn: () => {},
+  createColumn: () => Promise.resolve(false),
   updateColumn: () => Promise.resolve(false),
   deleteColumn: () => {},
   swapColumn: () => {}
@@ -271,8 +271,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
         if (response.status === 200) {
           setColumnList(response.data);
+          return true;
         }
       }
+      return false;
     },
     [columnList]
   );
