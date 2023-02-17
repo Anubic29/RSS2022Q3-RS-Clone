@@ -23,7 +23,7 @@ export const BoardContext = createContext<BoardContextType>({
   projectInfo: null,
   updateProject: () => Promise.resolve(false),
   deleteProject: () => Promise.resolve(false),
-  addUserToTeam: () => {},
+  addUserToTeam: () => Promise.resolve(false),
   setSearchInputValue: () => {},
   addUserFilter: () => {},
   deleteUserFilter: () => {},
@@ -123,8 +123,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
           const users = await Promise.all(usersId.map((user) => api.users.getData(user)));
           setProjectInfo(projectInfo);
           setUserList(users.map((data) => data.data));
+          return true;
         }
       }
+      return false;
     },
     [projectInfo, userList]
   );

@@ -40,7 +40,7 @@ export interface BoardContextType {
   projectInfo: ProjectType | null;
   updateProject: (updateData: ProjectDataToUpdate) => Promise<boolean>;
   deleteProject: () => Promise<boolean>;
-  addUserToTeam: (_id: string) => void;
+  addUserToTeam: (_id: string) => Promise<boolean>;
   setSearchInputValue: (value: string) => void;
   addUserFilter: (_id: string) => void;
   deleteUserFilter: (_id: string) => void;

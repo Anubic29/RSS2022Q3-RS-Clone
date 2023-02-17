@@ -6,13 +6,14 @@ import { MdCancel, MdSearch } from 'react-icons/md';
 import { UserAvatar } from '../';
 import UserType from '../../../../../types/user/userType';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
+import api from '../../../../../api';
+import Loader from '../../../../../components/Loader/Loader';
 
 import styles from './PopupAddUser.module.scss';
-import api from '../../../../../api';
 
 function PopupAddUser() {
   const { addUserToTeam, getUserList } = useBoard();
-  const { setIsVisibleBoard } = useOverlay();
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const [selectedUser, setSelectedUser] = useState<UserType>();
   const [userList, setUserList] = useState<UserType[]>([]);
   const [value, setValue] = useState('');
@@ -31,9 +32,10 @@ function PopupAddUser() {
     } else setUserList([]);
   }, [value]);
 
-  const onSubmitHandler = useCallback(() => {
+  const onSubmitHandler = useCallback(async () => {
     if (selectedUser) {
-      addUserToTeam(selectedUser._id);
+      setChildrenBoard(<Loader />);
+      await addUserToTeam(selectedUser._id);
       setIsVisibleBoard(false);
     }
   }, [selectedUser]);
