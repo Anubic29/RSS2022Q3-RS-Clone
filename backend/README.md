@@ -12,6 +12,8 @@ None
 
 Query Params:
 mail: String (optional)
+fullname: String (optional)
+value: String (optional)
 limit: Number (optional)
 
 Data Params:
