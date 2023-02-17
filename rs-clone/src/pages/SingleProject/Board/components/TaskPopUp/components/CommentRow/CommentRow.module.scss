@@ -1,0 +1,83 @@
+@import '../../../../../../../theme/variables.scss';
+
+.commentRow_wrap {
+  display: flex;
+  margin-top: 30px;
+}
+.commentRow_CommentBody  {
+  list-style-position: inside;
+}
+
+.commentRow_CommentBody > u {
+  text-decoration: underline;
+}
+
+.commentRow_CommentBody > ol > li {
+  list-style-type: decimal;
+}
+
+.commentRow_CommentBody > ul > li {
+  list-style-type: disc;
+}
+
+.commentRow_UserNameSpan {
+  color: $colorContent;
+  font-size: 14px;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.commentRow_TimeSpan {
+  padding-left: 10px;
+  font-size: 14px;
+  color: $colorGreyText;
+  position: relative;
+
+  &:hover {
+    cursor: default;
+    &::before {
+      display: block;
+      position: absolute;
+      left: 0;
+      margin-bottom: 15px;
+      bottom: 5px;
+      padding: 10px;
+      width: 200px;
+      font-size: 14px;
+      color: $colorWhite;
+      text-align: center;
+      background-color: $colorPrimary;
+      border-radius: 5px;
+      z-index: 22;
+      content: attr(data-title);
+    }
+  }
+}
+
+.ButtonsWrap {
+  display: flex;
+  padding-top: 10px;
+}
+
+.buttonReset, .buttonSubmit {
+  background-color: $colorWhite;
+  color: $colorBorder;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.buttonReset {
+  margin-left: 30px;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}

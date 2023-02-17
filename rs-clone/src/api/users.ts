@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import UserType from '../Types/User/UserType';
+import UserType from '../types/user/userType';
 
 export default function (instance: AxiosInstance) {
   return {
@@ -22,7 +22,7 @@ export default function (instance: AxiosInstance) {
       return instance.delete(`api/users/${userId}/info`);
     },
     deleteNotedData(userId: string, noteId: string) {
-      return instance.delete(`api/users/${userId}/nodet/${noteId}`);
+      return instance.delete(`api/users/${userId}/noted/${noteId}`);
     }
   };
 }
