@@ -3,9 +3,13 @@ import { useLocation } from 'react-router-dom';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../components';
 import { AsideNavElement } from '../';
-import cardsData from '../../../../data/fakeProjectCard';
+import { useBoard } from '../../../../contexts/Board.context';
+import ProjectType from '../../../../types/project/projectType';
 
 import styles from './AsideBar.module.scss';
+
+const MEDIA_TABLET = 767;
+const BADGE_SIZE = 24;
 
 function AsideBar() {
   const currentScreenWidth = window.screen.width;
@@ -15,8 +19,9 @@ function AsideBar() {
     board: currentPath !== 'settings',
     settings: currentPath === 'settings'
   });
-  const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= 767);
-  const testProjectData = cardsData[0];
+  const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= MEDIA_TABLET);
+  const { projectInfo } = useBoard();
+  const { title, description, pathImage, color } = projectInfo as ProjectType;
 
   const changeActiveStateHandler = (event: React.MouseEvent<HTMLElement>) => {
     const target = (event.target as HTMLElement).closest('a') as HTMLElement;
@@ -24,7 +29,6 @@ function AsideBar() {
     if (target.id === 'board') {
       setIsActive({ board: true, settings: false });
     }
-
     if (target.id === 'settings') {
       setIsActive({ board: false, settings: true });
     }
@@ -41,11 +45,11 @@ function AsideBar() {
       </div>
 
       <div className={styles.TitleArea}>
-        <ProjectAvatar {...testProjectData} />
+        <ProjectAvatar source={pathImage} size={BADGE_SIZE} bgColor={color} />
 
         <div className={styles.ProjectInfo}>
-          <p className={styles.ProjectTitle}>{testProjectData.title}</p>
-          <p className={styles.ProjectDescription}>{testProjectData.description}</p>
+          <p className={styles.ProjectTitle}>{title}</p>
+          <p className={styles.ProjectDescription}>{description}</p>
         </div>
       </div>
 

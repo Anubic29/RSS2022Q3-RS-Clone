@@ -10,36 +10,17 @@ import useComponentVisible from '../../../hooks/useComponentVisible/useComponent
 import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
 import { Overlay } from '../../../components';
-import { ProjectId } from '../../../data/fakeProjectPageData';
 
 import styles from './Board.module.scss';
 
 function Board() {
-  const {
-    projectInfo,
-    updateProject,
-    setSearchInputValue,
-    setProjectDataBack,
-    setTasksDataBack,
-    setUsersDataBack,
-    getUserList
-  } = useBoard();
+  const { projectInfo, updateProject, setSearchInputValue, getUserList } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const data = await setProjectDataBack(ProjectId);
-      if (data) {
-        await setTasksDataBack(data._id);
-        await setUsersDataBack([data.author, ...data.team]);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     const author = projectInfo?.author;
