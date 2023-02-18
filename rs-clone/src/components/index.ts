@@ -8,6 +8,7 @@ import InfoCard from './InfoCard/InfoCard';
 import Preloader from './Preloader/Preloader';
 import Dropdown from './Dropdown/Dropdown';
 import Overlay from './Overlay/Overlay';
+import Loader from './Loader/Loader';
 
 export {
   ProjectAvatar,
@@ -19,5 +20,6 @@ export {
   EmptyData,
   Preloader,
   Dropdown,
-  Overlay
+  Overlay,
+  Loader
 };
