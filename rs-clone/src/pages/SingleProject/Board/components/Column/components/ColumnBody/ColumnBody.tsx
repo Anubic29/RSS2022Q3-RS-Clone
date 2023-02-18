@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import TaskType from '../../../../../../../types/task/taskType';
 import { MdClose, MdDone } from 'react-icons/md';
 import { BtnAction, Task } from '../../../';
@@ -9,6 +9,7 @@ import {
   colorSecondaryLight
 } from '../../../../../../../theme/variables';
 import { useBoard } from '../../../../../../../contexts/Board.context';
+import { Preloader } from '../../../../../../../components';
 
 import styles from './ColumnBody.module.scss';
 
@@ -30,6 +31,7 @@ function ColumnBody(props: ColumnBodyProps) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [titleError, setTitleError] = useState(newTaskTitle.length === 0);
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
 
   useEffect(() => {
     if (!isComponentVisible) setNewTaskTitle('');
@@ -39,12 +41,14 @@ function ColumnBody(props: ColumnBodyProps) {
     setTitleError(newTaskTitle.length === 0);
   }, [newTaskTitle]);
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = useCallback(async () => {
     if (!titleError) {
-      createTask(props.id, newTaskTitle, props.userId);
+      setIsLoadingCreate(true);
+      await createTask(props.id, newTaskTitle, props.userId);
+      setIsLoadingCreate(false);
       setIsComponentVisible(false);
     }
-  };
+  }, [titleError, props.id, newTaskTitle, props.userId]);
 
   return (
     <div
@@ -106,6 +110,11 @@ function ColumnBody(props: ColumnBodyProps) {
                 />
               </div>
             </div>
+            {isLoadingCreate && (
+              <div className={styles['block-loader']}>
+                <Preloader />
+              </div>
+            )}
           </form>
         )}
       </div>

@@ -48,7 +48,7 @@ export interface BoardContextType {
   getColumnList: () => ColumnProjectType[];
   getColumnCount: () => number;
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
-  createTask: (columnId: string, taskTitle: string, userId?: string) => void;
+  createTask: (columnId: string, taskTitle: string, userId?: string) => Promise<boolean>;
   updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
   deleteTask: (taskId: string) => void;
   deleteAllTaskInColumn: (_id: string) => Promise<boolean>;

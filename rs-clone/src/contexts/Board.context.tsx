@@ -31,7 +31,7 @@ export const BoardContext = createContext<BoardContextType>({
   getColumnList: () => [],
   getColumnCount: () => 0,
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
-  createTask: () => {},
+  createTask: () => Promise.resolve(false),
   updateTask: () => {},
   deleteTask: () => {},
   deleteAllTaskInColumn: () => Promise.resolve(false),
@@ -194,8 +194,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         const response = await api.tasks.postData(payload);
         if (response.status === 200) {
           setTaskList([...taskList, response.data]);
+          return true;
         }
       }
+      return false;
     },
     [taskList, projectInfo]
   );
