@@ -105,9 +105,12 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
   const deleteProject = useCallback(async () => {
     if (projectInfo) {
-      const response = await api.projects.deleteData(projectInfo._id);
-      if (response.status === 200 && response.data) {
-        return true;
+      const resp = await api.tasks.deleteAllDataByProject(projectInfo._id);
+      if (resp.status === 200 && resp.data) {
+        const response = await api.projects.deleteData(projectInfo._id);
+        if (response.status === 200 && response.data) {
+          return true;
+        }
       }
     }
     return false;
