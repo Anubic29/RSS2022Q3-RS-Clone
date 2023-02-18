@@ -50,7 +50,7 @@ export interface BoardContextType {
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
   createTask: (columnId: string, taskTitle: string, userId?: string) => Promise<boolean>;
   updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
-  deleteTask: (taskId: string) => void;
+  deleteTask: (taskId: string) => Promise<boolean>;
   deleteAllTaskInColumn: (_id: string) => Promise<boolean>;
   moveTasksToColumn: (_cuurId: string, _newId: string) => Promise<boolean>;
   createColumn: (columnTitle: string) => Promise<boolean>;

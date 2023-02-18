@@ -33,7 +33,7 @@ export const BoardContext = createContext<BoardContextType>({
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
   createTask: () => Promise.resolve(false),
   updateTask: () => {},
-  deleteTask: () => {},
+  deleteTask: () => Promise.resolve(false),
   deleteAllTaskInColumn: () => Promise.resolve(false),
   moveTasksToColumn: () => Promise.resolve(false),
   createColumn: () => Promise.resolve(false),
@@ -233,7 +233,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         taskList.splice(idx, 1);
 
         setTaskList([...taskList]);
+        return true;
       }
+      return false;
     },
     [taskList]
   );
