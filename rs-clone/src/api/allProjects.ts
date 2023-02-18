@@ -1,43 +1,8 @@
-interface ColumnList {
-  _id: string;
-  title: string;
-  type: string;
-}
+import ProjectType from '../types/project/projectType';
+import { ACCESS_TOKEN, BASE_URL, getCurrentUserId } from './config';
+import { ProjectCreateBody } from '../types/project/projectCreateBody';
 
-export interface Project {
-  _id: string;
-  title: string;
-  description: string;
-  key: string;
-  author: string;
-  team: string[];
-  pathImage: string;
-  boardTitle: string;
-  color: string;
-  columnList: ColumnList;
-}
-
-export type ProjectCreateBody = Pick<
-  Project,
-  'title' | 'description' | 'author' | 'pathImage' | 'key' | 'color'
->;
-
-const BASE_URL = 'http://localhost:5050/api';
-const ACCESS_TOKEN = localStorage.getItem('accessToken');
-
-async function getCurrentUserId(): Promise<string> {
-  const res = await fetch(`${BASE_URL}/users/current`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${ACCESS_TOKEN}`
-    }
-  });
-  const user = await res.json();
-
-  return user._id;
-}
-
-async function getProjects(): Promise<Project[]> {
+async function getProjectsRequest(): Promise<ProjectType[]> {
   const currentUserId = await getCurrentUserId();
   const res = await fetch(`${BASE_URL}/projects?user=${currentUserId}`, {
     method: 'GET',
@@ -49,7 +14,7 @@ async function getProjects(): Promise<Project[]> {
   return await res.json();
 }
 
-async function deleteProject(id: string) {
+async function deleteProjectRequest(id: string) {
   await fetch(`${BASE_URL}/projects/${id}/info`, {
     method: 'DELETE',
     headers: {
@@ -58,7 +23,7 @@ async function deleteProject(id: string) {
   });
 }
 
-async function createProject(body: ProjectCreateBody) {
+async function createProjectRequest(body: ProjectCreateBody) {
   await fetch(`${BASE_URL}/projects`, {
     method: 'POST',
     headers: {
@@ -69,4 +34,4 @@ async function createProject(body: ProjectCreateBody) {
   });
 }
 
-export { getProjects, deleteProject, createProject, getCurrentUserId };
+export { getProjectsRequest, deleteProjectRequest, createProjectRequest };

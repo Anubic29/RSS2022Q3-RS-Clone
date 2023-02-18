@@ -1,18 +1,44 @@
 import React, { createContext, PropsWithChildren, useContext, useState } from 'react';
-import { Project } from '../api/allProjects';
+import ProjectType from '../types/project/projectType';
+import {
+  createProjectRequest,
+  deleteProjectRequest,
+  getProjectsRequest
+} from '../api/allProjects';
+import { ProjectCreateBody } from '../types/project/projectCreateBody';
 
 export interface ProjectsContextValue {
-  projects: Project[] | [];
-  setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
+  projects: ProjectType[] | [];
+  getProjects: () => void;
+  deleteProject: (id: string) => void;
+  createProject: (body: ProjectCreateBody) => void;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
 
 function ProjectsProvider({ children }: PropsWithChildren) {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+
+  const getProjects = async () => {
+    const fetchedProjects = await getProjectsRequest();
+    setProjects(fetchedProjects);
+  };
+
+  const deleteProject = async (id: string) => {
+    await deleteProjectRequest(id);
+    setProjects(projects.filter((project) => project._id !== id));
+  };
+
+  const createProject = async (body: ProjectCreateBody) => {
+    await createProjectRequest(body);
+    setProjects([...projects, body as ProjectType]);
+  };
+
   const contextValue: ProjectsContextValue = {
     projects,
-    setProjects
+    getProjects,
+    deleteProject,
+    createProject
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InfoCards, ProjectForm } from './components';
 import { Button } from '../../components';
-import { createProject, getCurrentUserId } from '../../api/allProjects';
 import { getRandomNum } from '../../utils';
 import { projectBadges } from '../../data';
+import { useProjects } from '../../contexts';
+import { ProjectsContextValue } from '../../contexts/ProjectsContext';
+import { getCurrentUserId } from '../../api/config';
 
 import styles from './ProjectCreate.module.scss';
 
@@ -22,6 +24,7 @@ function ProjectCreate() {
   const [key, setKey] = useState('');
   const [description, setDescription] = useState('');
   const navigate = useNavigate();
+  const { createProject } = useProjects() as ProjectsContextValue;
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
