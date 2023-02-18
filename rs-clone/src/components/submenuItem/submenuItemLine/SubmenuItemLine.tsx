@@ -10,7 +10,10 @@ const SubmenuItemLine: React.FC<{
   bgColor: string;
 }> = (props) => {
   return (
-    <li>
+    <li
+      onClick={(e) => {
+        e.stopPropagation();
+      }}>
       <Link to="/" className={classes.submenu_line}>
         <div
           className={

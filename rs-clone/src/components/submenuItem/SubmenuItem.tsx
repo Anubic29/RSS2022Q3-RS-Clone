@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BoxWithShadow from '../boxWithShadow/BoxWithShadow';
 import SubmenuNav from './submenuNav/SubmenuNaм';
 import SubmenuItemsBlock from './submenuItamsBlock/SubmenuItemsBlock';
@@ -14,16 +15,19 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
     return tabValue;
   };
 
+  const navigate = useNavigate();
+
   const logOutHandler = () => {
     contextValue.setIsAuthenticated(false);
     localStorage.removeItem('accessToken');
+    navigate('/');
   };
 
   const link = () => {
     switch (props.menuItem) {
       case 'userMenu':
         return (
-          <Link to="/" onClick={logOutHandler}>
+          <Link to="/" onMouseDown={logOutHandler}>
             <p>Log out</p>
           </Link>
         );
