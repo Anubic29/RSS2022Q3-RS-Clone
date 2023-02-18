@@ -29,8 +29,15 @@ router.get('/', authenticateToken, async (req, res) => {
         mail: data.mail
       };
     });
-    if (req.query.mail) {
-      userList = userList.filter((data) => data.mail.includes(req.query.mail));
+    if (req.query.value) {
+      userList = userList.filter((data) => `${data.firstName} ${data.lastName}`.includes(req.query.value) || data.mail.includes(req.query.value));
+    } else {
+      if (req.query.mail) {
+        userList = userList.filter((data) => data.mail.includes(req.query.mail));
+      }
+      if (req.query.fullname) {
+        userList = userList.filter((data) => `${data.firstName} ${data.lastName}`.includes(req.query.fullname));
+      }
     }
     if (req.query.limit && !Number.isNaN(+req.query.limit)) {
       userList = userList.slice(0, +req.query.limit);

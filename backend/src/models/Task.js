@@ -40,11 +40,11 @@ const schema = new Schema({
       required: true
     },
     date: {
-      type: Date,
+      type: String,
       required: true
     },
     dateUpdate: {
-      type: Date,
+      type: String,
       required: true
     }
   }]
