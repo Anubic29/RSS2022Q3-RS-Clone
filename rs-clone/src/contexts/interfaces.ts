@@ -49,12 +49,12 @@ export interface BoardContextType {
   getColumnCount: () => number;
   getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
   createTask: (columnId: string, taskTitle: string, userId?: string) => Promise<boolean>;
-  updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
+  updateTask: (_id: string, updateData: TaskDataToUpdate) => Promise<boolean>;
   deleteTask: (taskId: string) => Promise<boolean>;
   deleteAllTaskInColumn: (_id: string) => Promise<boolean>;
   moveTasksToColumn: (_cuurId: string, _newId: string) => Promise<boolean>;
   createColumn: (columnTitle: string) => Promise<boolean>;
   updateColumn: (_id: string, updateData: ColumnDataToUpdate) => Promise<boolean>;
   deleteColumn: (_id: string) => Promise<boolean>;
-  swapColumn: (_idActive: string, _id: string) => void;
+  swapColumn: (_idActive: string, _id: string) => Promise<boolean>;
 }
