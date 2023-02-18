@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import CurrentUserType from '../types/user/currentUserType';
 import UserType from '../types/user/userType';
 
 export default function (instance: AxiosInstance) {
@@ -8,6 +9,9 @@ export default function (instance: AxiosInstance) {
     },
     getData(userId: string) {
       return instance.get(`api/users/${userId}/info`);
+    },
+    getCurrentData() {
+      return instance.get<CurrentUserType>('api/users/current');
     },
     postData(config: AxiosRequestConfig) {
       return instance.post('api/users', config);
