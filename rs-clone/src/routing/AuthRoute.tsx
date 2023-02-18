@@ -14,42 +14,31 @@ import { ProjectsProvider } from '../contexts';
 
 function AuthRoute() {
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <ProjectsProvider>
-            <App />
-          </ProjectsProvider>
-        }>
-        <Route index element={<Dashboard />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="sign-in" element={<Navigate to={'/'} />} />
-        <Route path="sign-up" element={<Navigate to={'/'} />} />
-        <Route path="projects" element={<Projects />} />
-        <Route
-          path="projects/:id"
-          element={
-            <BoardProvider>
-              <SingleProject />
-            </BoardProvider>
-          }>
-          <Route index element={<Board />} />
-          <Route path="board" element={<Board />} />
-          <Route path="selected-task/:taskId" element={<Board />} />
-          <Route path="settings" element={<Settings />} />
+    <ProjectsProvider>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="sign-in" element={<Navigate to={'/'} />} />
+          <Route path="sign-up" element={<Navigate to={'/'} />} />
+          <Route path="projects" element={<Projects />} />
+          <Route
+            path="projects/:id"
+            element={
+              <BoardProvider>
+                <SingleProject />
+              </BoardProvider>
+            }>
+            <Route index element={<Board />} />
+            <Route path="board" element={<Board />} />
+            <Route path="selected-task/:taskId" element={<Board />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
         </Route>
-      </Route>
-      <Route
-        path="create-project"
-        element={
-          <ProjectsProvider>
-            <ProjectCreate />
-          </ProjectsProvider>
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="create-project" element={<ProjectCreate />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </ProjectsProvider>
   );
 }
 
