@@ -3,6 +3,12 @@ import classes from './CommentRow.module.scss';
 import TextRedactorBlock from '../../../../../../../Components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
 import UserIcon from '../../../../../../../Components/userIcon/UserIcon';
+import { useBoard } from '../../../../../../../contexts/Board.context';
+
+const SECOND = 1000;
+const MINUTE = 60;
+const HOUR = 60;
+const MINSINDAY = 1440;
 
 const CommentRow = (props: {
   id: string;
@@ -10,20 +16,27 @@ const CommentRow = (props: {
   dateCreated: number;
   body: string;
   onDelete: (id: string) => void;
+  taskId: string;
 }) => {
   const getTimeDifference = (timeCreated: number) => {
     const diffMs = Math.abs(Date.now() - timeCreated);
-    const minutes = Math.floor((diffMs / 1000 / 60) << 0);
+    const minutes = Math.floor((diffMs / SECOND / MINUTE) << 0);
     if (minutes < 0) return 'unknown';
     if (minutes < 2) return `posted just now`;
-    if (minutes >= 2 && minutes < 60) return `posted ${minutes} min ago`;
-    if (minutes >= 60 && minutes < 1440) {
-      return `posted ${Math.floor(minutes / 60)} hours ago`;
+    if (minutes >= 2 && minutes < HOUR) return `posted ${minutes} min ago`;
+    if (minutes >= 60 && minutes < MINSINDAY) {
+      return `posted ${Math.floor(minutes / HOUR)} hours ago`;
     }
-    if (minutes >= 1440) {
+    if (minutes >= MINSINDAY) {
       return `posted long time ago`;
     }
   };
+
+  const { getTaskList } = useBoard();
+
+  const commentsRow = getTaskList().filter((task) => task._id === props.taskId)[0].commentList;
+  console.log(commentsRow);
+
   const [isEditMode, setEditMode] = useState(false);
   const [commentBody, setCommentBody] = useState(props.body);
   const [postedTimeAgo, setPostedTimeAgo] = useState(getTimeDifference(props.dateCreated));

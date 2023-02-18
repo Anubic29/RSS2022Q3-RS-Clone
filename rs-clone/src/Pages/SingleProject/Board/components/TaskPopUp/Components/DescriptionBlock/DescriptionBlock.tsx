@@ -2,16 +2,22 @@ import classes from './DescriptionBlock.module.scss';
 import React, { ReactNode, useState } from 'react';
 import TextRedactorBlock from '../../../../../../../Components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
+import { useBoard } from '../../../../../../../contexts/Board.context';
 
-const DescriptionBlock = () => {
-  const [savedDescr, setSavedDescr] = useState<string | JSX.Element | JSX.Element[]>('');
+const DescriptionBlock = (props: { id: string; descript: string }) => {
+  const [savedDescr, setSavedDescr] = useState<string | JSX.Element | JSX.Element[]>(
+    parse(props.descript) || ''
+  );
 
   const [editorMode, setEditorMode] = useState(false);
+
+  const { updateTask } = useBoard();
 
   const onTextValueHandler = (val: string) => {
     if (val === '<p><br></p>') val = '';
     const parsed = parse(val);
     setSavedDescr(parsed);
+    updateTask(props.id, { description: val });
   };
 
   const editorModeHandler = () => {
@@ -40,7 +46,8 @@ const DescriptionBlock = () => {
           onTextValue={onTextValueHandler}
           placeholder="Add description"
           onEditorMode={editorModeHandler}
-          initialValue={true}
+          initialValue={props.descript}
+          init={props.descript}
         />
       </div>
     </div>

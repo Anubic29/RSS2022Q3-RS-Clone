@@ -8,6 +8,7 @@
 
     &__form {
       width: 100%;
+      position: relative;
 
       &__text-backgr {
         background-color: $colorBackground;
@@ -52,4 +53,38 @@
       }
     }
   }
+}
+
+.editTitle_buttons {
+  display: none;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 99;
+}
+
+.btn {
+  height: 30px;
+  width: auto;
+  margin-left: 15px;
+  vertical-align: middle;
+  cursor: pointer;
+
+  & > svg{
+    width: 20px;
+    height: 20px;
+    color: $colorBorder;
+  }
+
+  &.corfirmBtn:hover > * {
+      color: green;
+    }
+
+  &.cancelBtn:hover > * {
+      color: red;
+    }
+}
+
+.visible {
+  display: flex;
 }

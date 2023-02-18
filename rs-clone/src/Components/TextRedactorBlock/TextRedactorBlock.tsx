@@ -10,6 +10,7 @@ type TextRedactorProps = {
   onEditorMode: (isEditorActive: boolean) => void;
   initialValue: string | boolean;
   onIsEdited?: (date: number) => void;
+  init?: string;
 };
 
 const TextRedactorBlock = ({
@@ -17,9 +18,10 @@ const TextRedactorBlock = ({
   onTextValue,
   onEditorMode,
   initialValue,
-  onIsEdited
+  onIsEdited,
+  init
 }: TextRedactorProps) => {
-  const [value, setValue] = useState(initialValue || '');
+  const [value, setValue] = useState(initialValue || init);
 
   const valueHandler = (e: string) => {
     setValue(e);

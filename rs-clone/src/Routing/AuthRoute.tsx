@@ -1,6 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { App } from '../Components';
 import { BoardProvider } from '../contexts/Board.context';
+// import { CommentsProvider } from '../contexts/Comments.context';
 import {
   Dashboard,
   NotFound,

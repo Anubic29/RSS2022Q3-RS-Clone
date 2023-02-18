@@ -4,6 +4,7 @@ import TextRedactorBlock from '../../../../../../../Components/TextRedactorBlock
 import CommentRow from '../CommentRow/CommentRow';
 import UserIcon from '../../../../../../../Components/userIcon/UserIcon';
 import { BiSortDown, BiSortUp } from 'react-icons/bi';
+// import { useComments } from '../../../../../../../contexts/Comments.context';
 
 export type commentDetails = {
   id: string;
@@ -12,10 +13,14 @@ export type commentDetails = {
   body: string;
 };
 
-const CommentsBlock = () => {
+const CommentsBlock = (props: { taskId: string }) => {
   const [savedDescr, setSavedDescr] = useState<commentDetails[]>([]);
   const [editorMode, setEditorMode] = useState(false);
   const [newestFirst, setNewestFirt] = useState(true);
+
+  // const { getCommentsList } = useComments();
+
+  // const list = getCommentsList();
 
   const onTextValueHandler = (val: string) => {
     const comment: commentDetails = {
@@ -96,6 +101,7 @@ const CommentsBlock = () => {
           )
           .map((comment) => (
             <CommentRow
+              taskId={props.taskId}
               id={comment.id}
               userName={comment.userName}
               body={comment.body}
