@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import TaskType from '../../../../../../../types/task/taskType';
 import { MdClose, MdDone } from 'react-icons/md';
 import { BtnAction, Task } from '../../../';
@@ -11,6 +11,7 @@ import {
 import { useBoard } from '../../../../../../../contexts/Board.context';
 
 import styles from './ColumnBody.module.scss';
+import { useUser } from '../../../../../../../contexts/User.context';
 
 interface ColumnBodyProps {
   id: string;
@@ -27,6 +28,7 @@ interface ColumnBodyProps {
 
 function ColumnBody(props: ColumnBodyProps) {
   const { createTask } = useBoard();
+  const { currentUser } = useUser();
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [titleError, setTitleError] = useState(newTaskTitle.length === 0);
@@ -39,12 +41,12 @@ function ColumnBody(props: ColumnBodyProps) {
     setTitleError(newTaskTitle.length === 0);
   }, [newTaskTitle]);
 
-  const onSubmitHandler = () => {
-    if (!titleError) {
-      createTask(props.id, newTaskTitle, props.userId);
+  const onSubmitHandler = useCallback(() => {
+    if (!titleError && currentUser) {
+      createTask(props.id, newTaskTitle, currentUser._id, props.userId);
       setIsComponentVisible(false);
     }
-  };
+  }, [createTask, props.id, newTaskTitle, currentUser, props.userId]);
 
   return (
     <div
