@@ -64,7 +64,7 @@ router.get('/:id/info', authenticateToken, async(req, res) => {
 
 router.get('/:id/comments', authenticateToken, async(req, res) => {
   try {
-    const task = await Task.find({ _id: req.params.id });
+    const task = (await Task.find({ _id: req.params.id }))[0];
     if (!task) throw new Error('Not found');
 
     res.json(task.commentList);
