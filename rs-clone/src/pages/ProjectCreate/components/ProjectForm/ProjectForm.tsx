@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProjects } from '../../../../contexts';
 import { ProjectsContextValue } from '../../../../contexts/ProjectsContext';
@@ -12,6 +12,7 @@ import styles from './ProjectForm.module.scss';
 
 interface ProjectFormProps {
   id: string;
+  setLoader: Dispatch<SetStateAction<boolean>>;
 }
 
 enum InputIds {
@@ -26,7 +27,7 @@ const { NAME_MIN_LENGTH, KEY_LENGTH, DESCRIPTION_MIN_LENGTH, changeKeyInput, che
   projectValidationData;
 
 function ProjectForm(props: ProjectFormProps) {
-  const { id } = props;
+  const { id, setLoader } = props;
 
   const [name, setName] = useState('');
   const [key, setKey] = useState('');
@@ -72,6 +73,8 @@ function ProjectForm(props: ProjectFormProps) {
       key.length === KEY_LENGTH;
 
     if (validationCondition) {
+      setLoader(true);
+
       setIsValidName(true);
       setIsValidDescription(true);
       setIsValidKey(true);
@@ -90,6 +93,7 @@ function ProjectForm(props: ProjectFormProps) {
         color: bg
       });
 
+      setLoader(false);
       navigate('/');
     } else {
       checkIsValidInput({
