@@ -9,22 +9,13 @@ import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-ico
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
-import { ProjectId } from '../../../data/fakeProjectPageData';
 import { Preloader } from '../../../components';
 import PartOverlay from '../../../components/PartOverlay/PartOverlay';
 
 import styles from './Board.module.scss';
 
 function Board() {
-  const {
-    projectInfo,
-    updateProject,
-    setSearchInputValue,
-    setProjectDataBack,
-    setTasksDataBack,
-    setUsersDataBack,
-    getUserList
-  } = useBoard();
+  const { projectInfo, updateProject, setSearchInputValue, getUserList } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
@@ -33,16 +24,6 @@ function Board() {
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
   const [isLoaderGoing, setIsLoaderGoing] = useState(false);
   const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const data = await setProjectDataBack(ProjectId);
-      if (data) {
-        await setTasksDataBack(data._id);
-        await setUsersDataBack([data.author, ...data.team]);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     const author = projectInfo?.author;

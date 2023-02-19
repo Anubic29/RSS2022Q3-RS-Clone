@@ -2,10 +2,14 @@ import React, { useCallback, useState } from 'react';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../components';
 import { AsideNavElement } from '../';
-import { useLocation } from 'react-router-dom';
 import { useBoard } from '../../../../contexts/Board.context';
+import { useLocation } from 'react-router-dom';
+import ProjectType from '../../../../types/project/projectType';
 
 import styles from './AsideBar.module.scss';
+
+const MEDIA_TABLET = 767;
+const BADGE_SIZE = 24;
 
 interface AsideBarProps {
   onChangeAsideState: (state: boolean) => void;
@@ -20,7 +24,8 @@ function AsideBar(props: AsideBarProps) {
     board: currentPath !== 'settings',
     settings: currentPath === 'settings'
   });
-  const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= 767);
+  const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= MEDIA_TABLET);
+  const { title, description, pathImage, color } = projectInfo as ProjectType;
 
   const changeActiveStateHandler = (event: React.MouseEvent<HTMLElement>) => {
     const target = (event.target as HTMLElement).closest('a') as HTMLElement;
@@ -28,7 +33,6 @@ function AsideBar(props: AsideBarProps) {
     if (target.id === 'board') {
       setIsActive({ board: true, settings: false });
     }
-
     if (target.id === 'settings') {
       setIsActive({ board: false, settings: true });
     }
@@ -46,15 +50,11 @@ function AsideBar(props: AsideBarProps) {
       </div>
 
       <div className={styles.TitleArea}>
-        <ProjectAvatar
-          source={projectInfo?.pathImage ?? ''}
-          bgColor={projectInfo?.color ?? 'transparent'}
-          size={23}
-        />
+        <ProjectAvatar source={pathImage} size={BADGE_SIZE} bgColor={color} />
 
         <div className={styles.ProjectInfo}>
-          <p className={styles.ProjectTitle}>{projectInfo?.title}</p>
-          <p className={styles.ProjectDescription}>{projectInfo?.description}</p>
+          <p className={styles.ProjectTitle}>{title}</p>
+          <p className={styles.ProjectDescription}>{description}</p>
         </div>
       </div>
 

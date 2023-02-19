@@ -8,6 +8,7 @@ export interface ProjectsContextValue {
   getProjects: () => void;
   deleteProject: (id: string) => void;
   createProject: (body: ProjectCreateBody) => void;
+  isProjectExist: (id: string) => Promise<boolean>;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
@@ -17,6 +18,7 @@ function ProjectsProvider({ children }: PropsWithChildren) {
 
   const getProjects = async () => {
     const fetchedProjects = await getProjectsRequest();
+
     setProjects(fetchedProjects);
   };
 
@@ -30,11 +32,18 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     setProjects([...projects, body as ProjectType]);
   };
 
+  const isProjectExist = async (id: string) => {
+    const fetchedProjects = await getProjectsRequest();
+
+    return fetchedProjects.some((project) => project._id === id);
+  };
+
   const contextValue: ProjectsContextValue = {
     projects,
     getProjects,
     deleteProject,
-    createProject
+    createProject,
+    isProjectExist
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;
