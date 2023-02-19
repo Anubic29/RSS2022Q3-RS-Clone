@@ -1,5 +1,5 @@
 import { useContext, createContext, useState, useMemo, useCallback, useEffect } from 'react';
-import { CurrentUserId } from '../data/fakeProjectPageData';
+import { CurrentUserId } from '../data/FakeProjectPageData';
 import { useBoard } from './Board.context';
 import api from '../api';
 

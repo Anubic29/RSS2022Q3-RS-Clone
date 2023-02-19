@@ -1,11 +1,11 @@
-import ProjectsList from './projects/ProjectsList/ProjectsList';
-import ProjectCard from './projects/ProjectCard/ProjectCard';
-import ProjectsSection from './projects/ProjectsSection/ProjectsSection';
-import TasksListItem from './tasks/TasksListItem/TasksListItem';
-import TasksList from './tasks/TasksList/TasksList';
-import TasksSection from './tasks/TasksSection/TasksSection';
-import MarkedItemsList from './tasks/MarkedItemsList/MarkedItemsList';
-import MarkedItem from './tasks/MarkedItem/MarkedItem';
+import ProjectsList from './Projects/ProjectsList/ProjectsList';
+import ProjectCard from './Projects/ProjectCard/ProjectCard';
+import ProjectsSection from './Projects/ProjectsSection/ProjectsSection';
+import TasksListItem from './Tasks/TasksListItem/TasksListItem';
+import TasksList from './Tasks/TasksList/TasksList';
+import TasksSection from './Tasks/TasksSection/TasksSection';
+import MarkedItemsList from './Tasks/MarkedItemsList/MarkedItemsList';
+import MarkedItem from './Tasks/MarkedItem/MarkedItem';
 
 export {
   ProjectsList,

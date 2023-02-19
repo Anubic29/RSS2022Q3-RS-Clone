@@ -1,4 +1,4 @@
-import ProjectType from '../types/project/projectType';
+import ProjectType from '../types/Project/ProjectType';
 import { ACCESS_TOKEN, BASE_URL, getCurrentUserId } from './config';
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
 

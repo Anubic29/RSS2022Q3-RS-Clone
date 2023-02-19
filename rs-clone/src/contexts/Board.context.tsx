@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useContext, createContext, useState, useMemo, useCallback } from 'react';
-import { CurrentUserId } from '../data/fakeProjectPageData';
+import { CurrentUserId } from '../data/FakeProjectPageData';
 import api from '../api';
 import ColumnProjectType from '../types/project/columnProjectType';
-import ProjectType from '../types/project/projectType';
+import ProjectType from '../types/Project/ProjectType';
 import TaskType from '../types/task/taskType';
 import UserType from '../types/user/userType';
 

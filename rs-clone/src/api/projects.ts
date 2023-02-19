@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import ColumnProjectType from '../types/project/columnProjectType';
-import ProjectType from '../types/project/projectType';
+import ProjectType from '../types/Project/ProjectType';
 
 export default function (instance: AxiosInstance) {
   return {
