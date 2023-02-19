@@ -20,7 +20,7 @@ function SingleProject() {
   useEffect(() => {
     (async () => {
       try {
-        if (await isProjectExist(id as string)) {
+        if (isProjectExist(id as string)) {
           const data = (await setProjectDataBack(id as string)) as ProjectType;
 
           await setTasksDataBack(data?._id);
@@ -36,7 +36,7 @@ function SingleProject() {
         setIsLoading(false);
       }
     })();
-  });
+  }, [isProjectExist]);
 
   const [asideState, setAsideState] = useState(false);
 
