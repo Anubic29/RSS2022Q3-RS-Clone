@@ -31,7 +31,7 @@ function ColumnRowUser(props: ColumnRowUserProps) {
 
   return (
     <div className={styles['user-tasks']}>
-      <div className={styles['user-Header']}>
+      <div className={styles['user-header']}>
         {user && (
           <>
             <div className={styles['user-header__avatar']}>

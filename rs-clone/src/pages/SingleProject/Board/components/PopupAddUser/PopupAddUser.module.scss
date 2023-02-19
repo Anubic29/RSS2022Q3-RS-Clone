@@ -72,6 +72,42 @@
         }
       }
     }
+
+    .selected-user-item {
+      display: flex;
+      align-items: center;
+      width: 300px;
+      height: 40px;
+      padding: 5px;
+      background-color: $colorBackgroundHover;
+      border-radius: 5px;
+      user-select: none;
+
+      .avatar {
+        height: 25px;
+        width: 25px;
+        font-size: 12px;
+        margin-right: 5px;
+      }
+
+      .btn-block {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        font-size: 20px;
+        color: $colorBtnDanger;
+        transition: color ease .3s;
+
+        &:hover {
+          cursor: pointer;
+          color: $colorBtnDangerHover;
+        }
+
+        &:active {
+          color: $colorBtnDangerActive;
+        }
+      }
+    }
   }
 
   &__btns-block {
@@ -107,6 +143,11 @@
         &:active {
           background-color: $colorBtnPrimaryActive;
         }
+      }
+
+      &.blocked {
+        background-color: $colorSecondaryText;
+        cursor: not-allowed;
       }
     }
   }

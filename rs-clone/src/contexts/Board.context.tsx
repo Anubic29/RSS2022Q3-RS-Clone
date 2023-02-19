@@ -7,61 +7,13 @@ import ProjectType from '../types/project/projectType';
 import TaskType from '../types/task/taskType';
 import UserType from '../types/user/userType';
 
-type TaskDataToUpdate = {
-  title?: string;
-  description?: string;
-  author?: string;
-  executor?: string;
-  projectId?: string;
-  columnId?: string;
-};
-
-type ColumnDataToUpdate = {
-  title?: string;
-  type?: string;
-};
-
-type ProjectDataToUpdate = {
-  title?: string;
-  description?: string;
-  key?: string;
-  boardTitle?: string;
-  color?: string;
-  author?: string;
-  pathImage?: string;
-};
-
-export type UserDataForAvatar = {
-  firstName: string;
-  lastName: string;
-};
-
-interface BoardContextType {
-  setProjectDataBack: (ProjectId: string) => Promise<ProjectType | null>;
-  setTasksDataBack: (ProjectId: string) => Promise<boolean>;
-  setUsersDataBack: (usersId: string[]) => Promise<boolean>;
-  getUserList: () => UserType[];
-  projectInfo: ProjectType | null;
-  updateProject: (updateData: ProjectDataToUpdate) => Promise<boolean>;
-  deleteProject: () => Promise<boolean>;
-  addUserToTeam: (_id: string) => void;
-  setSearchInputValue: (value: string) => void;
-  addUserFilter: (_id: string) => void;
-  deleteUserFilter: (_id: string) => void;
-  getTaskList: () => TaskType[];
-  getColumnList: () => ColumnProjectType[];
-  getColumnCount: () => number;
-  getFullNameUser: (_id: string) => UserDataForAvatar | undefined;
-  createTask: (columnId: string, taskTitle: string, userId?: string) => void;
-  updateTask: (_id: string, updateData: TaskDataToUpdate) => void;
-  deleteTask: (taskId: string) => void;
-  deleteAllTaskInColumn: (_id: string) => void;
-  moveTasksToColumn: (_cuurId: string, _newId: string) => void;
-  createColumn: (columnTitle: string) => void;
-  updateColumn: (_id: string, updateData: ColumnDataToUpdate) => void;
-  deleteColumn: (_id: string) => void;
-  swapColumn: (_idActive: string, _id: string) => void;
-}
+import {
+  TaskDataToUpdate,
+  ColumnDataToUpdate,
+  ProjectDataToUpdate,
+  UserDataForAvatar,
+  BoardContextType
+} from './interfaces';
 
 export const BoardContext = createContext<BoardContextType>({
   setProjectDataBack: () => Promise.resolve(null),
@@ -71,7 +23,7 @@ export const BoardContext = createContext<BoardContextType>({
   projectInfo: null,
   updateProject: () => Promise.resolve(false),
   deleteProject: () => Promise.resolve(false),
-  addUserToTeam: () => {},
+  addUserToTeam: () => Promise.resolve(false),
   setSearchInputValue: () => {},
   addUserFilter: () => {},
   deleteUserFilter: () => {},
@@ -79,15 +31,15 @@ export const BoardContext = createContext<BoardContextType>({
   getColumnList: () => [],
   getColumnCount: () => 0,
   getFullNameUser: () => ({ firstName: '', lastName: '' }),
-  createTask: () => {},
-  updateTask: () => {},
-  deleteTask: () => {},
-  deleteAllTaskInColumn: () => {},
-  moveTasksToColumn: () => {},
-  createColumn: () => {},
-  updateColumn: () => {},
-  deleteColumn: () => {},
-  swapColumn: () => {}
+  createTask: () => Promise.resolve(false),
+  updateTask: () => Promise.resolve(false),
+  deleteTask: () => Promise.resolve(false),
+  deleteAllTaskInColumn: () => Promise.resolve(false),
+  moveTasksToColumn: () => Promise.resolve(false),
+  createColumn: () => Promise.resolve(false),
+  updateColumn: () => Promise.resolve(false),
+  deleteColumn: () => Promise.resolve(false),
+  swapColumn: () => Promise.resolve(false)
 });
 
 export const BoardProvider = (props: { children: React.ReactNode }) => {
@@ -153,9 +105,12 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
   const deleteProject = useCallback(async () => {
     if (projectInfo) {
-      const response = await api.projects.deleteData(projectInfo._id);
-      if (response.status === 200 && response.data) {
-        return true;
+      const resp = await api.tasks.deleteAllDataByProject(projectInfo._id);
+      if (resp.status === 200 && resp.data) {
+        const response = await api.projects.deleteData(projectInfo._id);
+        if (response.status === 200 && response.data) {
+          return true;
+        }
       }
     }
     return false;
@@ -171,8 +126,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
           const users = await Promise.all(usersId.map((user) => api.users.getData(user)));
           setProjectInfo(projectInfo);
           setUserList(users.map((data) => data.data));
+          return true;
         }
       }
+      return false;
     },
     [projectInfo, userList]
   );
@@ -237,8 +194,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         const response = await api.tasks.postData(payload);
         if (response.status === 200) {
           setTaskList([...taskList, response.data]);
+          return true;
         }
       }
+      return false;
     },
     [taskList, projectInfo]
   );
@@ -260,7 +219,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       if (response.status === 200) {
         taskList.splice(idx, 1, response.data);
         setTaskList([...taskList]);
+        return true;
       }
+      return false;
     },
     [taskList]
   );
@@ -274,7 +235,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         taskList.splice(idx, 1);
 
         setTaskList([...taskList]);
+        return true;
       }
+      return false;
     },
     [taskList]
   );
@@ -290,7 +253,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         });
 
         setTaskList(res);
+        return true;
       }
+      return false;
     },
     [taskList]
   );
@@ -301,7 +266,9 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       if (response.status === 200 && response.data) {
         const res = taskList.filter((data) => data.columnId !== _id);
         setTaskList(res);
+        return true;
       }
+      return false;
     },
     [taskList]
   );
@@ -317,8 +284,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
         if (response.status === 200) {
           setColumnList(response.data);
+          return true;
         }
       }
+      return false;
     },
     [columnList]
   );
@@ -337,8 +306,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
         if (response.status === 200) {
           columnList.splice(idx, 1, response.data);
           setColumnList([...columnList]);
+          return true;
         }
       }
+      return false;
     },
     [columnList]
   );
@@ -353,8 +324,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
           columnList.splice(idx, 1);
 
           setColumnList([...columnList]);
+          return true;
         }
       }
+      return false;
     },
     [columnList]
   );
@@ -370,8 +343,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
         if (response.status === 200) {
           setColumnList(response.data);
+          return true;
         }
       }
+      return false;
     },
     [columnList]
   );
