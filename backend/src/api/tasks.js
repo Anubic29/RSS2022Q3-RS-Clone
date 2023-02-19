@@ -21,7 +21,8 @@ function isCorrectTaskComment(body) {
     && body.text !== ''
     && typeof body.author === 'string'
     && body.author !== ''
-    && body.date instanceof Date;
+    && typeof body.date === 'string'
+    && body.date !== '';
 }
 
 
@@ -63,7 +64,7 @@ router.get('/:id/info', authenticateToken, async(req, res) => {
 
 router.get('/:id/comments', authenticateToken, async(req, res) => {
   try {
-    const task = await Task.find({ _id: req.params.id });
+    const task = (await Task.find({ _id: req.params.id }))[0];
     if (!task) throw new Error('Not found');
 
     res.json(task.commentList);
@@ -151,7 +152,7 @@ router.put('/:id/info', authenticateToken, async (req, res) => {
 router.put('/:id/comments/:commentId', authenticateToken, async (req, res) => {
   try {
     if (typeof req.body.text !== 'string' || req.body.text === '') throw new Error('Not found property text');
-    if (!(req.body.dateUpdate instanceof Date)) throw new Error('Not found property dateUpdate');
+    if (typeof req.body.dateUpdate !== 'string' || req.body.dateUpdate === '') throw new Error('Not found property dateUpdate');
     
     const task = (await Task.find({ _id: req.params.id }))[0];
     if (!task) throw new Error('Not found task');
