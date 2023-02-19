@@ -8,6 +8,7 @@ import InfoCard from './InfoCard/InfoCard';
 import Preloader from './Preloader/Preloader';
 import Dropdown from './Dropdown/Dropdown';
 import Overlay from './Overlay/Overlay';
+import Loader from './Loader/Loader';
 import Alert from './Alert/Alert';
 
 export {
@@ -21,5 +22,6 @@ export {
   Preloader,
   Dropdown,
   Overlay,
+  Loader,
   Alert
 };

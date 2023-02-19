@@ -1,26 +1,30 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import {
   colorBackgroundColumn,
   colorBackgroundHover,
-  colorSecondaryLight
+  colorSecondaryLight,
+  colorStarFilled
 } from '../../../theme/variables';
 import { BtnAction, UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './components';
-import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-icons/md';
+import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose, MdStar } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../contexts/Board.context';
-import { useOverlay } from '../../../contexts';
+import { useOverlay, useUser } from '../../../contexts';
 import { Preloader } from '../../../components';
 import PartOverlay from '../../../components/PartOverlay/PartOverlay';
 
 import styles from './Board.module.scss';
 
 function Board() {
+  const { notedItemList, addNotedItem, deleteNotedItem } = useUser();
   const { projectInfo, updateProject, setSearchInputValue, getUserList } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
+  const [isNotedProject, setIsNotedProject] = useState(false);
+  const [isLoaderGoingStar, setIsLoaderGoingStar] = useState(false);
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
   const [isLoaderGoing, setIsLoaderGoing] = useState(false);
   const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
@@ -76,6 +80,24 @@ function Board() {
   useEffect(() => {
     if (!isInputTitleVisible) setBoardTitle(`${projectInfo?.boardTitle}`);
   }, [isInputTitleVisible]);
+
+  const onClickBtnNote = useCallback(async () => {
+    if (projectInfo) {
+      setIsLoaderGoingStar(true);
+      if (!isNotedProject) {
+        await addNotedItem(projectInfo._id, 'project');
+        setIsNotedProject(true);
+      } else {
+        await deleteNotedItem(projectInfo._id);
+        setIsNotedProject(false);
+      }
+      setIsLoaderGoingStar(false);
+    }
+  }, [projectInfo, addNotedItem, deleteNotedItem, isNotedProject]);
+
+  useEffect(() => {
+    setIsNotedProject(notedItemList.findIndex((data) => data.id === projectInfo?._id) >= 0);
+  }, [notedItemList]);
 
   return (
     <div className={styles.wrapper}>
@@ -151,12 +173,20 @@ function Board() {
           </div>
           <div className={styles['info__actions']}>
             <div className={styles['actions__list']}>
-              <BtnAction
-                image={MdStarOutline}
-                title="Add to the list"
-                backgrColorHover={colorBackgroundColumn}
-                backgrColorActive={colorSecondaryLight}
-              />
+              <div className={styles['btn-block-action']}>
+                {!isLoaderGoingStar && (
+                  <div onClick={onClickBtnNote}>
+                    <BtnAction
+                      image={isNotedProject ? MdStar : MdStarOutline}
+                      colorImg={isNotedProject ? colorStarFilled : ''}
+                      title="Add to the list"
+                      backgrColorHover={colorBackgroundColumn}
+                      backgrColorActive={colorSecondaryLight}
+                    />
+                  </div>
+                )}
+                {isLoaderGoingStar && <Preloader />}
+              </div>
             </div>
           </div>
         </div>

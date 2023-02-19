@@ -1,10 +1,19 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './layouts/Header/Header';
 import Footer from './layouts/Footer/Footer';
-import { OverlayProvider, PartOverlayProvider } from './contexts';
+import { OverlayProvider, PartOverlayProvider, useUser } from './contexts';
 import Overlay from './components/Overlay/Overlay';
 
 function App() {
+  const { setUserDataBack } = useUser();
+
+  useEffect(() => {
+    (async () => {
+      setUserDataBack();
+    })();
+  }, []);
+
   return (
     <>
       <OverlayProvider>

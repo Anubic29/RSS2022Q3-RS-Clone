@@ -1,10 +1,9 @@
 import ProjectType from '../types/project/projectType';
-import { ACCESS_TOKEN, BASE_URL, getCurrentUserId } from './config';
+import { ACCESS_TOKEN, BASE_URL } from './config';
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
 
-async function getProjectsRequest(): Promise<ProjectType[]> {
-  const currentUserId = await getCurrentUserId();
-  const res = await fetch(`${BASE_URL}/projects?user=${currentUserId}`, {
+async function getProjectsRequest(userId: string): Promise<ProjectType[]> {
+  const res = await fetch(`${BASE_URL}/projects?user=${userId}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${ACCESS_TOKEN}`
