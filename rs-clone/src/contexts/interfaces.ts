@@ -1,4 +1,4 @@
-import ProjectType from '../types/Project/ProjectType';
+import ProjectType from '../types/project/projectType';
 import ColumnProjectType from '../types/project/columnProjectType';
 import TaskType from '../types/task/taskType';
 import UserType from '../types/user/userType';

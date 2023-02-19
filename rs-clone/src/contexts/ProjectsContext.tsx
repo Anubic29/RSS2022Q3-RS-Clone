@@ -1,7 +1,7 @@
 import React, { createContext, PropsWithChildren, useContext, useState } from 'react';
-import ProjectType from '../types/Project/ProjectType';
 import { createProjectRequest, deleteProjectRequest, getProjectsRequest } from '../api/allProjects';
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
+import ProjectType from '../types/project/projectType';
 
 export interface ProjectsContextValue {
   projects: ProjectType[] | [];

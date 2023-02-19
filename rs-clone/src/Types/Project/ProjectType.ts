@@ -1,4 +1,4 @@
-import ColumnProjectType from "./columnProjectType";
+import ColumnProjectType from './columnProjectType';
 
 type ProjectType = {
   _id: string;
