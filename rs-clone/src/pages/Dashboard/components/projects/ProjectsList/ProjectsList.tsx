@@ -29,7 +29,7 @@ function ProjectsList() {
     <>
       {isLoading ? (
         <div className={styles.Empty}>
-          <Preloader text={'Loading data...'} />
+          <Preloader text={'Loading projects...'} />
         </div>
       ) : projects.length ? (
         <ul className={styles.ProjectsList}>
