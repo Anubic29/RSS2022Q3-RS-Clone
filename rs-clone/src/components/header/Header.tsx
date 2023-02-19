@@ -5,12 +5,14 @@ import SubmenuItem from '../submenuItem/SubmenuItem';
 import MenuSpan from '../submenuItem/menuSpan/MenuSpan';
 import classes from './header.module.scss';
 import Button from '../Button/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useComponentVisible from '../../hooks/useComponentVisible/useAllComponentsVisible';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
   const [submenu, setSubmenu] = useState('');
+
+  const navigate = useNavigate();
 
   const {
     ref: workRef,
@@ -34,12 +36,14 @@ const Header = () => {
     const item = 'work';
     setActiveItem(item);
     setSubmenu(item);
-    setWorkIsMenuVisible(true);
     if (activeItem === item) {
       setActiveItem('');
-      setWorkIsMenuVisible(false);
     }
   };
+
+  useEffect(() => {
+    console.log(isWorkMenuVisible);
+  }, [isWorkMenuVisible]);
 
   useEffect(() => {
     if (!isWorkMenuVisible && !isProjMenuVisible && !isUserMenuVisible) setActiveItem('');
@@ -82,8 +86,8 @@ const Header = () => {
                 <MenuSpan text="Your work"></MenuSpan>
                 <MdExpandMore className={classes.header_menuArrow} />
               </div>
-              {activeItem === 'work' && isWorkMenuVisible && (
-                <div ref={workRef}>
+              {activeItem === 'work' && (
+                <div className={classes.absolute} ref={workRef}>
                   <SubmenuItem menuItem={submenu}></SubmenuItem>
                 </div>
               )}
@@ -98,20 +102,22 @@ const Header = () => {
                 <MdExpandMore className={classes.header_menuArrow} />
               </div>
               {activeItem === 'project' && isProjMenuVisible && (
-                <div ref={projRef}>
+                <div className={classes.absolute} ref={projRef}>
                   <SubmenuItem menuItem={submenu}></SubmenuItem>
                 </div>
               )}
             </li>
           </ul>
         </nav>
-        <Button className={classes.header_createBtn}>Create</Button>
+        <Button onClick={() => navigate('/create-project')} className={classes.header_createBtn}>
+          Create
+        </Button>
         <div className={classes.header_userMenu}>
           <div onClick={userIconHandler}>
             <UserIcon user="OD"></UserIcon>
           </div>
           {activeItem === 'userMenu' && isUserMenuVisible && (
-            <div ref={userRef}>
+            <div className={classes.absolute + ' ' + classes.submenu_box_right} ref={userRef}>
               <SubmenuItem menuItem={submenu}></SubmenuItem>
             </div>
           )}

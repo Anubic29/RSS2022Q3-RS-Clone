@@ -7,11 +7,13 @@ const SubmenuNav: React.FC<{ onNavTabHandler: (tabValue: string) => string; menu
 ) => {
   const [tab, setTab] = useState('assigned');
 
-  const asignClickHandler = () => {
+  const asignClickHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    e.stopPropagation();
     setTab('assigned');
   };
 
-  const boardClickHandler = () => {
+  const boardClickHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    e.stopPropagation();
     setTab('board');
   };
 
@@ -26,12 +28,12 @@ const SubmenuNav: React.FC<{ onNavTabHandler: (tabValue: string) => string; menu
         <ul className={classes.tabsList}>
           <li
             className={`${classes.submenuLi} ${assignedChosen && classes.active}`}
-            onClick={asignClickHandler}>
+            onClick={(e) => asignClickHandler(e)}>
             <MenuSpan text="Assigned to me"></MenuSpan>
           </li>
           <li
             className={`${classes.submenuLi} ${assignedChosen || classes.active}`}
-            onClick={boardClickHandler}>
+            onClick={(e) => boardClickHandler(e)}>
             <MenuSpan text="Boards"></MenuSpan>
           </li>
         </ul>

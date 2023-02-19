@@ -27,9 +27,9 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
     switch (props.menuItem) {
       case 'userMenu':
         return (
-          <Link to="/" onMouseDown={logOutHandler}>
+          <div onMouseDown={logOutHandler}>
             <p>Log out</p>
-          </Link>
+          </div>
         );
       case 'project':
         return (
@@ -47,16 +47,11 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
   };
 
   return (
-    <div
-      className={
-        classes.submenu_box + ' ' + (props.menuItem === 'userMenu' ? classes.submenu_box_right : '')
-      }>
-      <BoxWithShadow>
-        <SubmenuNav onNavTabHandler={saveTabValueHandler} menuItem={props.menuItem} />
-        <SubmenuItemsBlock onTabChange={tab} menuItem={props.menuItem} />
-        <nav className={classes.submenuBottomNav}>{link()}</nav>
-      </BoxWithShadow>
-    </div>
+    <BoxWithShadow>
+      <SubmenuNav onNavTabHandler={saveTabValueHandler} menuItem={props.menuItem} />
+      <SubmenuItemsBlock onTabChange={tab} menuItem={props.menuItem} />
+      <nav className={classes.submenuBottomNav}>{link()}</nav>
+    </BoxWithShadow>
   );
 };
 

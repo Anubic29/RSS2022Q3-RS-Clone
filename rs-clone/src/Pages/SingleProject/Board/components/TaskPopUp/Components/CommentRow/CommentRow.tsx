@@ -3,7 +3,7 @@ import classes from './CommentRow.module.scss';
 import TextRedactorBlock from '../../../../../../../Components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
 import UserIcon from '../../../../../../../Components/userIcon/UserIcon';
-import { useBoard } from '../../../../../../../contexts/Board.context';
+import { useComments } from '../../../../../../../contexts/Comments.context';
 
 const SECOND = 1000;
 const MINUTE = 60;
@@ -11,10 +11,11 @@ const HOUR = 60;
 const MINSINDAY = 1440;
 
 const CommentRow = (props: {
-  id: string;
-  userName: string;
-  dateCreated: number;
-  body: string;
+  _id: string;
+  author: string;
+  date: string;
+  dateUpdate: string;
+  text: string;
   onDelete: (id: string) => void;
   taskId: string;
 }) => {
@@ -32,31 +33,35 @@ const CommentRow = (props: {
     }
   };
 
-  const { getTaskList } = useBoard();
-
-  const commentsRow = getTaskList().filter((task) => task._id === props.taskId)[0].commentList;
-  console.log(commentsRow);
+  const { updateComment } = useComments();
 
   const [isEditMode, setEditMode] = useState(false);
-  const [commentBody, setCommentBody] = useState(props.body);
-  const [postedTimeAgo, setPostedTimeAgo] = useState(getTimeDifference(props.dateCreated));
-  const [isEdited, setIsEdited] = useState<number | null>(null);
-
-  setInterval(() => setPostedTimeAgo(getTimeDifference(props.dateCreated)), 60000);
+  const [commentBody, setCommentBody] = useState(props.text);
+  const [postedTimeAgo, setPostedTimeAgo] = useState(getTimeDifference(JSON.parse(props.date)));
+  const [isEdited, setIsEdited] = useState<string | null>(
+    props.date !== props.dateUpdate ? props.dateUpdate : null
+  );
+  setInterval(() => setPostedTimeAgo(getTimeDifference(JSON.parse(props.date))), 60000);
 
   const editModeHandler = (val: boolean) => {
     setEditMode(val);
   };
 
   const textValueHandler = (textValue: string) => {
+    updateComment(props.taskId, props._id, {
+      _id: props._id,
+      text: textValue,
+      author: props.author,
+      date: props.date,
+      dateUpdate: JSON.stringify(Date.now())
+    });
     setCommentBody(textValue);
   };
-
   const deleteHandler = (id: string) => {
     props.onDelete(id);
   };
 
-  const setIsEditedHandler = (date: number) => {
+  const setIsEditedHandler = (date: string) => {
     setIsEdited(date);
   };
 
@@ -70,13 +75,13 @@ const CommentRow = (props: {
           <span className={classes.commentRow_UserNameSpan}>User Name</span>
           <span
             className={classes.commentRow_TimeSpan}
-            data-title={`created on ${new Date(props.dateCreated).toLocaleString()}`}>
+            data-title={`created on ${new Date(JSON.parse(props.date)).toLocaleString()}`}>
             {postedTimeAgo}
           </span>
-          {isEdited && (
+          {props.date != props.dateUpdate && isEdited && (
             <span
               className={classes.commentRow_TimeSpan}
-              data-title={`edited at ${new Date(isEdited).toLocaleString()}`}>
+              data-title={`edited at ${new Date(JSON.parse(isEdited)).toLocaleString()}`}>
               Edited
             </span>
           )}
@@ -101,7 +106,7 @@ const CommentRow = (props: {
           <button className={classes.buttonSubmit} onClick={() => setEditMode(true)}>
             Edit
           </button>
-          <button className={classes.buttonReset} onClick={() => deleteHandler(props.id)}>
+          <button className={classes.buttonReset} onClick={() => deleteHandler(props._id)}>
             Delete
           </button>
         </div>

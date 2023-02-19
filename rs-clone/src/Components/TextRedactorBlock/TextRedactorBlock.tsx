@@ -9,7 +9,7 @@ type TextRedactorProps = {
   onTextValue: (val: string) => void;
   onEditorMode: (isEditorActive: boolean) => void;
   initialValue: string | boolean;
-  onIsEdited?: (date: number) => void;
+  onIsEdited?: (date: string) => void;
   init?: string;
 };
 
@@ -31,9 +31,8 @@ const TextRedactorBlock = ({
     if (value === '<p><br></p>' || !value) return;
     onTextValue(typeof value === 'string' ? value : '');
     onEditorMode(false);
-    console.log(initialValue);
     setValue(initialValue ? value : '');
-    if (onIsEdited) onIsEdited(Date.now());
+    if (onIsEdited) onIsEdited(JSON.stringify(Date.now()));
   };
 
   return (

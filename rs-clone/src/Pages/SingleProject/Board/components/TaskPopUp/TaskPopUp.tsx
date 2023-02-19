@@ -17,6 +17,7 @@ import { useClipboard } from 'use-clipboard-copy';
 import FlipMenu from '../BtnMenuAction/BtnMenuAction';
 import { colorLightGrey } from '../../../../../theme/variables';
 import { useBoard } from '../../../../../contexts/Board.context';
+import { useComments } from '../../../../../contexts/Comments.context';
 
 interface TaskProps {
   _id: string;
@@ -25,14 +26,20 @@ interface TaskProps {
 
 const TaskPopUp = (props: TaskProps) => {
   const { updateTask, deleteTask, getTaskList, getColumnList } = useBoard();
+  const { getCommentsList, getCommentDataBack } = useComments();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+
+  useEffect(() => {
+    getCommentDataBack(props._id);
+  }, []);
+  const list = getCommentsList();
+  console.log('list', list);
 
   const data = getTaskList().filter((task) => {
     if (task._id === props._id) {
       return task;
     }
   });
-
   const columnsData = getColumnList();
   const column = columnsData.filter((col) => {
     if (col._id === data[0].columnId) return col;
