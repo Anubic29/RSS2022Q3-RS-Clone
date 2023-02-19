@@ -8,6 +8,7 @@ export interface ProjectsContextValue {
   getProjects: (_id: string) => void;
   deleteProject: (id: string) => void;
   createProject: (body: ProjectCreateBody) => void;
+  isProjectExist: (id: string) => boolean;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
@@ -30,11 +31,19 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     setProjects([...projects, body as ProjectType]);
   };
 
+  const isProjectExist = useCallback(
+    (id: string) => {
+      return projects.some((project) => project._id === id);
+    },
+    [projects]
+  );
+
   const contextValue: ProjectsContextValue = {
     projects,
     getProjects,
     deleteProject,
-    createProject
+    createProject,
+    isProjectExist
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;

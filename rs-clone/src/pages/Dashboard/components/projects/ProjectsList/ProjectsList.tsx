@@ -32,15 +32,14 @@ function ProjectsList() {
     <>
       {isLoading ? (
         <div className={styles.Empty}>
-          <Preloader text={'Loading data...'} />
+          <Preloader text={'Loading projects...'} />
         </div>
       ) : projects.length ? (
         <ul className={styles.ProjectsList}>
           {projects.map((project) => {
             return (
               <ProjectCard
-                _id={project._id}
-                id={project.key}
+                id={project._id}
                 title={project.title}
                 description={project.description}
                 source={project.pathImage}

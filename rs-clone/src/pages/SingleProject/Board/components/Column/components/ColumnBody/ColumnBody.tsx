@@ -9,6 +9,7 @@ import {
   colorSecondaryLight
 } from '../../../../../../../theme/variables';
 import { useBoard } from '../../../../../../../contexts/Board.context';
+import { Preloader } from '../../../../../../../components';
 
 import styles from './ColumnBody.module.scss';
 import { useUser } from '../../../../../../../contexts/User.context';
@@ -27,11 +28,12 @@ interface ColumnBodyProps {
 }
 
 function ColumnBody(props: ColumnBodyProps) {
-  const { createTask } = useBoard();
   const { currentUser } = useUser();
+  const { createTask, projectInfo } = useBoard();
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [titleError, setTitleError] = useState(newTaskTitle.length === 0);
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
 
   useEffect(() => {
     if (!isComponentVisible) setNewTaskTitle('');
@@ -43,10 +45,12 @@ function ColumnBody(props: ColumnBodyProps) {
 
   const onSubmitHandler = useCallback(() => {
     if (!titleError && currentUser) {
+      setIsLoadingCreate(true);
       createTask(props.id, newTaskTitle, currentUser._id, props.userId);
+      setIsLoadingCreate(false);
       setIsComponentVisible(false);
     }
-  }, [createTask, props.id, newTaskTitle, currentUser, props.userId]);
+  }, [createTask, props.id, newTaskTitle, titleError, currentUser, props.userId]);
 
   return (
     <div
@@ -64,7 +68,7 @@ function ColumnBody(props: ColumnBodyProps) {
             <Task
               _id={task._id}
               title={task.title}
-              keyTask={`key-${task.id}`}
+              keyTask={`${projectInfo?.key ?? 'key'}-${task.id}`}
               executor={task.executor}
               typeDone={props.type === 'final'}
             />
@@ -108,6 +112,11 @@ function ColumnBody(props: ColumnBodyProps) {
                 />
               </div>
             </div>
+            {isLoadingCreate && (
+              <div className={styles['block-loader']}>
+                <Preloader />
+              </div>
+            )}
           </form>
         )}
       </div>
