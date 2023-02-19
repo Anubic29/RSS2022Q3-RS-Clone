@@ -37,8 +37,10 @@ const Header = () => {
     const item = 'work';
     setActiveItem(item);
     setSubmenu(item);
+    setWorkIsMenuVisible(true);
     if (activeItem === item) {
       setActiveItem('');
+      setWorkIsMenuVisible(false);
     }
   };
 
