@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import TaskType from '../Types/Task/TaskType';
+import TaskType from '../types/task/TaskType';
 
 export default function (instance: AxiosInstance) {
   return {

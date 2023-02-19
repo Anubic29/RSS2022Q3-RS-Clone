@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import Routing from './Routing/Routing';
+import Routing from './routing/Routing';
 
 import './index.scss';
 

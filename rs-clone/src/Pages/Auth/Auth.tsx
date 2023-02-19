@@ -2,7 +2,7 @@ import { useState, Dispatch } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import classes from './Auth.module.scss';
 import Modal from '../../Components/Modal/Modal';
-import BoxWithShadow from '../../Components/boxWithShadow/BoxWithShadow';
+import BoxWithShadow from '../../components/BoxWithShadow/BoxWithShadow';
 import LoaderImg from '../../Components/Loader/Loader';
 import Message from '../../Components/LoaderMessage/Message';
 

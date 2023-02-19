@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { App } from '../Components';
+import { App } from '../components';
 import { BoardProvider } from '../contexts/Board.context';
 import { CommentsProvider } from '../contexts/Comments.context';
 import {
@@ -10,7 +10,7 @@ import {
   Board,
   Settings,
   SingleProject
-} from '../Pages';
+} from '../pages';
 
 function AuthRoute() {
   return (

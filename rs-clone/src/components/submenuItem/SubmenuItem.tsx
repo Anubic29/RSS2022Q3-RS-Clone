@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BoxWithShadow from '../boxWithShadow/BoxWithShadow';
-import SubmenuNav from './submenuNav/SubmenuNaм';
 import SubmenuItemsBlock from './submenuItamsBlock/SubmenuItemsBlock';
 import { Link } from 'react-router-dom';
 import classes from './submenuItem.module.scss';
 import { IsAuthContex } from '../../context';
+import BoxWithShadow from '../BoxWithShadow/BoxWithShadow';
+import SubmenuNav from './submenuNav/SubmenuNav';
 
 const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
   const contextValue = useContext(IsAuthContex);

@@ -8,7 +8,7 @@ import EditableTitle from '../../../../../Components/EditableTitle/EditableTitle
 import DescriptionBlock from './Components/DescriptionBlock/DescriptionBlock';
 import CommentsBlock from './Components/CommentsBlock/CommentsBlock';
 import { GrClose } from 'react-icons/gr';
-import BoxWithShadow from '../../../../../Components/boxWithShadow/BoxWithShadow';
+import BoxWithShadow from '../../../../../components/BoxWithShadow/BoxWithShadow';
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './Components/DetailsBlock/DetailsBlock';
 import { useOverlay } from '../../../../../contexts/Overlay.context';

@@ -4,7 +4,7 @@ import { useBoard } from '../../../../../contexts/Board.context';
 import { useOverlay } from '../../../../../contexts';
 import { MdSearch } from 'react-icons/md';
 import { UserAvatar } from '../';
-import UserType from '../../../../../Types/User/UserType';
+import UserType from '../../../../../types/user/userType';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 
 import styles from './PopupAddUser.module.scss';

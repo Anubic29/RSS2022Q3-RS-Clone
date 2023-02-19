@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import UserType from '../../../../../Types/User/UserType';
-import TaskType from '../../../../../Types/Task/TaskType';
-import ColumnProjectType from '../../../../../Types/Project/ColumnProjectType';
+import UserType from '../../../../../types/user/userType';
+import TaskType from '../../../../../types/task/TaskType';
+import ColumnProjectType from '../../../../../types/project/columnProjectType';
 import { Column, UserAvatar } from '../';
 import { ColumnBody } from '../Column/components';
 import { useBoard } from '../../../../../contexts/Board.context';

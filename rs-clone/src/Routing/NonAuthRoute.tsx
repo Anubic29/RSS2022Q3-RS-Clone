@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Auth, NotFound, SignUp, LoginPage } from '../Pages';
+import { Auth, NotFound, SignUp, LoginPage } from '../pages';
 
 function NonAuthRoute() {
   return (

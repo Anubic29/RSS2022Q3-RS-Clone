@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import TaskType from '../../../../../../../Types/Task/TaskType';
+import TaskType from '../../../../../../../types/task/TaskType';
 import { MdClose, MdDone } from 'react-icons/md';
 import { BtnAction, Task } from '../../../';
 import useComponentVisible from '../../../../../../../hooks/useComponentVisible/useComponentVisible';
