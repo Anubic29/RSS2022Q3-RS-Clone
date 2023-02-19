@@ -1,0 +1,26 @@
+.row {
+  font-size: 14px;
+}
+
+.cell {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px 8px;
+}
+
+.btn-block {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+  }
+}

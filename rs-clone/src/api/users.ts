@@ -7,7 +7,7 @@ export default function (instance: AxiosInstance) {
       return instance.get<UserType[]>(`api/users/${query}`);
     },
     getData(userId: string) {
-      return instance.get(`api/users/${userId}/info`);
+      return instance.get<UserType>(`api/users/${userId}/info`);
     },
     postData(config: AxiosRequestConfig) {
       return instance.post('api/users', config);

@@ -1,0 +1,83 @@
+@import '../../theme/variables.scss';
+
+.wrapper {
+  padding: 0 40px;
+}
+
+.header {
+  margin: 25px 0 15px;
+  display: flex;
+  flex-direction: column;
+
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+
+  .search-block {
+    margin-top: 15px;
+    max-width: 185px;
+    position: relative;
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translate(0, -50%);
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .search-bar {
+    height: 30px;
+    padding-right: 30px;
+  }
+}
+
+.project-list {
+  width: 100%;
+
+  &__header-row {
+    
+    & > * {
+      font-size: 15px;
+      padding: 4px 8px;
+      border-bottom: 2px solid $colorBorder;
+      text-align: left;
+    }
+  }
+
+  .project {
+    &__star {
+      width: 3%;
+      font-size: 20px;
+    }
+
+    &__title {
+      width: 22%;
+    }
+
+    &__key {
+      width: 8%;
+    }
+
+    &__description {
+      width: 25%;
+    }
+
+    &__author {
+      width: 16%;
+    }
+
+    &__menu {
+      width: 4%;
+    }
+  }
+
+}

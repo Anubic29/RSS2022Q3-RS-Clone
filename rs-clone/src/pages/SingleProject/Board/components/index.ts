@@ -7,7 +7,6 @@ import PopupAddUser from './PopupAddUser/PopupAddUser';
 import PopupDeleteColumn from './PopupDeleteColumn/PopupDeleteColumn';
 import SelectPanel from './SelectPanel/SelectPanel';
 import Task from './Task/Task';
-import UserAvatar from './UserAvatar/UserAvatar';
 import UserBtn from './UserBtn/UserBtn';
 import UserList from './UserList/UserList';
 
@@ -21,7 +20,6 @@ export {
   PopupDeleteColumn,
   SelectPanel,
   Task,
-  UserAvatar,
   UserBtn,
   UserList
 };
