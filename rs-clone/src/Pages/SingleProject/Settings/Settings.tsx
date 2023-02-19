@@ -1,37 +1,61 @@
-import { Button, Dropdown, ProjectAvatar } from '../../../Components';
+import { useEffect, useMemo } from 'react';
+import { Button, Dropdown, ProjectAvatar } from '../../../components';
 import { useOverlay } from '../../../contexts';
-import cardsData from '../../../Data/FakeProjectCard';
-import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './Components';
-import Styles from './Settings.module.scss';
+import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './components';
+import { useBoard } from '../../../contexts/Board.context';
+import { ProjectId } from '../../../data/fakeProjectPageData';
+import Loader from '../../../components/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
+
+import styles from './Settings.module.scss';
+
+const PROJECT_BADGE_SIZE = 128;
 
 function Settings() {
-  const testData = cardsData[0];
-  const { setIsVisibleApp, setChildrenApp } = useOverlay();
+  const { setProjectDataBack, deleteProject, projectInfo } = useBoard();
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setProjectDataBack(ProjectId);
+  }, []);
 
   const showPopupHandler = () => {
-    setChildrenApp(<ProjectBadgesPopup />);
-    setIsVisibleApp(true);
+    setChildrenBoard(<ProjectBadgesPopup />);
+    setIsVisibleBoard(true);
   };
 
+  const optionsBtnMenu = useMemo(() => {
+    return [
+      {
+        title: 'Remove',
+        onClick: async () => {
+          setChildrenBoard(<Loader />);
+          setIsVisibleBoard(true);
+          await deleteProject();
+          setIsVisibleBoard(false);
+          navigate('/');
+        }
+      }
+    ];
+  }, [deleteProject]);
+
   return (
-    <div className={Styles.Settings}>
+    <div className={styles.Settings}>
       <SettingsBreadcrumbs />
 
-      <div className={Styles.TitleArea}>
-        <span className={Styles.Title}>Details</span>
-        <Dropdown
-          childElements={[
-            {
-              title: 'Remove project',
-              onClick: () => console.log(true)
-            }
-          ]}
-        />
+      <div className={styles.TitleArea}>
+        <span className={styles.Title}>Details</span>
+        <Dropdown childElements={optionsBtnMenu} />
       </div>
 
-      <div className={Styles.ProjectDetails}>
-        <ProjectAvatar {...testData} size={128} />
-        <Button className={Styles.ButtonAvatar} onClick={showPopupHandler}>
+      <div className={styles.ProjectDetails}>
+        <ProjectAvatar
+          source={projectInfo?.pathImage ?? ''}
+          bgColor={projectInfo?.color ?? 'transparent'}
+          size={PROJECT_BADGE_SIZE}
+        />
+        <Button className={styles.ButtonAvatar} onClick={showPopupHandler}>
           Change avatar
         </Button>
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Input } from '../../../../../Components';
+import { Input } from '../../../../../components';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { useOverlay } from '../../../../../contexts';
 import { MdSearch } from 'react-icons/md';

@@ -1,5 +1,4 @@
-import SignUpForm from './Components/SignUpForm';
-import classes from './SignUp.module.scss';
+import SignUpForm from './components/SignUpForm';
 
 function SignUp() {
   return <SignUpForm />;

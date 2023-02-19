@@ -1,4 +1,6 @@
-import Styles from './Button.module.scss';
+import React from 'react';
+
+import styles from './Button.module.scss';
 
 interface ButtonProps {
   children?: React.ReactNode;
@@ -11,7 +13,7 @@ interface ButtonProps {
 
 function Button(props: ButtonProps) {
   const { children, className } = props;
-  const classNames = className ? `${Styles.Button} ${className}` : Styles.Button;
+  const classNames = className ? `${styles.Button} ${className}` : styles.Button;
 
   return (
     <button {...props} className={classNames}>

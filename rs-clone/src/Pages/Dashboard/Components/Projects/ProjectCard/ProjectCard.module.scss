@@ -1,4 +1,7 @@
+@import '../../../../../theme/variables';
+
 .ProjectCard {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -6,11 +9,11 @@
   width: 240px;
   border-left: 20px solid;
   border-radius: 3px;
-  background: #ffffff;
-  box-shadow: 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+  background: $colorProjectCardBackground;
+  box-shadow: $boxShadowProjectCard;
 
   &:hover {
-    box-shadow: 0 2px 4px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+    box-shadow: $boxShadowProjectCardHover;
   }
 }
 
@@ -26,7 +29,7 @@
   display: flex;
   justify-content: space-between;
   padding: 5px 12px 5px 17px;
-  border-top: 1px solid var(--ds-border, #ebecf0);
+  border-top: $borderProjectActionsArea;
 }
 
 .ProjectInfo {
@@ -39,11 +42,11 @@
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
-  color: #172b4d;
+  color: $colorContent;
   cursor: pointer;
 
   &:hover {
-    color: #0065ff;
+    color: $colorProjectTitleHover;
   }
 }
 
@@ -54,7 +57,7 @@
   white-space: nowrap;
   font-size: 11px;
   font-weight: 500;
-  color: #172b4d;
+  color: $colorContent;
 }
 
 .Actions {
@@ -64,15 +67,27 @@
   padding: 5px 3px;
   border-radius: 3px;
   font-size: 11px;
-  color: #172b4d;
+  color: $colorContent;
   cursor: pointer;
 
   &:hover {
-    background: rgba(9, 30, 66, 0.08);
+    background: $colorProjectActionsAreaBackgroundHover;
   }
 }
 
 .Avatar {
   align-self: flex-start;
   flex: 0 0 23px;
+}
+
+.PreloaderContainer {
+  position: absolute;
+  top: 0;
+  left: -20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% + 20px);
+  height: 100%;
+  background: $colorProjectPreloaderContainerBackground;
 }

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import classes from './CommentRow.module.scss';
-import TextRedactorBlock from '../../../../../../../Components/TextRedactorBlock/TextRedactorBlock';
+import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
-import UserIcon from '../../../../../../../Components/userIcon/UserIcon';
+import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
 import { useComments } from '../../../../../../../contexts/Comments.context';
 
 const SECOND = 1000;

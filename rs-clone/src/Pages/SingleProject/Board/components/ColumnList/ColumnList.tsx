@@ -8,9 +8,11 @@ import {
 import { BtnAction, Column, ColumnRowUser } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { useBoard } from '../../../../../contexts/Board.context';
+import { ColumnBody, ColumnHeader } from '../Column/components';
+import { usePartOverlay } from '../../../../../contexts';
 
 import styles from './ColumnList.module.scss';
-import { ColumnBody, ColumnHeader } from '../Column/components';
+import Loader from '../../../../../components/Loader/Loader';
 
 interface ColumnListProps {
   group: '' | 'Executor';
@@ -18,6 +20,7 @@ interface ColumnListProps {
 
 function ColumnList(props: ColumnListProps) {
   const { getUserList, getTaskList, getColumnList, updateTask, swapColumn } = useBoard();
+  const { setIsVisibleColumnList, setChildrenColumnList } = usePartOverlay();
   const [isScrolledList, setIsScrolledList] = useState(false);
 
   const { isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
@@ -39,10 +42,13 @@ function ColumnList(props: ColumnListProps) {
     event.preventDefault();
   }, []);
   const dropHandlerTask = useCallback(
-    (event: React.DragEvent, column: string) => {
+    async (event: React.DragEvent, column: string) => {
       event.preventDefault();
       if (currentTask !== '') {
-        updateTask(currentTask, { columnId: column });
+        setChildrenColumnList(<Loader />);
+        setIsVisibleColumnList(true);
+        await updateTask(currentTask, { columnId: column });
+        setIsVisibleColumnList(false);
         setCurrentTask('');
       }
     },
@@ -83,10 +89,13 @@ function ColumnList(props: ColumnListProps) {
     event.preventDefault();
   }, []);
   const dropHandlerColumn = useCallback(
-    (event: React.DragEvent, column: string) => {
+    async (event: React.DragEvent, column: string) => {
       event.preventDefault();
       if (currentColumn !== '') {
-        swapColumn(currentColumn, column);
+        setChildrenColumnList(<Loader />);
+        setIsVisibleColumnList(true);
+        await swapColumn(currentColumn, column);
+        setIsVisibleColumnList(false);
         setCurrentColumn('');
       }
     },

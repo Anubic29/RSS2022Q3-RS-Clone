@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BsPinAngle } from 'react-icons/bs';
 import { TbPinned } from 'react-icons/tb';
-import UserIcon from '../../../../../../../../Components/userIcon/UserIcon';
+import UserIcon from '../../../../../../../../components/UserIcon/UserIcon';
 import classes from './ListItem.module.scss';
 
 interface ListItemProps {

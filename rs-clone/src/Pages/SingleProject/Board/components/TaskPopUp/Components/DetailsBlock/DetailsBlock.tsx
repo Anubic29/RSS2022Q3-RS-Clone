@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MdExpandMore } from 'react-icons/md';
 import classes from './DetailsBlock.module.scss';
-import Block from './Components/Block';
+import Block from './components/Block';
 
 interface dataType {
   [string: string]: string;

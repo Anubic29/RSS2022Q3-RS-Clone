@@ -1,9 +1,11 @@
+@import '../../../../../theme/variables';
+
 .Form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: $mediaMobile) {
     width: 100%;
   }
 }
@@ -11,7 +13,7 @@
 .Input {
   width: 350px;
 
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: $mediaMobile) {
     width: 100%;
   }
 }
@@ -25,4 +27,17 @@
 
 .Button {
   align-self: flex-start;
+}
+
+.form-row {
+  display: flex;
+}
+
+.form-loader {
+  margin-left: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $colorIconDone;
+  font-size: 25px;
 }

@@ -1,7 +1,7 @@
 import { TasksListItem } from '../..';
-import { EmptyData } from '../../../../../Components';
+import { EmptyData } from '../../../../../components';
 
-import Styles from './TasksList.module.scss';
+import styles from './TasksList.module.scss';
 
 function TasksList() {
   const testCondition = true;
@@ -9,11 +9,11 @@ function TasksList() {
   return (
     <>
       {testCondition ? (
-        <ul className={Styles.TasksList}>
+        <ul className={styles.TasksList}>
           <TasksListItem />
         </ul>
       ) : (
-        <div className={Styles.Empty}>
+        <div className={styles.Empty}>
           <EmptyData text="There are no tasks assigned to you" />
         </div>
       )}

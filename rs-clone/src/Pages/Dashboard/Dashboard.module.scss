@@ -1,3 +1,5 @@
+@import '../../theme/variables';
+
 .Dashboard {
   padding: 24px 0;
 }
@@ -6,9 +8,9 @@
   margin: 0 40px 24px;
   font-size: 24px;
   font-weight: 500;
-  color: #172b4d;
+  color: $colorContent;
 
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: $mediaMobile) {
     margin: 0 15px 24px;
   }
 }

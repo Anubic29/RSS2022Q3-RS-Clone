@@ -1,3 +1,5 @@
+@import '../../theme/variables';
+
 .ProjectCreate {
   display: flex;
   justify-content: center;
@@ -10,7 +12,7 @@
   max-width: 900px;
   margin: 0 auto;
 
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: $mediaDesktopSmall) {
     max-width: initial;
     padding: 15px;
   }
@@ -20,7 +22,7 @@
   display: flex;
   gap: 60px;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaTablet) {
     flex-direction: column;
   }
 }
@@ -28,7 +30,7 @@
 .Col {
   width: 40%;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $mediaMobile) {
     width: 100%;
   }
 }
@@ -40,14 +42,14 @@
 .Title {
   font-size: 29px;
   font-weight: 700;
-  color: #172B4D;
+  color: $colorContent;
 }
 
 .Subtitle {
   margin-top: 8px;
   font-size: 12px;
   font-weight: 500;
-  color: #172B4D;
+  color: $colorContent;
 }
 
 .RowBottom {
@@ -56,14 +58,14 @@
   gap: 8px;
   margin-top: 24px;
   padding-top: 24px;
-  border-top: 1px solid rgba(9,30,66,0.08);
+  border-top: $borderProjectCreateRowBottom;
 }
 
 .ButtonCancel {
-  color: #42526E;
-  background: rgba(9, 30, 66, 0.04);
+  color: $colorButtonCancelText;
+  background: $colorButtonCancelBackground;
 
   &:hover {
-    background: rgba(9, 30, 66, 0.08);
+    background: $colorButtonCancelBackgroundHover;
   }
 }

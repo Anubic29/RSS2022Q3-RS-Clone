@@ -1,6 +1,7 @@
-import { EmptyData } from '../../../../../Components';
+import { EmptyData } from '../../../../../components';
 import { MarkedItem } from '../..';
-import Styles from './MarkedItemsList.module.scss';
+
+import styles from './MarkedItemsList.module.scss';
 
 function MarkedItemsList() {
   const testCondition = true;
@@ -8,12 +9,12 @@ function MarkedItemsList() {
   return (
     <>
       {testCondition ? (
-        <ul className={Styles.MarkedItemsList}>
+        <ul className={styles.MarkedItemsList}>
           <MarkedItem type="Task" depProject="Company BDSM Code" title="Task" />
           <MarkedItem type="Board" depProject="Company BDSM Code" title="Board" />
         </ul>
       ) : (
-        <div className={Styles.Empty}>
+        <div className={styles.Empty}>
           <EmptyData text="There are no marked items" />
         </div>
       )}

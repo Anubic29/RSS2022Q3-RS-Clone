@@ -1,3 +1,5 @@
+@import '../../../../theme/variables';
+
 .AsideNavElement {
   display: flex;
   align-items: center;
@@ -7,7 +9,7 @@
   cursor: pointer;
 
   &:hover {
-    background: #e6effc;
+    background: $borderAsideBarNavElementBackground;
   }
 }
 
@@ -18,12 +20,12 @@
   gap: 13px;
   padding: 8px 16px;
   border-radius: 3px;
-  background: #E6EFFC;
+  background: $borderAsideBarNavElementBackground;
   cursor: pointer;
 
   & .Icon,
   & .Title {
-    color: #0052CC;
+    color: $colorPrimary;
   }
 
   &:before {
@@ -35,18 +37,18 @@
     height: 40%;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
-    background: #0052CC;
+    background: $colorPrimary;
     transform: translateY(-50%);
   }
 }
 
 .Icon {
   font-size: 25px;
-  color: #42526E;
+  color: $colorGreyText;
 }
 
 .Title {
   font-size: 14px;
   font-weight: 400;
-  color: #42526E;
+  color: $colorGreyText;
 }

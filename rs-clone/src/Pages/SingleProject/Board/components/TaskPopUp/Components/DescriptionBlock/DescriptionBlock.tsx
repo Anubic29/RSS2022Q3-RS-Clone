@@ -1,6 +1,6 @@
 import classes from './DescriptionBlock.module.scss';
 import React, { ReactNode, useState } from 'react';
-import TextRedactorBlock from '../../../../../../../Components/TextRedactorBlock/TextRedactorBlock';
+import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
 import { useBoard } from '../../../../../../../contexts/Board.context';
 

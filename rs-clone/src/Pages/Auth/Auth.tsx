@@ -1,10 +1,10 @@
 import { useState, Dispatch } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import classes from './Auth.module.scss';
-import Modal from '../../Components/Modal/Modal';
+import Modal from '../../components/Modal/Modal';
 import BoxWithShadow from '../../components/BoxWithShadow/BoxWithShadow';
-import LoaderImg from '../../Components/Loader/Loader';
-import Message from '../../Components/LoaderMessage/Message';
+import LoaderImg from '../../components/Loader/Loader';
+import Message from '../../components/LoaderMessage/Message';
 
 function Auth() {
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);

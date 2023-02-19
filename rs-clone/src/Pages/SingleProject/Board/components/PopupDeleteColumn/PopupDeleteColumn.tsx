@@ -6,6 +6,7 @@ import { useBoard } from '../../../../../contexts/Board.context';
 import { useOverlay } from '../../../../../contexts';
 
 import styles from './PopupDeleteColumn.module.scss';
+import Loader from '../../../../../components/Loader/Loader';
 
 interface PopupDeleteColumnProps {
   _id: string;
@@ -14,7 +15,7 @@ interface PopupDeleteColumnProps {
 
 function PopupDeleteColumn(props: PopupDeleteColumnProps) {
   const { getColumnList, moveTasksToColumn, deleteColumn } = useBoard();
-  const { setIsVisibleBoard } = useOverlay();
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const [selectedColumn, setSelectedColumn] = useState('');
   const [options, setOptions] = useState<Option[]>([]);
 
@@ -23,9 +24,10 @@ function PopupDeleteColumn(props: PopupDeleteColumnProps) {
     setOptions(res.map((data) => ({ text: data.title, value: data._id })));
   }, [getColumnList, props._id, props.title]);
 
-  const onSubmitHandler = useCallback(() => {
-    moveTasksToColumn(props._id, selectedColumn);
-    deleteColumn(props._id);
+  const onSubmitHandler = useCallback(async () => {
+    setChildrenBoard(<Loader />);
+    await moveTasksToColumn(props._id, selectedColumn);
+    await deleteColumn(props._id);
     setIsVisibleBoard(false);
   }, [selectedColumn]);
 

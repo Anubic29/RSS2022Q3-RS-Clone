@@ -1,46 +1,76 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdOutlineClear, MdArrowRightAlt } from 'react-icons/md';
-import { ProjectAvatarProps } from '../../../../../Components/ProjectAvatar/ProjectAvatar';
-import { ProjectAvatar } from '../../../../../Components';
-import Styles from './ProjectCard.module.scss';
+import { ProjectAvatarProps } from '../../../../../components/ProjectAvatar/ProjectAvatar';
+import { Preloader, ProjectAvatar } from '../../../../../components';
+import { useProjects } from '../../../../../contexts';
+import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
+
+import styles from './ProjectCard.module.scss';
 
 interface ProjectCardProps extends ProjectAvatarProps {
-  id: number;
+  _id: string;
+  id: string;
   title: string;
   description: string;
 }
 
-function ProjectCard(props: ProjectCardProps) {
-  const { title, description, size, source, bgColor, id } = props;
+const getTransparentBorderColor = (color: string) => `${color}50`;
 
-  const cardStyles = {
-    borderColor: `${bgColor}50`
+function ProjectCard(props: ProjectCardProps) {
+  const { title, description, size, source, bgColor, id, _id } = props;
+  const [isLoading, setIsLoading] = useState(false);
+  const { deleteProject } = useProjects() as ProjectsContextValue;
+
+  const deleteProjectHandler = async (event: React.MouseEvent) => {
+    try {
+      const target = event.target as HTMLElement;
+      const id = (target.closest(`.${styles.ProjectCard}`) as HTMLElement).id;
+
+      setIsLoading(true);
+      await deleteProject(id);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <>
-      <li className={Styles.ProjectCard} style={cardStyles}>
-        <div className={Styles.TitleArea}>
-          <ProjectAvatar className={Styles.Avatar} {...{ size, source, bgColor }} />
-          <div className={Styles.ProjectInfo}>
-            <Link to={`projects/${id}`}>
-              <p className={Styles.ProjectTitle}>{title}</p>
-            </Link>
-            <p className={Styles.ProjectDescription}>{description}</p>
-          </div>
+    <li
+      className={styles.ProjectCard}
+      style={{ borderColor: getTransparentBorderColor(bgColor) }}
+      id={_id}>
+      {isLoading && (
+        <div className={styles.PreloaderContainer}>
+          <Preloader />
         </div>
-        <div className={Styles.ActionsArea}>
-          <div className={Styles.Actions}>
-            <Link to={`projects/${id}`}>Move to project</Link>
-            <MdArrowRightAlt />
-          </div>
-          <div className={Styles.Actions}>
-            Delete
-            <MdOutlineClear />
-          </div>
+      )}
+
+      <div className={styles.TitleArea}>
+        <ProjectAvatar className={styles.Avatar} {...{ size, source, bgColor }} />
+
+        <div className={styles.ProjectInfo}>
+          <Link to={`projects/${id}`}>
+            <p className={styles.ProjectTitle}>{title}</p>
+          </Link>
+
+          <p className={styles.ProjectDescription} title={description}>
+            {description}
+          </p>
         </div>
-      </li>
-    </>
+      </div>
+
+      <div className={styles.ActionsArea}>
+        <div className={styles.Actions}>
+          <Link to={`projects/${id}`}>Move to project</Link>
+          <MdArrowRightAlt />
+        </div>
+
+        <div className={styles.Actions} onClick={deleteProjectHandler}>
+          <p>Delete</p>
+          <MdOutlineClear />
+        </div>
+      </div>
+    </li>
   );
 }
 

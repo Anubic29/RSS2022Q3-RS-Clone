@@ -25,6 +25,9 @@ export default function (instance: AxiosInstance) {
         payload
       );
     },
+    deleteData(projectId: string) {
+      return instance.delete<boolean>(`api/projects/${projectId}/info`);
+    },
     deleteColumnData(projectId: string, columnId: string) {
       return instance.delete<boolean>(`api/projects/${projectId}/columns/${columnId}`);
     }

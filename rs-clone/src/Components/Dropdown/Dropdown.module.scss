@@ -1,3 +1,5 @@
+@import '../../theme/variables';
+
 .Dropdown {
   display: flex;
   justify-content: center;
@@ -9,7 +11,7 @@
   cursor: pointer;
 
   &:hover {
-    background: rgba(9, 30, 66, 0.08);
+    background: $colorDropdownBackgroundHover;
   }
 }
 
@@ -21,11 +23,11 @@
   width: 32px;
   height: 32px;
   border-radius: 3px;
-  background: #263759;
+  background: $colorDropdownBackgroundActive;
   cursor: pointer;
 
   .DropdownItem {
-    background: #ffffff;
+    background: $colorDropdownItemBackgroundActive;
   }
 }
 
@@ -33,7 +35,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #42526f;
+  background: $colorDropdownItemBackground;
 }
 
 .DropdownContainer {
@@ -48,19 +50,19 @@
   display: flex;
   flex-direction: column;
   padding: 8px 0;
-  background: #ffffff;
-  box-shadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+  background: $colorDropdownListBackground;
+  box-shadow: $boxShadow;
 }
 
 .DropdownElement {
   padding: 8px 20px;
   font-size: 14px;
   font-weight: 400;
-  color: #172b4d;
+  color: $colorDropdownElementText;
   white-space: nowrap;
   cursor: pointer;
 
   &:hover {
-    background: #F4F5F7;
+    background: $colorDropdownElementBackgroundHover;
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './userIcon.module.scss';
+import classes from './UserIcon.module.scss';
 
 const UserIcon: React.FC<{ user: string }> = (props) => {
   return (
