@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Button, EmptyData, Overlay, Preloader } from '../../components';
 import { AsideBar } from './components';
@@ -36,6 +36,12 @@ function SingleProject() {
         setIsLoading(false);
       }
     })();
+  });
+
+  const [asideState, setAsideState] = useState(false);
+
+  const onChangeAsideState = useCallback((state: boolean) => {
+    setAsideState(state);
   }, []);
 
   return (
@@ -57,10 +63,11 @@ function SingleProject() {
           ) : (
             <>
               <div className="SingleProject">
-                <AsideBar />
-                <Outlet />
+                <AsideBar onChangeAsideState={onChangeAsideState} />
+                <div className={asideState ? 'content aside-hidden' : 'content'}>
+                  <Outlet />
+                </div>
               </div>
-
               <Overlay scope={'Board'} />
             </>
           )}

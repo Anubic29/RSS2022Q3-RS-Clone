@@ -29,6 +29,7 @@
     &__text {
       margin-left: 2px;
       margin: 0 8px;
+      padding: 5px 0;
       text-transform: uppercase;
       display: block;
       font-size: 12px;
@@ -50,6 +51,8 @@
       margin-left: 5px;
       font-size: 14px;
       color: $colorIconDone;
+      display: flex;
+      align-items: center;
     }
 
     .content {
@@ -75,6 +78,15 @@
       left: 0;
       bottom: 0;
       transform: translate(0, 100%);
+    }
+
+    .form-loader {
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $colorIconDone;
+      font-size: 20px;
     }
   }
 

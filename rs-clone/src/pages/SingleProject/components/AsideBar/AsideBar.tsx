@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../components';
 import { AsideNavElement } from '../';
 import { useBoard } from '../../../../contexts/Board.context';
+import { useLocation } from 'react-router-dom';
 import ProjectType from '../../../../types/project/projectType';
 
 import styles from './AsideBar.module.scss';
@@ -11,7 +11,12 @@ import styles from './AsideBar.module.scss';
 const MEDIA_TABLET = 767;
 const BADGE_SIZE = 24;
 
-function AsideBar() {
+interface AsideBarProps {
+  onChangeAsideState: (state: boolean) => void;
+}
+
+function AsideBar(props: AsideBarProps) {
+  const { projectInfo } = useBoard();
   const currentScreenWidth = window.screen.width;
   const location = useLocation();
   const currentPath = location.pathname.split('/').at(-1);
@@ -20,7 +25,6 @@ function AsideBar() {
     settings: currentPath === 'settings'
   });
   const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= MEDIA_TABLET);
-  const { projectInfo } = useBoard();
   const { title, description, pathImage, color } = projectInfo as ProjectType;
 
   const changeActiveStateHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,9 +38,10 @@ function AsideBar() {
     }
   };
 
-  const collapseHandler = () => {
+  const collapseHandler = useCallback(() => {
     setIsCollapsed(!isCollapsed);
-  };
+    props.onChangeAsideState(!isCollapsed);
+  }, [isCollapsed, props.onChangeAsideState]);
 
   return (
     <aside className={isCollapsed ? styles.AsideBarCollapsed : styles.AsideBar}>

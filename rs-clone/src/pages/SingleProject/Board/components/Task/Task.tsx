@@ -9,6 +9,7 @@ import TaskPopUp from '../TaskPopUp/TaskPopUp';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from './Task.module.scss';
+import { Preloader } from '../../../../../components';
 
 interface TaskProps {
   _id: string;
@@ -23,6 +24,7 @@ function Task(props: TaskProps) {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const { getTaskList, getFullNameUser, deleteTask } = useBoard();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+  const [isLoadingRemove, setIsLoadingRemove] = useState(false);
 
   const user = useMemo(() => getFullNameUser(props.executor), [props.executor, getFullNameUser]);
 
@@ -55,10 +57,12 @@ function Task(props: TaskProps) {
     }
   }, []);
 
-  const deleteTaskCallback = useCallback(
-    () => deleteTask(props._id),
-    [props._id, getTaskList().length]
-  );
+  const deleteTaskCallback = useCallback(async () => {
+    setIsLoadingRemove(true);
+    await deleteTask(props._id);
+    setIsLoadingRemove(false);
+  }, [props._id, getTaskList().length]);
+
   const optionsBtnMenu = useMemo(() => {
     return [
       {
@@ -117,6 +121,11 @@ function Task(props: TaskProps) {
           </div>
         </div>
       </div>
+      {isLoadingRemove && (
+        <div className={styles['block-loader']}>
+          <Preloader />
+        </div>
+      )}
     </div>
   );
 }
