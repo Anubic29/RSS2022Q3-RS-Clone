@@ -2,7 +2,6 @@ import { useContext, createContext, useState, useMemo, useCallback, useEffect } 
 import { CurrentUserId } from '../data/FakeProjectPageData';
 import { useBoard } from './Board.context';
 import api from '../api';
-import { AxiosResponse } from 'axios';
 
 type CommentType = {
   _id: string;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import UserType from '../../../../../types/user/userType';
-import TaskType from '../../../../../types/task/TaskType';
+import TaskType from '../../../../../types/task/taskType';
 import ColumnProjectType from '../../../../../types/project/columnProjectType';
 import { Column, UserAvatar } from '../';
 import { ColumnBody } from '../Column/components';

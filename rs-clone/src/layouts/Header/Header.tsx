@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { MdExpandMore } from 'react-icons/md';
-<<<<<<< HEAD:rs-clone/src/components/header/Header.tsx
-import UserIcon from '../userIcon/UserIcon';
-import SubmenuItem from '../submenuItem/SubmenuItem';
-import MenuSpan from '../submenuItem/menuSpan/MenuSpan';
-import classes from './header.module.scss';
-import Button from '../Button/Button';
-import { Link, useNavigate } from 'react-router-dom';
-import useComponentVisible from '../../hooks/useComponentVisible/useAllComponentsVisible';
-=======
+
 import UserIcon from '../../components/UserIcon/UserIcon';
 import SubmenuItem from '../../components/SubmenuItem/SubmenuItem';
 import MenuSpan from '../../components/SubmenuItem/components/MenuSpan/MenuSpan';
 import classes from './Header.module.scss';
 import Button from '../../components/Button/Button';
-import { Link } from 'react-router-dom';
->>>>>>> develop:rs-clone/src/layouts/Header/Header.tsx
+import { Link, useNavigate } from 'react-router-dom';
+import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');

@@ -1,5 +1,5 @@
 import ProjectAvatar from './ProjectAvatar/ProjectAvatar';
-import App from './App/App';
+import App from '../App';
 import EmptyData from './EmptyData/EmptyData';
 import Input from './Input/Input';
 import Label from './Label/Label';

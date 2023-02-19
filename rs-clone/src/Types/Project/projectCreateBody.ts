@@ -1,4 +1,4 @@
-import ProjectType from './ProjectType';
+import ProjectType from './projectType';
 
 export type ProjectCreateBody = Pick<
   ProjectType,

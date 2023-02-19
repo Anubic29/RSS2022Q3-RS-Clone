@@ -1,6 +1,6 @@
-import ProjectType from '../types/project/ProjectType';
+import ProjectType from '../types/project/projectType';
 import ColumnProjectType from '../types/project/columnProjectType';
-import TaskType from '../types/task/TaskType';
+import TaskType from '../types/task/taskType';
 import UserType from '../types/user/userType';
 
 export type TaskDataToUpdate = {
