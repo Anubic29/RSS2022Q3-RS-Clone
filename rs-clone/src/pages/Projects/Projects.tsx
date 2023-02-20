@@ -22,6 +22,7 @@ function Projects() {
   const [customMessage, setCustomMessage] = useState('There are no projects');
   const [projectList, setProjectList] = useState<ProjectWithAuthorType[]>([]);
   const [serverError, setServerError] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const [sortField, setSortField] = useState<'title' | 'key' | 'author' | ''>('');
   const [sortOrder, setSortOrder] = useState(false);
 
@@ -56,14 +57,14 @@ function Projects() {
   }, [projects]);
 
   const projectListDisplay = useMemo(() => {
-    let result = projectList;
+    let result = projectList.filter((project) => project.proj.title.includes(searchValue));
     if (sortField !== '') {
       if (!sortOrder)
-        result = projectList.sort((a, b) => (a.proj[sortField] > b.proj[sortField] ? 1 : -1));
-      else result = projectList.sort((a, b) => (b.proj[sortField] > a.proj[sortField] ? 1 : -1));
+        result = result.sort((a, b) => (a.proj[sortField] > b.proj[sortField] ? 1 : -1));
+      else result = result.sort((a, b) => (b.proj[sortField] > a.proj[sortField] ? 1 : -1));
     }
     return result;
-  }, [projectList, sortField, sortOrder]);
+  }, [projectList, sortField, sortOrder, searchValue]);
 
   const sortByColumn = useCallback(
     (field: 'title' | 'key' | 'author') => {
@@ -87,7 +88,13 @@ function Projects() {
           </Link>
         </div>
         <div className={styles['search-block']}>
-          <Input id="search-projects" type="text" className={styles['search-bar']} />
+          <Input
+            id="search-projects"
+            type="text"
+            className={styles['search-bar']}
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
           <div className={styles.icon}>
             <MdSearch />
           </div>
