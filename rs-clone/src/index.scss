@@ -29,3 +29,12 @@
     padding: 0 15px;
   }
 }
+
+.AlertsContainer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
