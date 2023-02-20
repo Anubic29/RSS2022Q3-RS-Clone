@@ -5,6 +5,7 @@ import { ProjectAvatarProps } from '../../../../../components/ProjectAvatar/Proj
 import { Preloader, ProjectAvatar } from '../../../../../components';
 import { useProjects } from '../../../../../contexts';
 import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
+import { useAlerts } from '../../../../../contexts/AlertsContext';
 
 import styles from './ProjectCard.module.scss';
 
@@ -20,6 +21,7 @@ function ProjectCard(props: ProjectCardProps) {
   const { title, description, size, source, bgColor, id } = props;
   const [isLoading, setIsLoading] = useState(false);
   const { deleteProject } = useProjects() as ProjectsContextValue;
+  const { addAlert } = useAlerts();
 
   const deleteProjectHandler = async (event: React.MouseEvent) => {
     try {
@@ -28,6 +30,9 @@ function ProjectCard(props: ProjectCardProps) {
 
       setIsLoading(true);
       await deleteProject(id);
+      addAlert('Success', 'Project was deleted successfully');
+    } catch {
+      addAlert('Error', 'Server error. Can`t remove project');
     } finally {
       setIsLoading(false);
     }
