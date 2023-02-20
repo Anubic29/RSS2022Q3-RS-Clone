@@ -17,19 +17,21 @@
 }
 
 .btn-block {
-  width: fit-content;
   font-size: 20px;
   display: flex;
   align-items: center;
   color: $colorStarNoted;
   transition: color ease .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     cursor: pointer;
     color: $colorStarNotedHover;
   }
 
-  &:active {
+  &.active {
     color: $colorStarNotedActive;
   }
 }

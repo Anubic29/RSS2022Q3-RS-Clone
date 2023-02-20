@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { MdStarOutline } from 'react-icons/md';
+import { MdStar, MdStarOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import api from '../../../../api';
-import { UserAvatar, ProjectAvatar, BtnMenuAction } from '../../../../components';
+import { UserAvatar, ProjectAvatar, BtnMenuAction, Preloader } from '../../../../components';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../theme/variables';
 import UserType from '../../../../types/user/userType';
 import { convertLetterToHex } from '../../../../utils/convertLetterToHex';
+import { useUser } from '../../../../contexts';
 
 import styles from './ProjectTableRow.module.scss';
 
@@ -17,10 +18,14 @@ interface ProjectTableRowProps {
   myKey: string;
   description: string;
   author: string;
+  noted: boolean;
 }
 
 function ProjectTableRow(props: ProjectTableRowProps) {
+  const { addNotedItem, deleteNotedItem } = useUser();
   const [user, setUser] = useState<UserType>();
+  const [isNoted, setIsNoted] = useState(props.noted);
+  const [isLoadingNoted, setIsLoadingNoted] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -31,9 +36,19 @@ function ProjectTableRow(props: ProjectTableRowProps) {
     })();
   }, [props.author]);
 
-  const onClickStarHandler = useCallback(() => {
-    console.log('Noted:', props._id);
-  }, [props._id]);
+  const onClickStarHandler = useCallback(async () => {
+    if (!isNoted) {
+      setIsLoadingNoted(true);
+      await addNotedItem(props._id, 'project');
+      setIsNoted(true);
+      setIsLoadingNoted(false);
+    } else {
+      setIsLoadingNoted(true);
+      await deleteNotedItem(props._id);
+      setIsNoted(false);
+      setIsLoadingNoted(false);
+    }
+  }, [props._id, isNoted, addNotedItem, deleteNotedItem]);
 
   const options = useMemo(() => {
     return [
@@ -49,8 +64,10 @@ function ProjectTableRow(props: ProjectTableRowProps) {
   return (
     <tr className={styles.row}>
       <td className={styles.cell}>
-        <span className={styles['btn-block']} onClick={onClickStarHandler}>
-          <MdStarOutline />
+        <span
+          className={isNoted ? `${styles['btn-block']} ${styles['active']}` : styles['btn-block']}
+          onClick={onClickStarHandler}>
+          {isLoadingNoted ? <Preloader /> : isNoted ? <MdStar /> : <MdStarOutline />}
         </span>
       </td>
       <td className={styles.cell}>
