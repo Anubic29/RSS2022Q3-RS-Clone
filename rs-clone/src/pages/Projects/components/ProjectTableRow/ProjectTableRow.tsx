@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MdStarOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import api from '../../../../api';
@@ -31,6 +31,10 @@ function ProjectTableRow(props: ProjectTableRowProps) {
     })();
   }, [props.author]);
 
+  const onClickStarHandler = useCallback(() => {
+    console.log('Noted:', props._id);
+  }, [props._id]);
+
   const options = useMemo(() => {
     return [
       {
@@ -45,7 +49,7 @@ function ProjectTableRow(props: ProjectTableRowProps) {
   return (
     <tr className={styles.row}>
       <td className={styles.cell}>
-        <span className={styles['btn-block']}>
+        <span className={styles['btn-block']} onClick={onClickStarHandler}>
           <MdStarOutline />
         </span>
       </td>
@@ -81,7 +85,7 @@ function ProjectTableRow(props: ProjectTableRowProps) {
           </div>
         )}
       </td>
-      <td className={styles.cell}>
+      <td className={`${styles.cell} ${styles['menu-cell']}`}>
         <BtnMenuAction
           options={options}
           btnBackgrColorHover={colorBackgroundHover}

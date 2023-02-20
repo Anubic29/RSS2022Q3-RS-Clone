@@ -54,6 +54,11 @@
     }
   }
 
+  th, td {
+    word-wrap: break-word;
+    max-width: 200px;
+  }
+
   .project {
     &__star {
       width: 3%;
