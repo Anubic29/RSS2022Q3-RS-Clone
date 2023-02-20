@@ -59,6 +59,26 @@
     max-width: 200px;
   }
 
+  .sortable-cell {
+    transition: background-color ease .3s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $colorBackgroundHover;
+    }
+
+    .content {
+      display: flex;
+
+      .icon {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        font-size: 18px;
+      }
+    }
+  }
+
   .project {
     &__star {
       width: 3%;

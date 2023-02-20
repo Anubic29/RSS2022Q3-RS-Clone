@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { MdStar, MdStarOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import api from '../../../../api';
@@ -17,7 +17,7 @@ interface ProjectTableRowProps {
   projColor: string;
   myKey: string;
   description: string;
-  author: string;
+  author: UserType;
   noted: boolean;
   setMainCustomMessage: (text: string) => void;
   setMainLoading: (state: boolean) => void;
@@ -27,18 +27,8 @@ interface ProjectTableRowProps {
 function ProjectTableRow(props: ProjectTableRowProps) {
   const { addNotedItem, deleteNotedItem } = useUser();
   const { deleteProject } = useProjects();
-  const [user, setUser] = useState<UserType>();
   const [isNoted, setIsNoted] = useState(props.noted);
   const [isLoadingNoted, setIsLoadingNoted] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const response = await api.users.getData(props.author);
-      if (response.status === 200) {
-        setUser(response.data);
-      }
-    })();
-  }, [props.author]);
 
   const onClickStarHandler = useCallback(async () => {
     if (!isNoted) {
@@ -98,20 +88,20 @@ function ProjectTableRow(props: ProjectTableRowProps) {
       <td className={styles.cell}>{props.myKey}</td>
       <td className={styles.cell}>{props.description}</td>
       <td className={`${styles.cell} ${styles['user-cell']}`}>
-        {user && (
+        {props.author && (
           <div className={styles['cell-content']}>
             <div className={styles.avatar}>
               <UserAvatar
-                content={user.firstName[0] + user.lastName[0]}
-                color={`#${convertLetterToHex(user.firstName[0], 3, '9')}${convertLetterToHex(
-                  user.lastName[0],
+                content={props.author.firstName[0] + props.author.lastName[0]}
+                color={`#${convertLetterToHex(
+                  props.author.firstName[0],
                   3,
                   '9'
-                )}`}
+                )}${convertLetterToHex(props.author.lastName[0], 3, '9')}`}
               />
             </div>
             <div className={styles['user-name']}>
-              {user.firstName} {user.lastName}
+              {props.author.firstName} {props.author.lastName}
             </div>
           </div>
         )}
