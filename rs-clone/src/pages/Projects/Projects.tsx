@@ -14,6 +14,7 @@ function Projects() {
   const [isLoading, setIsLoading] = useState(true);
   const [customMessage, setCustomMessage] = useState('There are no projects');
   const [projectList, setProjectList] = useState<ProjectType[]>([]);
+  const [serverError, setServerError] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -48,10 +49,10 @@ function Projects() {
         </div>
       </div>
       {isLoading ? (
-        <div className={styles.Empty}>
+        <div className={styles.empty}>
           <Preloader text={'Loading projects...'} />
         </div>
-      ) : projects.length ? (
+      ) : projects.length && !serverError ? (
         <table className={styles['project-list']}>
           <thead className={styles['project-list__header']}>
             <tr className={styles['project-list__header-row']}>
@@ -78,13 +79,16 @@ function Projects() {
                   description={project.description}
                   author={project.author}
                   noted={notedItemList.some((data) => data.id === project._id)}
+                  setMainLoading={(state: boolean) => setIsLoading(state)}
+                  setMainCustomMessage={(text: string) => setCustomMessage(text)}
+                  setServerError={(state: boolean) => setServerError(state)}
                 />
               );
             })}
           </tbody>
         </table>
       ) : (
-        <div className={styles.Empty}>
+        <div className={styles.empty}>
           <EmptyData text={customMessage} />
         </div>
       )}

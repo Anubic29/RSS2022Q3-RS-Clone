@@ -6,7 +6,7 @@ import { UserAvatar, ProjectAvatar, BtnMenuAction, Preloader } from '../../../..
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../theme/variables';
 import UserType from '../../../../types/user/userType';
 import { convertLetterToHex } from '../../../../utils/convertLetterToHex';
-import { useUser } from '../../../../contexts';
+import { useUser, useProjects } from '../../../../contexts';
 
 import styles from './ProjectTableRow.module.scss';
 
@@ -19,10 +19,14 @@ interface ProjectTableRowProps {
   description: string;
   author: string;
   noted: boolean;
+  setMainCustomMessage: (text: string) => void;
+  setMainLoading: (state: boolean) => void;
+  setServerError: (state: boolean) => void;
 }
 
 function ProjectTableRow(props: ProjectTableRowProps) {
   const { addNotedItem, deleteNotedItem } = useUser();
+  const { deleteProject } = useProjects();
   const [user, setUser] = useState<UserType>();
   const [isNoted, setIsNoted] = useState(props.noted);
   const [isLoadingNoted, setIsLoadingNoted] = useState(false);
@@ -55,11 +59,21 @@ function ProjectTableRow(props: ProjectTableRowProps) {
       {
         title: 'Remove',
         callback: async () => {
-          console.log('Remove:', props._id);
+          props.setMainLoading(true);
+          try {
+            await api.tasks.deleteAllDataByProject(props._id);
+            if (isNoted) await deleteNotedItem(props._id);
+            await deleteProject(props._id);
+          } catch (error) {
+            props.setServerError(true);
+            props.setMainCustomMessage('Server error');
+          } finally {
+            props.setMainLoading(false);
+          }
         }
       }
     ];
-  }, [props._id]);
+  }, [props._id, deleteProject, deleteNotedItem, isNoted]);
 
   return (
     <tr className={styles.row}>
