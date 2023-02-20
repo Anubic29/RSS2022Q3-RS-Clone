@@ -12,6 +12,7 @@ import {
 } from '../pages';
 import { ProjectsProvider } from '../contexts';
 import { CommentsProvider } from '../contexts/Comments.context';
+import React from 'react';
 
 function AuthRoute() {
   return (
