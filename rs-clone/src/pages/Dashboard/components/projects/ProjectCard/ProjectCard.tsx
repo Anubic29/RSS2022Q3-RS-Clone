@@ -14,7 +14,7 @@ interface ProjectCardProps extends ProjectAvatarProps {
   description: string;
 }
 
-const getTransparentBorderColor = (color: string) => `${color}50`;
+const getTransparentBorderColor = (color: string) => `${color}90`;
 
 function ProjectCard(props: ProjectCardProps) {
   const { title, description, size, source, bgColor, id } = props;
