@@ -12,6 +12,7 @@ import { useBoard } from '../../../../../../../contexts/Board.context';
 import { Preloader, BtnAction } from '../../../../../../../components';
 
 import styles from './ColumnBody.module.scss';
+import { useUser } from '../../../../../../../contexts/User.context';
 
 interface ColumnBodyProps {
   id: string;
@@ -27,6 +28,7 @@ interface ColumnBodyProps {
 }
 
 function ColumnBody(props: ColumnBodyProps) {
+  const { currentUser } = useUser();
   const { createTask, projectInfo } = useBoard();
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -41,14 +43,14 @@ function ColumnBody(props: ColumnBodyProps) {
     setTitleError(newTaskTitle.length === 0);
   }, [newTaskTitle]);
 
-  const onSubmitHandler = useCallback(async () => {
-    if (!titleError) {
+  const onSubmitHandler = useCallback(() => {
+    if (!titleError && currentUser) {
       setIsLoadingCreate(true);
-      await createTask(props.id, newTaskTitle, props.userId);
+      createTask(props.id, newTaskTitle, currentUser._id, props.userId);
       setIsLoadingCreate(false);
       setIsComponentVisible(false);
     }
-  }, [titleError, props.id, newTaskTitle, props.userId]);
+  }, [createTask, props.id, newTaskTitle, titleError, currentUser, props.userId]);
 
   return (
     <div

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useContext, createContext, useState, useMemo, useCallback } from 'react';
-import { CurrentUserId } from '../data/fakeProjectPageData';
 import api from '../api';
 import ColumnProjectType from '../types/project/columnProjectType';
 import ProjectType from '../types/project/projectType';
@@ -181,12 +180,12 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   );
 
   const createTask = useCallback(
-    async (columnId: string, taskTitle: string, userId?: string) => {
+    async (columnId: string, taskTitle: string, currUserId: string, userId?: string) => {
       if (projectInfo) {
         const payload = {
           title: taskTitle,
           description: '',
-          author: CurrentUserId,
+          author: currUserId,
           executor: userId ?? 'auto',
           projectId: projectInfo._id,
           columnId: columnId

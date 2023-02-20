@@ -11,6 +11,8 @@ import Overlay from './Overlay/Overlay';
 import UserAvatar from './UserAvatar/UserAvatar';
 import BtnAction from './BtnAction/BtnAction';
 import BtnMenuAction from './BtnMenuAction/BtnMenuAction';
+import Loader from './Loader/Loader';
+import Alert from './Alert/Alert';
 
 export {
   ProjectAvatar,
@@ -25,5 +27,7 @@ export {
   Overlay,
   UserAvatar,
   BtnAction,
-  BtnMenuAction
+  BtnMenuAction,
+  Loader,
+  Alert
 };

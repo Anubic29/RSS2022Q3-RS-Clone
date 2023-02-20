@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ProjectCard } from '../..';
 import { EmptyData, Preloader } from '../../../../../components';
-import { useProjects } from '../../../../../contexts';
+import { useProjects, useUser } from '../../../../../contexts';
 import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
 
 import styles from './ProjectsList.module.scss';
@@ -11,33 +11,35 @@ const PROJECT_BADGE_SIZE = 24;
 function ProjectsList() {
   const [isLoading, setIsLoading] = useState(true);
   const [customMessage, setCustomMessage] = useState('There are no projects');
+  const { currentUser } = useUser();
   const { projects, getProjects } = useProjects() as ProjectsContextValue;
 
   useEffect(() => {
-    (async () => {
-      try {
-        await getProjects();
-      } catch {
-        setCustomMessage(`Server error`);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
+    if (currentUser) {
+      (async (_id: string) => {
+        try {
+          await getProjects(_id);
+        } catch {
+          setCustomMessage(`Server error`);
+        } finally {
+          setIsLoading(false);
+        }
+      })(currentUser._id);
+    }
+  }, [currentUser]);
 
   return (
     <>
       {isLoading ? (
         <div className={styles.Empty}>
-          <Preloader text={'Loading data...'} />
+          <Preloader text={'Loading projects...'} />
         </div>
       ) : projects.length ? (
         <ul className={styles.ProjectsList}>
           {projects.map((project) => {
             return (
               <ProjectCard
-                _id={project._id}
-                id={project.key}
+                id={project._id}
                 title={project.title}
                 description={project.description}
                 source={project.pathImage}

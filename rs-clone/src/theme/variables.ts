@@ -5,11 +5,14 @@ const colorSecondaryLight = '#94bfff';
 const colorBackgroundActiveMenu = 'rgb(37 56 88)';
 const colorContentActiveMenu = 'rgb(244 245 247)';
 
+const colorStarFilled = '#ffab00';
+
 export {
   colorBackground,
   colorBackgroundColumn,
   colorBackgroundHover,
   colorSecondaryLight,
   colorBackgroundActiveMenu,
-  colorContentActiveMenu
+  colorContentActiveMenu,
+  colorStarFilled
 };

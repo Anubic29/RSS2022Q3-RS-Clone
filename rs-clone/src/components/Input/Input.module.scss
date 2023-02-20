@@ -20,3 +20,16 @@
     background: $colorInoutBackgroundFocus;
   }
 }
+
+.InputInvalid {
+  border-color: $colorLabelMark;
+
+  &:focus {
+    border-color: $colorLabelMark;
+  }
+}
+
+.ValidationMessage {
+  font-size: 11px;
+  color: $colorLabelMark;
+}
