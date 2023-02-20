@@ -7,6 +7,7 @@ import { getRandomNum } from '../../../../utils';
 import { projectBadges } from '../../../../data';
 import { Input, Label } from '../../../../components';
 import { projectValidationData } from '../../../../utils';
+import { useAlerts } from '../../../../contexts/AlertsContext';
 
 import styles from './ProjectForm.module.scss';
 
@@ -39,6 +40,7 @@ function ProjectForm(props: ProjectFormProps) {
 
   const navigate = useNavigate();
   const { createProject } = useProjects() as ProjectsContextValue;
+  const { addAlert } = useAlerts();
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -79,22 +81,28 @@ function ProjectForm(props: ProjectFormProps) {
       setIsValidDescription(true);
       setIsValidKey(true);
 
-      const userId = await getCurrentUserId();
-      const randomNum = getRandomNum(BADGE_MIN_INDEX, BADGE_MAX_INDEX);
-      const badge = projectBadges[randomNum];
-      const { src, bg } = badge;
+      try {
+        const userId = await getCurrentUserId();
+        const randomNum = getRandomNum(BADGE_MIN_INDEX, BADGE_MAX_INDEX);
+        const badge = projectBadges[randomNum];
+        const { src, bg } = badge;
 
-      await createProject({
-        description,
-        key,
-        title: name,
-        author: userId,
-        pathImage: src,
-        color: bg
-      });
+        await createProject({
+          description,
+          key,
+          title: name,
+          author: userId,
+          pathImage: src,
+          color: bg
+        });
 
-      setLoader(false);
-      navigate('/');
+        navigate('/');
+        addAlert('Success', 'Project was created successfully');
+      } catch {
+        addAlert('Error', 'Server error. Can`t create project');
+      } finally {
+        setLoader(false);
+      }
     } else {
       checkIsValidInput({
         condition: name.length >= NAME_MIN_LENGTH,
@@ -108,6 +116,8 @@ function ProjectForm(props: ProjectFormProps) {
         condition: key.length === KEY_LENGTH,
         setValidationStateFn: setIsValidKey
       });
+
+      addAlert('Error', 'You have to fill form correctly');
     }
   };
 
