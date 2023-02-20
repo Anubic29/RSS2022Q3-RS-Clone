@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Dropdown, ProjectAvatar } from '../../../components';
 import { useOverlay } from '../../../contexts';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './components';
@@ -13,10 +13,14 @@ const PROJECT_BADGE_SIZE = 128;
 function Settings() {
   const { deleteProject, projectInfo } = useBoard();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+  const [imageSrc, setImageSrc] = useState(projectInfo?.pathImage || '');
+  const [imageBg, setImageBg] = useState(projectInfo?.color || '');
   const navigate = useNavigate();
 
   const showPopupHandler = () => {
-    setChildrenBoard(<ProjectBadgesPopup />);
+    setChildrenBoard(
+      <ProjectBadgesPopup setImageSrc={setImageSrc} setImageBg={setImageBg} imageSrc={imageSrc} />
+    );
     setIsVisibleBoard(true);
   };
 
@@ -45,16 +49,12 @@ function Settings() {
       </div>
 
       <div className={styles.ProjectDetails}>
-        <ProjectAvatar
-          source={projectInfo?.pathImage ?? ''}
-          bgColor={projectInfo?.color ?? 'transparent'}
-          size={PROJECT_BADGE_SIZE}
-        />
+        <ProjectAvatar source={imageSrc} bgColor={imageBg} size={PROJECT_BADGE_SIZE} />
         <Button className={styles.ButtonAvatar} onClick={showPopupHandler}>
           Change avatar
         </Button>
 
-        <SettingsForm />
+        <SettingsForm imageSrc={imageSrc} imageBg={imageBg} />
       </div>
     </div>
   );
