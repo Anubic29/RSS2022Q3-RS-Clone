@@ -8,6 +8,7 @@ import { ProjectsContextValue } from '../../contexts/ProjectsContext';
 import ProjectType from '../../types/project/projectType';
 
 import './SingleProject.scss';
+import React from 'react';
 
 function SingleProject() {
   const { id } = useParams();

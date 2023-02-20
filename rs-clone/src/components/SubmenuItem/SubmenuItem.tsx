@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SubmenuItemsBlock from './components/SubmenuItamsBlock/SubmenuItemsBlock';
 import { Link } from 'react-router-dom';
 import classes from './SubmenuItem.module.scss';
-import { IsAuthContex } from '../../context';
+import { IsAuthContex } from '../../contexs';
 import BoxWithShadow from '../BoxWithShadow/BoxWithShadow';
 import SubmenuNav from './components/SubmenuNav/SubmenuNav';
 

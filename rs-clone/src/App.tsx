@@ -4,6 +4,7 @@ import Header from './layouts/Header/Header';
 import Footer from './layouts/Footer/Footer';
 import { OverlayProvider, PartOverlayProvider, useUser } from './contexts';
 import Overlay from './components/Overlay/Overlay';
+import React from 'react';
 
 function App() {
   const { setUserDataBack } = useUser();

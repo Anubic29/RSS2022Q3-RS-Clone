@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './ProjectAvatar.module.scss';
 
 export interface ProjectAvatarProps {

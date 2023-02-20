@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
 import NonAuthRoute from './NonAuthRoute';
-import { IsAuthContex } from '../context';
+import { IsAuthContex } from '../contexs';
 
 function Routing() {
   const isToken = localStorage.getItem('accessToken');

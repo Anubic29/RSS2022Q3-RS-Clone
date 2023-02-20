@@ -2,6 +2,7 @@ import { EmptyData } from '../../../../../components';
 import { MarkedItem } from '../..';
 
 import styles from './MarkedItemsList.module.scss';
+import React from 'react';
 
 function MarkedItemsList() {
   const testCondition = true;

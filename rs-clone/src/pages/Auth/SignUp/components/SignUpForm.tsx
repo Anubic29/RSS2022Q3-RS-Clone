@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import classes from './SignUpForm.module.scss';
 import api from '../../../../api';
 import axios, { AxiosError } from 'axios';
-import { IsAuthContex } from '../../../../context';
+import { IsAuthContex } from '../../../../contexs';
 import { changeIsLoading } from '../../Auth';
 
 type ServerError = { errorMessage: string };

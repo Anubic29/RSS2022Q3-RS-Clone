@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import styles from './EditableTitle.module.scss';
 import { MdDone, MdClear } from 'react-icons/md';
+import React from 'react';
 
 type EditableTitleProps = {
   titleProp: string;

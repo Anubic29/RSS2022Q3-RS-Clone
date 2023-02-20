@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   MdOutlineViewColumn as BoardIcon,
   MdCheckBox as TaskIcon,

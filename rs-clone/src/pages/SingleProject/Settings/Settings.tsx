@@ -7,6 +7,7 @@ import Loader from '../../../components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Settings.module.scss';
+import React from 'react';
 
 const PROJECT_BADGE_SIZE = 128;
 

@@ -4,6 +4,7 @@ import { useBoard } from '../../../../../contexts/Board.context';
 import { MdDone } from 'react-icons/md';
 
 import styles from './SettingsForm.module.scss';
+import React from 'react';
 
 enum InputIds {
   NAME = 'name',

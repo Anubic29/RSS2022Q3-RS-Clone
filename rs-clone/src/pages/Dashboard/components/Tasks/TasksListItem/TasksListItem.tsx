@@ -1,3 +1,4 @@
+import React from 'react';
 import { MdCheckBox } from 'react-icons/md';
 
 import styles from './TasksListItem.module.scss';

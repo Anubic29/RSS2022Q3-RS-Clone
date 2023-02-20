@@ -1,3 +1,4 @@
+import React from 'react';
 import { ProjectsSection, TasksSection } from './components';
 
 import styles from './Dashboard.module.scss';

@@ -1,3 +1,4 @@
+import React from 'react';
 import './Preloader.scss';
 
 interface PreloaderProps {
