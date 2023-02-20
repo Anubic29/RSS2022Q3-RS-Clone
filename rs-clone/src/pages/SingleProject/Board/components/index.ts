@@ -1,5 +1,3 @@
-import BtnAction from './BtnAction/BtnAction';
-import BtnMenuAction from './BtnMenuAction/BtnMenuAction';
 import Column from './Column/Column';
 import ColumnList from './ColumnList/ColumnList';
 import ColumnRowUser from './ColumnRowUser/ColumnRowUser';
@@ -11,8 +9,6 @@ import UserBtn from './UserBtn/UserBtn';
 import UserList from './UserList/UserList';
 
 export {
-  BtnAction,
-  BtnMenuAction,
   Column,
   ColumnList,
   ColumnRowUser,

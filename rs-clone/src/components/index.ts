@@ -9,6 +9,8 @@ import Preloader from './Preloader/Preloader';
 import Dropdown from './Dropdown/Dropdown';
 import Overlay from './Overlay/Overlay';
 import UserAvatar from './UserAvatar/UserAvatar';
+import BtnAction from './BtnAction/BtnAction';
+import BtnMenuAction from './BtnMenuAction/BtnMenuAction';
 
 export {
   ProjectAvatar,
@@ -21,5 +23,7 @@ export {
   Preloader,
   Dropdown,
   Overlay,
-  UserAvatar
+  UserAvatar,
+  BtnAction,
+  BtnMenuAction
 };

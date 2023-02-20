@@ -4,13 +4,13 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../theme/variables';
-import { BtnAction, UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './components';
+import { UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay } from '../../../contexts';
 import { ProjectId } from '../../../data/fakeProjectPageData';
-import { Preloader } from '../../../components';
+import { Preloader, BtnAction } from '../../../components';
 import PartOverlay from '../../../components/PartOverlay/PartOverlay';
 
 import styles from './Board.module.scss';

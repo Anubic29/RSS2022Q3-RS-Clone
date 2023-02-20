@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MdSearch, MdStar } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import { Button, Input } from '../../components';
 import { useProjects } from '../../contexts';
 import ProjectType from '../../types/project/projectType';
@@ -20,7 +21,9 @@ function Projects() {
       <div className={styles.header}>
         <div className={styles['title-row']}>
           <h1 className={styles.title}>Projects</h1>
-          <Button>Create Project</Button>
+          <Link to="/create-project">
+            <Button>Create Project</Button>
+          </Link>
         </div>
         <div className={styles['search-block']}>
           <Input id="search-projects" type="text" className={styles['search-bar']} />
@@ -46,8 +49,11 @@ function Projects() {
           {projectList.map((project) => {
             return (
               <ProjectTableRow
+                _id={project._id}
                 key={project._id}
                 title={project.title}
+                projPathImage={project.pathImage}
+                projColor={project.color}
                 myKey={project.key}
                 description={project.description}
                 author={project.author}

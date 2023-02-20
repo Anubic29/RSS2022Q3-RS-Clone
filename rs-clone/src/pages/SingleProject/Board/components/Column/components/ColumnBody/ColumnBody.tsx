@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import TaskType from '../../../../../../../types/task/taskType';
 import { MdClose, MdDone } from 'react-icons/md';
-import { BtnAction, Task } from '../../../';
+import { Task } from '../../../';
 import useComponentVisible from '../../../../../../../hooks/useComponentVisible/useComponentVisible';
 import {
   colorBackgroundColumn,
@@ -9,7 +9,7 @@ import {
   colorSecondaryLight
 } from '../../../../../../../theme/variables';
 import { useBoard } from '../../../../../../../contexts/Board.context';
-import { Preloader } from '../../../../../../../components';
+import { Preloader, BtnAction } from '../../../../../../../components';
 
 import styles from './ColumnBody.module.scss';
 
