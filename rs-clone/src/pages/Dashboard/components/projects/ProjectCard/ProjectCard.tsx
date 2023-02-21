@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MdOutlineClear, MdArrowRightAlt } from 'react-icons/md';
+import { MdOutlineClear, MdArrowRightAlt, MdSettings as SettingsIcon } from 'react-icons/md';
 import { ProjectAvatarProps } from '../../../../../components/ProjectAvatar/ProjectAvatar';
 import { Preloader, ProjectAvatar } from '../../../../../components';
 import { useProjects } from '../../../../../contexts';
@@ -15,7 +15,7 @@ interface ProjectCardProps extends ProjectAvatarProps {
   description: string;
 }
 
-const getTransparentBorderColor = (color: string) => `${color}50`;
+const getTransparentBorderColor = (color: string) => `${color}90`;
 
 function ProjectCard(props: ProjectCardProps) {
   const { title, description, size, source, bgColor, id } = props;
@@ -63,15 +63,28 @@ function ProjectCard(props: ProjectCardProps) {
         </div>
       </div>
 
-      <div className={styles.ActionsArea}>
-        <div className={styles.Actions}>
-          <Link to={`projects/${id}`}>Move to project</Link>
-          <MdArrowRightAlt />
-        </div>
+      <div className={styles.ProjectActions}>
+        <p className={styles.ActionsTitle}>Fast navigation</p>
 
-        <div className={styles.Actions} onClick={deleteProjectHandler}>
-          <p>Delete</p>
-          <MdOutlineClear />
+        <div className={styles.ActionsArea}>
+          <Link to={`projects/${id}`}>
+            <div className={styles.Actions}>
+              <p>Go to project</p>
+              <MdArrowRightAlt />
+            </div>
+          </Link>
+
+          <Link to={`projects/${id}/settings`}>
+            <div className={styles.Actions}>
+              <p>Settings</p>
+              <SettingsIcon />
+            </div>
+          </Link>
+
+          <div className={styles.Actions} onClick={deleteProjectHandler}>
+            <p>Delete</p>
+            <MdOutlineClear />
+          </div>
         </div>
       </div>
     </li>

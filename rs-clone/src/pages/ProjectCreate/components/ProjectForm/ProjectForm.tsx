@@ -99,7 +99,7 @@ function ProjectForm(props: ProjectFormProps) {
         navigate('/');
         addAlert('Success', 'Project was created successfully');
       } catch {
-        addAlert('Error', 'Server error. Can`t create project');
+        addAlert('Error', 'Server error. Unable to create project. Try again later');
       } finally {
         setLoader(false);
       }

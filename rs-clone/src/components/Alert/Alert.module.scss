@@ -18,18 +18,13 @@ $warningIconColor: rgb(237, 108, 2);
 .Alert {
   position: relative;
   z-index: 9999;
-  min-width: 500px;
+  width: 500px;
   padding: 12px 16px;
   border-radius: 3px;
   user-select: none;
 
   @media screen and (max-width: $mediaMobile) {
-    top: initial;
-    right: initial;
-    bottom: 20px;
-    left: 50%;
-    min-width: 300px;
-    transform: translateX(-50%);
+    width: 100%;
   }
 }
 
@@ -63,6 +58,7 @@ $warningIconColor: rgb(237, 108, 2);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
 }
 
 .Message {
@@ -92,5 +88,6 @@ $warningIconColor: rgb(237, 108, 2);
 }
 
 .RemoveIcon {
+  flex: 0 0 auto;
   cursor: pointer;
 }

@@ -4,7 +4,6 @@ import { Button, EmptyData, Overlay, Preloader } from '../../components';
 import { AsideBar } from './components';
 import { useBoard } from '../../contexts/Board.context';
 import { useProjects } from '../../contexts';
-import { ProjectsContextValue } from '../../contexts/ProjectsContext';
 import ProjectType from '../../types/project/projectType';
 
 import './SingleProject.scss';
@@ -12,7 +11,7 @@ import './SingleProject.scss';
 function SingleProject() {
   const { id } = useParams();
   const { setProjectDataBack, setTasksDataBack, setUsersDataBack } = useBoard();
-  const { isProjectExist } = useProjects() as ProjectsContextValue;
+  const { isProjectExist } = useProjects();
   const [projectExistence, setProjectExistence] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [customMessage, setCustomMessage] = useState('Project is not exist');
