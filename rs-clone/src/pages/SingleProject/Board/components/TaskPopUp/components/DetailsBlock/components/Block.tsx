@@ -2,17 +2,27 @@ import classes from './Block.module.scss';
 import { useState, useEffect } from 'react';
 import { MdExpandMore } from 'react-icons/md';
 import ListItem from './ListItem';
+import type UserType from '../../../../../../../../types/user/userType';
 
 interface Block {
   title: string;
   data: () => { [string: string]: string };
   onPin: (pin: string, isPinned: boolean) => boolean;
   isPinned: boolean;
+  team: UserType[];
+  assignToMe: boolean;
 }
 
 const Block = (props: Block) => {
   const [moreDetails, setMoreDetails] = useState(false);
   const [dataList, setDatalist] = useState(props.data());
+
+  const userName = () => {
+    const data = props.team.find(
+      (user) => user._id === dataList.asignee || user._id === dataList.author
+    );
+    return `${data?.firstName} ${data?.lastName}`;
+  };
 
   useEffect(() => {
     setDatalist(props.data());
@@ -49,10 +59,13 @@ const Block = (props: Block) => {
               <ListItem
                 key={item[0]}
                 title={item[0]}
-                type={item[0] === 'Labels' ? 'tags' : 'name'}
-                value={item[1]}
+                type={'name'}
+                id={item[1]}
+                name={userName()}
                 pinned={props.onPin}
                 isPinned={props.isPinned}
+                assignToMe={props.assignToMe}
+                team={props.team}
               />
             ))}
           </ul>

@@ -1,26 +1,31 @@
 import { useState, useEffect } from 'react';
-import { MdExpandMore } from 'react-icons/md';
-import classes from './DetailsBlock.module.scss';
 import Block from './components/Block';
+import type UserType from '../../../../../../../types/user/userType';
 
 interface dataType {
-  [string: string]: string;
+  asignee: string;
+  author: string;
+  team: UserType[];
+  assignToMe: boolean;
 }
 
-const DetailsBlock = () => {
-  const data: dataType = {
-    Assignee: 'Name Surname',
-    Labels: 'None',
-    Reporter: 'Name Surname'
+type fieldsType = {
+  asignee: string;
+  author: string;
+};
+
+const DetailsBlock = (props: dataType) => {
+  console.log(props.assignToMe);
+  const fields = {
+    asignee: props.asignee,
+    author: props.author
   };
-
   const [pinned, setPinned] = useState<string[]>([]);
-
   const filterPinnedData = () => {
     const pinnedData: { [string: string]: string } = {};
-    for (const item in data) {
+    for (const item in fields) {
       if (pinned.includes(item)) {
-        pinnedData[item] = data[item as keyof dataType];
+        pinnedData[item] = fields[item as keyof fieldsType];
       }
     }
     return pinnedData;
@@ -28,9 +33,9 @@ const DetailsBlock = () => {
 
   const filterUnPinnedData = () => {
     const unPinnedData: { [string: string]: string } = {};
-    for (const item in data) {
+    for (const item in fields) {
       if (!pinned.includes(item)) {
-        unPinnedData[item] = data[item as keyof dataType];
+        unPinnedData[item] = fields[item as keyof fieldsType];
       }
     }
     return unPinnedData;
@@ -55,10 +60,19 @@ const DetailsBlock = () => {
           data={filterPinnedData}
           onPin={pinHandler}
           isPinned={true}
+          team={props.team}
+          assignToMe={props.assignToMe}
         />
       )}
       {pinned.length !== 3 && (
-        <Block title="Details" data={filterUnPinnedData} onPin={pinHandler} isPinned={false} />
+        <Block
+          title="Details"
+          data={filterUnPinnedData}
+          onPin={pinHandler}
+          isPinned={false}
+          team={props.team}
+          assignToMe={props.assignToMe}
+        />
       )}
     </>
   );

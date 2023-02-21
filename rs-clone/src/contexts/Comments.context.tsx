@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext, createContext, useState, useMemo, useCallback, useEffect } from 'react';
 import { useBoard } from './Board.context';
 import api from '../api';
+import { userInfo } from 'os';
 
 type CommentType = {
   _id: string;
@@ -16,6 +17,12 @@ type CommentNoIdType = {
   date: string;
   dateUpdate: string;
 };
+type UserInfo = {
+  _id: string;
+  name: string;
+  surname: string;
+  email: string;
+};
 
 interface TaskContentType {
   getCommentDataBack: (taskId: string) => Promise<boolean>;
@@ -23,6 +30,7 @@ interface TaskContentType {
   addComment: (taskId: string, comment: CommentNoIdType) => void;
   updateComment: (taskId: string, CommentId: string, comment: CommentType) => void;
   deleteComment: (taskId: string, commentId: string) => void;
+  getUserData: (userId: string) => Promise<UserInfo> | undefined;
 }
 
 export const CommentsContext = createContext<TaskContentType>({
@@ -30,7 +38,8 @@ export const CommentsContext = createContext<TaskContentType>({
   getCommentsList: () => [],
   addComment: () => [],
   updateComment: () => [],
-  deleteComment: () => []
+  deleteComment: () => [],
+  getUserData: () => undefined
 });
 
 export const CommentsProvider = (props: { children: React.ReactNode }) => {
@@ -60,7 +69,6 @@ export const CommentsProvider = (props: { children: React.ReactNode }) => {
     };
     const response = await api.comments.addCommentData(taskId, payload);
     if (response.status === 200) {
-      console.log('success');
       const newList = (await response.data) as CommentType;
       setCommentsList((data) => {
         data.length = 0;
@@ -88,10 +96,16 @@ export const CommentsProvider = (props: { children: React.ReactNode }) => {
   );
 
   const deleteComment = useCallback(async (taskId: string, commentId: string) => {
-    console.log(getCommentsList());
     const response = await api.comments.deleteComment(taskId, commentId);
     if (response.status === 200) {
       getCommentDataBack(taskId);
+    }
+  }, []);
+
+  const getUserData = useCallback(async (userId: string) => {
+    const response = await api.comments.getUserData(userId);
+    if (response.status === 200) {
+      return response.data ? response.data : undefined;
     }
   }, []);
 
@@ -101,9 +115,10 @@ export const CommentsProvider = (props: { children: React.ReactNode }) => {
       getCommentsList,
       addComment,
       updateComment,
-      deleteComment
+      deleteComment,
+      getUserData
     }),
-    [getCommentDataBack, getCommentsList, addComment, updateComment, deleteComment]
+    [getCommentDataBack, getCommentsList, addComment, updateComment, deleteComment, getUserData]
   );
 
   return <CommentsContext.Provider value={values}>{props.children}</CommentsContext.Provider>;
@@ -112,24 +127,3 @@ export const CommentsProvider = (props: { children: React.ReactNode }) => {
 export const useComments = () => {
   return useContext(CommentsContext);
 };
-
-// const [userList, setUserList] = useState<UserType[]>([]);
-// const [projectInfo, setProjectInfo] = useState<ProjectType | null>(null);
-// const [columnList, setColumnList] = useState<ColumnProjectType[]>([]);
-// const [taskList, setTaskList] = useState<TaskType[]>([]);
-// const [userListFilter, setUserListFilter] = useState<string[]>([]);
-// const [searchValue, setSearchValue] = useState<string>('');
-// const setProjectDataBack = useCallback(async (ProjectId: string) => {
-//   const response = await api.projects.getData(ProjectId);
-//   setProjectInfo(response.data);
-//   setColumnList(response.data.columnList);
-//   return response.data;
-// }, []);
-// const setTasksDataBack = useCallback(
-//   async (ProjectId: string) => {
-//     const response = await api.tasks.getAllData(`?project=${ProjectId}`);
-//     setTaskList(response.data);
-//     return true;
-//   },
-//   [projectInfo]
-// );

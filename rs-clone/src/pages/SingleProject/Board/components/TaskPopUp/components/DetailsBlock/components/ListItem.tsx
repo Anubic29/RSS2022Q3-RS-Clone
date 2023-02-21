@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { BsPinAngle } from 'react-icons/bs';
-import { TbPinned } from 'react-icons/tb';
-import UserIcon from '../../../../../../../../components/UserIcon/UserIcon';
 import classes from './ListItem.module.scss';
+import UserType from '../../../../../../../../types/user/userType';
+import BoxWithShadow from '../../../../../../../../components/BoxWithShadow/BoxWithShadow';
+import FlipMenu from '../../FlipMenu/FlipMenu';
 
 interface ListItemProps {
   title: string;
-  value: string;
+  name: string;
+  id: string;
   type: 'name' | 'tags';
   pinned: (pin: string, isPinned: boolean) => boolean;
   isPinned: boolean;
+  assignToMe: boolean;
+  team: UserType[];
 }
 
 const ListItem = (props: ListItemProps) => {
@@ -31,13 +35,33 @@ const ListItem = (props: ListItemProps) => {
         <p>{props.title}</p>
         <BsPinAngle className={classes.pin} onClick={(e) => onPinHandler(e)} />
       </div>
-      <div className={classes.details_listItemCol__right}>
-        {props.type === 'name' && (
-          <div className={classes.details_userIconDiv}>{`${props.value.split(' ')[0][0]}${
-            props.value.split(' ')[1][0]
-          }`}</div>
+      <div className={classes.userRow_wrap}>
+        <div
+          className={`${classes.usersListRow} ${props.title === 'asignee' ? classes.hover : ''}`}>
+          {props.type === 'name' && (
+            <div className={classes.details_userIconDiv}>{`${props.name
+              .split(' ')
+              .map((name) => name[0])
+              .join('')}`}</div>
+          )}
+          <p>{props.name}</p>
+        </div>
+        {props.assignToMe && props.title === 'asignee' && (
+          <button className={classes.assignToMeBtn}>Assign to me</button>
         )}
-        <p>{props.value}</p>
+        {props.team.length > 0 && props.title === 'asignee' && (
+          <BoxWithShadow>
+            <div className={classes.asigneeListWrap}>
+              <ul className={classes.assigneeUl}>
+                {props.team.map((user, i) => (
+                  <li className={classes.assigneeLi} key={i}>
+                    {user.firstName} {user.lastName}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </BoxWithShadow>
+        )}
       </div>
     </li>
   );

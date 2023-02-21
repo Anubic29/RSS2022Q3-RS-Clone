@@ -30,6 +30,10 @@ export default function (instance: AxiosInstance) {
 
     deleteComment(taskId: string, commentId: string) {
       return instance.delete(`/api/tasks/${taskId}/comments/${commentId}`);
+    },
+
+    getUserData(userId: string) {
+      return instance.get(`/${userId}/info`);
     }
   };
 }

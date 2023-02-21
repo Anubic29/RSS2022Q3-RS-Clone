@@ -25,9 +25,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [notedItemList, setNotedItemList] = useState<NotedItemUserType[]>([]);
 
   const setUserDataBack = useCallback(async () => {
-    console.log('hffjhskhks');
     const response = await api.users.getCurrentData();
-    console.log(response);
     if (response.status === 200) {
       setCurrentUser(response.data);
       setNotedItemList(response.data.notedItems);

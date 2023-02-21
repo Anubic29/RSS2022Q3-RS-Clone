@@ -8,7 +8,6 @@ import EditableTitle from '../../../../../components/EditableTitle/EditableTitle
 import DescriptionBlock from './components/DescriptionBlock/DescriptionBlock';
 import CommentsBlock from './components/CommentsBlock/CommentsBlock';
 import { GrClose } from 'react-icons/gr';
-import { TbDots } from 'react-icons/tb';
 import BoxWithShadow from '../../../../../components/BoxWithShadow/BoxWithShadow';
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './components/DetailsBlock/DetailsBlock';
@@ -19,6 +18,7 @@ import FlipMenu from '../BtnMenuAction/BtnMenuAction';
 import { colorLightGrey } from '../../../../../theme/variables';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { useComments } from '../../../../../contexts/Comments.context';
+import type TaskType from '../../../../../types/task/taskType';
 
 interface TaskProps {
   _id: string;
@@ -26,29 +26,46 @@ interface TaskProps {
 }
 
 const TaskPopUp = (props: TaskProps) => {
-  const { updateTask, deleteTask, getTaskList, getColumnList } = useBoard();
-  const { getCommentsList, getCommentDataBack } = useComments();
+  const { updateTask, deleteTask, getTaskList, getColumnList, getUserList } = useBoard();
+  const { getCommentsList, getCommentDataBack, getUserData } = useComments();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
 
   useEffect(() => {
     getCommentDataBack(props._id);
   }, []);
-  const list = getCommentsList();
-  console.log('list', list);
 
-  const data = getTaskList().filter((task) => {
-    if (task._id === props._id) {
-      return task;
-    }
-  });
+  const dataset = () => {
+    const task: TaskType = getTaskList().filter((task) => {
+      if (task._id === props._id) {
+        return task as TaskType;
+      }
+    })[0];
+    const userList = getUserList();
+    const result = {
+      _taskId: task._id,
+      taskTitle: task.title,
+      taskDescript: task.description,
+      taskComments: task.commentList,
+      taskColumnId: task.columnId,
+      taskProjectId: task.projectId,
+      authorId: task.author,
+      asigneeId: task.executor === 'auto' ? task.author : task.executor,
+      projectTeam: userList
+    };
+    return result;
+  };
+
+  const data = dataset();
+
   const columnsData = getColumnList();
   const column = columnsData.filter((col) => {
-    if (col._id === data[0].columnId) return col;
+    if (col._id === data.taskColumnId) return col;
   })[0];
 
   const clipboard = useClipboard();
   const params = useParams();
   const projectkId = params.id;
+  const taskId = params.taskId;
   const navigate = useNavigate();
 
   const [isActive, setIsActive] = useState(false);
@@ -92,6 +109,7 @@ const TaskPopUp = (props: TaskProps) => {
   };
 
   const url = window.location.href;
+  console.log(data.asigneeId, data.authorId);
 
   return (
     <>
@@ -109,12 +127,12 @@ const TaskPopUp = (props: TaskProps) => {
                 </button>
               </div>
               <div className={classes.taskDetails_taskName}>
-                <EditableTitle titleProp={data[0].title} callback={updateTask} id={props._id} />
+                <EditableTitle titleProp={data.taskTitle} callback={updateTask} id={props._id} />
               </div>
               <div className={classes.taskDetails_taskActions}></div>
               <div className={classes.taskDetails_taskDescriptionBlock}>
                 <h6 className={classes.taskDetails_descr__title}>Description</h6>
-                <DescriptionBlock id={props._id} descript={data[0].description} />
+                <DescriptionBlock id={props._id} descript={data.taskDescript} />
               </div>
               <div className={classes.taskDetails_commentsBlock}>
                 <h6 className={classes.taskDetails_descr__title}>Comments</h6>
@@ -165,7 +183,12 @@ const TaskPopUp = (props: TaskProps) => {
                   </div>
                 )}
               </div>
-              <DetailsBlock />
+              <DetailsBlock
+                asignee={data.asigneeId === 'auto' ? data.authorId : data.asigneeId}
+                author={data.authorId}
+                team={data.projectTeam}
+                assignToMe={data.authorId !== data.asigneeId}
+              />
             </div>
           </div>
         </>

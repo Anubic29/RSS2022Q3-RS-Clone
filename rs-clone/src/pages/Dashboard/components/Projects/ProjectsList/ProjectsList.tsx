@@ -16,7 +16,6 @@ function ProjectsList() {
   const { projects, getProjects } = useProjects() as ProjectsContextValue;
 
   useEffect(() => {
-    console.log(currentUser);
     if (currentUser) {
       (async (_id: string) => {
         try {
