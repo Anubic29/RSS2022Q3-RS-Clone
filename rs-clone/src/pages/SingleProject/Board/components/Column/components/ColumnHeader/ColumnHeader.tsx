@@ -5,13 +5,12 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../../../../../theme/variables';
-import { BtnMenuAction, BtnAction } from '../../../';
 import { MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../../../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../../../../../contexts/Board.context';
 import { useOverlay } from '../../../../../../../contexts';
 import { PopupDeleteColumn } from '../../../';
-import { Preloader } from '../../../../../../../components';
+import { Preloader, BtnMenuAction, BtnAction } from '../../../../../../../components';
 import { usePartOverlay } from '../../../../../../../contexts';
 import Loader from '../../../../../../../components/Loader/Loader';
 

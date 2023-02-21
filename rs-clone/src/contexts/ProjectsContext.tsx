@@ -49,6 +49,6 @@ function ProjectsProvider({ children }: PropsWithChildren) {
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;
 }
 
-const useProjects = () => useContext(ProjectsContext);
+const useProjects = () => useContext(ProjectsContext) as ProjectsContextValue;
 
 export { ProjectsProvider, useProjects };
