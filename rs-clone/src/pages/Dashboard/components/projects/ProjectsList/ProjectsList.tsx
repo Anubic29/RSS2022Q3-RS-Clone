@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { ProjectCard } from '../..';
 import { EmptyData, Preloader } from '../../../../../components';
 import { useProjects, useUser } from '../../../../../contexts';
-import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
 
 import styles from './ProjectsList.module.scss';
 
@@ -12,7 +11,7 @@ function ProjectsList() {
   const [isLoading, setIsLoading] = useState(true);
   const [customMessage, setCustomMessage] = useState('There are no projects');
   const { currentUser } = useUser();
-  const { projects, getProjects } = useProjects() as ProjectsContextValue;
+  const { projects, getProjects } = useProjects();
 
   useEffect(() => {
     if (currentUser) {
