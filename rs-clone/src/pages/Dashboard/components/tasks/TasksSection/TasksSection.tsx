@@ -3,25 +3,20 @@ import { MarkedItemsList, TasksList } from '../..';
 
 import styles from './TasksSection.module.scss';
 
-enum TabsIds {
-  TASKS = 'tabs-tasks',
-  MARKED = 'tabs-marked'
-}
+const tabsIds: Record<string, string> = {
+  tasks: 'tabs-tasks',
+  marked: 'tabs-marked'
+};
 
 function TasksSection() {
-  const [view, setView] = useState(<TasksList />);
-  const [isActive, setIsActive] = useState({ tasks: true, marked: false });
+  const [currentTab, setCurrentTab] = useState(tabsIds.tasks);
+  const [activeTab, setActiveTab] = useState(tabsIds.tasks);
 
-  const changeViewHandler = (event: React.MouseEvent<HTMLLIElement>) => {
-    const target = event.target as HTMLLIElement;
+  const changeTabHandler = (event: React.MouseEvent<HTMLLIElement>) => {
+    const { id } = event.target as HTMLLIElement;
 
-    if (target.id === TabsIds.TASKS) {
-      setView(<TasksList />);
-      setIsActive({ tasks: true, marked: false });
-    } else {
-      setView(<MarkedItemsList />);
-      setIsActive({ tasks: false, marked: true });
-    }
+    setCurrentTab(tabsIds[id]);
+    setActiveTab(tabsIds[id]);
   };
 
   return (
@@ -29,22 +24,24 @@ function TasksSection() {
       <ul className={styles.Tabs}>
         <li
           className={styles.TabsItem}
-          id={TabsIds.TASKS}
-          onClick={changeViewHandler}
-          data-is-active={isActive.tasks}>
+          id="tasks"
+          onClick={changeTabHandler}
+          data-is-active={activeTab === tabsIds.tasks}>
           Your tasks
         </li>
 
         <li
           className={styles.TabsItem}
-          id={TabsIds.MARKED}
-          onClick={changeViewHandler}
-          data-is-active={isActive.marked}>
+          id="marked"
+          onClick={changeTabHandler}
+          data-is-active={activeTab === tabsIds.marked}>
           Marked
         </li>
       </ul>
 
-      <div className={styles.Content}>{view}</div>
+      <div className={styles.Content}>
+        {currentTab === tabsIds.tasks ? <TasksList /> : <MarkedItemsList />}
+      </div>
     </section>
   );
 }

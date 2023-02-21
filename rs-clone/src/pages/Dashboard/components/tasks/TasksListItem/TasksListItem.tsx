@@ -1,11 +1,11 @@
-import { MdCheckBox } from 'react-icons/md';
+import { MdCheckBox as TaskIcon } from 'react-icons/md';
 
 import styles from './TasksListItem.module.scss';
 
 function TasksListItem() {
   return (
     <li className={styles.TaskItem}>
-      <MdCheckBox className={styles.TaskIcon} />
+      <TaskIcon className={styles.TaskIcon} />
 
       <div className={styles.Content}>
         <div className={styles.TitleArea}>
