@@ -1,7 +1,7 @@
 import { BtnAction } from '../';
-import { colorBackgroundActiveMenu, colorContentActiveMenu } from '../../../../../theme/variables';
+import { colorBackgroundActiveMenu, colorContentActiveMenu } from '../../theme/variables';
 import { MdMoreHoriz } from 'react-icons/md';
-import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
+import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
 
 import styles from './BtnMenuAction.module.scss';
 import { useEffect } from 'react';

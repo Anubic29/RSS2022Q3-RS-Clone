@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import UserType from '../../../../../types/user/userType';
 import TaskType from '../../../../../types/task/taskType';
 import ColumnProjectType from '../../../../../types/project/columnProjectType';
-import { Column, UserAvatar } from '../';
+import { Column } from '../';
 import { ColumnBody } from '../Column/components';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
+import { UserAvatar } from '../../../../../components';
 
 import styles from './ColumnRowUser.module.scss';
 

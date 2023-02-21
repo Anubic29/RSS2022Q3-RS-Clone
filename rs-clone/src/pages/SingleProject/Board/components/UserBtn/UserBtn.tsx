@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { UserAvatar } from '../';
+import { UserAvatar } from '../../../../../components';
 import { IconType } from 'react-icons';
 import { useBoard } from '../../../../../contexts/Board.context';
 
