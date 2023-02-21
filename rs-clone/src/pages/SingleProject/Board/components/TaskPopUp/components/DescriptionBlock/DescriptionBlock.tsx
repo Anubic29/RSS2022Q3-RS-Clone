@@ -6,7 +6,7 @@ import { useBoard } from '../../../../../../../contexts/Board.context';
 
 const DescriptionBlock = (props: { id: string; descript: string }) => {
   const [savedDescr, setSavedDescr] = useState<string | JSX.Element | JSX.Element[]>(
-    parse(props.descript) || ''
+    parse(props.descript)
   );
 
   const [editorMode, setEditorMode] = useState(false);

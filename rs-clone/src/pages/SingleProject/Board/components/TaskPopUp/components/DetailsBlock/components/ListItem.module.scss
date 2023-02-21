@@ -9,6 +9,7 @@
 .details_ListItem {
   margin-top: 15px;
   padding-left: 20px;
+  padding-right: 20px;
 
   &:hover {
     .pin {
@@ -30,8 +31,8 @@
   align-items: center;
   &.hover:hover {
     background-color: $colorHoverBlue;
+      cursor: text;
     &::after {
-      content: 'change';
       color: $colorBorder;
       font-size: 14px;
       position: absolute;
@@ -40,9 +41,19 @@
   }
 }
 
+input.usersListRow,
+input.userRow_wrap:focus-visible,
+input.userRow_wrap:focus-visible {
+  outline: $colorPrimary 3px solid;
+  border: none;
+  height: 30px;
+  margin-left: 10px;
+}
+
 .details_listRow {
   margin-top: 20px;
   display: flex;
+  position: relative;
 }
 
 .details_userIconDiv {
@@ -56,6 +67,10 @@
   vertical-align: middle;
 }
 
+.asigneeWrap {
+  position: relative;
+  width: 100%;
+}
 .pin {
   padding-left: 5px;
   width: 20px;
@@ -76,6 +91,10 @@
   margin-right: auto;
   margin-left: 46px;
   opacity: 0.5;
+  margin-left: 45px;
+  opacity: 0.5;
+  position: absolute;
+  bottom: -13px;
   &:hover {
     color: orange;
   }
@@ -94,14 +113,34 @@
 .assigneeUl {
   position: absolute;
   left: 0;
+  top: 4px;
+  min-height: 10px;
   z-index: 20;
-  width: 100%
+  min-width: 280px;
+  transform: translate(-50%);
+  border: 1px solid $colorBackgroundHover;
+  border-radius: 0 0 5px 5px;
+  box-shadow: $shadowSubMenu;
 }
 
 .assigneeLi {
+  display: flex;
   width: inherit;
-  border-top: 1px solid $colorBackgroundHover;
-  border-bottom: 1px solid $colorBackgroundHover;
   height: 40px;
   background-color: white;
+  line-height: 40px;
+  vertical-align: middle;
+  padding-left: 10px;
+  cursor: pointer;
+  transition: 100ms all ease;
+  &:hover {
+    font-size: 16px;
+    background-color: $colorBackgroundHover;
+    border-left: 3px $colorPrimary solid;
+  }
 }
+
+  input.users_listRow {
+    border: 3px $colorActiveInput solid;
+
+  }

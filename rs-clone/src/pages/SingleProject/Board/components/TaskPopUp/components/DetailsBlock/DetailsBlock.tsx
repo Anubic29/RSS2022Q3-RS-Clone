@@ -3,6 +3,7 @@ import Block from './components/Block';
 import type UserType from '../../../../../../../types/user/userType';
 
 interface dataType {
+  taskId: string;
   asignee: string;
   author: string;
   team: UserType[];
@@ -56,22 +57,28 @@ const DetailsBlock = (props: dataType) => {
     <>
       {pinned.length > 0 && (
         <Block
+          taskId={props.taskId}
           title="Your pinned fields"
           data={filterPinnedData}
           onPin={pinHandler}
           isPinned={true}
           team={props.team}
           assignToMe={props.assignToMe}
+          author={props.author}
+          asignee={props.asignee}
         />
       )}
       {pinned.length !== 3 && (
         <Block
+          taskId={props.taskId}
           title="Details"
           data={filterUnPinnedData}
           onPin={pinHandler}
           isPinned={false}
           team={props.team}
           assignToMe={props.assignToMe}
+          author={props.author}
+          asignee={props.asignee}
         />
       )}
     </>

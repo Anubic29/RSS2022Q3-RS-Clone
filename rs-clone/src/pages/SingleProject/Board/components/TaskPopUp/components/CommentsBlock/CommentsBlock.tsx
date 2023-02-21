@@ -5,6 +5,7 @@ import CommentRow from '../CommentRow/CommentRow';
 import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
 import { BiSortDown, BiSortUp } from 'react-icons/bi';
 import { useComments } from '../../../../../../../contexts/Comments.context';
+import { useUser } from '../../../../../../../contexts';
 
 type CommentType = {
   _id: string;
@@ -21,16 +22,17 @@ const CommentsBlock = (props: { taskId: string }) => {
   const [editorMode, setEditorMode] = useState(false);
   const [newestFirst, setNewestFirt] = useState(true);
 
+  const { currentUser } = useUser();
+
   useEffect(() => {
     setSavedDescr(list);
   }, [list]);
 
   const onTextValueHandler = async (val: string, id?: string) => {
-    console.log(val, id);
     if (!id) {
       addComment(props.taskId, {
         text: val,
-        author: '63ee397f19f67e418c335876',
+        author: currentUser ? currentUser._id : '',
         date: JSON.stringify(Date.now()),
         dateUpdate: ''
       });
@@ -39,7 +41,7 @@ const CommentsBlock = (props: { taskId: string }) => {
       updateComment(props.taskId, id, {
         _id: id,
         text: val,
-        author: '63ee397f19f67e418c335876',
+        author: currentUser ? currentUser._id : '',
         date: '',
         dateUpdate: JSON.stringify(Date.now())
       });
@@ -61,11 +63,20 @@ const CommentsBlock = (props: { taskId: string }) => {
     setNewestFirt(newestFirst ? false : true);
   };
 
+  const getFirstLetters = (first: string, last: string) => {
+    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
+  };
+
   return (
     <div className={classes.commentsWrap}>
       <div className={classes.commentDetails_editorWrap}>
         <div className={classes.commentDetails_iconColumn}>
-          <UserIcon user={'OD'} />
+          <UserIcon
+            user={getFirstLetters(
+              currentUser?.firstName as string,
+              currentUser?.lastName as string
+            )}
+          />
         </div>
         <div className={classes.commentDetails_commentColumn}>
           <div

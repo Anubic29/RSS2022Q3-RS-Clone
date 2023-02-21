@@ -30,6 +30,11 @@ const TaskPopUp = (props: TaskProps) => {
   const { getCommentsList, getCommentDataBack, getUserData } = useComments();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
 
+  const clipboard = useClipboard();
+  const params = useParams();
+  const projectkId = params.id;
+  const navigate = useNavigate();
+
   useEffect(() => {
     getCommentDataBack(props._id);
   }, []);
@@ -56,17 +61,12 @@ const TaskPopUp = (props: TaskProps) => {
   };
 
   const data = dataset();
+  console.log(data);
 
   const columnsData = getColumnList();
   const column = columnsData.filter((col) => {
     if (col._id === data.taskColumnId) return col;
   })[0];
-
-  const clipboard = useClipboard();
-  const params = useParams();
-  const projectkId = params.id;
-  const taskId = params.taskId;
-  const navigate = useNavigate();
 
   const [isActive, setIsActive] = useState(false);
   const [taskState, setTaskState] = useState(column);
@@ -184,6 +184,7 @@ const TaskPopUp = (props: TaskProps) => {
                 )}
               </div>
               <DetailsBlock
+                taskId={data._taskId}
                 asignee={data.asigneeId === 'auto' ? data.authorId : data.asigneeId}
                 author={data.authorId}
                 team={data.projectTeam}

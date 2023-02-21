@@ -4,6 +4,8 @@ import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock
 import parse from 'html-react-parser';
 import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
 import { useComments } from '../../../../../../../contexts/Comments.context';
+import { useUser } from '../../../../../../../contexts';
+import { useBoard } from '../../../../../../../contexts/Board.context';
 
 const SECOND = 1000;
 const MINUTE = 60;
@@ -34,6 +36,13 @@ const CommentRow = (props: {
   };
 
   const { updateComment } = useComments();
+  const { currentUser } = useUser();
+  const { getUserList } = useBoard();
+
+  const authorUserNameObj = getUserList().find((user) => user._id === props.author) || {
+    firstName: 'user',
+    lastName: 'unknown'
+  };
 
   const [isEditMode, setEditMode] = useState(false);
   const [commentBody, setCommentBody] = useState(props.text);
@@ -65,14 +74,26 @@ const CommentRow = (props: {
     setIsEdited(date);
   };
 
+  const getFirstLetters = (first: string, last: string) => {
+    console.log(first, last);
+    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
+  };
+
   return (
     <div className={classes.commentRow_wrap}>
       <div className={classes.commentRow_IconColumn}>
-        <UserIcon user={'OD'} />
+        <UserIcon
+          user={getFirstLetters(
+            authorUserNameObj?.firstName as string,
+            authorUserNameObj?.lastName as string
+          )}
+        />
       </div>
       <div className={classes.commentRow_TextColumn}>
         <p className={classes.commentRow_TopLine}>
-          <span className={classes.commentRow_UserNameSpan}>User Name</span>
+          <span className={classes.commentRow_UserNameSpan}>
+            {authorUserNameObj?.firstName} {authorUserNameObj?.lastName}
+          </span>
           <span
             className={classes.commentRow_TimeSpan}
             data-title={`created on ${new Date(JSON.parse(props.date)).toLocaleString()}`}>
@@ -103,12 +124,16 @@ const CommentRow = (props: {
           className={`${classes.commentRow_actionsBlock} ${classes.ButtonsWrap} ${
             isEditMode ? classes.hidden : classes.visible
           }`}>
-          <button className={classes.buttonSubmit} onClick={() => setEditMode(true)}>
-            Edit
-          </button>
-          <button className={classes.buttonReset} onClick={() => deleteHandler(props._id)}>
-            Delete
-          </button>
+          {currentUser && currentUser._id === props.author && (
+            <>
+              <button className={classes.buttonSubmit} onClick={() => setEditMode(true)}>
+                Edit
+              </button>
+              <button className={classes.buttonReset} onClick={() => deleteHandler(props._id)}>
+                Delete
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

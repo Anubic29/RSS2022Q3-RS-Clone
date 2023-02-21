@@ -5,12 +5,15 @@ import ListItem from './ListItem';
 import type UserType from '../../../../../../../../types/user/userType';
 
 interface Block {
+  taskId: string;
   title: string;
-  data: () => { [string: string]: string };
+  data: () => { [string: string]: string }; //{asignee, author}
   onPin: (pin: string, isPinned: boolean) => boolean;
   isPinned: boolean;
   team: UserType[];
   assignToMe: boolean;
+  author: string;
+  asignee: string;
 }
 
 const Block = (props: Block) => {
@@ -26,6 +29,7 @@ const Block = (props: Block) => {
 
   useEffect(() => {
     setDatalist(props.data());
+    console.log(dataList);
   }, [props.onPin, props.data]);
 
   const moreDetailsHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -57,6 +61,7 @@ const Block = (props: Block) => {
           <ul className={`${classes.details_listBlock} ${moreDetails ? classes.visible : ''}`}>
             {Object.entries(dataList).map((item) => (
               <ListItem
+                taskId={props.taskId}
                 key={item[0]}
                 title={item[0]}
                 type={'name'}
@@ -66,6 +71,8 @@ const Block = (props: Block) => {
                 isPinned={props.isPinned}
                 assignToMe={props.assignToMe}
                 team={props.team}
+                author={props.author}
+                asignee={props.asignee}
               />
             ))}
           </ul>

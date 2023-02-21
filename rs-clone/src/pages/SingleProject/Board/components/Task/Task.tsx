@@ -34,7 +34,7 @@ function Task(props: TaskProps) {
   const showModal = () => {
     setIsVisibleBoard(true);
     setChildrenBoard(<TaskPopUp _id={props._id} keyTask={props.keyTask} />);
-    navigate(`selected-task/${props.keyTask}`);
+    navigate(`selected-task/${props._id}`);
   };
   useEffect(() => {
     if (params.taskId) {
