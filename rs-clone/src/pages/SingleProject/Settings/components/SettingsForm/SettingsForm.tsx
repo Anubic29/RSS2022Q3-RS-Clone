@@ -134,7 +134,7 @@ function SettingsForm(props: SettingsFormProps) {
         addAlert('Error', 'You have to fill form correctly');
       }
     },
-    [updateProject, name, key, description, imageSrc, imageBg]
+    [updateProject, name, key, description, imageSrc, imageBg, addAlert]
   );
 
   return (

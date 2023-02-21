@@ -1,3 +1,5 @@
+@import "./theme/variables";
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,7 +27,7 @@
 .container {
   padding: 0 40px;
   
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: $mediaMobile) {
     padding: 0 15px;
   }
 }
@@ -38,4 +40,12 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+
+  @media screen and (max-width: $mediaMobile) {
+    top: 0;
+    right: initial;
+    left: 0;
+    gap: 0;
+    width: 100%;
+  }
 }
