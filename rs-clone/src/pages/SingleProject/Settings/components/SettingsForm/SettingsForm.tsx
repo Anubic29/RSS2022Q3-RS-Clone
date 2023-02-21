@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Input, Label, Preloader } from '../../../../../components';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { MdDone } from 'react-icons/md';
+import { useAlerts } from '../../../../../contexts/AlertsContext';
+import { projectValidationData } from '../../../../../utils';
 import ProjectType from '../../../../../types/project/projectType';
 
 import styles from './SettingsForm.module.scss';
@@ -17,15 +19,23 @@ enum InputIds {
   KEY = 'key'
 }
 
+const { NAME_MIN_LENGTH, KEY_LENGTH, DESCRIPTION_MIN_LENGTH, changeKeyInput, checkIsValidInput } =
+  projectValidationData;
+
 function SettingsForm(props: SettingsFormProps) {
   const { imageSrc, imageBg } = props;
   const { projectInfo, updateProject } = useBoard();
+  const { addAlert } = useAlerts();
   const [name, setName] = useState(projectInfo?.title || '');
   const [description, setDescription] = useState(projectInfo?.description || '');
   const [key, setKey] = useState(projectInfo?.key || '');
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoaderGoing, setIsLoaderGoing] = useState(false);
   const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
+
+  const [isValidName, setIsValidName] = useState(true);
+  const [isValidDescription, setIsValidDescription] = useState(true);
+  const [isValidKey, setIsValidKey] = useState(true);
 
   useEffect(() => {
     const {
@@ -54,10 +64,22 @@ function SettingsForm(props: SettingsFormProps) {
 
     if (id === InputIds.NAME) {
       setName(value);
+      checkIsValidInput({
+        condition: value.length >= NAME_MIN_LENGTH,
+        setValidationStateFn: setIsValidName
+      });
     } else if (id === InputIds.DESCRIPTION) {
       setDescription(value);
+      checkIsValidInput({
+        condition: value.length >= DESCRIPTION_MIN_LENGTH,
+        setValidationStateFn: setIsValidDescription
+      });
     } else if (id === InputIds.KEY) {
-      setKey(value);
+      setKey(changeKeyInput(value));
+      checkIsValidInput({
+        condition: value.length === KEY_LENGTH,
+        setValidationStateFn: setIsValidKey
+      });
     }
   };
 
@@ -65,17 +87,51 @@ function SettingsForm(props: SettingsFormProps) {
     async (event: React.FormEvent) => {
       event.preventDefault();
 
-      setIsDisabled(true);
-      setIsLoaderGoing(true);
+      const validationCondition =
+        name.length >= NAME_MIN_LENGTH &&
+        description.length >= DESCRIPTION_MIN_LENGTH &&
+        key.length === KEY_LENGTH;
 
-      try {
-        await updateProject({ title: name, description, key, pathImage: imageSrc, color: imageBg });
+      if (validationCondition) {
+        setIsValidName(true);
+        setIsValidDescription(true);
+        setIsValidKey(true);
 
-        setIsLoaderGoing(false);
-        setAfterLoadingIcon(true);
-        setTimeout(() => setAfterLoadingIcon(false), 1500);
-      } catch {
-        console.log(false);
+        setIsDisabled(true);
+        setIsLoaderGoing(true);
+
+        try {
+          await updateProject({
+            title: name,
+            description,
+            key,
+            pathImage: imageSrc,
+            color: imageBg
+          });
+
+          setIsLoaderGoing(false);
+          setAfterLoadingIcon(true);
+          setTimeout(() => setAfterLoadingIcon(false), 1500);
+
+          addAlert('Success', 'Project settings were updated successfully');
+        } catch {
+          addAlert('Error', 'Server error. Unable to update settings. Try again later');
+        }
+      } else {
+        checkIsValidInput({
+          condition: name.length >= NAME_MIN_LENGTH,
+          setValidationStateFn: setIsValidName
+        });
+        checkIsValidInput({
+          condition: description.length >= DESCRIPTION_MIN_LENGTH,
+          setValidationStateFn: setIsValidDescription
+        });
+        checkIsValidInput({
+          condition: key.length === KEY_LENGTH,
+          setValidationStateFn: setIsValidKey
+        });
+
+        addAlert('Error', 'You have to fill form correctly');
       }
     },
     [updateProject, name, key, description, imageSrc, imageBg]
@@ -91,6 +147,8 @@ function SettingsForm(props: SettingsFormProps) {
           id={InputIds.NAME}
           value={name}
           onChange={onChangeHandler}
+          isValid={isValidName}
+          validationMessage="Name should contain at least 3 characters"
         />
       </fieldset>
 
@@ -102,6 +160,8 @@ function SettingsForm(props: SettingsFormProps) {
           id={InputIds.DESCRIPTION}
           value={description}
           onChange={onChangeHandler}
+          isValid={isValidDescription}
+          validationMessage="Description should contain at least 8 characters"
         />
       </fieldset>
 
@@ -113,13 +173,20 @@ function SettingsForm(props: SettingsFormProps) {
           id={InputIds.KEY}
           value={key}
           onChange={onChangeHandler}
+          isValid={isValidKey}
+          validationMessage="Key should be equal 3 characters"
         />
       </fieldset>
 
       <div className={styles['form-row']}>
-        <Button className={styles.Button} type="submit" disabled={isDisabled}>
+        <Button
+          className={styles.Button}
+          type="submit"
+          disabled={isDisabled}
+          title={isDisabled ? 'Settings has no changes' : undefined}>
           Save changes
         </Button>
+
         <div className={styles['form-loader']}>
           {isLoaderGoing && <Preloader text="" />}
           {afterLoadingIcon && <MdDone />}

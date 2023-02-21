@@ -9,12 +9,7 @@
   width: 100%;
 
   .content {
-    width: calc(100% - $widthAsideBarSingleProjectNormal);
-    transition: all 0.25s ease;
-
-    &.aside-hidden {
-      width: calc(100% - $widthAsideBarSingleProjectHidden);
-    }
+    flex: 1;
   }
 
   @media screen and (max-width: $mediaTablet) {

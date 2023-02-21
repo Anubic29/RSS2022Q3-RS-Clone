@@ -9,6 +9,7 @@ interface ButtonProps {
   form?: string;
   disabled?: boolean;
   onClick?: () => void;
+  title?: string;
 }
 
 function Button(props: ButtonProps) {
