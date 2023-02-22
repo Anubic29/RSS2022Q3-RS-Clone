@@ -1,16 +1,29 @@
 import { useEffect, useState } from 'react';
 import { TasksListItem } from '../..';
 import { EmptyData, Preloader } from '../../../../../components';
+import { useTasks } from '../../../../../contexts/TasksContext';
+import { useAlerts } from '../../../../../contexts/AlertsContext';
 
 import styles from './TasksList.module.scss';
+import { useProjects } from '../../../../../contexts';
 
 function TasksList() {
   const [isLoading, setIsLoading] = useState(true);
-  const testCondition = true;
+  const { tasks, getTasks } = useTasks();
+  const { projects } = useProjects();
+  const { addAlert } = useAlerts();
 
   useEffect(() => {
-    setIsLoading(false);
-  }, []);
+    (async () => {
+      try {
+        await getTasks();
+      } catch {
+        addAlert('Error', 'Server error. Unable to load tasks. Try again later');
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [projects]);
 
   return (
     <>
@@ -20,9 +33,11 @@ function TasksList() {
         </div>
       ) : (
         <>
-          {testCondition ? (
+          {tasks.length ? (
             <ul className={styles.TasksList}>
-              <TasksListItem />
+              {tasks.map((task) => {
+                return <TasksListItem {...task} key={task._id} taskId={task._id} />;
+              })}
             </ul>
           ) : (
             <div className={styles.Empty}>

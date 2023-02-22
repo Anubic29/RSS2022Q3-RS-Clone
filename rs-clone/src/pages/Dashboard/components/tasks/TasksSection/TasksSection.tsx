@@ -27,7 +27,7 @@ function TasksSection() {
           id="tasks"
           onClick={changeTabHandler}
           data-is-active={activeTab === tabsIds.tasks}>
-          Your tasks
+          Assigned to you
         </li>
 
         <li

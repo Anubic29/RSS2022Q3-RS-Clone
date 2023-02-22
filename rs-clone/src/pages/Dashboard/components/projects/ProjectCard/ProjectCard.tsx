@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MdOutlineClear, MdArrowRightAlt, MdSettings as SettingsIcon } from 'react-icons/md';
+import {
+  MdOutlineClear,
+  MdSettings as SettingsIcon,
+  MdOutlineViewColumn as BoardIcon
+} from 'react-icons/md';
 import { ProjectAvatarProps } from '../../../../../components/ProjectAvatar/ProjectAvatar';
 import { Preloader, ProjectAvatar } from '../../../../../components';
 import { useProjects } from '../../../../../contexts';
@@ -54,7 +58,9 @@ function ProjectCard(props: ProjectCardProps) {
 
         <div className={styles.ProjectInfo}>
           <Link to={`projects/${id}`}>
-            <p className={styles.ProjectTitle}>{title}</p>
+            <p className={styles.ProjectTitle} title={title}>
+              {title}
+            </p>
           </Link>
 
           <p className={styles.ProjectDescription} title={description}>
@@ -69,8 +75,8 @@ function ProjectCard(props: ProjectCardProps) {
         <div className={styles.ActionsArea}>
           <Link to={`projects/${id}`}>
             <div className={styles.Actions}>
-              <p>Go to project</p>
-              <MdArrowRightAlt />
+              <p>Board</p>
+              <BoardIcon />
             </div>
           </Link>
 
