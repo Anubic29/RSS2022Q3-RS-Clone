@@ -6,7 +6,6 @@ const BoxWithShadow: React.FC<{
   className?: string;
 }> = (props) => {
   const inherit = props.className;
-  console.log(inherit);
   return (
     <div className={`${classes.submenu_block} ${inherit ? classes[inherit] : ''}`}>
       {props.children}

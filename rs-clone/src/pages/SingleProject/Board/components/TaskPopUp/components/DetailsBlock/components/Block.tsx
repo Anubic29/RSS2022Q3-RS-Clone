@@ -29,7 +29,6 @@ const Block = (props: Block) => {
 
   useEffect(() => {
     setDatalist(props.data());
-    console.log(dataList);
   }, [props.onPin, props.data]);
 
   const moreDetailsHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

@@ -45,10 +45,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    console.log(isWorkMenuVisible);
-  }, [isWorkMenuVisible]);
-
-  useEffect(() => {
     if (!isWorkMenuVisible && !isProjMenuVisible && !isUserMenuVisible) setActiveItem('');
   }, [isWorkMenuVisible, isProjMenuVisible, isUserMenuVisible]);
 

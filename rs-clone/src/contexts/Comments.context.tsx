@@ -1,3 +1,4 @@
+import { string } from 'prop-types';
 import React from 'react';
 import { useContext, createContext, useState, useMemo, useCallback, useEffect } from 'react';
 import api from '../api';
@@ -22,6 +23,11 @@ type UserInfo = {
   email: string;
 };
 
+type PinnedFielsType = {
+  taskId: string;
+  fields: string[];
+};
+
 interface TaskContentType {
   getCommentDataBack: (taskId: string) => Promise<boolean>;
   getCommentsList: () => CommentType[];
@@ -29,6 +35,8 @@ interface TaskContentType {
   updateComment: (taskId: string, CommentId: string, comment: CommentType) => void;
   deleteComment: (taskId: string, commentId: string) => void;
   getUserData: (userId: string) => Promise<UserInfo> | undefined;
+  setPinnedF: (data: PinnedFielsType) => void;
+  getPinnedF: () => PinnedFielsType[];
 }
 
 export const CommentsContext = createContext<TaskContentType>({
@@ -37,11 +45,14 @@ export const CommentsContext = createContext<TaskContentType>({
   addComment: () => [],
   updateComment: () => [],
   deleteComment: () => [],
-  getUserData: () => undefined
+  getUserData: () => undefined,
+  setPinnedF: () => [],
+  getPinnedF: () => []
 });
 
 export const CommentsProvider = (props: { children: React.ReactNode }) => {
   const [commentsList, setCommentsList] = useState<CommentType[]>([]);
+  const [pinnedFiels, setPinnedFiels] = useState<PinnedFielsType[]>([]);
 
   const getCommentDataBack = useCallback(async (taskId: string) => {
     const response = await api.comments.getAllComments(taskId);
@@ -53,12 +64,7 @@ export const CommentsProvider = (props: { children: React.ReactNode }) => {
     return commentsList;
   }, [commentsList]);
 
-  useEffect(() => {
-    console.log('commentsList', commentsList);
-  }, [commentsList]);
-
   const addComment = useCallback(async (taskId: string, addData: CommentNoIdType) => {
-    console.log(taskId, addData);
     const payload = {
       text: addData.text,
       author: addData.author,
@@ -107,6 +113,14 @@ export const CommentsProvider = (props: { children: React.ReactNode }) => {
     }
   }, []);
 
+  const setPinnedF = useCallback((data: PinnedFielsType) => {
+    setPinnedFiels([...pinnedFiels, data]);
+  }, []);
+
+  const getPinnedF = useCallback(() => {
+    return pinnedFiels;
+  }, [pinnedFiels]);
+
   const values = useMemo(
     () => ({
       getCommentDataBack,
@@ -114,9 +128,20 @@ export const CommentsProvider = (props: { children: React.ReactNode }) => {
       addComment,
       updateComment,
       deleteComment,
-      getUserData
+      getUserData,
+      setPinnedF,
+      getPinnedF
     }),
-    [getCommentDataBack, getCommentsList, addComment, updateComment, deleteComment, getUserData]
+    [
+      getCommentDataBack,
+      getCommentsList,
+      addComment,
+      updateComment,
+      deleteComment,
+      getUserData,
+      setPinnedF,
+      getPinnedF
+    ]
   );
 
   return <CommentsContext.Provider value={values}>{props.children}</CommentsContext.Provider>;

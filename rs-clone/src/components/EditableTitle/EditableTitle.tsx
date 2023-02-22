@@ -49,6 +49,7 @@ const EditableTitle = ({ titleProp, callback, id }: EditableTitleProps) => {
                 if (event.key === 'Enter') {
                   setCanEditTitle(false);
                   callback(id, { title });
+                  if (ref.current) ref.current.classList.remove(`${styles.visible}`);
                 }
               }}
             />
@@ -69,7 +70,6 @@ const EditableTitle = ({ titleProp, callback, id }: EditableTitleProps) => {
             onMouseDown={() => {
               setCanEditTitle(false);
               setTitle(memoTitle);
-              console.log(memoTitle);
             }}>
             <MdClear />
           </div>

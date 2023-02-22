@@ -75,7 +75,6 @@ const CommentRow = (props: {
   };
 
   const getFirstLetters = (first: string, last: string) => {
-    console.log(first, last);
     return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
   };
 

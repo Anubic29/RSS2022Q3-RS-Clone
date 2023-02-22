@@ -61,7 +61,6 @@ const TaskPopUp = (props: TaskProps) => {
   };
 
   const data = dataset();
-  console.log(data);
 
   const columnsData = getColumnList();
   const column = columnsData.filter((col) => {
@@ -109,7 +108,6 @@ const TaskPopUp = (props: TaskProps) => {
   };
 
   const url = window.location.href;
-  console.log(data.asigneeId, data.authorId);
 
   return (
     <>
