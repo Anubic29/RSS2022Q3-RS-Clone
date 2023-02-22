@@ -1,8 +1,9 @@
 type CommentTaskType = {
-  _id: string;
+  id: string;
   text: string;
   author: string;
-  date: Date;
+  date: string;
+  dateEdited?: string;
 };
 
 export default CommentTaskType;

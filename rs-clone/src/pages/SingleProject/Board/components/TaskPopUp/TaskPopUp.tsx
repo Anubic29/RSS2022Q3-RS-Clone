@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import classes from './TaskPopUp.module.scss';
 import { Link } from 'react-router-dom';
 import { BsLink45Deg } from 'react-icons/bs';
@@ -8,41 +8,67 @@ import EditableTitle from '../../../../../components/EditableTitle/EditableTitle
 import DescriptionBlock from './components/DescriptionBlock/DescriptionBlock';
 import CommentsBlock from './components/CommentsBlock/CommentsBlock';
 import { GrClose } from 'react-icons/gr';
-import { TbDots } from 'react-icons/tb';
 import BoxWithShadow from '../../../../../components/BoxWithShadow/BoxWithShadow';
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './components/DetailsBlock/DetailsBlock';
 import { useOverlay } from '../../../../../contexts/Overlay.context';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
+import FlipMenu from '../../../../../components/BtnMenuAction/BtnMenuAction';
+import { colorLightGrey } from '../../../../../theme/variables';
+import { useBoard } from '../../../../../contexts/Board.context';
+import { useComments } from '../../../../../contexts/Comments.context';
+import type TaskType from '../../../../../types/task/taskType';
 
 interface TaskProps {
   _id: string;
-  title: string;
   keyTask: string;
-  executor: string;
-  typeDone?: boolean;
 }
 
 const TaskPopUp = (props: TaskProps) => {
+  const { updateTask, deleteTask, getTaskList, getColumnList, getUserList } = useBoard();
+  const { getCommentsList, getCommentDataBack, getUserData } = useComments();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
-  const data = {
-    title: props.title,
-    keyTask: props.keyTask,
-    id: props._id,
-    executor: props.executor
-  };
 
   const clipboard = useClipboard();
   const params = useParams();
   const projectkId = params.id;
   const navigate = useNavigate();
 
-  const taskStates = ['dev ready', 'in review', 'in dev', 'done'];
+  useEffect(() => {
+    getCommentDataBack(props._id);
+  }, []);
+
+  const dataset = () => {
+    const task: TaskType = getTaskList().filter((task) => {
+      if (task._id === props._id) {
+        return task as TaskType;
+      }
+    })[0];
+    const userList = getUserList();
+    const result = {
+      _taskId: task._id,
+      taskTitle: task.title,
+      taskDescript: task.description,
+      taskComments: task.commentList,
+      taskColumnId: task.columnId,
+      taskProjectId: task.projectId,
+      authorId: task.author,
+      asigneeId: task.executor === 'auto' ? task.author : task.executor,
+      projectTeam: userList
+    };
+    return result;
+  };
+
+  const data = dataset();
+
+  const columnsData = getColumnList();
+  const column = columnsData.filter((col) => {
+    if (col._id === data.taskColumnId) return col;
+  })[0];
 
   const [isActive, setIsActive] = useState(false);
-  const [taskState, setTaskState] = useState('in dev');
-  const [dotsMenuActive, setDotsMenuActive] = useState(false);
+  const [taskState, setTaskState] = useState(column);
 
   const {
     ref,
@@ -68,16 +94,17 @@ const TaskPopUp = (props: TaskProps) => {
   const taskStateHandler = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     e.stopPropagation();
     const target = e.target as HTMLTextAreaElement;
-    setTaskState(() => target.getAttribute('value') as string);
+    const id = target.getAttribute('value');
+    if (id) updateTask(props._id, { columnId: id });
+    setTaskState(() => {
+      return columnsData.filter((col) => col._id === id)[0];
+    });
     setIsMenuVisible(false);
   };
 
-  // window.onclick = function () {
-  //   if (isMenuVisible) setIsMenuVisible(false);
-  // };
-
-  const dotsHandler = () => {
-    setDotsMenuActive(dotsMenuActive ? false : true);
+  const deleteHandler = () => {
+    deleteTask(props._id);
+    closeHandler();
   };
 
   const url = window.location.href;
@@ -90,7 +117,7 @@ const TaskPopUp = (props: TaskProps) => {
             <div className={classes.taskDetails_col__left}>
               <div className={classes.taskDetails_topLine}>
                 <Link to="/">
-                  <span className={classes.taskDetails_code}>{data.keyTask}</span>
+                  <span className={classes.taskDetails_code}>{props.keyTask}</span>
                 </Link>
                 <input className={classes.copy_input} ref={clipboard.target} value={url} readOnly />
                 <button className={classes.copy_button} onClick={clipboard.copy}>
@@ -98,33 +125,30 @@ const TaskPopUp = (props: TaskProps) => {
                 </button>
               </div>
               <div className={classes.taskDetails_taskName}>
-                <EditableTitle titleProp={data.title} />
+                <EditableTitle titleProp={data.taskTitle} callback={updateTask} id={props._id} />
               </div>
               <div className={classes.taskDetails_taskActions}></div>
               <div className={classes.taskDetails_taskDescriptionBlock}>
                 <h6 className={classes.taskDetails_descr__title}>Description</h6>
-                <DescriptionBlock />
+                <DescriptionBlock id={props._id} descript={data.taskDescript} />
               </div>
               <div className={classes.taskDetails_commentsBlock}>
                 <h6 className={classes.taskDetails_descr__title}>Comments</h6>
-                <CommentsBlock />
+                <CommentsBlock taskId={props._id} />
               </div>
             </div>
             <div className={classes.taskDetails_col__right}>
               <div className={classes.taskDetails_topLine}>
-                <div className={classes.dotsMenu}>
-                  <TbDots className={classes.taskDetails_nav} onClick={dotsHandler} />
-                  {dotsMenuActive && (
-                    <div className={classes.dotsMenu_wrap}>
-                      <BoxWithShadow>
-                        <ul className={classes.taskDetails_currentStatusUl}>
-                          <li className={classes.taskDetails_currentStatusLi}>Clone</li>
-                          <li className={classes.taskDetails_currentStatusLi}>delete</li>
-                        </ul>
-                      </BoxWithShadow>
-                    </div>
-                  )}
-                </div>
+                <FlipMenu
+                  options={[
+                    {
+                      title: 'Delete',
+                      callback: deleteHandler
+                    }
+                  ]}
+                  btnBackgrColorHover={colorLightGrey}
+                  btnBackgrColorActive={colorLightGrey}
+                />
                 <GrClose
                   className={classes.taskDetails_nav + ' ' + classes.stroke}
                   onClick={closeHandler}
@@ -132,22 +156,22 @@ const TaskPopUp = (props: TaskProps) => {
               </div>
               <div ref={ref} className={classes.taskDetails_changeStatusBlock}>
                 <button className={classes.taskDetails_changeStatusBtn} onClick={isActiveHandler}>
-                  <p className={classes.taskDetails_currentStatusActive}>{taskState}</p>
+                  <p className={classes.taskDetails_currentStatusActive}>{taskState.title}</p>
                   <MdExpandMore className={classes.expandArrow} />
                 </button>
                 {isMenuVisible && (
                   <div className={classes.submenu}>
                     <BoxWithShadow>
                       <ul className={classes.taskDetails_currentStatusUl}>
-                        {taskStates.map((state) => {
-                          if (state !== taskState) {
+                        {columnsData.map((state) => {
+                          if (state._id !== taskState._id) {
                             return (
                               <li
-                                key={state}
+                                key={state._id}
                                 className={classes.taskDetails_currentStatusLi}
                                 onClick={(e) => taskStateHandler(e)}
-                                value={state}>
-                                {state}
+                                value={state._id}>
+                                {state.title}
                               </li>
                             );
                           }
@@ -157,7 +181,13 @@ const TaskPopUp = (props: TaskProps) => {
                   </div>
                 )}
               </div>
-              <DetailsBlock />
+              <DetailsBlock
+                taskId={data._taskId}
+                asignee={data.asigneeId === 'auto' ? data.authorId : data.asigneeId}
+                author={data.authorId}
+                team={data.projectTeam}
+                assignToMe={data.authorId !== data.asigneeId}
+              />
             </div>
           </div>
         </>

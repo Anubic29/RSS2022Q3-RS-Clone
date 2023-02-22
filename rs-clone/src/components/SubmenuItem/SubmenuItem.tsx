@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import BoxWithShadow from '../BoxWithShadow/BoxWithShadow';
-import SubmenuNav from './components/SubmenuNav/SubmenuNaм';
+import { useNavigate } from 'react-router-dom';
 import SubmenuItemsBlock from './components/SubmenuItamsBlock/SubmenuItemsBlock';
 import { Link } from 'react-router-dom';
 import classes from './SubmenuItem.module.scss';
-import { IsAuthContex } from '../../context';
+import { IsAuthContex } from '../../contexs';
+import BoxWithShadow from '../BoxWithShadow/BoxWithShadow';
+import SubmenuNav from './components/SubmenuNav/SubmenuNav';
 
 const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
   const contextValue = useContext(IsAuthContex);
@@ -14,18 +15,21 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
     return tabValue;
   };
 
+  const navigate = useNavigate();
+
   const logOutHandler = () => {
     contextValue.setIsAuthenticated(false);
     localStorage.removeItem('accessToken');
+    navigate('/');
   };
 
   const link = () => {
     switch (props.menuItem) {
       case 'userMenu':
         return (
-          <Link to="/" onClick={logOutHandler}>
+          <div onMouseDown={logOutHandler}>
             <p>Log out</p>
-          </Link>
+          </div>
         );
       case 'project':
         return (
@@ -43,16 +47,11 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
   };
 
   return (
-    <div
-      className={
-        classes.submenu_box + ' ' + (props.menuItem === 'userMenu' ? classes.submenu_box_right : '')
-      }>
-      <BoxWithShadow>
-        <SubmenuNav onNavTabHandler={saveTabValueHandler} menuItem={props.menuItem} />
-        <SubmenuItemsBlock onTabChange={tab} menuItem={props.menuItem} />
-        <nav className={classes.submenuBottomNav}>{link()}</nav>
-      </BoxWithShadow>
-    </div>
+    <BoxWithShadow>
+      <SubmenuNav onNavTabHandler={saveTabValueHandler} menuItem={props.menuItem} />
+      <SubmenuItemsBlock onTabChange={tab} menuItem={props.menuItem} />
+      <nav className={classes.submenuBottomNav}>{link()}</nav>
+    </BoxWithShadow>
   );
 };
 

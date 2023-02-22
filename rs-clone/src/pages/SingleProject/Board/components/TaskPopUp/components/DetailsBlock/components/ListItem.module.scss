@@ -9,6 +9,7 @@
 .details_ListItem {
   margin-top: 15px;
   padding-left: 20px;
+  padding-right: 20px;
 
   &:hover {
     .pin {
@@ -21,17 +22,55 @@
   width: 100px;
 }
 
+.usersListRow {
+  padding: 3px 7px;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  &.hover:hover {
+    background-color: $colorHoverBlue;
+      cursor: text;
+    &::after {
+      color: $colorBorder;
+      font-size: 14px;
+      position: absolute;
+      right: 10px;
+    }
+  }
+}
+
+input.usersListRow,
+input.userRow_wrap:focus-visible,
+input.userRow_wrap:focus-visible {
+  outline: $colorPrimary 3px solid;
+  border: none;
+  height: 30px;
+  margin-left: 10px;
+}
+
 .details_listRow {
   margin-top: 20px;
+  display: flex;
+  position: relative;
 }
 
 .details_userIconDiv {
-  padding: 5px;
   border-radius: 50%;
   background-color: blueviolet;
   margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  vertical-align: middle;
 }
 
+.asigneeWrap {
+  position: relative;
+  width: 100%;
+}
 .pin {
   padding-left: 5px;
   width: 20px;
@@ -44,3 +83,64 @@
     fill: orange;
   }
 }
+
+.assignToMeBtn {
+  background-color: transparent;
+  border: none;
+  white-space: nowrap;
+  margin-right: auto;
+  margin-left: 46px;
+  opacity: 0.5;
+  margin-left: 45px;
+  opacity: 0.5;
+  position: absolute;
+  bottom: -13px;
+  &:hover {
+    color: orange;
+  }
+}
+.userRow_wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-items: center;
+}
+
+.asigneeListWrap {
+  position: relative;
+}
+
+.assigneeUl {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  min-height: 10px;
+  z-index: 20;
+  min-width: 280px;
+  transform: translate(-50%);
+  border: 1px solid $colorBackgroundHover;
+  border-radius: 0 0 5px 5px;
+  box-shadow: $shadowSubMenu;
+}
+
+.assigneeLi {
+  display: flex;
+  width: inherit;
+  height: 40px;
+  background-color: white;
+  line-height: 40px;
+  vertical-align: middle;
+  padding-left: 10px;
+  cursor: pointer;
+  transition: 100ms all ease;
+  &:hover {
+    font-size: 16px;
+    background-color: $colorBackgroundHover;
+    border-left: 3px $colorPrimary solid;
+  }
+}
+
+  input.users_listRow {
+    border: 3px $colorActiveInput solid;
+
+  }

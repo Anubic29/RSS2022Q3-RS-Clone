@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { Button } from '../../../../../components';
 import { useOverlay } from '../../../../../contexts';
 import projectBadges from '../../../../../data/projectBadges';

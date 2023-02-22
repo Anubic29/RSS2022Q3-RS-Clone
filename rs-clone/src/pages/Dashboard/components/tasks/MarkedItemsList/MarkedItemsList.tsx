@@ -3,6 +3,7 @@ import { MarkedItem } from '../..';
 import { useUser } from '../../../../../contexts';
 
 import styles from './MarkedItemsList.module.scss';
+import React from 'react';
 
 function MarkedItemsList() {
   const { notedItemList } = useUser();

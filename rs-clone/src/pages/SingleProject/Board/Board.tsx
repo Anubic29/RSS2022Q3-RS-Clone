@@ -14,6 +14,7 @@ import { Preloader, BtnAction } from '../../../components';
 import PartOverlay from '../../../components/PartOverlay/PartOverlay';
 
 import styles from './Board.module.scss';
+import React from 'react';
 
 function Board() {
   const { notedItemList, addNotedItem, deleteNotedItem } = useUser();

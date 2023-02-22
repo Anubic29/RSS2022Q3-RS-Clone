@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MdSearch, MdStar, MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import api from '../../api';

@@ -4,7 +4,7 @@ import classes from './LoginForm.module.scss';
 import api from '../../../../api';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { IsAuthContex } from '../../../../context';
+import { IsAuthContex } from '../../../../contexs';
 import { changeIsLoading } from '../../Auth';
 
 type ServerError = { errorMessage: string };

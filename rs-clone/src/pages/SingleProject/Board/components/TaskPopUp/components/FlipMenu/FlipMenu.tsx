@@ -1,11 +1,13 @@
-import { BtnAction } from '../';
-import { colorBackgroundActiveMenu, colorContentActiveMenu } from '../../theme/variables';
+import BtnAction from '../../../../../../../components/BtnMenuAction/BtnMenuAction';
+import {
+  colorBackgroundActiveMenu,
+  colorContentActiveMenu
+} from '../../../../../../../theme/variables';
 import { MdMoreHoriz } from 'react-icons/md';
-import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
+import useComponentVisible from '../../../../../../../hooks/useComponentVisible/useComponentVisible';
 
 import styles from './BtnMenuAction.module.scss';
 import { useEffect } from 'react';
-import { IconType } from 'react-icons';
 
 type Option = {
   title: string;
@@ -19,9 +21,6 @@ interface BtnMenuActionProps {
   btnBackgrColorHover: string;
   btnBackgrColorActive: string;
   onActiveMenu?: (value: boolean) => void;
-  image?: IconType;
-  backgrColorImportant?: string;
-  colorImg?: string;
 }
 
 function BtnMenuAction(props: BtnMenuActionProps) {
@@ -37,9 +36,10 @@ function BtnMenuAction(props: BtnMenuActionProps) {
         className={styles['menu__btn']}
         onClick={() => setIsComponentVisible(!isComponentVisible)}>
         <BtnAction
+          options={[]}
           image={MdMoreHoriz}
-          backgrColorHover={props.btnBackgrColorHover}
-          backgrColorActive={props.btnBackgrColorActive}
+          btnBackgrColorHover={props.btnBackgrColorHover}
+          btnBackgrColorActive={props.btnBackgrColorActive}
           backgrColorImportant={isComponentVisible ? colorBackgroundActiveMenu : undefined}
           colorImg={isComponentVisible ? colorContentActiveMenu : undefined}
         />

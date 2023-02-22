@@ -1,20 +1,36 @@
-import { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Button, EmptyData, Overlay, Preloader } from '../../components';
 import { AsideBar } from './components';
 import { useBoard } from '../../contexts/Board.context';
 import { useProjects } from '../../contexts';
 import ProjectType from '../../types/project/projectType';
+import { useUser } from '../../contexts';
 
 import './SingleProject.scss';
 
 function SingleProject() {
   const { id } = useParams();
   const { setProjectDataBack, setTasksDataBack, setUsersDataBack } = useBoard();
-  const { isProjectExist } = useProjects();
+  const { isProjectExist, getProjects } = useProjects();
   const [projectExistence, setProjectExistence] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [customMessage, setCustomMessage] = useState('Project is not exist');
+  const { currentUser } = useUser();
+
+  useEffect(() => {
+    if (currentUser) {
+      (async (_id: string) => {
+        try {
+          await getProjects(_id);
+        } catch {
+          setCustomMessage('Server error');
+        } finally {
+          setIsLoading(false);
+        }
+      })(currentUser._id);
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     (async () => {

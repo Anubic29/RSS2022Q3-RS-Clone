@@ -1,3 +1,4 @@
+import React from 'react';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import api from '../api';
 import CurrentUserType from '../types/user/currentUserType';

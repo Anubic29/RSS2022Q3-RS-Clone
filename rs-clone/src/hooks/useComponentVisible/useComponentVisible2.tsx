@@ -2,10 +2,18 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function useComponentVisible(initialIsVisible: boolean) {
   const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLInputElement>(null);
+  // const ref2 = useRef<HTMLInputElement>(null);
 
-  const handleClickOutside = () => {
-    setIsComponentVisible(false);
+  const handleClickOutside = (event: Event) => {
+    if (
+      ref.current &&
+      !ref.current.contains(event.target as HTMLDivElement)
+      // ref2.current &&
+      // !ref2.current.contains(event.target as HTMLInputElement)
+    ) {
+      setIsComponentVisible(false);
+    }
   };
 
   useEffect(() => {

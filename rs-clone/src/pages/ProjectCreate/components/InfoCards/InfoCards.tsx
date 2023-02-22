@@ -3,6 +3,7 @@ import Kanban from '../../../../assets/kanban.svg';
 import TeamManaged from '../../../../assets/team-managed.svg';
 
 import styles from './InfoCards.module.scss';
+import React from 'react';
 
 const INFO_CARDs_CUSTOM_BACKGROUND = {
   lightPurple: '#EAE6FF'

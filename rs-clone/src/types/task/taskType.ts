@@ -1,4 +1,4 @@
-import CommentTaskType from './commentTaskType';
+import CommentTaskType from './сommentTaskType';
 
 type TaskType = {
   _id: string;

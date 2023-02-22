@@ -2,6 +2,7 @@ import DeveloperItem from './DevItem/DeveloperItem';
 import classes from './Footer.module.scss';
 
 import RSLogo from '../../assets/icons/rs_logo.svg';
+import React from 'react';
 
 const Footer = () => {
   return (

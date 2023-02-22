@@ -92,3 +92,14 @@
 .header_userMenu {
   margin-left: auto;
 }
+
+.absolute {
+  position: absolute;
+  top: 60px;
+  min-width: 350px;
+  z-index: 21;
+}
+
+.submenu_box_right {
+  right: 20px;
+}

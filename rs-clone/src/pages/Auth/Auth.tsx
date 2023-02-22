@@ -5,6 +5,7 @@ import Modal from '../../components/Modal/Modal';
 import BoxWithShadow from '../../components/BoxWithShadow/BoxWithShadow';
 import LoaderImg from '../../components/Loader/Loader';
 import Message from '../../components/LoaderMessage/Message';
+import React from 'react';
 
 function Auth() {
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);

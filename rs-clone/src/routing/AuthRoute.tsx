@@ -14,6 +14,7 @@ import { ProjectsProvider } from '../contexts';
 import { UserProvider } from '../contexts/User.context';
 import { AlertsProvider } from '../contexts/AlertsContext';
 import { TasksProvider } from '../contexts/TasksContext';
+import { CommentsProvider } from '../contexts/Comments.context';
 
 function AuthRoute() {
   return (
@@ -32,7 +33,9 @@ function AuthRoute() {
                   path="projects/:id"
                   element={
                     <BoardProvider>
-                      <SingleProject />
+                      <CommentsProvider>
+                        <SingleProject />
+                      </CommentsProvider>
                     </BoardProvider>
                   }>
                   <Route index element={<Board />} />

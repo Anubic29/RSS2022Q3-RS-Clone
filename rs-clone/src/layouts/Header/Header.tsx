@@ -1,31 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdExpandMore } from 'react-icons/md';
+
 import UserIcon from '../../components/UserIcon/UserIcon';
 import SubmenuItem from '../../components/SubmenuItem/SubmenuItem';
 import MenuSpan from '../../components/SubmenuItem/components/MenuSpan/MenuSpan';
 import classes from './Header.module.scss';
 import Button from '../../components/Button/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
   const [submenu, setSubmenu] = useState('');
 
+  const navigate = useNavigate();
+
+  const {
+    ref: workRef,
+    isComponentVisible: isWorkMenuVisible,
+    setIsComponentVisible: setWorkIsMenuVisible
+  } = useComponentVisible(false);
+
+  const {
+    ref: projRef,
+    isComponentVisible: isProjMenuVisible,
+    setIsComponentVisible: setProjIsMenuVisible
+  } = useComponentVisible(false);
+
+  const {
+    ref: userRef,
+    isComponentVisible: isUserMenuVisible,
+    setIsComponentVisible: setUserIsMenuVisible
+  } = useComponentVisible(false);
+
   const workMenuHandler = () => {
     const item = 'work';
     setActiveItem(item);
     setSubmenu(item);
+    setWorkIsMenuVisible(true);
     if (activeItem === item) {
       setActiveItem('');
+      setWorkIsMenuVisible(false);
     }
   };
+
+  useEffect(() => {
+    if (!isWorkMenuVisible && !isProjMenuVisible && !isUserMenuVisible) setActiveItem('');
+  }, [isWorkMenuVisible, isProjMenuVisible, isUserMenuVisible]);
 
   const projectMenuHandler = () => {
     const item = 'project';
     setActiveItem(item);
     setSubmenu(item);
+    setProjIsMenuVisible(true);
     if (activeItem === item) {
       setActiveItem('');
+      setProjIsMenuVisible(false);
     }
   };
 
@@ -33,8 +63,10 @@ const Header = () => {
     const item = 'userMenu';
     setActiveItem(item);
     setSubmenu(item);
+    setUserIsMenuVisible(true);
     if (activeItem === item) {
       setActiveItem('');
+      setUserIsMenuVisible(false);
     }
   };
 
@@ -53,7 +85,11 @@ const Header = () => {
                 <MenuSpan text="Your work"></MenuSpan>
                 <MdExpandMore className={classes.header_menuArrow} />
               </div>
-              {activeItem === 'work' && <SubmenuItem menuItem={submenu}></SubmenuItem>}
+              {activeItem === 'work' && (
+                <div className={classes.absolute} ref={workRef}>
+                  <SubmenuItem menuItem={submenu}></SubmenuItem>
+                </div>
+              )}
             </li>
             <li className={classes.header_menuItem}>
               <div
@@ -64,16 +100,26 @@ const Header = () => {
                 <MenuSpan text="Projects"></MenuSpan>
                 <MdExpandMore className={classes.header_menuArrow} />
               </div>
-              {activeItem === 'project' && <SubmenuItem menuItem={submenu}></SubmenuItem>}
+              {activeItem === 'project' && isProjMenuVisible && (
+                <div className={classes.absolute} ref={projRef}>
+                  <SubmenuItem menuItem={submenu}></SubmenuItem>
+                </div>
+              )}
             </li>
           </ul>
         </nav>
-        <Button className={classes.header_createBtn}>Create</Button>
+        <Button onClick={() => navigate('/create-project')} className={classes.header_createBtn}>
+          Create
+        </Button>
         <div className={classes.header_userMenu}>
           <div onClick={userIconHandler}>
             <UserIcon user="OD"></UserIcon>
           </div>
-          {activeItem === 'userMenu' && <SubmenuItem menuItem={submenu}></SubmenuItem>}
+          {activeItem === 'userMenu' && isUserMenuVisible && (
+            <div className={classes.absolute + ' ' + classes.submenu_box_right} ref={userRef}>
+              <SubmenuItem menuItem={submenu}></SubmenuItem>
+            </div>
+          )}
         </div>
       </div>
     </header>

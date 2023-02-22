@@ -4,30 +4,48 @@ import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock
 import CommentRow from '../CommentRow/CommentRow';
 import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
 import { BiSortDown, BiSortUp } from 'react-icons/bi';
+import { useComments } from '../../../../../../../contexts/Comments.context';
+import { useUser } from '../../../../../../../contexts';
 
-export type commentDetails = {
-  id: string;
-  userName: string;
-  dateCreated: number;
-  body: string;
+type CommentType = {
+  _id: string;
+  text: string;
+  author: string;
+  date: string;
+  dateUpdate: string;
 };
 
-const CommentsBlock = () => {
-  const [savedDescr, setSavedDescr] = useState<commentDetails[]>([]);
+const CommentsBlock = (props: { taskId: string }) => {
+  const { getCommentsList, addComment, updateComment, deleteComment } = useComments();
+  const list = getCommentsList();
+  const [savedDescr, setSavedDescr] = useState<CommentType[]>(list);
   const [editorMode, setEditorMode] = useState(false);
   const [newestFirst, setNewestFirt] = useState(true);
 
-  const onTextValueHandler = (val: string) => {
-    const comment: commentDetails = {
-      userName: 'user Name',
-      id: Date.now().toString(),
-      dateCreated: Date.now(),
-      body: val
-    };
-    setSavedDescr((prevV) => {
-      console.log([...prevV, comment]);
-      return [...prevV, comment];
-    });
+  const { currentUser } = useUser();
+
+  useEffect(() => {
+    setSavedDescr(list);
+  }, [list]);
+
+  const onTextValueHandler = async (val: string, id?: string) => {
+    if (!id) {
+      addComment(props.taskId, {
+        text: val,
+        author: currentUser ? currentUser._id : '',
+        date: JSON.stringify(Date.now()),
+        dateUpdate: ''
+      });
+    }
+    if (id) {
+      updateComment(props.taskId, id, {
+        _id: id,
+        text: val,
+        author: currentUser ? currentUser._id : '',
+        date: '',
+        dateUpdate: JSON.stringify(Date.now())
+      });
+    }
   };
 
   const editorModeHandler = () => {
@@ -39,20 +57,26 @@ const CommentsBlock = () => {
   };
 
   const deleteHandler = (id: string) => {
-    setSavedDescr((array) => {
-      console.log(array.filter((el) => el.id !== id));
-      return array.filter((el) => el.id !== id);
-    });
+    deleteComment(props.taskId, id);
   };
   const sortHandler = () => {
     setNewestFirt(newestFirst ? false : true);
+  };
+
+  const getFirstLetters = (first: string, last: string) => {
+    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
   };
 
   return (
     <div className={classes.commentsWrap}>
       <div className={classes.commentDetails_editorWrap}>
         <div className={classes.commentDetails_iconColumn}>
-          <UserIcon user={'OD'} />
+          <UserIcon
+            user={getFirstLetters(
+              currentUser?.firstName as string,
+              currentUser?.lastName as string
+            )}
+          />
         </div>
         <div className={classes.commentDetails_commentColumn}>
           <div
@@ -92,16 +116,20 @@ const CommentsBlock = () => {
       {savedDescr.length > 0 &&
         savedDescr
           .sort((a, b) =>
-            newestFirst ? b.dateCreated - a.dateCreated : a.dateCreated - b.dateCreated
+            newestFirst
+              ? JSON.parse(b.date) - JSON.parse(a.date)
+              : JSON.parse(a.date) - JSON.parse(b.date)
           )
           .map((comment) => (
             <CommentRow
-              id={comment.id}
-              userName={comment.userName}
-              body={comment.body}
-              dateCreated={comment.dateCreated}
-              key={comment.id}
+              taskId={props.taskId}
+              _id={comment._id}
+              author={comment.author}
+              text={comment.text}
+              date={JSON.parse(comment.date)}
+              key={comment._id}
               onDelete={deleteHandler}
+              dateUpdate={comment.dateUpdate}
             />
           ))}
     </div>

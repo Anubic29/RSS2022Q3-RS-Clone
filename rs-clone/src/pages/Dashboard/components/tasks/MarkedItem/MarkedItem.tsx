@@ -1,9 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import {
   MdOutlineViewColumn as BoardIcon,
   MdCheckBox as TaskIcon,
   MdOutlineStar as StarIcon
 } from 'react-icons/md';
-import React, { useEffect, useState } from 'react';
 import { useProjects, useUser } from '../../../../../contexts';
 import { useTasks } from '../../../../../contexts/TasksContext';
 import TaskType from '../../../../../types/task/taskType';

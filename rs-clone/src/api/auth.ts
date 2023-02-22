@@ -1,5 +1,4 @@
 import { AxiosInstance } from 'axios';
-import { SignUp } from '../pages';
 
 export default function (instance: AxiosInstance) {
   return {
