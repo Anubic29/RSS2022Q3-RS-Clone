@@ -4,10 +4,12 @@ import Header from './layouts/Header/Header';
 import Footer from './layouts/Footer/Footer';
 import { OverlayProvider, PartOverlayProvider, useUser } from './contexts';
 import Overlay from './components/Overlay/Overlay';
+import { useAlerts } from './contexts/AlertsContext';
 import React from 'react';
 
 function App() {
   const { setUserDataBack } = useUser();
+  const { alerts } = useAlerts();
 
   useEffect(() => {
     (async () => {
@@ -20,11 +22,16 @@ function App() {
       <OverlayProvider>
         <PartOverlayProvider>
           <Header />
+
           <div className="App">
             <Outlet />
           </div>
+
           <Footer />
+
           <Overlay scope={'App'} />
+
+          {!!alerts.length && <div className="AlertsContainer">{alerts}</div>}
         </PartOverlayProvider>
       </OverlayProvider>
     </>

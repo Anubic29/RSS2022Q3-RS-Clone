@@ -5,14 +5,15 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../../../theme/variables';
-import { BtnAction, Column, ColumnRowUser } from '../';
+import { Column, ColumnRowUser } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 import { usePartOverlay } from '../../../../../contexts';
+import Loader from '../../../../../components/Loader/Loader';
+import { BtnAction } from '../../../../../components';
 
 import styles from './ColumnList.module.scss';
-import Loader from '../../../../../components/Loader/Loader';
 
 interface ColumnListProps {
   group: '' | 'Executor';

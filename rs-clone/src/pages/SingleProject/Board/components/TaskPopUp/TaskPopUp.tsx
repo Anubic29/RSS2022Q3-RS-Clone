@@ -14,7 +14,7 @@ import DetailsBlock from './components/DetailsBlock/DetailsBlock';
 import { useOverlay } from '../../../../../contexts/Overlay.context';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
-import FlipMenu from '../BtnMenuAction/BtnMenuAction';
+import FlipMenu from '../../../../../components/BtnMenuAction/BtnMenuAction';
 import { colorLightGrey } from '../../../../../theme/variables';
 import { useBoard } from '../../../../../contexts/Board.context';
 import { useComments } from '../../../../../contexts/Comments.context';

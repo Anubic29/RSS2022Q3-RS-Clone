@@ -8,6 +8,9 @@ import InfoCard from './InfoCard/InfoCard';
 import Preloader from './Preloader/Preloader';
 import Dropdown from './Dropdown/Dropdown';
 import Overlay from './Overlay/Overlay';
+import UserAvatar from './UserAvatar/UserAvatar';
+import BtnAction from './BtnAction/BtnAction';
+import BtnMenuAction from './BtnMenuAction/BtnMenuAction';
 import Loader from './Loader/Loader';
 import Alert from './Alert/Alert';
 
@@ -22,6 +25,9 @@ export {
   Preloader,
   Dropdown,
   Overlay,
+  UserAvatar,
+  BtnAction,
+  BtnMenuAction,
   Loader,
   Alert
 };

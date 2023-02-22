@@ -1,4 +1,4 @@
-import BtnAction from '../../../BtnAction/BtnAction';
+import BtnAction from '../../../../../../../components/BtnMenuAction/BtnMenuAction';
 import {
   colorBackgroundActiveMenu,
   colorContentActiveMenu
@@ -36,9 +36,10 @@ function BtnMenuAction(props: BtnMenuActionProps) {
         className={styles['menu__btn']}
         onClick={() => setIsComponentVisible(!isComponentVisible)}>
         <BtnAction
+          options={[]}
           image={MdMoreHoriz}
-          backgrColorHover={props.btnBackgrColorHover}
-          backgrColorActive={props.btnBackgrColorActive}
+          btnBackgrColorHover={props.btnBackgrColorHover}
+          btnBackgrColorActive={props.btnBackgrColorActive}
           backgrColorImportant={isComponentVisible ? colorBackgroundActiveMenu : undefined}
           colorImg={isComponentVisible ? colorContentActiveMenu : undefined}
         />
