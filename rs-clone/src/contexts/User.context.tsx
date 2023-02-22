@@ -49,14 +49,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const deleteNotedItem = useCallback(
     async (id: string) => {
       if (currentUser) {
-        const idx = notedItemList.findIndex((data) => data.id === id);
         const response = await api.users.deleteNotedData(currentUser._id, id);
+
         if (response.status === 200 && response.data) {
-          notedItemList.splice(idx, 1);
-          setNotedItemList(notedItemList);
+          setNotedItemList((notedItemList) => notedItemList.filter((item) => item.id !== id));
+
           return true;
         }
       }
+
       return false;
     },
     [notedItemList, currentUser]

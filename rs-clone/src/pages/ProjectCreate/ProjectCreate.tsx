@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InfoCards, ProjectForm } from './components';
 import { Button, Preloader } from '../../components';
+import { useAlerts } from '../../contexts/AlertsContext';
 
 import styles from './ProjectCreate.module.scss';
 
@@ -10,8 +11,11 @@ const FORM_ID = 'project-create-form';
 function ProjectCreate() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { alerts } = useAlerts();
 
-  const onCancelHandler = () => navigate('/');
+  const onCancelHandler = () => {
+    navigate('/');
+  };
 
   return (
     <section className={styles.ProjectCreate}>
@@ -42,6 +46,8 @@ function ProjectCreate() {
           <Button form={FORM_ID}>Create project</Button>
         </div>
       </div>
+
+      {!!alerts.length && <div className="AlertsContainer">{alerts}</div>}
     </section>
   );
 }

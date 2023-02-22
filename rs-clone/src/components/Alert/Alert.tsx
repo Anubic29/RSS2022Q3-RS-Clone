@@ -5,12 +5,16 @@ import {
   MdInfoOutline as InfoIcon,
   MdCheckCircleOutline as SuccessIcon
 } from 'react-icons/md';
+import { useAlerts } from '../../contexts/AlertsContext';
+import { MdOutlineClear as RemoveIcon } from 'react-icons/md';
 
 import styles from './Alert.module.scss';
 
-interface AlertProps {
+export interface AlertProps {
+  id: string;
   type: 'Warning' | 'Success' | 'Error' | 'Info';
   message: string;
+  isFinite: boolean;
   className?: string;
   children?: React.ReactNode;
 }
@@ -23,15 +27,25 @@ const ICONS_MAP = {
 };
 
 function Alert(props: AlertProps) {
-  const { type, message, children, className } = props;
+  const { type, message, className, id, children } = props;
+  const { removeAlert } = useAlerts();
+
+  const onClickHandler = () => {
+    removeAlert(id);
+  };
 
   return (
-    <div className={[styles.Alert, styles[`Alert${type}`], className].join(' ')}>
+    <div className={[styles.Alert, styles[`Alert${type}`], className].join(' ')} id={id}>
       <div className={styles.RowTop}>
-        {ICONS_MAP[type]}
-        <p className={styles.Message}>{message}</p>
+        <div className={styles.TitleArea}>
+          {ICONS_MAP[type]}
+          <p className={styles.Message}>{message}</p>
+        </div>
+
+        <RemoveIcon className={styles.RemoveIcon} onClick={onClickHandler} />
       </div>
-      {children && <div className={styles.RowBottom}>{children}</div>}
+
+      <div className={styles.RowBottom}>{children}</div>
     </div>
   );
 }

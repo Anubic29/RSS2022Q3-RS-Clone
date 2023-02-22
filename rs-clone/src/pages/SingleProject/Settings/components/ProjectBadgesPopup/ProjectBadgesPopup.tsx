@@ -1,30 +1,35 @@
-import React from 'react';
-import { useCallback, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { Button } from '../../../../../components';
-import Loader from '../../../../../components/Loader/Loader';
 import { useOverlay } from '../../../../../contexts';
-import { useBoard } from '../../../../../contexts/Board.context';
 import projectBadges from '../../../../../data/projectBadges';
 
 import styles from './ProjectBadgesPopup.module.scss';
 
-function ProjectBadgesPopup() {
-  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
-  const { updateProject } = useBoard();
-  const [selectedImage, setSelectedImage] = useState<number>();
+interface ProjectBadgesPopupProps {
+  imageSrc: string;
+  setImageSrc: Dispatch<SetStateAction<string>>;
+  setImageBg: Dispatch<SetStateAction<string>>;
+}
+
+function ProjectBadgesPopup(props: ProjectBadgesPopupProps) {
+  const { setImageSrc, setImageBg, imageSrc } = props;
+  const { setIsVisibleBoard } = useOverlay();
+  const [selectedImage, setSelectedImage] = useState(imageSrc);
 
   const onClickHandler = useCallback(() => {
     setIsVisibleBoard(false);
   }, []);
 
   const onSubmitHandler = useCallback(async () => {
-    if (typeof selectedImage === 'number') {
-      setChildrenBoard(<Loader />);
-      const pathImage = projectBadges.find((data) => data.id === selectedImage)?.src;
-      await updateProject({ pathImage });
-      setIsVisibleBoard(false);
+    const badge = projectBadges.find((data) => data.src === selectedImage);
+
+    if (badge) {
+      setImageSrc(badge.src);
+      setImageBg(badge.bg);
     }
-  }, [projectBadges, updateProject, selectedImage]);
+
+    setIsVisibleBoard(false);
+  }, [projectBadges, selectedImage]);
 
   return (
     <div className={styles.ProjectBadgesPopup}>
@@ -33,11 +38,11 @@ function ProjectBadgesPopup() {
       <ul className={styles.BadgesList}>
         {projectBadges.map((badge) => {
           const className =
-            badge.id === selectedImage
+            badge.src === selectedImage
               ? `${styles.BadgeItem} ${styles.selected}`
               : styles.BadgeItem;
           return (
-            <li className={className} key={badge.id} onClick={() => setSelectedImage(badge.id)}>
+            <li className={className} key={badge.id} onClick={() => setSelectedImage(badge.src)}>
               <img className={styles.Badge} src={badge.src} alt="Project badge" />
             </li>
           );

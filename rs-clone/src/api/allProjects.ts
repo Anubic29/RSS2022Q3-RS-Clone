@@ -13,6 +13,17 @@ async function getProjectsRequest(userId: string): Promise<ProjectType[]> {
   return await res.json();
 }
 
+async function getProjectRequest(id: string): Promise<ProjectType> {
+  const res = await fetch(`${BASE_URL}/projects/${id}/info`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${ACCESS_TOKEN}`
+    }
+  });
+
+  return await res.json();
+}
+
 async function deleteProjectRequest(id: string) {
   await fetch(`${BASE_URL}/projects/${id}/info`, {
     method: 'DELETE',
@@ -33,4 +44,4 @@ async function createProjectRequest(body: ProjectCreateBody) {
   });
 }
 
-export { getProjectsRequest, deleteProjectRequest, createProjectRequest };
+export { getProjectsRequest, deleteProjectRequest, createProjectRequest, getProjectRequest };
