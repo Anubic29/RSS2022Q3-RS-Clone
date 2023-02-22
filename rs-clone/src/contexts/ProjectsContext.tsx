@@ -7,8 +7,7 @@ import {
   getProjectsRequest
 } from '../api/allProjects';
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
-import { ACCESS_TOKEN, BASE_URL, getCurrentUserId } from '../api/config';
-import TaskType from '../types/task/taskType';
+import { ACCESS_TOKEN, BASE_URL } from '../api/config';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];

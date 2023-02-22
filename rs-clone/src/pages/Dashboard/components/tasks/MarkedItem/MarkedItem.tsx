@@ -4,7 +4,7 @@ import {
   MdOutlineStar as StarIcon
 } from 'react-icons/md';
 import React, { useEffect, useState } from 'react';
-import { useProjects } from '../../../../../contexts';
+import { useProjects, useUser } from '../../../../../contexts';
 import { useTasks } from '../../../../../contexts/TasksContext';
 import TaskType from '../../../../../types/task/taskType';
 import ProjectType from '../../../../../types/project/projectType';
@@ -27,7 +27,8 @@ const ICONS_MAP = {
 function MarkedItem(props: MarkedItemProps) {
   const { type, _id } = props;
   const { getProject, projects } = useProjects();
-  const { getTask, removeNotedItem } = useTasks();
+  const { getTask } = useTasks();
+  const { deleteNotedItem } = useUser();
   const { addAlert } = useAlerts();
   const [task, setTask] = useState<TaskType | null>(null);
   const [projectTitle, setProjectTitle] = useState('');
@@ -55,9 +56,14 @@ function MarkedItem(props: MarkedItemProps) {
     event.preventDefault();
 
     setIsLoading(true);
-    await removeNotedItem(_id);
+    await deleteNotedItem(_id);
     setIsLoading(false);
   };
+
+  const linkToMarkedItem =
+    type === 'project'
+      ? `projects/${_id}`
+      : `projects/${task?.projectId}/selected-task/${task?._id}`;
 
   return (
     <div className={styles.ItemWrapper}>
@@ -67,12 +73,7 @@ function MarkedItem(props: MarkedItemProps) {
         </div>
       )}
 
-      <Link
-        to={
-          type === 'project'
-            ? `projects/${_id}`
-            : `projects/${task?.projectId}/selected-task/${task?._id}`
-        }>
+      <Link to={linkToMarkedItem}>
         <li className={styles.TaskItem}>
           <div className={styles.IconsContainer}>
             <StarIcon

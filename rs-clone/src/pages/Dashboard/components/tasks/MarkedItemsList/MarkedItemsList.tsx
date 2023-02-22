@@ -1,37 +1,17 @@
-import { EmptyData, Preloader } from '../../../../../components';
+import { EmptyData } from '../../../../../components';
 import { MarkedItem } from '../..';
-import { useTasks } from '../../../../../contexts/TasksContext';
-import { useEffect, useState } from 'react';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
+import { useUser } from '../../../../../contexts';
 
 import styles from './MarkedItemsList.module.scss';
 
 function MarkedItemsList() {
-  const { notedItems, getNotedItems } = useTasks();
-  const { addAlert } = useAlerts();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        await getNotedItems();
-      } catch {
-        addAlert('Error', 'Server error. Unable to load marked items. Try again later');
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
+  const { notedItemList } = useUser();
 
   return (
     <>
-      {isLoading ? (
-        <div className={styles.Empty}>
-          <Preloader text="Loading marked items..." />
-        </div>
-      ) : notedItems.length ? (
+      {notedItemList.length ? (
         <ul className={styles.MarkedItemsList}>
-          {notedItems.map((item) => {
+          {notedItemList.map((item) => {
             return (
               <MarkedItem type={item.type as 'task' | 'project'} _id={item.id} key={item._id} />
             );
