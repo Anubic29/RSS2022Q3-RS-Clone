@@ -50,6 +50,10 @@
 }
 
 .ProjectTitle {
+  max-width: 171px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;

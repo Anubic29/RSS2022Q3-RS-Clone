@@ -1,17 +1,21 @@
 import { EmptyData } from '../../../../../components';
 import { MarkedItem } from '../..';
+import { useUser } from '../../../../../contexts';
 
 import styles from './MarkedItemsList.module.scss';
 
 function MarkedItemsList() {
-  const testCondition = true;
+  const { notedItemList } = useUser();
 
   return (
     <>
-      {testCondition ? (
+      {notedItemList.length ? (
         <ul className={styles.MarkedItemsList}>
-          <MarkedItem type="Task" depProject="Company BDSM Code" title="Task" />
-          <MarkedItem type="Board" depProject="Company BDSM Code" title="Board" />
+          {notedItemList.map((item) => {
+            return (
+              <MarkedItem type={item.type as 'task' | 'project'} _id={item.id} key={item._id} />
+            );
+          })}
         </ul>
       ) : (
         <div className={styles.Empty}>

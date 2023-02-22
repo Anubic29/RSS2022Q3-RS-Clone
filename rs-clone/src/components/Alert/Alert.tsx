@@ -14,7 +14,9 @@ export interface AlertProps {
   id: string;
   type: 'Warning' | 'Success' | 'Error' | 'Info';
   message: string;
+  isFinite: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 const ICONS_MAP = {
@@ -25,7 +27,7 @@ const ICONS_MAP = {
 };
 
 function Alert(props: AlertProps) {
-  const { type, message, className, id } = props;
+  const { type, message, className, id, children } = props;
   const { removeAlert } = useAlerts();
 
   const onClickHandler = () => {
@@ -42,6 +44,8 @@ function Alert(props: AlertProps) {
 
         <RemoveIcon className={styles.RemoveIcon} onClick={onClickHandler} />
       </div>
+
+      <div className={styles.RowBottom}>{children}</div>
     </div>
   );
 }

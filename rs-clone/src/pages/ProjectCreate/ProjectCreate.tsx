@@ -11,10 +11,9 @@ const FORM_ID = 'project-create-form';
 function ProjectCreate() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { alerts, removeAllAlerts } = useAlerts();
+  const { alerts } = useAlerts();
 
   const onCancelHandler = () => {
-    removeAllAlerts();
     navigate('/');
   };
 

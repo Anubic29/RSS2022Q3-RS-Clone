@@ -5,6 +5,7 @@ import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './compone
 import { useBoard } from '../../../contexts/Board.context';
 import Loader from '../../../components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import { useAlerts } from '../../../contexts/AlertsContext';
 
 import styles from './Settings.module.scss';
 
@@ -15,6 +16,7 @@ function Settings() {
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const [imageSrc, setImageSrc] = useState(projectInfo?.pathImage || '');
   const [imageBg, setImageBg] = useState(projectInfo?.color || '');
+  const { addAlert } = useAlerts();
   const navigate = useNavigate();
 
   const showPopupHandler = () => {
@@ -34,6 +36,7 @@ function Settings() {
           await deleteProject();
           setIsVisibleBoard(false);
           navigate('/');
+          addAlert('Success', 'Project was deleted successfully');
         }
       }
     ];

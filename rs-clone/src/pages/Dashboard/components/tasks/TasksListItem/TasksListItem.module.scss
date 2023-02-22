@@ -1,5 +1,9 @@
 @import '../../../../../theme/variables';
 
+.ItemWrapper {
+  position: relative;
+}
+
 .TaskItem {
   display: flex;
   align-items: center;
@@ -65,4 +69,16 @@
   font-weight: 400;
   text-transform: uppercase;
   color: $colorTaskInfoText;
+}
+
+.PreloaderContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: $colorProjectPreloaderContainerBackground;
 }
