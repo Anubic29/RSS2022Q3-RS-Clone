@@ -24,15 +24,15 @@ function Task(props: TaskProps) {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const { getTaskList, getFullNameUser, deleteTask } = useBoard();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
-  const { getNotedItemList, addNotedItem, deleteNotedItem } = useUser();
+  const { isNotedItem, addNotedItem, deleteNotedItem } = useUser();
   const [isLoadingRemove, setIsLoadingRemove] = useState(false);
   const [isNoted, setIsNoted] = useState(false);
 
   const user = useMemo(() => getFullNameUser(props.executor), [props.executor, getFullNameUser]);
 
   useEffect(() => {
-    setIsNoted(getNotedItemList('task').some((data) => data.id === props._id));
-  }, [getNotedItemList, props._id]);
+    setIsNoted(isNotedItem(props._id));
+  }, [isNotedItem, props._id]);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -74,10 +74,15 @@ function Task(props: TaskProps) {
       },
       {
         title: 'Remove',
-        callback: deleteTaskCallback
+        callback: () => {
+          if (isNoted) {
+            deleteNotedItem(props._id);
+          }
+          deleteTaskCallback();
+        }
       }
     ];
-  }, [onClickHandlerNoted, deleteTaskCallback, isNoted]);
+  }, [onClickHandlerNoted, deleteTaskCallback, isNoted, deleteNotedItem]);
 
   return (
     <div

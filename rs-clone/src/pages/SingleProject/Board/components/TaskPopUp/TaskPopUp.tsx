@@ -26,7 +26,7 @@ interface TaskProps {
 const TaskPopUp = (props: TaskProps) => {
   const { updateTask, deleteTask, getTaskList, getColumnList, getUserList } = useBoard();
   const { getCommentsList, getCommentDataBack, getUserData } = useComments();
-  const { getNotedItemList, addNotedItem, deleteNotedItem } = useUser();
+  const { isNotedItem, addNotedItem, deleteNotedItem } = useUser();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const [isNoted, setIsNoted] = useState(false);
 
@@ -40,8 +40,8 @@ const TaskPopUp = (props: TaskProps) => {
   }, []);
 
   useEffect(() => {
-    setIsNoted(getNotedItemList('task').some((data) => data.id === props._id));
-  }, [getNotedItemList, props._id]);
+    setIsNoted(isNotedItem(props._id));
+  }, [isNotedItem, props._id]);
 
   const dataset = () => {
     const task: TaskType = getTaskList().filter((task) => {
@@ -126,11 +126,16 @@ const TaskPopUp = (props: TaskProps) => {
         callback: onClickHandlerNoted
       },
       {
-        title: 'Delete',
-        callback: deleteHandler
+        title: 'Remove',
+        callback: () => {
+          if (isNoted) {
+            deleteNotedItem(props._id);
+          }
+          deleteHandler();
+        }
       }
     ];
-  }, [deleteHandler, isNoted, onClickHandlerNoted]);
+  }, [deleteHandler, isNoted, onClickHandlerNoted, deleteNotedItem]);
 
   const url = window.location.href;
 
