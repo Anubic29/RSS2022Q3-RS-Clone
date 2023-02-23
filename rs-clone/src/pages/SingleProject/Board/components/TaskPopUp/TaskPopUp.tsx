@@ -3,18 +3,15 @@ import classes from './TaskPopUp.module.scss';
 import { Link } from 'react-router-dom';
 import { BsLink45Deg } from 'react-icons/bs';
 import { MdExpandMore } from 'react-icons/md';
-import Modal from '../../../../../components/Modal/Modal';
-import EditableTitle from '../../../../../components/EditableTitle/EditableTitle';
+import { Modal, EditableTitle, BoxWithShadow, BtnMenuAction } from '../../../../../components';
 import DescriptionBlock from './components/DescriptionBlock/DescriptionBlock';
 import CommentsBlock from './components/CommentsBlock/CommentsBlock';
 import { GrClose } from 'react-icons/gr';
-import BoxWithShadow from '../../../../../components/BoxWithShadow/BoxWithShadow';
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './components/DetailsBlock/DetailsBlock';
 import { useOverlay, useBoard, useComments } from '../../../../../contexts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
-import FlipMenu from '../../../../../components/BtnMenuAction/BtnMenuAction';
 import { colorLightGrey } from '../../../../../theme/variables';
 import type TaskType from '../../../../../types/task/taskType';
 
@@ -137,7 +134,7 @@ const TaskPopUp = (props: TaskProps) => {
             </div>
             <div className={classes.taskDetails_col__right}>
               <div className={classes.taskDetails_topLine}>
-                <FlipMenu
+                <BtnMenuAction
                   options={[
                     {
                       title: 'Delete',

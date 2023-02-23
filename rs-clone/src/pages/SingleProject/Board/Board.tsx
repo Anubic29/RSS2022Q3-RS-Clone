@@ -9,8 +9,7 @@ import { UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './comp
 import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose, MdStar } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useOverlay, useUser, useBoard } from '../../../contexts';
-import { Preloader, BtnAction } from '../../../components';
-import PartOverlay from '../../../components/PartOverlay/PartOverlay';
+import { Preloader, BtnAction, PartOverlay } from '../../../components';
 
 import styles from './Board.module.scss';
 import React from 'react';

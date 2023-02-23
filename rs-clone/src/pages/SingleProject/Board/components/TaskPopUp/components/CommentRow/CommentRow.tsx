@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import classes from './CommentRow.module.scss';
-import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
-import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
+import { UserIcon, TextRedactorBlock } from '../../../../../../../components';
 import { useUser, useComments, useBoard } from '../../../../../../../contexts';
 
 const SECOND = 1000;

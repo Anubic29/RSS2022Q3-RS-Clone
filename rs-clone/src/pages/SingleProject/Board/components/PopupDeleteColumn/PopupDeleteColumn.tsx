@@ -3,9 +3,9 @@ import { MdWarningAmber, MdArrowForward } from 'react-icons/md';
 import { SelectPanel } from '../';
 import { Option } from '../SelectPanel/SelectPanel';
 import { useOverlay, useBoard } from '../../../../../contexts';
+import { Loader } from '../../../../../components';
 
 import styles from './PopupDeleteColumn.module.scss';
-import Loader from '../../../../../components/Loader/Loader';
 
 interface PopupDeleteColumnProps {
   _id: string;

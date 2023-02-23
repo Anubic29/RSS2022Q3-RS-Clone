@@ -10,8 +10,7 @@ import { MdOutlineAddCircleOutline } from 'react-icons/md';
 import { useBoard } from '../../../../../contexts';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 import { usePartOverlay } from '../../../../../contexts';
-import Loader from '../../../../../components/Loader/Loader';
-import { BtnAction } from '../../../../../components';
+import { BtnAction, Loader } from '../../../../../components';
 
 import styles from './ColumnList.module.scss';
 

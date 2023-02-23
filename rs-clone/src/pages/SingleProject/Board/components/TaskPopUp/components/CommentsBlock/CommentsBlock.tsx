@@ -1,8 +1,7 @@
 import classes from './CommentsBlock.module.scss';
 import React, { useState, useEffect } from 'react';
-import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
+import { TextRedactorBlock, UserIcon } from '../../../../../../../components';
 import CommentRow from '../CommentRow/CommentRow';
-import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
 import { BiSortDown, BiSortUp } from 'react-icons/bi';
 import { useUser, useComments } from '../../../../../../../contexts';
 

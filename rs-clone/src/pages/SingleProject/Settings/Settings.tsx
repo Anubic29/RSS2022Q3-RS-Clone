@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
-import { Button, Dropdown, ProjectAvatar } from '../../../components';
+import { Button, Dropdown, ProjectAvatar, Loader } from '../../../components';
 import { useOverlay, useBoard, useAlerts } from '../../../contexts';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './components';
-import Loader from '../../../components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Settings.module.scss';
