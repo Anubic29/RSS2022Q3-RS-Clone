@@ -63,19 +63,13 @@ const CommentsBlock = (props: { taskId: string }) => {
     setNewestFirt(newestFirst ? false : true);
   };
 
-  const getFirstLetters = (first: string, last: string) => {
-    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
-  };
-
   return (
     <div className={classes.commentsWrap}>
       <div className={classes.commentDetails_editorWrap}>
         <div className={classes.commentDetails_iconColumn}>
           <UserIcon
-            user={getFirstLetters(
-              currentUser?.firstName as string,
-              currentUser?.lastName as string
-            )}
+            userFrst={currentUser?.firstName as string}
+            userLast={currentUser?.lastName as string}
           />
         </div>
         <div className={classes.commentDetails_commentColumn}>
