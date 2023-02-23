@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import {
   colorBackgroundColumn,
   colorBackgroundHover,
@@ -12,9 +12,9 @@ import { useBoard } from '../../../contexts/Board.context';
 import { useOverlay, useUser } from '../../../contexts';
 import { Preloader, BtnAction } from '../../../components';
 import PartOverlay from '../../../components/PartOverlay/PartOverlay';
+import { Link } from 'react-router-dom';
 
 import styles from './Board.module.scss';
-import React from 'react';
 
 function Board() {
   const { notedItemList, addNotedItem, deleteNotedItem } = useUser();
@@ -107,14 +107,14 @@ function Board() {
           <nav className={styles.breadcrumbs}>
             <ul className={styles['breadcrumbs__list']}>
               <li className={styles['breadcrumbs__item']}>
-                <a className={styles['breadcrumbs__link']} href="">
+                <Link className={styles['breadcrumbs__link']} to="/projects">
                   Projects
-                </a>
+                </Link>
               </li>
               <li className={styles['breadcrumbs__item']}>
-                <a className={styles['breadcrumbs__link']} href="">
-                  Current
-                </a>
+                <Link className={styles['breadcrumbs__link']} to={`/projects/${projectInfo?._id}`}>
+                  {projectInfo?.title}
+                </Link>
               </li>
             </ul>
           </nav>
