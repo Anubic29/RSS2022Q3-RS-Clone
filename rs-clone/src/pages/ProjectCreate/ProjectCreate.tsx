@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InfoCards, ProjectForm } from './components';
 import { Button, Preloader } from '../../components';
-import { useAlerts } from '../../contexts/AlertsContext';
+import { useAlerts } from '../../contexts';
 
 import styles from './ProjectCreate.module.scss';
 

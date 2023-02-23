@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../components';
 import { AsideNavElement } from '../';
-import { useBoard } from '../../../../contexts/Board.context';
+import { useBoard } from '../../../../contexts';
 import { useLocation } from 'react-router-dom';
 import ProjectType from '../../../../types/project/projectType';
 

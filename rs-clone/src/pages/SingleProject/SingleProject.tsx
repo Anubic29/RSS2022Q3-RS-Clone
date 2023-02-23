@@ -2,8 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Button, EmptyData, Overlay, Preloader } from '../../components';
 import { AsideBar } from './components';
-import { useBoard } from '../../contexts/Board.context';
-import { useProjects } from '../../contexts';
+import { useProjects, useBoard } from '../../contexts';
 import ProjectType from '../../types/project/projectType';
 import { useUser } from '../../contexts';
 

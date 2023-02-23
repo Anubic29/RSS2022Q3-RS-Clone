@@ -5,7 +5,7 @@ import {
   MdInfoOutline as InfoIcon,
   MdCheckCircleOutline as SuccessIcon
 } from 'react-icons/md';
-import { useAlerts } from '../../contexts/AlertsContext';
+import { useAlerts } from '../../contexts';
 import { MdOutlineClear as RemoveIcon } from 'react-icons/md';
 
 import styles from './Alert.module.scss';

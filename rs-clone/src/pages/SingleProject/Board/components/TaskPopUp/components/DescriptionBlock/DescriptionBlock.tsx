@@ -2,7 +2,7 @@ import classes from './DescriptionBlock.module.scss';
 import React, { ReactNode, useState } from 'react';
 import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
-import { useBoard } from '../../../../../../../contexts/Board.context';
+import { useBoard } from '../../../../../../../contexts';
 
 const DescriptionBlock = (props: { id: string; descript: string }) => {
   const [savedDescr, setSavedDescr] = useState<string | JSX.Element | JSX.Element[]>(

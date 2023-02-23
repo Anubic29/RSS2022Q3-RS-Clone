@@ -11,13 +11,11 @@ import { GrClose } from 'react-icons/gr';
 import BoxWithShadow from '../../../../../components/BoxWithShadow/BoxWithShadow';
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './components/DetailsBlock/DetailsBlock';
-import { useOverlay } from '../../../../../contexts/Overlay.context';
+import { useOverlay, useBoard, useComments } from '../../../../../contexts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
 import FlipMenu from '../../../../../components/BtnMenuAction/BtnMenuAction';
 import { colorLightGrey } from '../../../../../theme/variables';
-import { useBoard } from '../../../../../contexts/Board.context';
-import { useComments } from '../../../../../contexts/Comments.context';
 import type TaskType from '../../../../../types/task/taskType';
 
 interface TaskProps {

@@ -1,6 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { App } from '../components';
-import { BoardProvider } from '../contexts/Board.context';
 import {
   Dashboard,
   NotFound,
@@ -10,11 +9,14 @@ import {
   Settings,
   SingleProject
 } from '../pages';
-import { ProjectsProvider } from '../contexts';
-import { UserProvider } from '../contexts/User.context';
-import { AlertsProvider } from '../contexts/AlertsContext';
-import { TasksProvider } from '../contexts/TasksContext';
-import { CommentsProvider } from '../contexts/Comments.context';
+import {
+  ProjectsProvider,
+  BoardProvider,
+  UserProvider,
+  AlertsProvider,
+  TasksProvider,
+  CommentsProvider
+} from '../contexts';
 
 function AuthRoute() {
   return (

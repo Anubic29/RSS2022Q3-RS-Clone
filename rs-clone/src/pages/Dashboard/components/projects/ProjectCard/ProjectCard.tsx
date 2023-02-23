@@ -7,9 +7,8 @@ import {
 } from 'react-icons/md';
 import { ProjectAvatarProps } from '../../../../../components/ProjectAvatar/ProjectAvatar';
 import { Preloader, ProjectAvatar } from '../../../../../components';
-import { useProjects } from '../../../../../contexts';
+import { useProjects, useAlerts } from '../../../../../contexts';
 import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
 
 import styles from './ProjectCard.module.scss';
 
