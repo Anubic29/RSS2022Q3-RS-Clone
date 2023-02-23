@@ -13,6 +13,9 @@ import BtnAction from './BtnAction/BtnAction';
 import BtnMenuAction from './BtnMenuAction/BtnMenuAction';
 import Loader from './Loader/Loader';
 import Alert from './Alert/Alert';
+import Modal from './Modal/Modal';
+import BoxWithShadow from './BoxWithShadow/BoxWithShadow';
+import EditableTitle from './EditableTitle/EditableTitle';
 
 export {
   ProjectAvatar,
@@ -29,5 +32,8 @@ export {
   BtnAction,
   BtnMenuAction,
   Loader,
-  Alert
+  Alert,
+  Modal,
+  BoxWithShadow,
+  EditableTitle
 };
