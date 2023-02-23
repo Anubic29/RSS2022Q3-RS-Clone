@@ -5,7 +5,7 @@ import classes from './ListItem.module.scss';
 import UserType from '../../../../../../../../types/user/userType';
 import BoxWithShadow from '../../../../../../../../components/BoxWithShadow/BoxWithShadow';
 import { useBoard } from '../../../../../../../../contexts/Board.context';
-import useComponentVisible from '../../../../../../../../hooks/useComponentVisible/useInputVisible';
+import useComponentVisible from '../../../../../../../../hooks/useComponentVisible/useComponentVisible';
 import { useUser } from '../../../../../../../../contexts';
 import CurrentUserType from '../../../../../../../../types/user/currentUserType';
 import UserIcon from '../../../../../../../../components/UserIcon/UserIcon';
@@ -158,14 +158,15 @@ const ListItem = (props: ListItemProps) => {
           )}
         </div>
         {isVisibleAsigneeList && (
-          <input
-            ref={asigneeListRef}
-            className={classes.usersListRow}
-            value={inputValue}
-            onChange={(e) => {
-              asigneeInputHandler(e);
-            }}
-          />
+          <div ref={asigneeListRef} className={classes.inputWrap}>
+            <input
+              className={classes.usersListRow}
+              value={inputValue}
+              onChange={(e) => {
+                asigneeInputHandler(e);
+              }}
+            />
+          </div>
         )}
         {props.team.length > 0 && props.title === 'asignee' && isVisibleAsigneeList && (
           <BoxWithShadow>

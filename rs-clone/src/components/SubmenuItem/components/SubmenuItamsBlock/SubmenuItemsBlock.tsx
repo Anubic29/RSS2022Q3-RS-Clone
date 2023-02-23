@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SubmenuItemLine from '../SubmenuItemLine/SubmenuItemLine';
 import classes from '../../SubmenuItem.module.scss';
+import { useUser } from '../../../../contexts';
+import { useTasks } from '../../../../contexts/TasksContext';
+import { useProjects } from '../../../../contexts';
+import { useBoard } from '../../../../contexts/Board.context';
+import CommentTaskType from '../../../../types/task/сommentTaskType';
+import { convertLetterToHex } from '../../../../utils/convertLetterToHex';
+import { colorSecondary } from '../../../../theme/variables';
+import { ColumnList } from '../../../../pages/SingleProject/Board/components';
+
+type TaskType = {
+  _id: string;
+  id: number;
+  title: string;
+  description: string;
+  author: string;
+  executor: string;
+  projectId: string;
+  columnId: string;
+  commentList: CommentTaskType[];
+  __v: number;
+};
 
 type blockType = {
   subtitle: string;
   base: {
+    [x: string]: string;
     src: string;
     title: string;
     article: string;
@@ -13,136 +35,60 @@ type blockType = {
   }[];
 };
 
-const bd = [
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    title: 'Header & Footer',
-    article: 'CBC3',
-    project: 'BDCS',
-    bgColor: '#4cade8'
-  },
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    title: 'Tooth ter',
-    article: 'CBC44',
-    project: 'faS',
-    bgColor: '#4cade8'
-  },
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    title: 'Nase & Footer',
-    article: 'CBC66',
-    project: 'BDafaffaCS',
-    bgColor: '#4cade8'
-  }
-];
-
-const bd2 = [
+const board = [
   {
     src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
     title: 'Доска CBC',
     article: '',
     project: 'Company BDSM',
-    bgColor: '#4cade8'
-  },
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    title: 'Доска PER',
-    article: '',
-    project: 'Lena&&Alex',
-    bgColor: '#4cade8'
-  }
-];
-
-const projects = [
-  {
-    id: 1,
-    title: 'Project',
-    description: 'Drscription',
-    article: '',
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    bgColor: '#FF0000',
-    project: 'Software project'
-  },
-  {
-    id: 2,
-    title: 'project 2',
-    description: 'Drscription 2',
-    article: '',
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    bgColor: '#00FF00',
-    project: 'Software project'
-  },
-  {
-    id: 3,
-    title: 'project 3',
-    description: 'Drscription 3',
-    article: '',
-    size: 23,
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    bgColor: '#0000FF',
-    project: 'Software project'
-  },
-  {
-    id: 4,
-    title: 'project 4',
-    description: 'Drscription 4',
-    article: '',
-    size: 23,
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    bgColor: '#FF00FF',
-    project: 'Software project'
-  },
-  {
-    id: 5,
-    title: 'project 5',
-    description: 'Drscription 5',
-    article: '',
-    size: 23,
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    bgColor: '#00FFFF',
-    project: 'Software project'
-  },
-  {
-    id: 6,
-    title: 'project 6',
-    description: 'Drscription 6',
-    article: '',
-    size: 23,
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    bgColor: '#00FF00',
-    project: 'Software project'
-  }
-];
-
-const user = [
-  {
-    id: 0,
-    title: 'Olena Datso',
-    article: '',
-    src: '',
-    bgColor: '#00FF00',
-    project: 'email@tt.ua'
+    bgColor: '#4cade8',
+    columnId: ''
   }
 ];
 
 const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (props) => {
   const menuItem = props.menuItem;
   const tab = props.onTabChange;
+  const { currentUser } = useUser();
+  const { getTasks } = useTasks();
+  const { projects } = useProjects();
+  const { getColumnList } = useBoard();
+
+  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [currentProjects] = useState(projects || []);
+
+  useEffect(() => {
+    const tasks = async () => {
+      const list = await getTasks();
+      setTasks(list);
+    };
+    tasks();
+  }, []);
 
   const contentProject = {
     subtitle: 'RECENT',
-    base: projects
+    base: currentProjects
   };
 
   const contentWork = {
     subtitle: tab === 'assigned' ? 'DEV READY' : 'RECENT',
-    base: tab === 'assigned' ? bd : bd2
+    base: tab === 'assigned' ? tasks : board
   };
+
+  const userColor = `#${convertLetterToHex(
+    currentUser?.firstName[0] as string,
+    3,
+    '9'
+  )}${convertLetterToHex(currentUser?.lastName[0] as string, 3, '9')}`;
 
   const contenUserMenu = {
     subtitle: 'ACCOUNT',
-    base: user
+    base: [
+      {
+        title: `${currentUser?.firstName} ${currentUser?.lastName}`,
+        article: currentUser?.mail
+      }
+    ]
   };
 
   const block = () => {
@@ -155,39 +101,93 @@ const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (
         return contentProject;
     }
   };
+  const link = (id: string, projectIdForTask?: string) => {
+    switch (menuItem) {
+      case 'work':
+        if (tab === 'assigned') return `/projects/${projectIdForTask}/selected-task/${id}`;
+        if (tab === 'board') return '/';
+        break;
+      case 'project':
+        return `/projects/${id}`;
+      default:
+        return '/';
+    }
+  };
 
+  const usedColumns = () => {
+    const columnsList = getColumnList();
+    console.log(columnsList);
+    const filtered = columnsList.map((el) => {
+      for (const task of tasks) {
+        if (task.columnId === el._id) return el;
+      }
+    });
+    return filtered;
+  };
+  console.log(usedColumns());
   return (
     <>
       <div className={classes.itemsBlock}>
         <p className={classes.submenu_subtitle}>{(block() as blockType).subtitle}</p>
         <ul className={classes.submenu_itemsList}>
-          {(block() as blockType).base.map((item, i) => {
-            if (menuItem === 'work' && tab === 'assigned') {
-              item.article = item.article + '-';
-            }
-            return (
-              <SubmenuItemLine
-                key={i}
-                title={item.title}
-                article={item.article}
-                project={item.project}
-                src={item.src}
-                bgColor={item.bgColor ? item.bgColor : ''}></SubmenuItemLine>
-            );
-          })}
+          {menuItem === 'work' &&
+            tab === 'assigned' &&
+            (block() as blockType).base.map((item, i) => {
+              console.log(item);
+              return (
+                <SubmenuItemLine
+                  key={i}
+                  title={item.title}
+                  article={item.article}
+                  project={item.project}
+                  src=""
+                  bgColor={colorSecondary}
+                  type={'assigned'}
+                  columnId={item.columnId}
+                  link={link(item._id, item.projectId)}></SubmenuItemLine>
+              );
+            })}
+          {menuItem === 'project' &&
+            (block() as blockType).base.map((item, i) => {
+              return (
+                <SubmenuItemLine
+                  key={i}
+                  title={item.title}
+                  article={item.article}
+                  project={'Software project'}
+                  src={item.pathImage}
+                  bgColor={item.bgColor}
+                  link={link(item._id, item.projectId)}
+                  id={item._id}
+                  type={'project'}
+                  marked={Boolean(
+                    currentUser?.notedItems.find((marked) => marked.id === item._id)
+                  )}></SubmenuItemLine>
+              );
+            })}
         </ul>
       </div>
       {menuItem === 'userMenu' && (
-        <div className={classes.itemsBlock + ' ' + classes.itemsBlock__jira}>
-          <p className={classes.submenu_subtitle}>JIRA</p>
+        <>
           <SubmenuItemLine
-            key=""
-            title=""
-            article=""
+            key={currentUser?._id}
+            title={`${currentUser?.firstName} ${currentUser?.lastName}`}
+            article={currentUser?.mail as string}
             project=""
             src=""
-            bgColor=""></SubmenuItemLine>
-        </div>
+            type={'profile'}
+            bgColor={userColor}></SubmenuItemLine>
+          <div className={classes.itemsBlock + ' ' + classes.itemsBlock__jira}>
+            <p className={classes.submenu_subtitle}>JIRA</p>
+            <SubmenuItemLine
+              key={currentUser?._id}
+              title={'Profile'}
+              article=""
+              project=""
+              src=""
+              bgColor={userColor}></SubmenuItemLine>
+          </div>
+        </>
       )}
     </>
   );

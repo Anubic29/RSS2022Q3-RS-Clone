@@ -8,10 +8,13 @@ import classes from './Header.module.scss';
 import Button from '../../components/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
+import { useUser } from '../../contexts';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
   const [submenu, setSubmenu] = useState('');
+
+  const { currentUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -113,7 +116,9 @@ const Header = () => {
         </Button>
         <div className={classes.header_userMenu}>
           <div onClick={userIconHandler}>
-            <UserIcon userFrst="O" userLast="D"></UserIcon>
+            <UserIcon
+              userFrst={(currentUser?.firstName[0] as string) || '0'}
+              userLast={(currentUser?.lastName[0] as string) || '0'}></UserIcon>
           </div>
           {activeItem === 'userMenu' && isUserMenuVisible && (
             <div className={classes.absolute + ' ' + classes.submenu_box_right} ref={userRef}>
