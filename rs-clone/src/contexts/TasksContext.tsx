@@ -4,6 +4,7 @@ import TaskType from '../types/task/taskType';
 
 interface TasksContextProps {
   tasks: TaskType[];
+  tasksToDo: TaskType[];
   getTasks: () => Promise<TaskType[]>;
   getTasksToDo: () => Promise<TaskType[]>;
   getTask: (id: string) => Promise<TaskType>;
@@ -14,6 +15,7 @@ const TasksContext = createContext<TasksContextProps | null>(null);
 
 function TasksProvider({ children }: PropsWithChildren) {
   const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [tasksToDo, setTasksTodo] = useState<TaskType[]>([]);
 
   const getTasks = async () => {
     const userId = await getCurrentUserId();
@@ -40,7 +42,7 @@ function TasksProvider({ children }: PropsWithChildren) {
     });
     const fetchedTasks: TaskType[] = await res.json();
 
-    setTasks(fetchedTasks);
+    setTasksTodo(fetchedTasks);
 
     return fetchedTasks;
   };
@@ -59,6 +61,7 @@ function TasksProvider({ children }: PropsWithChildren) {
 
   const contextValue = {
     tasks,
+    tasksToDo,
     getTasks,
     getTask,
     getTasksToDo

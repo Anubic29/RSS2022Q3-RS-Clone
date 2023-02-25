@@ -10,8 +10,8 @@ const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (
   const menuItem = props.menuItem;
   const tab = props.onTabChange;
   const { projects, getColumnById } = useProjects();
-  const { tasks, getTasks, getTasksToDo } = useTasks();
-  const [currentTasks, setCurrentTasks] = useState<TaskType[]>(tasks);
+  const { tasksToDo, getTasksToDo } = useTasks();
+  const [currentTasks, setCurrentTasks] = useState<TaskType[]>(tasksToDo);
 
   const columnListDisplay = useMemo(() => {
     return Array.from(new Set(currentTasks.map((column) => column.columnId)));
