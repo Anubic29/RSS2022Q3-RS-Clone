@@ -13,9 +13,13 @@ import BtnAction from './BtnAction/BtnAction';
 import BtnMenuAction from './BtnMenuAction/BtnMenuAction';
 import Loader from './Loader/Loader';
 import Alert from './Alert/Alert';
-import Modal from './Modal/Modal';
 import BoxWithShadow from './BoxWithShadow/BoxWithShadow';
 import EditableTitle from './EditableTitle/EditableTitle';
+import Modal from './Modal/Modal';
+import PartOverlay from './PartOverlay/PartOverlay';
+import SubmenuItem from './SubmenuItem/SubmenuItem';
+import TextRedactorBlock from './TextRedactorBlock/TextRedactorBlock';
+import UserIcon from './UserIcon/UserIcon';
 
 export {
   ProjectAvatar,
@@ -33,7 +37,11 @@ export {
   BtnMenuAction,
   Loader,
   Alert,
-  Modal,
   BoxWithShadow,
-  EditableTitle
+  EditableTitle,
+  Modal,
+  PartOverlay,
+  SubmenuItem,
+  TextRedactorBlock,
+  UserIcon
 };

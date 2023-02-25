@@ -1,9 +1,8 @@
 import { useCallback, useMemo, useState, useEffect } from 'react';
 import { MdDone, MdFlag } from 'react-icons/md';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../../theme/variables';
-import { useBoard } from '../../../../../contexts/Board.context';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
-import { useOverlay } from '../../../../../contexts/Overlay.context';
+import { useOverlay, useBoard } from '../../../../../contexts';
 import TaskPopUp from '../TaskPopUp/TaskPopUp';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Preloader, UserAvatar, BtnMenuAction } from '../../../../../components';

@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './layouts/Header/Header';
 import Footer from './layouts/Footer/Footer';
-import { OverlayProvider, PartOverlayProvider, useUser } from './contexts';
-import Overlay from './components/Overlay/Overlay';
-import { useAlerts } from './contexts/AlertsContext';
+import { OverlayProvider, PartOverlayProvider, useUser, useAlerts } from './contexts';
+import { Overlay } from './components';
 
 function App() {
   const { setUserDataBack } = useUser();

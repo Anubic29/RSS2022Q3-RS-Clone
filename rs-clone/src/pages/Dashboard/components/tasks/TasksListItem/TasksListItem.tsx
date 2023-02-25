@@ -1,8 +1,7 @@
 import { MdCheckBox as TaskIcon } from 'react-icons/md';
 import React, { useEffect, useState } from 'react';
-import { useProjects } from '../../../../../contexts';
+import { useProjects, useAlerts } from '../../../../../contexts';
 import { Link } from 'react-router-dom';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
 import ProjectType from '../../../../../types/project/projectType';
 
 import styles from './TasksListItem.module.scss';

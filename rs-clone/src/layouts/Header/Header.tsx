@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MdExpandMore } from 'react-icons/md';
 
-import UserIcon from '../../components/UserIcon/UserIcon';
-import SubmenuItem from '../../components/SubmenuItem/SubmenuItem';
+import { UserIcon, SubmenuItem, Button } from '../../components';
 import MenuSpan from '../../components/SubmenuItem/components/MenuSpan/MenuSpan';
 import classes from './Header.module.scss';
-import Button from '../../components/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
 

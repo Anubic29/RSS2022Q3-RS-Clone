@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Block from './components/Block';
 import type UserType from '../../../../../../../types/user/userType';
-import { useComments } from '../../../../../../../contexts/Comments.context';
+import { useComments } from '../../../../../../../contexts';
 
 interface dataType {
   taskId: string;

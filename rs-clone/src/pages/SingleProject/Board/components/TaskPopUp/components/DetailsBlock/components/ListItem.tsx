@@ -3,12 +3,10 @@ import { BsPinAngle } from 'react-icons/bs';
 import { FaUserCircle } from 'react-icons/fa';
 import classes from './ListItem.module.scss';
 import UserType from '../../../../../../../../types/user/userType';
-import BoxWithShadow from '../../../../../../../../components/BoxWithShadow/BoxWithShadow';
-import { useBoard } from '../../../../../../../../contexts/Board.context';
+import { BoxWithShadow, UserIcon } from '../../../../../../../../components';
 import useComponentVisible from '../../../../../../../../hooks/useComponentVisible/useInputVisible';
-import { useUser } from '../../../../../../../../contexts';
+import { useUser, useBoard } from '../../../../../../../../contexts';
 import CurrentUserType from '../../../../../../../../types/user/currentUserType';
-import UserIcon from '../../../../../../../../components/UserIcon/UserIcon';
 import { type } from 'os';
 
 interface ListItemProps {

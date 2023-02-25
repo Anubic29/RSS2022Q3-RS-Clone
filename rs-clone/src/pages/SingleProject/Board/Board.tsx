@@ -8,10 +8,8 @@ import {
 import { UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './components';
 import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose, MdStar } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
-import { useBoard } from '../../../contexts/Board.context';
-import { useOverlay, useUser } from '../../../contexts';
-import { Preloader, BtnAction } from '../../../components';
-import PartOverlay from '../../../components/PartOverlay/PartOverlay';
+import { useOverlay, useUser, useBoard } from '../../../contexts';
+import { Preloader, BtnAction, PartOverlay } from '../../../components';
 import { Link } from 'react-router-dom';
 
 import styles from './Board.module.scss';

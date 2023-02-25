@@ -1,13 +1,12 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProjects } from '../../../../contexts';
+import { useProjects, useAlerts } from '../../../../contexts';
 import { ProjectsContextValue } from '../../../../contexts/ProjectsContext';
 import { getCurrentUserId } from '../../../../api/config';
 import { getRandomNum } from '../../../../utils';
 import { projectBadges } from '../../../../data';
 import { Input, Label } from '../../../../components';
 import { projectValidationData } from '../../../../utils';
-import { useAlerts } from '../../../../contexts/AlertsContext';
 
 import styles from './ProjectForm.module.scss';
 

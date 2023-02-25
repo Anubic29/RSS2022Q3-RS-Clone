@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Input, UserAvatar } from '../../../../../components';
-import { useBoard } from '../../../../../contexts/Board.context';
-import { useOverlay } from '../../../../../contexts';
+import { Input, UserAvatar, Loader } from '../../../../../components';
+import { useOverlay, useBoard } from '../../../../../contexts';
 import { MdCancel, MdSearch } from 'react-icons/md';
 import UserType from '../../../../../types/user/userType';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 import api from '../../../../../api';
-import Loader from '../../../../../components/Loader/Loader';
 
 import styles from './PopupAddUser.module.scss';
 
