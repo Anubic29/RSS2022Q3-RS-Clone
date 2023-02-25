@@ -54,7 +54,7 @@ const TaskPopUp = (props: TaskProps) => {
       taskColumnId: task.columnId,
       taskProjectId: task.projectId,
       authorId: task.author,
-      asigneeId: task.executor === 'auto' ? task.author : task.executor,
+      asigneeId: task.executor,
       projectTeam: userList
     };
     return result;
@@ -183,7 +183,7 @@ const TaskPopUp = (props: TaskProps) => {
               </div>
               <DetailsBlock
                 taskId={data._taskId}
-                asignee={data.asigneeId === 'auto' ? data.authorId : data.asigneeId}
+                asignee={data.asigneeId}
                 author={data.authorId}
                 team={data.projectTeam}
                 assignToMe={data.authorId !== data.asigneeId}

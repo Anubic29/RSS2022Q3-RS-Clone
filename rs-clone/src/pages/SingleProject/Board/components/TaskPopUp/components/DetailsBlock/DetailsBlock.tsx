@@ -26,17 +26,6 @@ const DetailsBlock = (props: dataType) => {
   const currentTaskPinned = pinnedList.find((task) => task.taskId === props.taskId);
 
   const [pinned, setPinned] = useState<string[]>(currentTaskPinned ? currentTaskPinned.fields : []);
-  // useEffect(() => {
-  //   console.log(pinned);
-  // }, [pinned]);
-
-  // useEffect(() => {
-  //   console.log(currentTaskPinned?.fields);
-  // }, [currentTaskPinned]);
-
-  // useEffect(() => {
-  //   console.log(getPinnedF());
-  // }, [getPinnedF]);
 
   const filterPinnedData = () => {
     const pinnedData: { [string: string]: string } = {};
