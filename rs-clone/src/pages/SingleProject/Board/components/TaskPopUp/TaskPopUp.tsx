@@ -1,24 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import classes from './TaskPopUp.module.scss';
 import { Link } from 'react-router-dom';
 import { BsLink45Deg } from 'react-icons/bs';
-import { MdExpandMore } from 'react-icons/md';
-import Modal from '../../../../../components/Modal/Modal';
-import EditableTitle from '../../../../../components/EditableTitle/EditableTitle';
+import { Modal, EditableTitle, BoxWithShadow, BtnMenuAction } from '../../../../../components';
+import { MdExpandMore, MdFlag } from 'react-icons/md';
 import DescriptionBlock from './components/DescriptionBlock/DescriptionBlock';
 import CommentsBlock from './components/CommentsBlock/CommentsBlock';
 import { GrClose } from 'react-icons/gr';
-import BoxWithShadow from '../../../../../components/BoxWithShadow/BoxWithShadow';
 import useComponentVisible from '../../../../../hooks/useComponentVisible/useComponentVisible';
 import DetailsBlock from './components/DetailsBlock/DetailsBlock';
-import { useOverlay } from '../../../../../contexts/Overlay.context';
+import { useOverlay, useBoard, useComments } from '../../../../../contexts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useClipboard } from 'use-clipboard-copy';
-import FlipMenu from '../../../../../components/BtnMenuAction/BtnMenuAction';
 import { colorLightGrey } from '../../../../../theme/variables';
-import { useBoard } from '../../../../../contexts/Board.context';
-import { useComments } from '../../../../../contexts/Comments.context';
 import type TaskType from '../../../../../types/task/taskType';
+import { useUser } from '../../../../../contexts';
 
 interface TaskProps {
   _id: string;
@@ -28,7 +24,9 @@ interface TaskProps {
 const TaskPopUp = (props: TaskProps) => {
   const { updateTask, deleteTask, getTaskList, getColumnList, getUserList } = useBoard();
   const { getCommentDataBack } = useComments();
+  const { isNotedItem, addNotedItem, deleteNotedItem } = useUser();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+  const [isNoted, setIsNoted] = useState(false);
 
   const clipboard = useClipboard();
   const params = useParams();
@@ -38,6 +36,10 @@ const TaskPopUp = (props: TaskProps) => {
   useEffect(() => {
     getCommentDataBack(props._id);
   }, []);
+
+  useEffect(() => {
+    setIsNoted(isNotedItem(props._id));
+  }, [isNotedItem, props._id]);
 
   const dataset = () => {
     const task: TaskType = getTaskList().filter((task) => {
@@ -101,10 +103,36 @@ const TaskPopUp = (props: TaskProps) => {
     setIsMenuVisible(false);
   };
 
+  const onClickHandlerNoted = useCallback(async () => {
+    if (!isNoted) {
+      await addNotedItem(props._id, 'task');
+    } else {
+      await deleteNotedItem(props._id);
+    }
+  }, [addNotedItem, deleteNotedItem, props._id, isNoted]);
+
   const deleteHandler = () => {
     deleteTask(props._id);
     closeHandler();
   };
+
+  const menuOptions = useMemo(() => {
+    return [
+      {
+        title: !isNoted ? 'Add to Noted List' : 'Remove from Noted List',
+        callback: onClickHandlerNoted
+      },
+      {
+        title: 'Remove',
+        callback: () => {
+          if (isNoted) {
+            deleteNotedItem(props._id);
+          }
+          deleteHandler();
+        }
+      }
+    ];
+  }, [deleteHandler, isNoted, onClickHandlerNoted, deleteNotedItem]);
 
   const url = window.location.href;
 
@@ -138,13 +166,8 @@ const TaskPopUp = (props: TaskProps) => {
             </div>
             <div className={classes.taskDetails_col__right}>
               <div className={classes.taskDetails_topLine}>
-                <FlipMenu
-                  options={[
-                    {
-                      title: 'Delete',
-                      callback: deleteHandler
-                    }
-                  ]}
+                <BtnMenuAction
+                  options={menuOptions}
                   btnBackgrColorHover={colorLightGrey}
                   btnBackgrColorActive={colorLightGrey}
                 />
@@ -153,30 +176,37 @@ const TaskPopUp = (props: TaskProps) => {
                   onClick={closeHandler}
                 />
               </div>
-              <div ref={ref} className={classes.taskDetails_changeStatusBlock}>
-                <button className={classes.taskDetails_changeStatusBtn} onClick={isActiveHandler}>
-                  <p className={classes.taskDetails_currentStatusActive}>{taskState.title}</p>
-                  <MdExpandMore className={classes.expandArrow} />
-                </button>
-                {isMenuVisible && (
-                  <div className={classes.submenu}>
-                    <BoxWithShadow>
-                      <ul className={classes.taskDetails_currentStatusUl}>
-                        {columnsData.map((state) => {
-                          if (state._id !== taskState._id) {
-                            return (
-                              <li
-                                key={state._id}
-                                className={classes.taskDetails_currentStatusLi}
-                                onClick={(e) => taskStateHandler(e)}
-                                value={state._id}>
-                                {state.title}
-                              </li>
-                            );
-                          }
-                        })}
-                      </ul>
-                    </BoxWithShadow>
+              <div className={classes.taskDetails_row}>
+                <div ref={ref} className={classes.taskDetails_changeStatusBlock}>
+                  <button className={classes.taskDetails_changeStatusBtn} onClick={isActiveHandler}>
+                    <p className={classes.taskDetails_currentStatusActive}>{taskState.title}</p>
+                    <MdExpandMore className={classes.expandArrow} />
+                  </button>
+                  {isMenuVisible && (
+                    <div className={classes.submenu}>
+                      <BoxWithShadow>
+                        <ul className={classes.taskDetails_currentStatusUl}>
+                          {columnsData.map((state) => {
+                            if (state._id !== taskState._id) {
+                              return (
+                                <li
+                                  key={state._id}
+                                  className={classes.taskDetails_currentStatusLi}
+                                  onClick={(e) => taskStateHandler(e)}
+                                  value={state._id}>
+                                  {state.title}
+                                </li>
+                              );
+                            }
+                          })}
+                        </ul>
+                      </BoxWithShadow>
+                    </div>
+                  )}
+                </div>
+                {isNoted && (
+                  <div className={classes.taskDetails_flagIcon}>
+                    <MdFlag />
                   </div>
                 )}
               </div>

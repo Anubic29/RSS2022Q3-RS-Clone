@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TasksListItem } from '../..';
 import { EmptyData, Preloader } from '../../../../../components';
-import { useTasks } from '../../../../../contexts/TasksContext';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
+import { useTasks, useAlerts } from '../../../../../contexts';
 
 import styles from './TasksList.module.scss';
 import { useProjects } from '../../../../../contexts';

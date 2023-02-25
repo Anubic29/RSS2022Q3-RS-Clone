@@ -4,7 +4,7 @@ import TaskType from '../../../../../types/task/taskType';
 import ColumnProjectType from '../../../../../types/project/columnProjectType';
 import { Column } from '../';
 import { ColumnBody } from '../Column/components';
-import { useBoard } from '../../../../../contexts/Board.context';
+import { useBoard } from '../../../../../contexts';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 import { UserAvatar } from '../../../../../components';
 

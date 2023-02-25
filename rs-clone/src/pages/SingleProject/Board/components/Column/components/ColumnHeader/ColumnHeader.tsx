@@ -7,12 +7,10 @@ import {
 } from '../../../../../../../theme/variables';
 import { MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../../../../../hooks/useComponentVisible/useComponentVisible';
-import { useBoard } from '../../../../../../../contexts/Board.context';
-import { useOverlay } from '../../../../../../../contexts';
+import { useOverlay, useBoard } from '../../../../../../../contexts';
 import { PopupDeleteColumn } from '../../../';
-import { Preloader, BtnMenuAction, BtnAction } from '../../../../../../../components';
+import { Preloader, BtnMenuAction, BtnAction, Loader } from '../../../../../../../components';
 import { usePartOverlay } from '../../../../../../../contexts';
-import Loader from '../../../../../../../components/Loader/Loader';
 
 import styles from './ColumnHeader.module.scss';
 

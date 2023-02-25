@@ -93,6 +93,20 @@ h6 {
   display: none;
 }
 
+.taskDetails_row {
+  display: flex;
+  
+  .taskDetails_flagIcon {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    margin-left: 15px;
+    color: $colorStarNotedActive;
+  }
+}
+
 .taskDetails_changeStatusBlock {
   max-width: 150px;
 }

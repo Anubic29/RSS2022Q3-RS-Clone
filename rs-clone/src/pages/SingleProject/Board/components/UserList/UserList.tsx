@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useBoard } from '../../../../../contexts/Board.context';
+import { useBoard } from '../../../../../contexts';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 import UserBtn from '../UserBtn/UserBtn';
 

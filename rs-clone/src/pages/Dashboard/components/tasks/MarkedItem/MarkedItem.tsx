@@ -4,13 +4,11 @@ import {
   MdCheckBox as TaskIcon,
   MdOutlineStar as StarIcon
 } from 'react-icons/md';
-import { useProjects, useUser } from '../../../../../contexts';
-import { useTasks } from '../../../../../contexts/TasksContext';
+import { useProjects, useUser, useTasks, useAlerts } from '../../../../../contexts';
 import TaskType from '../../../../../types/task/taskType';
 import ProjectType from '../../../../../types/project/projectType';
 import { Link } from 'react-router-dom';
 import { Preloader } from '../../../../../components';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
 
 import styles from './MarkedItem.module.scss';
 

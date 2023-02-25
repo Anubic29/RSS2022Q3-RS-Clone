@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Input, Label, Preloader } from '../../../../../components';
-import { useBoard } from '../../../../../contexts/Board.context';
+import { useBoard, useAlerts } from '../../../../../contexts';
 import { MdDone } from 'react-icons/md';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
 import { projectValidationData } from '../../../../../utils';
 import ProjectType from '../../../../../types/project/projectType';
 

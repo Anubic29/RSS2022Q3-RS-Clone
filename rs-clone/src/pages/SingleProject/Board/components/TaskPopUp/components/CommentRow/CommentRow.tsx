@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import classes from './CommentRow.module.scss';
-import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
-import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
-import { useComments } from '../../../../../../../contexts/Comments.context';
-import { useUser } from '../../../../../../../contexts';
-import { useBoard } from '../../../../../../../contexts/Board.context';
+import { UserIcon, TextRedactorBlock } from '../../../../../../../components';
+import { useUser, useComments, useBoard } from '../../../../../../../contexts';
 
 const SECOND = 1000;
 const MINUTE = 60;

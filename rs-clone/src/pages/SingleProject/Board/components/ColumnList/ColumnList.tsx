@@ -7,11 +7,10 @@ import {
 } from '../../../../../theme/variables';
 import { Column, ColumnRowUser } from '../';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
-import { useBoard } from '../../../../../contexts/Board.context';
+import { useBoard } from '../../../../../contexts';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 import { usePartOverlay } from '../../../../../contexts';
-import Loader from '../../../../../components/Loader/Loader';
-import { BtnAction } from '../../../../../components';
+import { BtnAction, Loader } from '../../../../../components';
 
 import styles from './ColumnList.module.scss';
 
@@ -200,19 +199,17 @@ function ColumnList(props: ColumnListProps) {
             </div>
           )}
         </div>
-        {getColumnList().length < 5 && (
-          <div className={styles['btn-add-container']}>
-            <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
-              <BtnAction
-                image={MdOutlineAddCircleOutline}
-                title="Create column"
-                backgrColorDefault={colorBackgroundColumn}
-                backgrColorHover={colorBackgroundHover}
-                backgrColorActive={colorSecondaryLight}
-              />
-            </div>
+        <div className={styles['btn-add-container']}>
+          <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
+            <BtnAction
+              image={MdOutlineAddCircleOutline}
+              title="Create column"
+              backgrColorDefault={colorBackgroundColumn}
+              backgrColorHover={colorBackgroundHover}
+              backgrColorActive={colorSecondaryLight}
+            />
           </div>
-        )}
+        </div>
         <div className={styles['curtain'] + ' ' + styles['right']}></div>
       </div>
     </div>
