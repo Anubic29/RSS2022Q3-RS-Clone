@@ -160,7 +160,6 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   }, [taskList, userListFilter, searchValue]);
 
   const getColumnList = useCallback(() => {
-    console.log(columnList);
     return columnList;
   }, [columnList]);
 

@@ -37,7 +37,9 @@ const SubmenuItemLine: React.FC<{
     <li
       onClick={(e) => {
         e.stopPropagation();
+        console.log(props.link);
         navigate(props.link as string);
+        window.location.reload();
       }}>
       <div className={classes.submenu_line}>
         {props.title !== 'Profile' && (
@@ -65,12 +67,18 @@ const SubmenuItemLine: React.FC<{
             {isMarked ? (
               <AiFillStar
                 className={classes.starIcon}
-                onClick={() => onMarkedProjectHandler(false)}
+                onClick={function (e) {
+                  e.stopPropagation();
+                  onMarkedProjectHandler(false);
+                }}
               />
             ) : !isMarked && props.marked !== undefined ? (
               <AiOutlineStar
                 className={classes.starIcon}
-                onClick={() => onMarkedProjectHandler(true)}
+                onClick={function (e) {
+                  e.stopPropagation();
+                  onMarkedProjectHandler(true);
+                }}
               />
             ) : (
               ''

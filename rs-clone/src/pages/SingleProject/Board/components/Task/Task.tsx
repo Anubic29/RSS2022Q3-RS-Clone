@@ -30,17 +30,12 @@ function Task(props: TaskProps) {
   const navigate = useNavigate();
   const params = useParams();
 
-  const showModal = () => {
-    setIsVisibleBoard(true);
-    setChildrenBoard(<TaskPopUp _id={props._id} keyTask={props.keyTask} />);
-    navigate(`selected-task/${props._id}`);
-  };
   useEffect(() => {
     if (params.taskId) {
       setIsVisibleBoard(true);
-      setChildrenBoard(<TaskPopUp _id={props._id} keyTask={props.keyTask} />);
+      setChildrenBoard(<TaskPopUp _id={params.taskId} keyTask={props.keyTask} />);
     }
-  }, []);
+  }, [params]);
 
   const deleteTaskCallback = useCallback(async () => {
     setIsLoadingRemove(true);
@@ -59,7 +54,7 @@ function Task(props: TaskProps) {
 
   return (
     <div
-      onClick={() => showModal()}
+      onClick={() => navigate(`selected-task/${props._id}`)}
       className={styles.task}
       onMouseOver={() => setHoverTask(true)}
       onMouseOut={() => setHoverTask(false)}>

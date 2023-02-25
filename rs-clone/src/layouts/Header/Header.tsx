@@ -9,12 +9,19 @@ import Button from '../../components/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
 import { useUser } from '../../contexts';
+import { useTasks } from '../../contexts/TasksContext';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
-  const [submenu, setSubmenu] = useState('');
+  const [submenu, setSubmenu] = useState<'work' | 'userMenu' | 'project'>('work');
 
   const { currentUser } = useUser();
+  const { getTasks } = useTasks();
+  useEffect(() => {
+    (async () => {
+      await getTasks();
+    })();
+  }, []);
 
   const navigate = useNavigate();
 

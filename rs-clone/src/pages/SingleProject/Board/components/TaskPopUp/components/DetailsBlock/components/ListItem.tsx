@@ -9,7 +9,6 @@ import useComponentVisible from '../../../../../../../../hooks/useComponentVisib
 import { useUser } from '../../../../../../../../contexts';
 import CurrentUserType from '../../../../../../../../types/user/currentUserType';
 import UserIcon from '../../../../../../../../components/UserIcon/UserIcon';
-import { type } from 'os';
 
 interface ListItemProps {
   taskId: string;
@@ -67,7 +66,9 @@ const ListItem = (props: ListItemProps) => {
   const { updateTask } = useBoard();
 
   const asigneeChangeHandler = (userId: string) => {
+    console.log(props.taskId, userId);
     updateTask(props.taskId, { executor: userId });
+    setIsVisibleList(false);
   };
 
   const ListToAsign = () => {

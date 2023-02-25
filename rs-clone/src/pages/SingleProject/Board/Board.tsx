@@ -9,16 +9,26 @@ import { UserBtn, SelectPanel, ColumnList, PopupAddUser, UserList } from './comp
 import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose, MdStar } from 'react-icons/md';
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 import { useBoard } from '../../../contexts/Board.context';
-import { useOverlay, useUser } from '../../../contexts';
+import { useOverlay, useProjects, useUser } from '../../../contexts';
 import { Preloader, BtnAction } from '../../../components';
 import PartOverlay from '../../../components/PartOverlay/PartOverlay';
 
 import styles from './Board.module.scss';
 import React from 'react';
+import ProjectType from '../../../types/project/projectType';
+import { useParams } from 'react-router-dom';
 
 function Board() {
   const { notedItemList, addNotedItem, deleteNotedItem } = useUser();
-  const { projectInfo, updateProject, setSearchInputValue, getUserList } = useBoard();
+  const {
+    projectInfo,
+    updateProject,
+    setSearchInputValue,
+    getUserList,
+    setTasksDataBack,
+    setProjectDataBack,
+    setUsersDataBack
+  } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
@@ -29,6 +39,20 @@ function Board() {
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
   const [isLoaderGoing, setIsLoaderGoing] = useState(false);
   const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
+  const { id } = useParams();
+
+  const { isProjectExist } = useProjects();
+
+  useEffect(() => {
+    (async () => {
+      if (isProjectExist(id as string)) {
+        const data = (await setProjectDataBack(id as string)) as ProjectType;
+
+        await setTasksDataBack(data?._id);
+        await setUsersDataBack([data?.author, ...data.team]);
+      }
+    })();
+  }, [isProjectExist]);
 
   useEffect(() => {
     const author = projectInfo?.author;

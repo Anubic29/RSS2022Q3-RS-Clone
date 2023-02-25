@@ -2,26 +2,8 @@ import React, { useEffect, useState } from 'react';
 import SubmenuItemLine from '../SubmenuItemLine/SubmenuItemLine';
 import classes from '../../SubmenuItem.module.scss';
 import { useUser } from '../../../../contexts';
-import { useTasks } from '../../../../contexts/TasksContext';
 import { useProjects } from '../../../../contexts';
-import { useBoard } from '../../../../contexts/Board.context';
-import CommentTaskType from '../../../../types/task/сommentTaskType';
 import { convertLetterToHex } from '../../../../utils/convertLetterToHex';
-import { colorSecondary } from '../../../../theme/variables';
-import { ColumnList } from '../../../../pages/SingleProject/Board/components';
-
-type TaskType = {
-  _id: string;
-  id: number;
-  title: string;
-  description: string;
-  author: string;
-  executor: string;
-  projectId: string;
-  columnId: string;
-  commentList: CommentTaskType[];
-  __v: number;
-};
 
 type blockType = {
   subtitle: string;
@@ -35,44 +17,19 @@ type blockType = {
   }[];
 };
 
-const board = [
-  {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Sign-check-icon.png/768px-Sign-check-icon.png',
-    title: 'Доска CBC',
-    article: '',
-    project: 'Company BDSM',
-    bgColor: '#4cade8',
-    columnId: ''
-  }
-];
-
-const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (props) => {
+const SubmenuItemsBlock: React.FC<{
+  onTabChange: string;
+  menuItem: 'work' | 'userMenu' | 'project';
+}> = (props) => {
   const menuItem = props.menuItem;
-  const tab = props.onTabChange;
   const { currentUser } = useUser();
-  const { getTasks } = useTasks();
   const { projects } = useProjects();
-  const { getColumnList } = useBoard();
 
-  const [tasks, setTasks] = useState<TaskType[]>([]);
   const [currentProjects] = useState(projects || []);
-
-  useEffect(() => {
-    const tasks = async () => {
-      const list = await getTasks();
-      setTasks(list);
-    };
-    tasks();
-  }, []);
 
   const contentProject = {
     subtitle: 'RECENT',
     base: currentProjects
-  };
-
-  const contentWork = {
-    subtitle: tab === 'assigned' ? 'DEV READY' : 'RECENT',
-    base: tab === 'assigned' ? tasks : board
   };
 
   const userColor = `#${convertLetterToHex(
@@ -93,20 +50,14 @@ const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (
 
   const block = () => {
     switch (menuItem) {
-      case 'work':
-        return contentWork;
       case 'userMenu':
         return contenUserMenu;
       case 'project':
         return contentProject;
     }
   };
-  const link = (id: string, projectIdForTask?: string) => {
+  const link = (id: string) => {
     switch (menuItem) {
-      case 'work':
-        if (tab === 'assigned') return `/projects/${projectIdForTask}/selected-task/${id}`;
-        if (tab === 'board') return '/';
-        break;
       case 'project':
         return `/projects/${id}`;
       default:
@@ -114,39 +65,11 @@ const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (
     }
   };
 
-  const usedColumns = () => {
-    const columnsList = getColumnList();
-    console.log(columnsList);
-    const filtered = columnsList.map((el) => {
-      for (const task of tasks) {
-        if (task.columnId === el._id) return el;
-      }
-    });
-    return filtered;
-  };
-  console.log(usedColumns());
   return (
     <>
       <div className={classes.itemsBlock}>
         <p className={classes.submenu_subtitle}>{(block() as blockType).subtitle}</p>
         <ul className={classes.submenu_itemsList}>
-          {menuItem === 'work' &&
-            tab === 'assigned' &&
-            (block() as blockType).base.map((item, i) => {
-              console.log(item);
-              return (
-                <SubmenuItemLine
-                  key={i}
-                  title={item.title}
-                  article={item.article}
-                  project={item.project}
-                  src=""
-                  bgColor={colorSecondary}
-                  type={'assigned'}
-                  columnId={item.columnId}
-                  link={link(item._id, item.projectId)}></SubmenuItemLine>
-              );
-            })}
           {menuItem === 'project' &&
             (block() as blockType).base.map((item, i) => {
               return (
@@ -157,7 +80,7 @@ const SubmenuItemsBlock: React.FC<{ onTabChange: string; menuItem: string }> = (
                   project={'Software project'}
                   src={item.pathImage}
                   bgColor={item.bgColor}
-                  link={link(item._id, item.projectId)}
+                  link={link(item._id)}
                   id={item._id}
                   type={'project'}
                   marked={Boolean(

@@ -27,7 +27,7 @@ interface TaskProps {
 
 const TaskPopUp = (props: TaskProps) => {
   const { updateTask, deleteTask, getTaskList, getColumnList, getUserList } = useBoard();
-  const { getCommentsList, getCommentDataBack, getUserData } = useComments();
+  const { getCommentDataBack } = useComments();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
 
   const clipboard = useClipboard();
@@ -59,7 +59,6 @@ const TaskPopUp = (props: TaskProps) => {
     };
     return result;
   };
-
   const data = dataset();
 
   const columnsData = getColumnList();
