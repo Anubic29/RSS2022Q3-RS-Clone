@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, ReactNode, useContext, useState } from 'react';
-import { ACCESS_TOKEN, BASE_URL, getCurrentUserId } from '../api/config';
+import { BASE_URL, getCurrentUserId } from '../api/config';
 import TaskType from '../types/task/taskType';
 
 interface TasksContextProps {
@@ -16,6 +16,7 @@ function TasksProvider({ children }: PropsWithChildren) {
 
   const getTasks = async () => {
     const userId = await getCurrentUserId();
+    const ACCESS_TOKEN = localStorage.getItem('accessToken');
     const res = await fetch(`${BASE_URL}/tasks?author=${userId}`, {
       method: 'GET',
       headers: {
@@ -30,6 +31,7 @@ function TasksProvider({ children }: PropsWithChildren) {
   };
 
   const getTask = async (id: string) => {
+    const ACCESS_TOKEN = localStorage.getItem('accessToken');
     const res = await fetch(`${BASE_URL}/tasks/${id}/info`, {
       method: 'GET',
       headers: {

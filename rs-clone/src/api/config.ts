@@ -2,6 +2,7 @@ const BASE_URL = 'http://localhost:5050/api';
 const ACCESS_TOKEN = localStorage.getItem('accessToken');
 
 async function getCurrentUserId(): Promise<string> {
+  const ACCESS_TOKEN = localStorage.getItem('accessToken');
   const res = await fetch(`${BASE_URL}/users/current`, {
     method: 'GET',
     headers: {
