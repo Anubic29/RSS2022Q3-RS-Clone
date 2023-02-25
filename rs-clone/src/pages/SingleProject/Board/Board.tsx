@@ -14,20 +14,10 @@ import { Preloader, BtnAction, PartOverlay } from '../../../components';
 import { Link } from 'react-router-dom';
 
 import styles from './Board.module.scss';
-import ProjectType from '../../../types/project/projectType';
-import { useParams } from 'react-router-dom';
 
 function Board() {
   const { notedItemList, addNotedItem, deleteNotedItem } = useUser();
-  const {
-    projectInfo,
-    updateProject,
-    setSearchInputValue,
-    getUserList,
-    setTasksDataBack,
-    setProjectDataBack,
-    setUsersDataBack
-  } = useBoard();
+  const { projectInfo, updateProject, setSearchInputValue, getUserList } = useBoard();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const [boardTitle, setBoardTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
@@ -38,20 +28,6 @@ function Board() {
   const [userListDisplay, setUserListDisplay] = useState<string[]>([]);
   const [isLoaderGoing, setIsLoaderGoing] = useState(false);
   const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
-  const { id } = useParams();
-
-  const { isProjectExist } = useProjects();
-
-  useEffect(() => {
-    (async () => {
-      if (isProjectExist(id as string)) {
-        const data = (await setProjectDataBack(id as string)) as ProjectType;
-
-        await setTasksDataBack(data?._id);
-        await setUsersDataBack([data?.author, ...data.team]);
-      }
-    })();
-  }, [isProjectExist]);
 
   useEffect(() => {
     const author = projectInfo?.author;
