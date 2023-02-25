@@ -40,6 +40,12 @@
   }
 }
 
+.table-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 45px;
+}
+
 .project-list {
   width: 100%;
   border-spacing: 0;

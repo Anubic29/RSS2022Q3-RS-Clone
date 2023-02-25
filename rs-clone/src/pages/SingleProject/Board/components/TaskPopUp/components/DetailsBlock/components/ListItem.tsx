@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { BsPinAngle } from 'react-icons/bs';
+import { FaUserCircle } from 'react-icons/fa';
 import classes from './ListItem.module.scss';
 import UserType from '../../../../../../../../types/user/userType';
 import { BoxWithShadow, UserIcon } from '../../../../../../../../components';
 import useComponentVisible from '../../../../../../../../hooks/useComponentVisible/useInputVisible';
 import { useUser, useBoard } from '../../../../../../../../contexts';
 import CurrentUserType from '../../../../../../../../types/user/currentUserType';
+import { type } from 'os';
 
 interface ListItemProps {
   taskId: string;
@@ -21,17 +23,11 @@ interface ListItemProps {
   asignee: string;
 }
 
-const userInitials = (name: string) => {
-  return name
-    .split(' ')
-    .map((name) => name[0])
-    .join('');
-};
-
 const ListItem = (props: ListItemProps) => {
   const { currentUser } = useUser();
 
   const userName = (userId: string, team: UserType[]) => {
+    if (userId === 'auto') return 'Not assigned';
     const userObj = team.find((user) => user._id === userId);
     return `${userObj?.firstName} ${userObj?.lastName}`;
   };
@@ -72,23 +68,33 @@ const ListItem = (props: ListItemProps) => {
     updateTask(props.taskId, { executor: userId });
   };
 
-  const getFirstLetters = (first: string, last: string) => {
-    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
-  };
-
   const ListToAsign = () => {
     return (
       <ul className={classes.assigneeUl}>
+        <li className={classes.assigneeLi} onMouseDown={() => asigneeChangeHandler('auto')}>
+          <FaUserCircle className={classes.unassignedIcon} /> <span>Not assigned</span>
+        </li>
         {listToAssign.length > 0 &&
-          listToAssign.map((user, i) => (
-            <li
-              className={classes.assigneeLi}
-              key={i}
-              onMouseDown={() => asigneeChangeHandler(user._id)}>
-              <UserIcon user={getFirstLetters(user.firstName, user.lastName)} />
-              <p>{`${user.firstName} ${user.lastName}`}</p>
-            </li>
-          ))}
+          listToAssign.map((user, i) => {
+            if (typeof user === 'object') {
+              return (
+                <li
+                  className={classes.assigneeLi}
+                  key={i}
+                  onMouseDown={() => asigneeChangeHandler(user._id)}>
+                  <UserIcon
+                    userFrst={
+                      props.team.find((userT) => userT._id === user._id)?.firstName as string
+                    }
+                    userLast={
+                      props.team.find((userT) => userT._id === user._id)?.lastName as string
+                    }
+                  />
+                  <p>{`${user.firstName} ${user.lastName}`}</p>
+                </li>
+              );
+            }
+          })}
       </ul>
     );
   };
@@ -118,19 +124,22 @@ const ListItem = (props: ListItemProps) => {
                 props.title === 'asignee' ? classes.hover : ''
               }`}
               onClick={() => searchAsigneeHandler(props.title)}>
-              <UserIcon
-                user={
-                  props.title === 'asignee'
-                    ? getFirstLetters(
-                        userName(props.asignee, props.team),
-                        userName(props.asignee, props.team).split(' ')[1][0]
-                      )
-                    : getFirstLetters(
-                        userName(props.author, props.team),
-                        userName(props.author, props.team).split(' ')[1][0]
-                      )
-                }
-              />
+              {(props.title === 'asignee' && props.asignee === 'auto' && (
+                <FaUserCircle className={classes.unassignedIcon} />
+              )) || (
+                <UserIcon
+                  userFrst={
+                    props.title === 'asignee'
+                      ? userName(props.asignee, props.team).split(' ')[0]
+                      : userName(props.author, props.team).split(' ')[0]
+                  }
+                  userLast={
+                    props.title === 'asignee'
+                      ? userName(props.asignee, props.team).split(' ')[1]
+                      : userName(props.author, props.team).split(' ')[1]
+                  }
+                />
+              )}
               <p>
                 {props.title === 'asignee'
                   ? userName(props.asignee, props.team)

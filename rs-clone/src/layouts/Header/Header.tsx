@@ -111,7 +111,7 @@ const Header = () => {
         </Button>
         <div className={classes.header_userMenu}>
           <div onClick={userIconHandler}>
-            <UserIcon user="OD"></UserIcon>
+            <UserIcon userFrst="O" userLast="D"></UserIcon>
           </div>
           {activeItem === 'userMenu' && isUserMenuVisible && (
             <div className={classes.absolute + ' ' + classes.submenu_box_right} ref={userRef}>

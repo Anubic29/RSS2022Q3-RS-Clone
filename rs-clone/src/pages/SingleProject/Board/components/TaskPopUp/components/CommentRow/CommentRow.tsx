@@ -71,18 +71,12 @@ const CommentRow = (props: {
     setIsEdited(date);
   };
 
-  const getFirstLetters = (first: string, last: string) => {
-    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
-  };
-
   return (
     <div className={classes.commentRow_wrap}>
       <div className={classes.commentRow_IconColumn}>
         <UserIcon
-          user={getFirstLetters(
-            authorUserNameObj?.firstName as string,
-            authorUserNameObj?.lastName as string
-          )}
+          userFrst={authorUserNameObj?.firstName as string}
+          userLast={authorUserNameObj?.lastName as string}
         />
       </div>
       <div className={classes.commentRow_TextColumn}>

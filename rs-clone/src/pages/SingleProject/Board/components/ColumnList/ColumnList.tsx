@@ -199,19 +199,17 @@ function ColumnList(props: ColumnListProps) {
             </div>
           )}
         </div>
-        {getColumnList().length < 5 && (
-          <div className={styles['btn-add-container']}>
-            <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
-              <BtnAction
-                image={MdOutlineAddCircleOutline}
-                title="Create column"
-                backgrColorDefault={colorBackgroundColumn}
-                backgrColorHover={colorBackgroundHover}
-                backgrColorActive={colorSecondaryLight}
-              />
-            </div>
+        <div className={styles['btn-add-container']}>
+          <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
+            <BtnAction
+              image={MdOutlineAddCircleOutline}
+              title="Create column"
+              backgrColorDefault={colorBackgroundColumn}
+              backgrColorHover={colorBackgroundHover}
+              backgrColorActive={colorSecondaryLight}
+            />
           </div>
-        )}
+        </div>
         <div className={styles['curtain'] + ' ' + styles['right']}></div>
       </div>
     </div>
