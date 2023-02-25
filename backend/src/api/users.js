@@ -10,7 +10,7 @@ function isCorrectUserInfo(body) {
     && typeof body.password === 'string';
 }
 
-const valuesNotedType = ['board', 'project']
+const valuesNotedType = ['task', 'project']
 function isCorrectUserNoted(body) {
   return typeof body.id === 'string' && valuesNotedType.indexOf(body.type) >= 0; 
 }

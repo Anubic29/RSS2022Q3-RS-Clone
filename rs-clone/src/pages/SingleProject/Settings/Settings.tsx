@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Button, Dropdown, ProjectAvatar } from '../../../components';
 import { useOverlay } from '../../../contexts';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './components';
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAlerts } from '../../../contexts/AlertsContext';
 
 import styles from './Settings.module.scss';
-import React from 'react';
 
 const PROJECT_BADGE_SIZE = 128;
 
@@ -45,7 +44,7 @@ function Settings() {
 
   return (
     <div className={styles.Settings}>
-      <SettingsBreadcrumbs />
+      <SettingsBreadcrumbs projId={`${projectInfo?._id}`} projTitle={`${projectInfo?.title}`} />
 
       <div className={styles.TitleArea}>
         <span className={styles.Title}>Details</span>

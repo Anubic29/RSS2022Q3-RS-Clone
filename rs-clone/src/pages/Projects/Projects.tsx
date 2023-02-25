@@ -105,73 +105,75 @@ function Projects() {
           <Preloader text={'Loading projects...'} />
         </div>
       ) : projects.length && !serverError ? (
-        <table className={styles['project-list']}>
-          <thead className={styles['project-list__header']}>
-            <tr className={styles['project-list__header-row']}>
-              <th className={styles['project__star']}>
-                <MdStar />
-              </th>
-              <th
-                className={`${styles['project__title']} ${styles['sortable-cell']}`}
-                onClick={() => sortByColumn('title')}>
-                <span className={styles['content']}>
-                  Title
-                  {sortField === 'title' && (
-                    <span className={styles['icon']}>
-                      {!sortOrder ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
-                    </span>
-                  )}
-                </span>
-              </th>
-              <th
-                className={`${styles['project__key']} ${styles['sortable-cell']}`}
-                onClick={() => sortByColumn('key')}>
-                <span className={styles['content']}>
-                  Key
-                  {sortField === 'key' && (
-                    <span className={styles['icon']}>
-                      {!sortOrder ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
-                    </span>
-                  )}
-                </span>
-              </th>
-              <th className={styles['project__description']}>Description</th>
-              <th
-                className={`${styles['project__author']} ${styles['sortable-cell']}`}
-                onClick={() => sortByColumn('author')}>
-                <span className={styles['content']}>
-                  Author
-                  {sortField === 'author' && (
-                    <span className={styles['icon']}>
-                      {!sortOrder ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
-                    </span>
-                  )}
-                </span>
-              </th>
-              <th className={styles['project__menu']}></th>
-            </tr>
-          </thead>
-          <tbody className={styles['project-list__body']}>
-            {projectListDisplay.map((project) => {
-              return (
-                <ProjectTableRow
-                  _id={project.proj._id}
-                  key={project.proj._id}
-                  title={project.proj.title}
-                  projPathImage={project.proj.pathImage}
-                  projColor={project.proj.color}
-                  myKey={project.proj.key}
-                  description={project.proj.description}
-                  author={project.user}
-                  noted={notedItemList.some((data) => data.id === project.proj._id)}
-                  setMainLoading={(state: boolean) => setIsLoading(state)}
-                  setMainCustomMessage={(text: string) => setCustomMessage(text)}
-                  setServerError={(state: boolean) => setServerError(state)}
-                />
-              );
-            })}
-          </tbody>
-        </table>
+        <div className={styles['table-block']}>
+          <table className={styles['project-list']}>
+            <thead className={styles['project-list__header']}>
+              <tr className={styles['project-list__header-row']}>
+                <th className={styles['project__star']}>
+                  <MdStar />
+                </th>
+                <th
+                  className={`${styles['project__title']} ${styles['sortable-cell']}`}
+                  onClick={() => sortByColumn('title')}>
+                  <span className={styles['content']}>
+                    Title
+                    {sortField === 'title' && (
+                      <span className={styles['icon']}>
+                        {!sortOrder ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
+                      </span>
+                    )}
+                  </span>
+                </th>
+                <th
+                  className={`${styles['project__key']} ${styles['sortable-cell']}`}
+                  onClick={() => sortByColumn('key')}>
+                  <span className={styles['content']}>
+                    Key
+                    {sortField === 'key' && (
+                      <span className={styles['icon']}>
+                        {!sortOrder ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
+                      </span>
+                    )}
+                  </span>
+                </th>
+                <th className={styles['project__description']}>Description</th>
+                <th
+                  className={`${styles['project__author']} ${styles['sortable-cell']}`}
+                  onClick={() => sortByColumn('author')}>
+                  <span className={styles['content']}>
+                    Author
+                    {sortField === 'author' && (
+                      <span className={styles['icon']}>
+                        {!sortOrder ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
+                      </span>
+                    )}
+                  </span>
+                </th>
+                <th className={styles['project__menu']}></th>
+              </tr>
+            </thead>
+            <tbody className={styles['project-list__body']}>
+              {projectListDisplay.map((project) => {
+                return (
+                  <ProjectTableRow
+                    _id={project.proj._id}
+                    key={project.proj._id}
+                    title={project.proj.title}
+                    projPathImage={project.proj.pathImage}
+                    projColor={project.proj.color}
+                    myKey={project.proj.key}
+                    description={project.proj.description}
+                    author={project.user}
+                    noted={notedItemList.some((data) => data.id === project.proj._id)}
+                    setMainLoading={(state: boolean) => setIsLoading(state)}
+                    setMainCustomMessage={(text: string) => setCustomMessage(text)}
+                    setServerError={(state: boolean) => setServerError(state)}
+                  />
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <div className={styles.empty}>
           <EmptyData text={customMessage} />

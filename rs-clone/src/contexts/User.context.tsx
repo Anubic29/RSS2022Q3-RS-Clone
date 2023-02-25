@@ -7,6 +7,8 @@ import NotedItemUserType from '../types/user/notedItemUserType';
 interface UserContextType {
   currentUser: CurrentUserType | undefined;
   notedItemList: NotedItemUserType[];
+  getNotedItemList: (type: 'task' | 'project') => NotedItemUserType[];
+  isNotedItem: (id: string) => boolean;
   addNotedItem: (id: string, type: string) => Promise<boolean>;
   deleteNotedItem: (id: string) => Promise<boolean>;
   setUserDataBack: () => void;
@@ -15,6 +17,8 @@ interface UserContextType {
 export const UserContext = createContext<UserContextType>({
   currentUser: undefined,
   notedItemList: [],
+  getNotedItemList: () => [],
+  isNotedItem: () => false,
   addNotedItem: () => Promise.resolve(false),
   deleteNotedItem: () => Promise.resolve(false),
   setUserDataBack: () => undefined
@@ -31,6 +35,20 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setNotedItemList(response.data.notedItems);
     }
   }, []);
+
+  const getNotedItemList = useCallback(
+    (type: 'task' | 'project') => {
+      return notedItemList.filter((data) => data.type === type);
+    },
+    [notedItemList]
+  );
+
+  const isNotedItem = useCallback(
+    (id: string) => {
+      return notedItemList.some((data) => data.id === id);
+    },
+    [notedItemList]
+  );
 
   const addNotedItem = useCallback(
     async (id: string, type: string) => {
@@ -67,11 +85,21 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     () => ({
       currentUser,
       notedItemList,
+      getNotedItemList,
+      isNotedItem,
       addNotedItem,
       deleteNotedItem,
       setUserDataBack
     }),
-    [currentUser, notedItemList, addNotedItem, deleteNotedItem, setUserDataBack]
+    [
+      currentUser,
+      notedItemList,
+      getNotedItemList,
+      isNotedItem,
+      addNotedItem,
+      deleteNotedItem,
+      setUserDataBack
+    ]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
