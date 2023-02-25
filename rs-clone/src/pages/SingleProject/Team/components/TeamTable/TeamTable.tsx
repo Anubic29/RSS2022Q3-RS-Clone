@@ -104,8 +104,8 @@ function TeamTable() {
           .filter((collaborator) => collaborator._id !== id)
           .sort((a, b) =>
             sortOrder === 'asc'
-              ? a.firstName.localeCompare(b.firstName)
-              : b.firstName.localeCompare(a.firstName)
+              ? b.firstName.localeCompare(a.firstName)
+              : a.firstName.localeCompare(b.firstName)
           )
       );
     } catch {
