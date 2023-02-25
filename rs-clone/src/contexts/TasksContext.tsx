@@ -17,7 +17,7 @@ function TasksProvider({ children }: PropsWithChildren) {
   const getTasks = async () => {
     const userId = await getCurrentUserId();
     const ACCESS_TOKEN = localStorage.getItem('accessToken');
-    const res = await fetch(`${BASE_URL}/tasks?author=${userId}`, {
+    const res = await fetch(`${BASE_URL}/tasks?executor=${userId}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`

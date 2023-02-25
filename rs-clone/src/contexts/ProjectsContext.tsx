@@ -16,6 +16,7 @@ export interface ProjectsContextValue {
   createProject: (body: ProjectCreateBody) => void;
   isProjectExist: (id: string) => boolean;
   getProject: (id: string) => Promise<ProjectType>;
+  removeProjectCollaborator: (projectId: string, collaboratorId: string) => void;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
@@ -52,6 +53,15 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     });
   };
 
+  const removeProjectCollaborator = async (projectId: string, collaboratorId: string) => {
+    await fetch(`${BASE_URL}/projects/${projectId}/team/${collaboratorId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`
+      }
+    });
+  };
+
   const isProjectExist = useCallback(
     (id: string) => {
       return projects.some((project) => project._id === id);
@@ -65,7 +75,8 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     deleteProject,
     createProject,
     isProjectExist,
-    getProject
+    getProject,
+    removeProjectCollaborator
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;

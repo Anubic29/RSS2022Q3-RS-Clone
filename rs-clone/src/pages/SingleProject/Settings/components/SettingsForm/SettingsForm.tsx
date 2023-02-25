@@ -113,7 +113,7 @@ function SettingsForm(props: SettingsFormProps) {
           setAfterLoadingIcon(true);
           setTimeout(() => setAfterLoadingIcon(false), 1500);
 
-          addAlert('Success', 'Project settings were updated successfully');
+          addAlert('Success', 'Project settings was updated successfully');
         } catch {
           addAlert('Error', 'Server error. Unable to update settings. Try again later');
         }

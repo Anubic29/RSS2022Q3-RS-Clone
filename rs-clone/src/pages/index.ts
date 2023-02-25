@@ -8,6 +8,7 @@ import ProjectCreate from './ProjectCreate/ProjectCreate';
 import SingleProject from './SingleProject/SingleProject';
 import Settings from './SingleProject/Settings/Settings';
 import Board from './SingleProject/Board/Board';
+import Team from './SingleProject/Team/Team';
 
 export {
   Dashboard,
@@ -19,5 +20,6 @@ export {
   SingleProject,
   LoginPage,
   Settings,
-  Board
+  Board,
+  Team
 };

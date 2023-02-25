@@ -8,7 +8,8 @@ import {
   Projects,
   Board,
   Settings,
-  SingleProject
+  SingleProject,
+  Team
 } from '../pages';
 import { ProjectsProvider } from '../contexts';
 import { UserProvider } from '../contexts/User.context';
@@ -38,10 +39,12 @@ function AuthRoute() {
                       </CommentsProvider>
                     </BoardProvider>
                   }>
-                  <Route index element={<Board />} />
+                  <Route index element={<Navigate to="board" />} />
                   <Route path="board" element={<Board />} />
+                  <Route path="board/selected-task/:taskId" element={<Board />} />
                   <Route path="selected-task/:taskId" element={<Board />} />
                   <Route path="settings" element={<Settings />} />
+                  <Route path="team" element={<Team />} />
                 </Route>
               </Route>
               <Route path="create-project" element={<ProjectCreate />} />

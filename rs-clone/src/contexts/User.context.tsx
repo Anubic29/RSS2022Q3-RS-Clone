@@ -3,6 +3,8 @@ import { createContext, ReactNode, useCallback, useContext, useMemo, useState } 
 import api from '../api';
 import CurrentUserType from '../types/user/currentUserType';
 import NotedItemUserType from '../types/user/notedItemUserType';
+import { ACCESS_TOKEN, BASE_URL } from '../api/config';
+import UserType from '../types/user/userType';
 
 interface UserContextType {
   currentUser: CurrentUserType | undefined;
@@ -10,6 +12,7 @@ interface UserContextType {
   addNotedItem: (id: string, type: string) => Promise<boolean>;
   deleteNotedItem: (id: string) => Promise<boolean>;
   setUserDataBack: () => void;
+  getUsers: () => Promise<UserType[]>;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -17,7 +20,8 @@ export const UserContext = createContext<UserContextType>({
   notedItemList: [],
   addNotedItem: () => Promise.resolve(false),
   deleteNotedItem: () => Promise.resolve(false),
-  setUserDataBack: () => undefined
+  setUserDataBack: () => undefined,
+  getUsers: () => Promise.resolve([])
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -63,15 +67,27 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     [notedItemList, currentUser]
   );
 
+  const getUsers = async () => {
+    const fetchedUsers = await fetch(`${BASE_URL}/users`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`
+      }
+    });
+
+    return await fetchedUsers.json();
+  };
+
   const values = useMemo(
     () => ({
       currentUser,
       notedItemList,
       addNotedItem,
       deleteNotedItem,
-      setUserDataBack
+      setUserDataBack,
+      getUsers
     }),
-    [currentUser, notedItemList, addNotedItem, deleteNotedItem, setUserDataBack]
+    [currentUser, notedItemList, addNotedItem, deleteNotedItem, setUserDataBack, getUsers]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
