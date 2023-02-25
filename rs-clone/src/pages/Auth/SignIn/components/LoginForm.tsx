@@ -1,16 +1,16 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './LoginForm.module.scss';
 import api from '../../../../api';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { IsAuthContex } from '../../../../contexs';
 import { changeIsLoading } from '../../Auth';
+import { useAuth } from '../../../../contexts';
 
 type ServerError = { errorMessage: string };
 
 const LoginForm = () => {
-  const contextValue = useContext(IsAuthContex);
+  const { setTokenData, removeTokenData } = useAuth();
   const [change, changeMessage, setText] = changeIsLoading();
 
   const passwRegEx = new RegExp('[0-9A-Za-z]{4,}$');
@@ -40,9 +40,8 @@ const LoginForm = () => {
           setTimeout(() => {
             changeMessage(false);
           }, 1000);
-          localStorage.setItem('accessToken', response.data);
           setUserExist(true);
-          contextValue.setIsAuthenticated(true);
+          setTokenData(response.data);
           navigate('/');
         }
       } catch (error) {
@@ -52,7 +51,7 @@ const LoginForm = () => {
         setTimeout(() => {
           changeMessage(false);
         }, 1000);
-        contextValue.setIsAuthenticated(false);
+        removeTokenData();
         if (axios.isAxiosError(error)) {
           const serverError = error as AxiosError<ServerError>;
           if (serverError && serverError.response) {

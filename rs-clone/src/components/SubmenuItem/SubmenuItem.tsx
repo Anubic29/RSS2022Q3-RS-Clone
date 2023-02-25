@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SubmenuItemsBlock from './components/SubmenuItamsBlock/SubmenuItemsBlock';
 import { Link } from 'react-router-dom';
 import classes from './SubmenuItem.module.scss';
-import { IsAuthContex } from '../../contexs';
 import BoxWithShadow from '../BoxWithShadow/BoxWithShadow';
 import SubmenuNav from './components/SubmenuNav/SubmenuNav';
+import { useAuth } from '../../contexts';
 
 const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
-  const contextValue = useContext(IsAuthContex);
+  const { removeTokenData } = useAuth();
   const [tab, setTab] = useState('assigned');
   const saveTabValueHandler = (tabValue: string) => {
     setTab(tabValue);
@@ -18,8 +18,7 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
   const navigate = useNavigate();
 
   const logOutHandler = () => {
-    contextValue.setIsAuthenticated(false);
-    localStorage.removeItem('accessToken');
+    removeTokenData();
     navigate('/');
   };
 
