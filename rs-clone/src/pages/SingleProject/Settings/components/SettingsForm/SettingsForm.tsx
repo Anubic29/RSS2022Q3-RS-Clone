@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Input, Label, Preloader, UserAvatar } from '../../../../../components';
-import { useBoard, useAlerts, useProjects } from '../../../../../contexts';
+import { useBoard, useAlerts, useProjects, useUser } from '../../../../../contexts';
 import { MdAccountCircle as UserIcon, MdDone } from 'react-icons/md';
 import { projectValidationData } from '../../../../../utils';
 import ProjectType from '../../../../../types/project/projectType';
@@ -30,11 +30,12 @@ function SettingsForm(props: SettingsFormProps) {
   const { projectInfo, updateProject, getUserList } = useBoard();
   const { addAlert } = useAlerts();
   const { changeProjectAuthor } = useProjects();
+  const { currentUser } = useUser();
 
   const [name, setName] = useState(projectInfo?.title || '');
   const [description, setDescription] = useState(projectInfo?.description || '');
   const [key, setKey] = useState(projectInfo?.key || '');
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [isLoaderGoing, setIsLoaderGoing] = useState(false);
   const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
 
@@ -47,6 +48,7 @@ function SettingsForm(props: SettingsFormProps) {
   const [cachedAuthor, setCachedAuthor] = useState('');
   const [avatarColor, setAvatarColor] = useState('');
   const [isFocused, setIsFocused] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(projectInfo?.author || '');
 
   useEffect(() => {
     window.addEventListener('click', onUserBlurHandler);
@@ -57,15 +59,13 @@ function SettingsForm(props: SettingsFormProps) {
   }, []);
 
   useEffect(() => {
-    const projectAuthor = getUserList().find(
-      (user) => user._id === projectInfo?.author
-    ) as UserType;
+    const projectAuthor = getUserList().find((user) => user._id === authorId) as UserType;
     const colorFirstHalf = convertLetterToHex(projectAuthor.firstName);
     const colorSecondHalf = convertLetterToHex(projectAuthor.lastName);
 
     setCachedAuthor(`${projectAuthor.firstName} ${projectAuthor.lastName}`);
     setAvatarColor(`#${colorFirstHalf}${colorSecondHalf}`);
-  }, []);
+  }, [authorId]);
 
   useEffect(() => {
     const {
@@ -135,6 +135,7 @@ function SettingsForm(props: SettingsFormProps) {
         try {
           await changeProjectAuthor(projectInfo?._id as string, authorId);
           await updateProject({
+            author: authorId,
             title: name,
             description,
             key,
@@ -172,9 +173,7 @@ function SettingsForm(props: SettingsFormProps) {
   );
 
   const onSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setAuthor(value);
+    setAuthor(event.target.value);
   };
 
   const onUserBlurHandler = (event: MouseEvent) => {
@@ -233,13 +232,17 @@ function SettingsForm(props: SettingsFormProps) {
         <Label text="Admin" />
         <div className={styles.UserInputContainer}>
           <label htmlFor={InputIds.ADMIN}>
-            {isFocused ? (
+            {currentUser?._id === projectInfo?.author && isFocused ? (
               <UserIcon
                 className={[styles.SettingsUserAvatar, styles.SettingsUserIconEmpty].join(' ')}
               />
             ) : (
               <UserAvatar
-                className={styles.SettingsUserAvatar}
+                className={
+                  currentUser?._id === projectInfo?.author
+                    ? styles.SettingsUserAvatar
+                    : styles.SettingsUserAvatarDisabled
+                }
                 content={cachedAuthor}
                 color={avatarColor}
               />
@@ -250,15 +253,25 @@ function SettingsForm(props: SettingsFormProps) {
             className={[styles.Input, styles.UserInput].join(' ')}
             type="text"
             id={InputIds.ADMIN}
-            value={isFocused ? author : cachedAuthor}
+            value={
+              currentUser?._id !== projectInfo?.author
+                ? cachedAuthor
+                : isFocused
+                ? author
+                : cachedAuthor
+            }
             onChange={onSearchHandler}
+            disabled={currentUser?._id !== projectInfo?.author}
           />
 
-          {isFocused && (
+          {currentUser?._id === projectInfo?.author && isFocused && (
             <UsersDropdown
               setIsFocused={setIsFocused}
               setAuthor={setCachedAuthor}
               setAuthorId={setAuthorId}
+              setSelectedUser={setSelectedUser}
+              selectedUser={selectedUser}
+              search={author}
             />
           )}
         </div>
