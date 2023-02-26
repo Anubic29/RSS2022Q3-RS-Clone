@@ -34,6 +34,7 @@ function TasksProvider({ children }: PropsWithChildren) {
   };
 
   const getTasksToDo = async () => {
+    const ACCESS_TOKEN = localStorage.getItem('accessToken');
     const userId = await getCurrentUserId();
     const res = await fetch(`${BASE_URL}/tasks?executor=${userId}`, {
       method: 'GET',
