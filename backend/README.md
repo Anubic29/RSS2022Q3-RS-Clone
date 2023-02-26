@@ -271,6 +271,22 @@ Data Params:
 }
 
 
+- Update Project Admin
+URL:
+/api/projects/:id/change-admin
+
+URL Params:
+id - String
+
+Query Params:
+None
+
+Data Params:
+{
+  userId: String
+}
+
+
 - Update Column
 URL:
 /api/projects/:id/columns/:columnId
