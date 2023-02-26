@@ -16,7 +16,6 @@ import {
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
 import { ACCESS_TOKEN, BASE_URL } from '../api/config';
 import ColumnProjectType from '../types/project/columnProjectType';
-import { ColumnList } from '../pages/SingleProject/Board/components';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];

@@ -14,6 +14,7 @@ interface UserContextType {
   addNotedItem: (id: string, type: string) => Promise<boolean>;
   deleteNotedItem: (id: string) => Promise<boolean>;
   visitProject: (projectId: string) => Promise<boolean>;
+  deleteRecentProject: (projectId: string) => void;
   setUserDataBack: () => void | Promise<number | undefined>;
 }
 
@@ -26,6 +27,7 @@ export const UserContext = createContext<UserContextType>({
   addNotedItem: () => Promise.resolve(false),
   deleteNotedItem: () => Promise.resolve(false),
   visitProject: () => Promise.resolve(false),
+  deleteRecentProject: () => console.log('error'),
   setUserDataBack: () => undefined
 });
 
@@ -115,6 +117,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     [currentUser]
   );
 
+  const deleteRecentProject = useCallback((projectId: string) => {
+    setRecentList((prev) => prev.filter((project) => project !== projectId));
+  }, []);
+
   const values = useMemo(
     () => ({
       currentUser,
@@ -125,6 +131,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       addNotedItem,
       deleteNotedItem,
       visitProject,
+      deleteRecentProject,
       setUserDataBack
     }),
     [
@@ -136,6 +143,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       addNotedItem,
       deleteNotedItem,
       visitProject,
+      deleteRecentProject,
       setUserDataBack
     ]
   );

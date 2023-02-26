@@ -7,7 +7,7 @@ import {
 } from 'react-icons/md';
 import { ProjectAvatarProps } from '../../../../../components/ProjectAvatar/ProjectAvatar';
 import { Preloader, ProjectAvatar } from '../../../../../components';
-import { useProjects, useAlerts } from '../../../../../contexts';
+import { useProjects, useAlerts, useUser } from '../../../../../contexts';
 import { ProjectsContextValue } from '../../../../../contexts/ProjectsContext';
 
 import styles from './ProjectCard.module.scss';
@@ -25,6 +25,7 @@ function ProjectCard(props: ProjectCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { deleteProject } = useProjects() as ProjectsContextValue;
   const { addAlert } = useAlerts();
+  const { deleteNotedItem, deleteRecentProject } = useUser();
 
   const deleteProjectHandler = async (event: React.MouseEvent) => {
     try {
@@ -33,6 +34,8 @@ function ProjectCard(props: ProjectCardProps) {
 
       setIsLoading(true);
       await deleteProject(id);
+      await deleteNotedItem(id);
+      deleteRecentProject(id);
       addAlert('Success', 'Project was deleted successfully');
     } catch {
       addAlert('Error', 'Server error. Can`t remove project');
