@@ -207,12 +207,14 @@ router.delete('/:id/noted/:notedId', authenticateToken, async (req, res) => {
     if (!user) throw new Error('Not found')
 
     const idx = user.notedItems.findIndex((notedItems) => notedItems.id === req.params['notedId']);
-    if (idx < 0) throw new Error('Not found noted')
-
-    user.notedItems.splice(idx, 1);
-
-    await user.save();
-    res.json(true);
+    if (idx >= 0) {
+      user.notedItems.splice(idx, 1);
+  
+      await user.save();
+      res.json(true);
+    } else {
+      res.json(false);
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
