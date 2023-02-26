@@ -1,0 +1,50 @@
+@import '../../../../../theme/variables';
+
+.UsersDropdown {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  z-index: 3;
+  width: 350px;
+  max-height: 210px;
+  overflow-y: auto;
+  padding: 8px 0;
+  border-radius: 3px;
+  background: $colorBackground;
+  box-shadow: $boxShadow;
+}
+
+.UsersDropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-left: 2px solid $colorBackground;
+  cursor: pointer;
+
+  &:hover {
+    background: #DEEBFF;
+    border-left: 2px solid $colorSecondary;
+  }
+}
+
+.UsersDropdown-item.active {
+  background: #DEEBFF;
+  border-left: 2px solid $colorSecondary;
+
+  .UsersDropdown-user-name {
+    color: $colorSecondary;
+  }
+}
+
+.UsersDropdown-avatar {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.UsersDropdown-user-name {
+  font-size: 15px;
+  font-weight: 400;
+  color: $colorContent;
+}

@@ -6,18 +6,16 @@ import {
   MdSearch as SearchIcon
 } from 'react-icons/md';
 import { TeamTableDataRow } from '../';
-import { useProjects, useUser } from '../../../../../contexts';
+import { useBoard, useAlerts } from '../../../../../contexts';
 import { EmptyData, Input, Preloader } from '../../../../../components';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
 import UserType from '../../../../../types/user/userType';
 
 import './TeamTable.scss';
 
 function TeamTable() {
   const { id: projectId } = useParams();
-  const { getUsers } = useUser();
-  const { getProject, removeProjectCollaborator } = useProjects();
   const { addAlert } = useAlerts();
+  const { getUserList, projectInfo, removeProjectCollaborator } = useBoard();
 
   const [sortOrder, setSortOrder] = useState('asc');
   const [collaborators, setCollaborators] = useState<UserType[]>([]);
@@ -31,17 +29,12 @@ function TeamTable() {
   useEffect(() => {
     (async () => {
       try {
-        const fetchedProject = await getProject(projectId as string);
-        const fetchedUsers = await getUsers();
-        const usersIds = [...fetchedProject.team, fetchedProject.author];
-        const filteredUsers = usersIds
-          .map((id) => fetchedUsers.find((user) => user._id === id))
-          .filter((user) => user) as UserType[];
-        const sortedUsersByDefault = filteredUsers.sort((a, b) =>
+        const fetchedUsers = getUserList();
+        const sortedUsersByDefault = fetchedUsers.sort((a, b) =>
           a.firstName.localeCompare(b.firstName)
         );
 
-        setAdminId(fetchedProject.author);
+        setAdminId(projectInfo?.author as string);
         setCollaborators(sortedUsersByDefault);
         setCachedCollaborators(sortedUsersByDefault);
       } catch {

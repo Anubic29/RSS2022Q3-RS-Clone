@@ -24,8 +24,8 @@ export interface ProjectsContextValue {
   createProject: (body: ProjectCreateBody) => void;
   isProjectExist: (id: string) => boolean;
   getProject: (id: string) => Promise<ProjectType>;
-  removeProjectCollaborator: (projectId: string, collaboratorId: string) => void;
   getColumnById: (id: string) => ColumnProjectType | undefined;
+  changeProjectAuthor: (projectId: string, userId: string) => void;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
@@ -76,12 +76,14 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     });
   };
 
-  const removeProjectCollaborator = async (projectId: string, collaboratorId: string) => {
-    await fetch(`${BASE_URL}/projects/${projectId}/team/${collaboratorId}`, {
-      method: 'DELETE',
+  const changeProjectAuthor = async (projectId: string, userId: string) => {
+    await fetch(`${BASE_URL}/projects/${projectId}/change-admin`, {
+      method: 'PUT',
       headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`
-      }
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ author: userId })
     });
   };
 
@@ -99,8 +101,8 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     createProject,
     isProjectExist,
     getProject,
-    removeProjectCollaborator,
-    getColumnById
+    getColumnById,
+    changeProjectAuthor
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;

@@ -62,4 +62,5 @@ export interface BoardContextType {
   updateColumn: (_id: string, updateData: ColumnDataToUpdate) => Promise<boolean>;
   deleteColumn: (_id: string) => Promise<boolean>;
   swapColumn: (_idActive: string, _id: string) => Promise<boolean>;
+  removeProjectCollaborator: (projectId: string, collaboratorId: string) => Promise<boolean>;
 }

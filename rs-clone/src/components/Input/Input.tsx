@@ -15,6 +15,8 @@ interface InputProps {
   maxLength?: number;
   isValid?: boolean;
   validationMessage?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 function Input(props: InputProps) {
@@ -28,7 +30,9 @@ function Input(props: InputProps) {
     required,
     placeholder,
     isValid = true,
-    validationMessage
+    validationMessage,
+    onFocus,
+    onBlur
   } = props;
 
   const classNames = className ? `${styles.Input} ${className}` : styles.Input;
@@ -44,6 +48,8 @@ function Input(props: InputProps) {
         onChange={onChange}
         value={value}
         required={required}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
       {!isValid && <p className={styles.ValidationMessage}>{validationMessage}</p>}
     </>

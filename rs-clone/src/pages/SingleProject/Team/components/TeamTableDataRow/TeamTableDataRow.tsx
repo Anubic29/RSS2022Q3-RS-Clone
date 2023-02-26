@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Preloader, UserAvatar } from '../../../../../components';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
-import { useAlerts } from '../../../../../contexts/AlertsContext';
+import { useAlerts } from '../../../../../contexts';
 import { useUser } from '../../../../../contexts';
 import UserType from '../../../../../types/user/userType';
 
@@ -33,7 +33,7 @@ function TeamTableDataRow(props: TeamTableDataRowProps) {
       <td className="TeamTable-data TeamTable-data-user">
         <UserAvatar
           className="TeamTable-user-avatar"
-          content={collaborator.firstName}
+          content={`${collaborator.firstName} ${collaborator.lastName}`}
           color={`#${colorFirstHalf}${colorSecondHalf}`}
         />
         <p className="TeamTable-user-name">{`${collaborator.firstName} ${collaborator.lastName}`}</p>

@@ -14,6 +14,7 @@ import {
   UserDataForAvatar,
   BoardContextType
 } from './interfaces';
+import { ACCESS_TOKEN, BASE_URL } from '../api/config';
 
 export const BoardContext = createContext<BoardContextType>({
   setProjectDataBack: () => Promise.resolve(null),
@@ -39,7 +40,8 @@ export const BoardContext = createContext<BoardContextType>({
   createColumn: () => Promise.resolve(false),
   updateColumn: () => Promise.resolve(false),
   deleteColumn: () => Promise.resolve(false),
-  swapColumn: () => Promise.resolve(false)
+  swapColumn: () => Promise.resolve(false),
+  removeProjectCollaborator: () => Promise.resolve(false)
 });
 
 export const BoardProvider = (props: { children: React.ReactNode }) => {
@@ -50,6 +52,19 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
 
   const [userListFilter, setUserListFilter] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
+
+  const removeProjectCollaborator = async (projectId: string, collaboratorId: string) => {
+    await fetch(`${BASE_URL}/projects/${projectId}/team/${collaboratorId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`
+      }
+    });
+
+    setUserList((users) => users.filter((user) => user._id !== collaboratorId));
+
+    return true;
+  };
 
   const setProjectDataBack = useCallback(async (ProjectId: string) => {
     const response = await api.projects.getData(ProjectId);
@@ -376,7 +391,8 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       createColumn,
       updateColumn,
       deleteColumn,
-      swapColumn
+      swapColumn,
+      removeProjectCollaborator
     }),
     [
       setProjectDataBack,
@@ -402,7 +418,8 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       createColumn,
       updateColumn,
       deleteColumn,
-      swapColumn
+      swapColumn,
+      removeProjectCollaborator
     ]
   );
 
