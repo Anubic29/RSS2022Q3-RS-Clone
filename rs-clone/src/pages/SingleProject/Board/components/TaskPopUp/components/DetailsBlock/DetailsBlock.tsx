@@ -21,6 +21,7 @@ const DetailsBlock = (props: dataType) => {
     asignee: props.asignee,
     author: props.author
   };
+
   const { setPinnedF, getPinnedF } = useComments();
   const pinnedList = getPinnedF();
   const currentTaskPinned = pinnedList.find((task) => task.taskId === props.taskId);

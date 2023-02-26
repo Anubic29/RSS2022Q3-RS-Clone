@@ -1,4 +1,11 @@
-import React, { createContext, PropsWithChildren, useCallback, useContext, useState } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import ProjectType from '../types/project/projectType';
 import {
   createProjectRequest,
@@ -8,6 +15,8 @@ import {
 } from '../api/allProjects';
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
 import { ACCESS_TOKEN, BASE_URL } from '../api/config';
+import ColumnProjectType from '../types/project/columnProjectType';
+import { ColumnList } from '../pages/SingleProject/Board/components';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];
@@ -16,17 +25,32 @@ export interface ProjectsContextValue {
   createProject: (body: ProjectCreateBody) => void;
   isProjectExist: (id: string) => boolean;
   getProject: (id: string) => Promise<ProjectType>;
+  getColumnById: (id: string) => ColumnProjectType | undefined;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
 
 function ProjectsProvider({ children }: PropsWithChildren) {
   const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [columnList, setColumnList] = useState<ColumnProjectType[]>([]);
 
   const getProjects = useCallback(async (_id: string) => {
     const fetchedProjects = await getProjectsRequest(_id);
     setProjects(fetchedProjects);
   }, []);
+
+  useEffect(() => {
+    setColumnList(
+      projects.reduce((acc: ColumnProjectType[], data) => acc.concat(data.columnList), [])
+    );
+  }, [projects]);
+
+  const getColumnById = useCallback(
+    (id: string) => {
+      return columnList.find((column) => column._id === id);
+    },
+    [columnList]
+  );
 
   const deleteProject = async (id: string) => {
     await removeProjectTasks(id);
@@ -65,7 +89,8 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     deleteProject,
     createProject,
     isProjectExist,
-    getProject
+    getProject,
+    getColumnById
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;

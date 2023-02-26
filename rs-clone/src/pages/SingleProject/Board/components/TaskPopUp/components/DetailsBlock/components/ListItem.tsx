@@ -3,11 +3,10 @@ import { BsPinAngle } from 'react-icons/bs';
 import { FaUserCircle } from 'react-icons/fa';
 import classes from './ListItem.module.scss';
 import UserType from '../../../../../../../../types/user/userType';
-import { BoxWithShadow, UserIcon } from '../../../../../../../../components';
-import useComponentVisible from '../../../../../../../../hooks/useComponentVisible/useInputVisible';
+import useComponentVisible from '../../../../../../../../hooks/useComponentVisible/useComponentVisible';
 import { useUser, useBoard } from '../../../../../../../../contexts';
 import CurrentUserType from '../../../../../../../../types/user/currentUserType';
-import { type } from 'os';
+import { UserIcon, BoxWithShadow } from '../../../../../../../../components';
 
 interface ListItemProps {
   taskId: string;
@@ -65,7 +64,9 @@ const ListItem = (props: ListItemProps) => {
   const { updateTask } = useBoard();
 
   const asigneeChangeHandler = (userId: string) => {
+    console.log(props.taskId, userId);
     updateTask(props.taskId, { executor: userId });
+    setIsVisibleList(false);
   };
 
   const ListToAsign = () => {
@@ -156,14 +157,15 @@ const ListItem = (props: ListItemProps) => {
           )}
         </div>
         {isVisibleAsigneeList && (
-          <input
-            ref={asigneeListRef}
-            className={classes.usersListRow}
-            value={inputValue}
-            onChange={(e) => {
-              asigneeInputHandler(e);
-            }}
-          />
+          <div ref={asigneeListRef} className={classes.inputWrap}>
+            <input
+              className={classes.usersListRow}
+              value={inputValue}
+              onChange={(e) => {
+                asigneeInputHandler(e);
+              }}
+            />
+          </div>
         )}
         {props.team.length > 0 && props.title === 'asignee' && isVisibleAsigneeList && (
           <BoxWithShadow>
