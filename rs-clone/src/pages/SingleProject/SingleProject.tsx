@@ -38,7 +38,6 @@ function SingleProject() {
           const data = (await setProjectDataBack(id as string)) as ProjectType;
 
           await visitProject(data._id);
-          console.log('1');
           await setTasksDataBack(data._id);
           await setUsersDataBack([data.author, ...data.team]);
 

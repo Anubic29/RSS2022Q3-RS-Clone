@@ -31,7 +31,7 @@ function UsersDropdown(props: UsersDropdownProps) {
         const itemClassName =
           _id === projectInfo?.author ? 'UsersDropdown-item active' : 'UsersDropdown-item';
 
-        const onClickHandler = () => {
+        const onClickHandler = async () => {
           setAuthor(fullName);
           setAuthorId(_id);
           setIsFocused(false);

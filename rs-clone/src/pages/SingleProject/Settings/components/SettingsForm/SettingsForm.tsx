@@ -34,7 +34,7 @@ function SettingsForm(props: SettingsFormProps) {
   const [name, setName] = useState(projectInfo?.title || '');
   const [description, setDescription] = useState(projectInfo?.description || '');
   const [key, setKey] = useState(projectInfo?.key || '');
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [isLoaderGoing, setIsLoaderGoing] = useState(false);
   const [afterLoadingIcon, setAfterLoadingIcon] = useState(false);
 
@@ -83,13 +83,13 @@ function SettingsForm(props: SettingsFormProps) {
       projectKey === key &&
       pathImage === imageSrc &&
       color === imageBg &&
-      cachedAuthor === projectAuthor
+      authorId === projectAuthor
     ) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
-  }, [name, description, key, imageSrc, imageBg, cachedAuthor]);
+  }, [name, description, key, imageSrc, imageBg, authorId]);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -133,6 +133,7 @@ function SettingsForm(props: SettingsFormProps) {
         setIsLoaderGoing(true);
 
         try {
+          await changeProjectAuthor(projectInfo?._id as string, authorId);
           await updateProject({
             title: name,
             description,
@@ -140,8 +141,6 @@ function SettingsForm(props: SettingsFormProps) {
             pathImage: imageSrc,
             color: imageBg
           });
-
-          await changeProjectAuthor(projectInfo?._id as string, authorId);
 
           setAfterLoadingIcon(true);
           setTimeout(() => setAfterLoadingIcon(false), 1500);
@@ -169,7 +168,7 @@ function SettingsForm(props: SettingsFormProps) {
         addAlert('Error', 'You have to fill form correctly');
       }
     },
-    [updateProject, name, key, description, imageSrc, imageBg, addAlert]
+    [updateProject, name, key, description, imageSrc, imageBg, authorId, addAlert]
   );
 
   const onSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

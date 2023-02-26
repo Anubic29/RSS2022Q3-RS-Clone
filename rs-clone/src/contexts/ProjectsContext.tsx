@@ -83,7 +83,7 @@ function ProjectsProvider({ children }: PropsWithChildren) {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ author: userId })
+      body: JSON.stringify({ userId })
     });
   };
 
