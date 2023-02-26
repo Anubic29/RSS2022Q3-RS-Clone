@@ -20,6 +20,9 @@ export default function (instance: AxiosInstance) {
     postNotedData(userId: string, payload: { [key: string]: string }) {
       return instance.post<NotedItemUserType[]>(`api/users/${userId}/noted`, payload);
     },
+    postVisitProject(userId: string, payload: { [key: string]: string }) {
+      return instance.post<string[]>(`api/users/${userId}/recent`, payload);
+    },
     updateData(userId: string, config: AxiosRequestConfig) {
       return instance.put(`api/users/${userId}/info`, config);
     },

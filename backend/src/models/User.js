@@ -26,7 +26,31 @@ const schema = new Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  recentProjects: {
+    type: [String],
+    default: []
+  },
+  jobTitleInfo: {
+    type: String,
+    default: ''
+  },
+  departmentInfo: {
+    type: String,
+    default: ''
+  },
+  organizationInfo: {
+    type: String,
+    default: ''
+  },
+  locationInfo: {
+    type: String,
+    default: ''
+  },
+  coverBlock: {
+    type: String,
+    default: ''
+  }
 });
 
 module.exports = model('User', schema);
