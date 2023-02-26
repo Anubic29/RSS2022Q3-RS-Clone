@@ -6,6 +6,7 @@ type CurrentUserType = {
   lastName: string;
   mail: string;
   notedItems: NotedItemUserType[];
+  recentProjects: string[];
   __v: number;
 };
 

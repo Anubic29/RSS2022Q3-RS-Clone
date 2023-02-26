@@ -25,7 +25,7 @@ interface ProjectTableRowProps {
 }
 
 function ProjectTableRow(props: ProjectTableRowProps) {
-  const { addNotedItem, deleteNotedItem } = useUser();
+  const { addNotedItem, deleteNotedItem, deleteRecentProject } = useUser();
   const { deleteProject } = useProjects();
   const [isNoted, setIsNoted] = useState(props.noted);
   const [isLoadingNoted, setIsLoadingNoted] = useState(false);
@@ -53,6 +53,7 @@ function ProjectTableRow(props: ProjectTableRowProps) {
           try {
             await api.tasks.deleteAllDataByProject(props._id);
             if (isNoted) await deleteNotedItem(props._id);
+            deleteRecentProject(props._id);
             await deleteProject(props._id);
           } catch (error) {
             props.setServerError(true);
@@ -63,7 +64,7 @@ function ProjectTableRow(props: ProjectTableRowProps) {
         }
       }
     ];
-  }, [props._id, deleteProject, deleteNotedItem, isNoted]);
+  }, [props._id, deleteProject, deleteNotedItem, deleteRecentProject, isNoted]);
 
   return (
     <tr className={styles.row}>
