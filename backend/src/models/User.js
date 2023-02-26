@@ -27,6 +27,10 @@ const schema = new Schema({
       required: true
     }
   }],
+  recentProjects: {
+    type: [String],
+    default: []
+  },
   jobTitleInfo: {
     type: String,
     default: ''

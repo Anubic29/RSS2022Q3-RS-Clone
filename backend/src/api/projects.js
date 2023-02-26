@@ -236,7 +236,14 @@ router.put('/:id/columns/:columnId', authenticateToken, async (req, res) => {
 router.delete('/:id/info', authenticateToken, async (req, res) => {
   try {
     const project = (await Project.find({ _id: req.params.id }))[0];
-    if (!project) throw new Error('Not found');
+    if (!project) throw new Error('Not found Project');
+
+    const users = (await User.find({})).filter((user) => user.recentProjects.includes(req.params.id));
+
+    users.forEach(async (user) => {
+      user.recentProjects.splice(user.recentProjects.findIndex((data) => data === req.params.id), 1);
+      await user.save();
+    });
 
     await Project.deleteOne({ _id: project._id });
     res.json(true);

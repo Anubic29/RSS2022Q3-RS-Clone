@@ -99,6 +99,22 @@ Data Params:
 }
 
 
+- Add project to recent list
+URL:
+/api/users/:id/recent
+
+URL Params:
+id - String
+
+Query Params:
+None
+
+Data Params:
+{
+  projectId: String,
+}
+
+
 ### Put
 - Update User
 URL:
