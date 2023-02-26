@@ -8,11 +8,10 @@ import {
   colorBackgroundHover,
   colorSecondaryLight
 } from '../../../../../../../theme/variables';
-import { useBoard } from '../../../../../../../contexts/Board.context';
+import { useBoard, useUser } from '../../../../../../../contexts';
 import { Preloader, BtnAction } from '../../../../../../../components';
 
 import styles from './ColumnBody.module.scss';
-import { useUser } from '../../../../../../../contexts/User.context';
 
 interface ColumnBodyProps {
   id: string;

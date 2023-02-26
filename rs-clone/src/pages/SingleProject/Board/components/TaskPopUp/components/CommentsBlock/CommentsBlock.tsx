@@ -1,11 +1,9 @@
 import classes from './CommentsBlock.module.scss';
 import React, { useState, useEffect } from 'react';
-import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
+import { TextRedactorBlock, UserIcon } from '../../../../../../../components';
 import CommentRow from '../CommentRow/CommentRow';
-import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
 import { BiSortDown, BiSortUp } from 'react-icons/bi';
-import { useComments } from '../../../../../../../contexts/Comments.context';
-import { useUser } from '../../../../../../../contexts';
+import { useUser, useComments } from '../../../../../../../contexts';
 
 type CommentType = {
   _id: string;
@@ -63,19 +61,13 @@ const CommentsBlock = (props: { taskId: string }) => {
     setNewestFirt(newestFirst ? false : true);
   };
 
-  const getFirstLetters = (first: string, last: string) => {
-    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
-  };
-
   return (
     <div className={classes.commentsWrap}>
       <div className={classes.commentDetails_editorWrap}>
         <div className={classes.commentDetails_iconColumn}>
           <UserIcon
-            user={getFirstLetters(
-              currentUser?.firstName as string,
-              currentUser?.lastName as string
-            )}
+            userFrst={currentUser?.firstName as string}
+            userLast={currentUser?.lastName as string}
           />
         </div>
         <div className={classes.commentDetails_commentColumn}>

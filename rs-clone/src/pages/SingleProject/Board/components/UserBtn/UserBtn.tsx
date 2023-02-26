@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { UserAvatar } from '../../../../../components';
 import { IconType } from 'react-icons';
-import { useBoard } from '../../../../../contexts/Board.context';
+import { useBoard } from '../../../../../contexts';
 
 import styles from './UserBtn.module.scss';
 

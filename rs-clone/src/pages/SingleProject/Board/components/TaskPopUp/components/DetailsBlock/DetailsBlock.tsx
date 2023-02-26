@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Block from './components/Block';
 import type UserType from '../../../../../../../types/user/userType';
-import { useComments } from '../../../../../../../contexts/Comments.context';
+import { useComments } from '../../../../../../../contexts';
 
 interface dataType {
   taskId: string;
@@ -21,22 +21,12 @@ const DetailsBlock = (props: dataType) => {
     asignee: props.asignee,
     author: props.author
   };
+
   const { setPinnedF, getPinnedF } = useComments();
   const pinnedList = getPinnedF();
   const currentTaskPinned = pinnedList.find((task) => task.taskId === props.taskId);
 
   const [pinned, setPinned] = useState<string[]>(currentTaskPinned ? currentTaskPinned.fields : []);
-  // useEffect(() => {
-  //   console.log(pinned);
-  // }, [pinned]);
-
-  // useEffect(() => {
-  //   console.log(currentTaskPinned?.fields);
-  // }, [currentTaskPinned]);
-
-  // useEffect(() => {
-  //   console.log(getPinnedF());
-  // }, [getPinnedF]);
 
   const filterPinnedData = () => {
     const pinnedData: { [string: string]: string } = {};

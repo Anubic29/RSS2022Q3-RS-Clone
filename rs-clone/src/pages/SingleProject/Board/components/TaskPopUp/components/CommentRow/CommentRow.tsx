@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import classes from './CommentRow.module.scss';
-import TextRedactorBlock from '../../../../../../../components/TextRedactorBlock/TextRedactorBlock';
 import parse from 'html-react-parser';
-import UserIcon from '../../../../../../../components/UserIcon/UserIcon';
-import { useComments } from '../../../../../../../contexts/Comments.context';
-import { useUser } from '../../../../../../../contexts';
-import { useBoard } from '../../../../../../../contexts/Board.context';
+import { UserIcon, TextRedactorBlock } from '../../../../../../../components';
+import { useUser, useComments, useBoard } from '../../../../../../../contexts';
 
 const SECOND = 1000;
 const MINUTE = 60;
@@ -74,18 +71,12 @@ const CommentRow = (props: {
     setIsEdited(date);
   };
 
-  const getFirstLetters = (first: string, last: string) => {
-    return `${first[0].toUpperCase()} ${last[0].toUpperCase()}`;
-  };
-
   return (
     <div className={classes.commentRow_wrap}>
       <div className={classes.commentRow_IconColumn}>
         <UserIcon
-          user={getFirstLetters(
-            authorUserNameObj?.firstName as string,
-            authorUserNameObj?.lastName as string
-          )}
+          userFrst={authorUserNameObj?.firstName as string}
+          userLast={authorUserNameObj?.lastName as string}
         />
       </div>
       <div className={classes.commentRow_TextColumn}>

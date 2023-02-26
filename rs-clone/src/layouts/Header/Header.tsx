@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { MdExpandMore } from 'react-icons/md';
 
-import UserIcon from '../../components/UserIcon/UserIcon';
-import SubmenuItem from '../../components/SubmenuItem/SubmenuItem';
+import { UserIcon, SubmenuItem, Button } from '../../components';
 import MenuSpan from '../../components/SubmenuItem/components/MenuSpan/MenuSpan';
 import classes from './Header.module.scss';
-import Button from '../../components/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
+import { useUser } from '../../contexts';
+import { useTasks } from '../../contexts/TasksContext';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
-  const [submenu, setSubmenu] = useState('');
+  const [submenu, setSubmenu] = useState<'work' | 'userMenu' | 'project'>('work');
+
+  const { currentUser } = useUser();
+  const { getTasks } = useTasks();
+  useEffect(() => {
+    (async () => {
+      await getTasks();
+    })();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -113,7 +121,9 @@ const Header = () => {
         </Button>
         <div className={classes.header_userMenu}>
           <div onClick={userIconHandler}>
-            <UserIcon user="OD"></UserIcon>
+            <UserIcon
+              userFrst={(currentUser?.firstName[0] as string) || '0'}
+              userLast={(currentUser?.lastName[0] as string) || '0'}></UserIcon>
           </div>
           {activeItem === 'userMenu' && isUserMenuVisible && (
             <div className={classes.absolute + ' ' + classes.submenu_box_right} ref={userRef}>

@@ -1,9 +1,7 @@
 import { useState, Dispatch } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 import classes from './Auth.module.scss';
-import Modal from '../../components/Modal/Modal';
-import BoxWithShadow from '../../components/BoxWithShadow/BoxWithShadow';
-import LoaderImg from '../../components/Loader/Loader';
+import { Modal, BoxWithShadow, Loader } from '../../components';
 import Message from '../../components/LoaderMessage/Message';
 import React from 'react';
 
@@ -27,7 +25,7 @@ function Auth() {
         <Modal translate={'twenty'}>
           <div className={classes['login-wrap']}>
             <BoxWithShadow>
-              {isLoadingData && <LoaderImg />}
+              {isLoadingData && <Loader />}
               {showResult && <Message text={text} />}
               <Outlet context={[change, changeMessage, setMessageText]} />
             </BoxWithShadow>

@@ -3,8 +3,8 @@
 .submenu_subtitle {
   color: $colorGreyText;
   font-weight: 600;
-  margin-top: 8px;
   padding: 0 30px;
+  padding-top: 20px;
 }
 
 .submenu_itemsList {
@@ -45,4 +45,31 @@
     position: absolute;
     top: 10px;
   }
+}
+
+.itemsBlock {
+  max-height: 300px;
+  overflow: scroll;
+  
+  &::-webkit-scrollbar {
+  width: 5px;
+  height: 0;
+}
+
+/* Track */
+  &::-webkit-scrollbar-track {
+  background: $colorWhite;
+}
+
+/* Handle */
+  &::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 }
