@@ -7,7 +7,8 @@ import {
   Projects,
   Board,
   Settings,
-  SingleProject
+  SingleProject,
+  Profile
 } from '../pages';
 import {
   ProjectsProvider,
@@ -45,6 +46,7 @@ function AuthRoute() {
                   <Route path="selected-task/:taskId" element={<Board />} />
                   <Route path="settings" element={<Settings />} />
                 </Route>
+                <Route path="profile" element={<Profile />} />
               </Route>
               <Route path="create-project" element={<ProjectCreate />} />
               <Route path="*" element={<NotFound />} />
