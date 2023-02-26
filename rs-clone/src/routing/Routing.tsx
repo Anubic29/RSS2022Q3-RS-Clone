@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AuthRoute from './AuthRoute';
 import NonAuthRoute from './NonAuthRoute';
-import { IsAuthContex } from '../contexs';
+import { useAuth } from '../contexts';
 
 function Routing() {
-  const isToken = localStorage.getItem('accessToken');
-  const [isAuthenticated, setIsAuthenticated] = useState(Boolean(isToken));
+  const { token, setTokenData } = useAuth();
+
   useEffect(() => {
-    setIsAuthenticated(Boolean(isToken));
-  }, [isAuthenticated]);
+    const newToken = localStorage.getItem('accessToken');
+    setTokenData(newToken ?? '');
+  }, []);
+
   return (
     <>
-      <BrowserRouter>
-        <IsAuthContex.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-          {isAuthenticated || isToken ? <AuthRoute /> : <NonAuthRoute />}
-        </IsAuthContex.Provider>
-      </BrowserRouter>
+      <BrowserRouter>{token ? <AuthRoute /> : <NonAuthRoute />}</BrowserRouter>
     </>
   );
 }

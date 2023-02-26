@@ -1,15 +1,15 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import classes from './SignUpForm.module.scss';
 import api from '../../../../api';
 import axios, { AxiosError } from 'axios';
-import { IsAuthContex } from '../../../../contexs';
 import { changeIsLoading } from '../../Auth';
+import { useAuth } from '../../../../contexts';
 
 type ServerError = { errorMessage: string };
 
 const LoginForm = () => {
-  const contextValue = useContext(IsAuthContex);
+  const { setTokenData, removeTokenData } = useAuth();
   const [change, changeMessage, setText] = changeIsLoading();
 
   const passwRegEx = new RegExp('[0-9A-Za-z]{4,}$');
@@ -42,9 +42,8 @@ const LoginForm = () => {
         const response = await api.auth.signUp(payload);
         if (response.status === 200) {
           const responseSignIn = await api.auth.signIn(payloadLogIn);
-          localStorage.setItem('accessToken', JSON.stringify(responseSignIn.data));
           setIsCreatedUser(true);
-          contextValue.setIsAuthenticated(true);
+          setTokenData(responseSignIn.data);
           navigate('/');
         }
       } catch (error) {
@@ -54,7 +53,7 @@ const LoginForm = () => {
         setTimeout(() => {
           changeMessage(false);
         }, 1000);
-        contextValue.setIsAuthenticated(false);
+        removeTokenData();
         changeMessage(true);
         setTimeout(() => {
           changeMessage(false);
