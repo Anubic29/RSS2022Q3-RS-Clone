@@ -15,7 +15,7 @@ import './TeamTable.scss';
 
 function TeamTable() {
   const { id: projectId } = useParams();
-  const { currentUser, getUsers } = useUser();
+  const { getUsers } = useUser();
   const { getProject, removeProjectCollaborator } = useProjects();
   const { addAlert } = useAlerts();
 
@@ -33,7 +33,7 @@ function TeamTable() {
       try {
         const fetchedProject = await getProject(projectId as string);
         const fetchedUsers = await getUsers();
-        const usersIds = [...fetchedProject.team, currentUser?._id];
+        const usersIds = [...fetchedProject.team, fetchedProject.author];
         const filteredUsers = usersIds
           .map((id) => fetchedUsers.find((user) => user._id === id))
           .filter((user) => user) as UserType[];
@@ -152,7 +152,6 @@ function TeamTable() {
                   <TeamTableDataRow
                     key={collaborator._id}
                     collaborator={collaborator}
-                    currentUserId={currentUser?._id as string}
                     adminId={adminId}
                     onRemove={handleRemoveCollaborator}
                   />

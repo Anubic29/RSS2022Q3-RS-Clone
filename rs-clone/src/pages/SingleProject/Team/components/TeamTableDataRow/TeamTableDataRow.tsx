@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import { Preloader, UserAvatar } from '../../../../../components';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 import { useAlerts } from '../../../../../contexts/AlertsContext';
+import { useUser } from '../../../../../contexts';
 import UserType from '../../../../../types/user/userType';
 
 import './TeamTableDataRow.scss';
 
 interface TeamTableDataRowProps {
   collaborator: UserType;
-  currentUserId: string;
   adminId: string;
   onRemove: (event: React.MouseEvent) => Promise<void>;
 }
 
 function TeamTableDataRow(props: TeamTableDataRowProps) {
-  const { collaborator, currentUserId, adminId, onRemove } = props;
+  const { collaborator, adminId, onRemove } = props;
   const { addAlert } = useAlerts();
+  const { currentUser } = useUser();
   const [isLoaded, setIsLoaded] = useState(true);
   const colorFirstHalf = convertLetterToHex(collaborator.firstName[0]);
   const colorSecondHalf = convertLetterToHex(collaborator.lastName[0]);
@@ -47,7 +48,7 @@ function TeamTableDataRow(props: TeamTableDataRowProps) {
       </td>
 
       <td className="TeamTable-data">
-        {collaborator._id !== currentUserId && currentUserId === adminId && (
+        {collaborator._id !== adminId && currentUser?._id === adminId && (
           <span id={collaborator._id} className="TeamTable-remove" onClick={handleRemove}>
             Remove
           </span>
