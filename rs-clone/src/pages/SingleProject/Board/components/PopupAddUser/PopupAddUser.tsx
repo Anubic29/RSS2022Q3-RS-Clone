@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Input, UserAvatar, Loader } from '../../../../../components';
+import { Input, UserAvatar, Loader, Preloader } from '../../../../../components';
 import { useOverlay, useBoard } from '../../../../../contexts';
 import { MdCancel, MdSearch } from 'react-icons/md';
 import UserType from '../../../../../types/user/userType';
@@ -13,11 +13,13 @@ function PopupAddUser() {
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const [selectedUser, setSelectedUser] = useState<UserType>();
   const [userList, setUserList] = useState<UserType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState('');
 
   useEffect(() => {
     if (value.trim().length > 0) {
       (async () => {
+        setIsLoading(true);
         const usersId = getUserList().map((data) => data._id);
         const response = await api.users.getAllData(`?value=${value}&limit=5`);
         if (response.status === 200) {
@@ -25,6 +27,7 @@ function PopupAddUser() {
           if (users.length === 1 && users[0].mail === value) setUserList([]);
           else setUserList(users);
         } else setUserList([]);
+        setIsLoading(false);
       })();
     } else setUserList([]);
   }, [value]);
@@ -55,7 +58,14 @@ function PopupAddUser() {
             <div className={styles['icon']}>
               <MdSearch />
             </div>
-            {userList.length > 0 && (
+            {isLoading && (
+              <div className={styles['user-list']}>
+                <div className={styles['loader']}>
+                  <Preloader />
+                </div>
+              </div>
+            )}
+            {userList.length > 0 && !isLoading && (
               <div className={styles['user-list']}>
                 {userList.map((user) => (
                   <div
