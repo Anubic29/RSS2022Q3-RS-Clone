@@ -138,6 +138,30 @@ router.post('/:id/noted', authenticateToken, async (req, res) => {
   }
 });
 
+router.post('/:id/recent', authenticateToken, async (req, res) => {
+  try {
+    if (typeof req.body.projectId !== 'string' || req.body.projectId.trim().length === 0) throw new Error('Not found property projectId');
+  
+    const user = (await User.find({ _id: req.params.id }))[0];
+    if (!user) throw new Error('Not found User');
+    
+    if (user.recentProjects.includes(req.body.projectId)) {
+      user.recentProjects.splice(user.recentProjects.findIndex((data) => data === req.body.projectId), 1);
+      user.recentProjects.unshift(req.body.projectId);
+    } else {
+      user.recentProjects.unshift(req.body.projectId);
+    }
+
+    if (user.recentProjects.length > 5) user.recentProjects.length = 5;
+
+    await user.save();
+    res.json(user.recentProjects);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
 
 // Put Methods
 
@@ -183,12 +207,14 @@ router.delete('/:id/noted/:notedId', authenticateToken, async (req, res) => {
     if (!user) throw new Error('Not found')
 
     const idx = user.notedItems.findIndex((notedItems) => notedItems.id === req.params['notedId']);
-    if (idx < 0) throw new Error('Not found noted')
-
-    user.notedItems.splice(idx, 1);
-
-    await user.save();
-    res.json(true);
+    if (idx >= 0) {
+      user.notedItems.splice(idx, 1);
+  
+      await user.save();
+      res.json(true);
+    } else {
+      res.json(false);
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
