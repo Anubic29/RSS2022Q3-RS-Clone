@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import React from 'react';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import api from '../api';
@@ -11,7 +12,7 @@ interface UserContextType {
   isNotedItem: (id: string) => boolean;
   addNotedItem: (id: string, type: string) => Promise<boolean>;
   deleteNotedItem: (id: string) => Promise<boolean>;
-  setUserDataBack: () => void;
+  setUserDataBack: () => void | Promise<number | undefined>;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -29,11 +30,22 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [notedItemList, setNotedItemList] = useState<NotedItemUserType[]>([]);
 
   const setUserDataBack = useCallback(async () => {
-    const response = await api.users.getCurrentData();
-    if (response.status === 200) {
-      setCurrentUser(response.data);
-      setNotedItemList(response.data.notedItems);
+    try {
+      const response = await api.users.getCurrentData();
+      if (response.status === 200) {
+        setCurrentUser(response.data);
+        setNotedItemList(response.data.notedItems);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return error.response?.status;
+      } else {
+        console.log('Unexpected error', error);
+      }
     }
+    // if (response.status === 403) {
+    //   Promise.reject();
+    // }
   }, []);
 
   const getNotedItemList = useCallback(

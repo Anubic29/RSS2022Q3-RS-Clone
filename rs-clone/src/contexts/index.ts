@@ -6,6 +6,7 @@ import { PartOverlayProvider, usePartOverlay } from './PartOverlay.context';
 import { ProjectsProvider, useProjects } from './ProjectsContext';
 import { TasksProvider, useTasks } from './TasksContext';
 import { UserProvider, useUser } from './User.context';
+import { AuthProvider, useAuth } from './Auth.context';
 
 export {
   AlertsProvider,
@@ -23,5 +24,7 @@ export {
   TasksProvider,
   useTasks,
   UserProvider,
-  useUser
+  useUser,
+  AuthProvider,
+  useAuth
 };
