@@ -15,7 +15,7 @@ function SingleProject() {
   const [projectExistence, setProjectExistence] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [customMessage, setCustomMessage] = useState('Project is not exist');
-  const { currentUser } = useUser();
+  const { currentUser, visitProject } = useUser();
 
   useEffect(() => {
     if (currentUser) {
@@ -37,8 +37,10 @@ function SingleProject() {
         if (isProjectExist(id as string)) {
           const data = (await setProjectDataBack(id as string)) as ProjectType;
 
-          await setTasksDataBack(data?._id);
-          await setUsersDataBack([data?.author, ...data.team]);
+          await visitProject(data._id);
+          console.log('1');
+          await setTasksDataBack(data._id);
+          await setUsersDataBack([data.author, ...data.team]);
 
           setProjectExistence(true);
         } else {

@@ -124,7 +124,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
       if (resp.status === 200 && resp.data) {
         const response = await api.projects.deleteData(projectInfo._id);
         if (response.status === 200 && response.data) {
-          return true;
+          return projectInfo._id;
         }
       }
     }

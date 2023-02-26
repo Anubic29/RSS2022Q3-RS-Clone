@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import api from '../api';
 import CurrentUserType from '../types/user/currentUserType';
@@ -10,28 +10,37 @@ import UserType from '../types/user/userType';
 interface UserContextType {
   currentUser: CurrentUserType | undefined;
   notedItemList: NotedItemUserType[];
+  recentList: string[];
   getNotedItemList: (type: 'task' | 'project') => NotedItemUserType[];
   isNotedItem: (id: string) => boolean;
   addNotedItem: (id: string, type: string) => Promise<boolean>;
   deleteNotedItem: (id: string) => Promise<boolean>;
   getUsers: () => Promise<UserType[]>;
+  visitProject: (projectId: string) => Promise<boolean>;
+  deleteRecentProject: (projectId: string) => void;
   setUserDataBack: () => void | Promise<number | undefined>;
 }
 
 export const UserContext = createContext<UserContextType>({
   currentUser: undefined,
   notedItemList: [],
+  recentList: [],
   getNotedItemList: () => [],
   isNotedItem: () => false,
   addNotedItem: () => Promise.resolve(false),
   deleteNotedItem: () => Promise.resolve(false),
   setUserDataBack: () => undefined,
-  getUsers: () => Promise.resolve([])
+  getUsers: () => Promise.resolve([]),
+  visitProject: () => Promise.resolve(false),
+  deleteRecentProject: () => console.log('error')
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>();
   const [notedItemList, setNotedItemList] = useState<NotedItemUserType[]>([]);
+  const [recentList, setRecentList] = useState<string[]>([]);
+
+  useEffect(() => console.log(recentList), [recentList]);
 
   const setUserDataBack = useCallback(async () => {
     try {
@@ -39,6 +48,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       if (response.status === 200) {
         setCurrentUser(response.data);
         setNotedItemList(response.data.notedItems);
+        setRecentList(response.data.recentProjects);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -108,26 +118,51 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     return await fetchedUsers.json();
   };
 
+  const visitProject = useCallback(
+    async (projectId: string) => {
+      if (currentUser) {
+        const response = await api.users.postVisitProject(currentUser._id, { projectId });
+        if (response.status === 200) {
+          setRecentList(response.data);
+          return true;
+        }
+      }
+      return false;
+    },
+    [currentUser]
+  );
+
+  const deleteRecentProject = useCallback((projectId: string) => {
+    setRecentList((prev) => prev.filter((project) => project !== projectId));
+  }, []);
+
   const values = useMemo(
     () => ({
       currentUser,
       notedItemList,
+      recentList,
       getNotedItemList,
       isNotedItem,
       addNotedItem,
       deleteNotedItem,
       setUserDataBack,
-      getUsers
+      getUsers,
+      visitProject,
+      deleteRecentProject
     }),
     [
       currentUser,
       notedItemList,
+      recentList,
       getNotedItemList,
       isNotedItem,
       addNotedItem,
       deleteNotedItem,
       setUserDataBack,
-      getUsers
+      getUsers,
+      visitProject,
+      deleteRecentProject,
+      setUserDataBack
     ]
   );
 

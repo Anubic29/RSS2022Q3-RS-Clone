@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Dropdown, ProjectAvatar, Loader } from '../../../components';
-import { useOverlay, useBoard, useAlerts } from '../../../contexts';
+import { useOverlay, useBoard, useAlerts, useUser } from '../../../contexts';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './components';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ const PROJECT_BADGE_SIZE = 128;
 function Settings() {
   const { deleteProject, projectInfo } = useBoard();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+  const { deleteNotedItem, deleteRecentProject } = useUser();
   const [imageSrc, setImageSrc] = useState(projectInfo?.pathImage || '');
   const [imageBg, setImageBg] = useState(projectInfo?.color || '');
   const { addAlert } = useAlerts();
@@ -30,14 +31,16 @@ function Settings() {
         onClick: async () => {
           setChildrenBoard(<Loader />);
           setIsVisibleBoard(true);
-          await deleteProject();
+          const id = await deleteProject();
+          await deleteNotedItem(`${id}`);
+          deleteRecentProject(`${id}`);
           setIsVisibleBoard(false);
           navigate('/');
           addAlert('Success', 'Project was deleted successfully');
         }
       }
     ];
-  }, [deleteProject]);
+  }, [deleteProject, deleteNotedItem, deleteRecentProject]);
 
   return (
     <div className={styles.Settings}>
