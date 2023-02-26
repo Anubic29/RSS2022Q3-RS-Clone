@@ -112,11 +112,11 @@ input.userRow_wrap:focus-visible {
 
 .assigneeUl {
   position: absolute;
-  left: 0;
-  top: 4px;
+  left: 10px;
+  top: 5px;
   min-height: 10px;
   z-index: 20;
-  min-width: 280px;
+  min-width: 285px;
   transform: translate(-50%);
   border: 1px solid $colorBackgroundHover;
   border-radius: 0 0 5px 5px;
@@ -172,4 +172,8 @@ input.userRow_wrap:focus-visible {
     height: auto;
     margin-right: 9px;
     margin-left: 7px;
+}
+
+.inputWrap {
+  width: 100%;
 }

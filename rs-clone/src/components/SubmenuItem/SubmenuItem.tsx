@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SubmenuItemsBlock from './components/SubmenuItamsBlock/SubmenuItemsBlock';
+import SubmenuItemsSortedBlock from './components/SubmenuItamsBlock/SubmenuItemSortedBlock';
 import { Link } from 'react-router-dom';
 import classes from './SubmenuItem.module.scss';
 import BoxWithShadow from '../BoxWithShadow/BoxWithShadow';
 import SubmenuNav from './components/SubmenuNav/SubmenuNav';
 import { useAuth } from '../../contexts';
 
-const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
+const SubmenuItem: React.FC<{ menuItem: 'work' | 'userMenu' | 'project' }> = (props) => {
   const { removeTokenData } = useAuth();
   const [tab, setTab] = useState('assigned');
   const saveTabValueHandler = (tabValue: string) => {
@@ -47,8 +48,15 @@ const SubmenuItem: React.FC<{ menuItem: string }> = (props) => {
 
   return (
     <BoxWithShadow>
-      <SubmenuNav onNavTabHandler={saveTabValueHandler} menuItem={props.menuItem} />
-      <SubmenuItemsBlock onTabChange={tab} menuItem={props.menuItem} />
+      {props.menuItem === 'work' && (
+        <>
+          <SubmenuNav onNavTabHandler={saveTabValueHandler} menuItem={props.menuItem} />
+          <SubmenuItemsSortedBlock onTabChange={tab} menuItem={props.menuItem} />
+        </>
+      )}
+      {props.menuItem !== 'work' && (
+        <SubmenuItemsBlock onTabChange={tab} menuItem={props.menuItem} />
+      )}
       <nav className={classes.submenuBottomNav}>{link()}</nav>
     </BoxWithShadow>
   );
