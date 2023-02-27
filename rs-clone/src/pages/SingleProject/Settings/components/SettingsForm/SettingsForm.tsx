@@ -133,15 +133,27 @@ function SettingsForm(props: SettingsFormProps) {
         setIsLoaderGoing(true);
 
         try {
-          await changeProjectAuthor(projectInfo?._id as string, authorId);
-          await updateProject({
-            author: authorId,
-            title: name,
-            description,
-            key,
-            pathImage: imageSrc,
-            color: imageBg
-          });
+          const { author: projectAuthor } = projectInfo as ProjectType;
+
+          if (projectAuthor !== authorId) {
+            await changeProjectAuthor(projectInfo?._id as string, authorId);
+            await updateProject({
+              author: authorId,
+              title: name,
+              description,
+              key,
+              pathImage: imageSrc,
+              color: imageBg
+            });
+          } else {
+            await updateProject({
+              title: name,
+              description,
+              key,
+              pathImage: imageSrc,
+              color: imageBg
+            });
+          }
 
           setAfterLoadingIcon(true);
           setTimeout(() => setAfterLoadingIcon(false), 1500);
