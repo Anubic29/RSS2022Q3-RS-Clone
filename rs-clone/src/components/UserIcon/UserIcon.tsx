@@ -15,7 +15,7 @@ const UserIcon: React.FC<{ userFrst: string; userLast: string }> = (props) => {
           <span
             className={
               classes.header_profileName
-            }>{`${props.userFrst[0]}${props.userLast[0]}`}</span>
+            }>{`${props.userFrst[0].toUpperCase()}${props.userLast[0].toUpperCase()}`}</span>
         </div>
       </div>
     </div>

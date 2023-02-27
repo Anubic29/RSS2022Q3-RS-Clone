@@ -3,8 +3,11 @@
 .column-list-container {
   overflow: auto;
   position: relative;
-  padding: 0 0 20px;
-  max-height: 500px;
+  max-height: calc(100vh - $headerHeight - $footerHeight - 24px - 54px - 120px);
+
+  @media screen and (max-width: $mediaDesktopSmall) {
+    max-height: calc(100vh - $headerHeight - $footerHeight - 24px - 54px - 166px);
+  }
 }
 
 .column-list {
@@ -14,6 +17,7 @@
 
   .list {
     display: flex;
+    gap: 12px;
 
     &-content {
       display: flex;
@@ -46,11 +50,11 @@
 
   .column-block {
     transition: padding ease .3s;
-    height: 100%;
+    min-height: 150px;
   }
 
   .btn-add-container {
-    padding: 0 5px;
+    padding: 0 10px;
     position: relative;
     z-index: 15;
     margin-right: auto;

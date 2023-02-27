@@ -2,12 +2,12 @@
 
 .task {
   position: relative;
-  width: 260px;
+  width: 270px;
   padding: 12px;
   background-color: $colorBackground;
-  margin: 2px;
-  border: 1px solid $colorBorder;
-  border-radius: 5px;
+  margin: 2px 0;
+  border-radius: 3px;
+  box-shadow: $boxShadowProjectCard;
   transition: background-color ease .5s;
 
   .btn-more {
@@ -22,6 +22,7 @@
 
     .title {
       font-size: 14px;
+      color: $colorContent;
       padding-right: 15px;
     }
   }
@@ -38,12 +39,14 @@
         width: 16px;
         height: 16px;
         border-radius: 4px;
-        background-color: $colorSecondary;
+        background-color: $colorTaskIcon;
       }
 
       &__key {
         margin-left: 10px;
-        font-size: 14px;
+        font-size: 12px;
+        font-weight: 500;
+        color: $colorSecondaryText;
       }
     }
 
@@ -57,7 +60,7 @@
         margin-left: 5px;
         font-size: 14px;
         color: $colorIconDone;
-        margin-right: 15px;
+        margin-right: 5px;
       }
     }
 
@@ -71,7 +74,7 @@
       height: fit-content;
       display: flex;
       align-items: center;
-      font-size: 24px;
+      font-size: 20px;
       margin-right: 5px;
       color: $colorStarNotedActive;
     }
@@ -79,8 +82,7 @@
     .user-block {
       width: 24px;
       height: 24px;
-      margin: 2px;
-      font-size: 14px;
+      font-size: 10px;
     }
   }
 

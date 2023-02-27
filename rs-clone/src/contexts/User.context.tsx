@@ -18,6 +18,7 @@ interface UserContextType {
   setUserDataBack: () => void | Promise<number | undefined>;
   setNotedDataBack: () => void;
   setRecentDataBack: () => void;
+  updateProfileData: (id: string, data: { [string: string]: string }) => void;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -32,7 +33,8 @@ export const UserContext = createContext<UserContextType>({
   visitProject: () => Promise.resolve(false),
   setNotedDataBack: () => console.log('error'),
   setRecentDataBack: () => console.log('error'),
-  deleteRecentProject: () => console.log('error')
+  deleteRecentProject: () => console.log('error'),
+  updateProfileData: () => []
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -134,6 +136,33 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setRecentList((prev) => prev.filter((project) => project !== projectId));
   }, []);
 
+  const updateProfileData = useCallback(
+    async (userId: string, updatedData: { [string: string]: string }) => {
+      if (currentUser) {
+        const payload = {
+          firstName: `${currentUser?.firstName as string}`,
+          lastName: `${currentUser?.lastName as string}`,
+          mail: `${currentUser?.mail as string}`,
+          password: `${currentUser?.password as string}`,
+
+          jobTitleInfo: `${currentUser?.jobTitleInfo || 'Job name'}`,
+          departmentInfo: `${currentUser?.departmentInfo || 'Department'}`,
+          organizationInfo: `${currentUser?.organizationInfo || 'Organization'}`,
+          locationInfo: `${currentUser?.locationInfo || 'Location'}`,
+          coverBlock: `${currentUser?.coverBlock || ''}`
+        };
+        const updatedUser = { ...payload, ...updatedData };
+        const response = await api.users.updateData(userId, updatedUser);
+        if (response.status) {
+          setCurrentUser(response.data);
+        }
+      } else {
+        return;
+      }
+    },
+    [currentUser]
+  );
+
   const values = useMemo(
     () => ({
       currentUser,
@@ -147,7 +176,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setNotedDataBack,
       setRecentDataBack,
       visitProject,
-      deleteRecentProject
+      deleteRecentProject,
+      updateProfileData
     }),
     [
       currentUser,
@@ -162,7 +192,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setRecentDataBack,
       visitProject,
       deleteRecentProject,
-      setUserDataBack
+      setUserDataBack,
+      updateProfileData
     ]
   );
 

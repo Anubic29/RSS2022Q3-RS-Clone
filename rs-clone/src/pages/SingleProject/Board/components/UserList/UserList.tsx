@@ -28,7 +28,7 @@ function UserList(props: UserListProps) {
               type="checkbox"
               _id={user._id}
               title={`${user.firstName} ${user.lastName}`}
-              content={user.firstName[0] + user.lastName[0]}
+              content={`${user.firstName} ${user.lastName}`}
               color={`#${colorPart1}${colorPart2}`}
             />
           );

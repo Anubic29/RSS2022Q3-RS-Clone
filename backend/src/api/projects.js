@@ -87,6 +87,11 @@ router.post('/', authenticateToken, async (req, res) => {
     });
 
     project.columnList.push({
+      title: "todo",
+      type: "common"
+    });
+
+    project.columnList.push({
       title: "dev",
       type: "common"
     });
@@ -129,11 +134,14 @@ router.post('/:id/columns', authenticateToken, async (req, res) => {
     if (!isCorrectProjectColumn(req.body)) throw new Error('Not found property');
 
     const project = (await Project.find({ _id: req.params.id }))[0];
-    if (!project) throw new Error('Not found');
+    if (!project) throw new Error('Not found Project');
+
+    // temporary solution
+    const isFinal = !project.columnList.some((column) => column.type === 'final');
 
     project.columnList.push({
       title: req.body.title,
-      type: req.body.type
+      type: isFinal ? 'final' : req.body.type
     });
 
     await project.save();

@@ -10,7 +10,7 @@ import { MdStarOutline, MdSearch, MdPersonAdd, MdDone, MdClose, MdStar } from 'r
 import useComponentVisible from '../../../hooks/useComponentVisible/useComponentVisible';
 
 import { useOverlay, useUser, useBoard } from '../../../contexts';
-import { Preloader, BtnAction, PartOverlay } from '../../../components';
+import { Preloader, BtnAction, PartOverlay, Input } from '../../../components';
 import { Link } from 'react-router-dom';
 
 import styles from './Board.module.scss';
@@ -106,14 +106,17 @@ function Board() {
           <nav className={styles.breadcrumbs}>
             <ul className={styles['breadcrumbs__list']}>
               <li className={styles['breadcrumbs__item']}>
+                <Link className={styles['breadcrumbs__link']} to="/">
+                  Homepage
+                </Link>
+              </li>
+              <li className={styles['breadcrumbs__item']}>
                 <Link className={styles['breadcrumbs__link']} to="/projects">
                   Projects
                 </Link>
               </li>
               <li className={styles['breadcrumbs__item']}>
-                <Link className={styles['breadcrumbs__link']} to={`/projects/${projectInfo?._id}`}>
-                  {projectInfo?.title}
-                </Link>
+                <p className={styles['breadcrumbs__link']}>{projectInfo?.key}</p>
               </li>
             </ul>
           </nav>
@@ -135,7 +138,7 @@ function Board() {
                 </span>
               ) : (
                 <div className={styles['content']}>
-                  <input
+                  <Input
                     className={styles['info__title__form__input']}
                     type="text"
                     autoFocus
@@ -143,6 +146,7 @@ function Board() {
                     onChange={(event) => {
                       setBoardTitle(event.target.value);
                     }}
+                    id="board-input-search"
                   />
                   {titleError && (
                     <span className={styles['error-message']}>Board title can&apos;t be empty</span>

@@ -1,5 +1,6 @@
 const express = require('express');
 const Task = require('../models/Task');
+const Project = require('../models/Project');
 const User = require('../models/User');
 const authenticateToken = require('../func/authenticateToken');
 const router = express.Router();
@@ -178,7 +179,10 @@ router.put('/by-column', authenticateToken, async(req, res) => {
     if (!typeof req.body.newId === 'string' || !req.body.newId) throw new Error('Not found property newId');
 
     const tasks = await Task.find({ columnId: req.body.currId })
-    if (!tasks) throw new Error('Not found tasks');
+    if (!tasks && tasks.length === 0) throw new Error('Not found tasks');
+
+    const project = (await Project.find({ _id: tasks[0].projectId }))[0];
+    if (!project.columnList.some((data) => data._id.toString() === req.body.newId)) throw new Error('Not found new column');
 
     for (let idx = 0; idx < tasks.length; idx++) {
       tasks[idx].columnId = req.body.newId;

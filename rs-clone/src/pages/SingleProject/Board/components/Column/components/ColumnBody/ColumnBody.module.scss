@@ -31,13 +31,14 @@
     transition: background-color ease .3s;
     height: 36px;
     display: flex;
+    color: $colorContent;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 3px;
     visibility: hidden;
   
     &:hover {
       cursor: pointer;
-      background-color: $colorBackgroundHover;
+      background-color: $colorButtonCancelBackgroundHover;
     }
   
     &:active {

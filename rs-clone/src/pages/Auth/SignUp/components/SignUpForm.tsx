@@ -190,7 +190,7 @@ const LoginForm = () => {
             <input
               ref={confirmPassRef}
               className={classes.login_input}
-              id="password"
+              id="password2"
               type="password"
               name="password"
               placeholder="Confirm password"

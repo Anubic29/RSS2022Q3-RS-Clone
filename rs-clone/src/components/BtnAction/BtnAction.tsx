@@ -39,7 +39,7 @@ function BtnAction(props: BtnActionProps) {
       onMouseUp={() => setActive(false)}
       onMouseOver={() => setHover(true)}
       onMouseLeave={() => setHover(false)}>
-      <props.image size={24} color={props.colorImg || 'black'} />
+      <props.image size={24} color={props.colorImg || '#172b4d'} />
       {hover && props.title && <div className={styles['btn__title']}>{props.title}</div>}
     </div>
   );

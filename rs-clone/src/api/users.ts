@@ -29,8 +29,8 @@ export default function (instance: AxiosInstance) {
     postVisitProject(userId: string, payload: { [key: string]: string }) {
       return instance.post<string[]>(`api/users/${userId}/recent`, payload);
     },
-    updateData(userId: string, config: AxiosRequestConfig) {
-      return instance.put(`api/users/${userId}/info`, config);
+    updateData(userId: string, payload: { [key: string]: string }) {
+      return instance.put(`api/users/${userId}/info`, payload);
     },
     deleteData(userId: string) {
       return instance.delete(`api/users/${userId}/info`);

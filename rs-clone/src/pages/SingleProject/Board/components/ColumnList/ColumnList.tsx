@@ -6,7 +6,7 @@ import {
   colorSecondaryLight
 } from '../../../../../theme/variables';
 import { Column, ColumnRowUser } from '../';
-import { MdOutlineAddCircleOutline } from 'react-icons/md';
+import { MdOutlineAdd } from 'react-icons/md';
 import { useBoard } from '../../../../../contexts';
 import { ColumnBody, ColumnHeader } from '../Column/components';
 import { usePartOverlay } from '../../../../../contexts';
@@ -107,7 +107,6 @@ function ColumnList(props: ColumnListProps) {
       className={styles['column-list-container']}
       onScroll={(event) => setIsScrolledList((event.target as HTMLDivElement).scrollTop > 0)}>
       <div className={styles['column-list']}>
-        <div className={styles['curtain'] + ' ' + styles['left']}></div>
         <div className={styles['list']}>
           {props.group === '' &&
             getColumnList().map((column) => (
@@ -202,7 +201,7 @@ function ColumnList(props: ColumnListProps) {
         <div className={styles['btn-add-container']}>
           <div className={styles['btn-add']} onClick={() => setIsComponentVisible(true)}>
             <BtnAction
-              image={MdOutlineAddCircleOutline}
+              image={MdOutlineAdd}
               title="Create column"
               backgrColorDefault={colorBackgroundColumn}
               backgrColorHover={colorBackgroundHover}
@@ -210,7 +209,6 @@ function ColumnList(props: ColumnListProps) {
             />
           </div>
         </div>
-        <div className={styles['curtain'] + ' ' + styles['right']}></div>
       </div>
     </div>
   );
