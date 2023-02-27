@@ -1,5 +1,6 @@
 const express = require('express');
 const Project = require('../models/Project');
+const Task = require('../models/Task');
 const User = require('../models/User');
 const authenticateToken = require('../func/authenticateToken');
 const router = express.Router();
@@ -264,7 +265,13 @@ router.delete('/:id/team/:userId', authenticateToken, async (req, res) => {
     if (!project) throw new Error('Not found project');
 
     const idx = project.team.indexOf(req.params.userId);
-    if (idx < 0) throw new Error('Not found column');
+    if (idx < 0) throw new Error('Not found user in team');
+
+    const tasks = await Task.find({ projectId: req.params.id, executor: req.params.userId });
+    tasks.forEach(async (task) => {
+      task.executor = 'auto';
+      await task.save();
+    });
 
     project.team.splice(idx, 1);
 
