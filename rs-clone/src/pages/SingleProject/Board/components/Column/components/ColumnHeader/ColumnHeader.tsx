@@ -7,7 +7,7 @@ import {
 } from '../../../../../../../theme/variables';
 import { MdDone, MdClose } from 'react-icons/md';
 import useComponentVisible from '../../../../../../../hooks/useComponentVisible/useComponentVisible';
-import { useOverlay, useBoard } from '../../../../../../../contexts';
+import { useOverlay, useBoard, useUser } from '../../../../../../../contexts';
 import { PopupDeleteColumn } from '../../../';
 import { Preloader, BtnMenuAction, BtnAction, Loader } from '../../../../../../../components';
 import { usePartOverlay } from '../../../../../../../contexts';
@@ -29,6 +29,7 @@ interface ColumnHeaderProps {
 function ColumnHeader(props: ColumnHeaderProps) {
   const { createColumn, updateColumn, deleteAllTaskInColumn, deleteColumn, getColumnCount } =
     useBoard();
+  const { setNotedDataBack } = useUser();
   const { setChildrenBoard, setIsVisibleBoard } = useOverlay();
   const { setChildrenColumnList, setIsVisibleColumnList } = usePartOverlay();
   const [title, setTitle] = useState('');
@@ -48,6 +49,7 @@ function ColumnHeader(props: ColumnHeaderProps) {
           setChildrenColumnList(<Loader />);
           setIsVisibleColumnList(true);
           await deleteAllTaskInColumn(props.id);
+          setNotedDataBack();
           setIsVisibleColumnList(false);
         }
       },

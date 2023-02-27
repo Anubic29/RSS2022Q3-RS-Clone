@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Dropdown, ProjectAvatar, Loader } from '../../../components';
-import { useOverlay, useBoard, useAlerts, useUser } from '../../../contexts';
+import { useOverlay, useBoard, useAlerts, useUser, useProjects } from '../../../contexts';
 import { ProjectBadgesPopup, SettingsBreadcrumbs, SettingsForm } from './components';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,9 +9,10 @@ import styles from './Settings.module.scss';
 const PROJECT_BADGE_SIZE = 128;
 
 function Settings() {
-  const { deleteProject, projectInfo } = useBoard();
+  const { projectInfo } = useBoard();
+  const { deleteProject } = useProjects();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
-  const { deleteNotedItem, deleteRecentProject } = useUser();
+  const { setNotedDataBack, setRecentDataBack } = useUser();
   const [imageSrc, setImageSrc] = useState(projectInfo?.pathImage || '');
   const [imageBg, setImageBg] = useState(projectInfo?.color || '');
   const { addAlert } = useAlerts();
@@ -29,18 +30,20 @@ function Settings() {
       {
         title: 'Remove',
         onClick: async () => {
-          setChildrenBoard(<Loader />);
-          setIsVisibleBoard(true);
-          const id = await deleteProject();
-          await deleteNotedItem(`${id}`);
-          deleteRecentProject(`${id}`);
-          setIsVisibleBoard(false);
-          navigate('/');
-          addAlert('Success', 'Project was deleted successfully');
+          if (projectInfo) {
+            setChildrenBoard(<Loader />);
+            setIsVisibleBoard(true);
+            await deleteProject(projectInfo._id);
+            setNotedDataBack();
+            setRecentDataBack();
+            setIsVisibleBoard(false);
+            navigate('/');
+            addAlert('Success', 'Project was deleted successfully');
+          }
         }
       }
     ];
-  }, [deleteProject, deleteNotedItem, deleteRecentProject]);
+  }, [deleteProject, setNotedDataBack, setRecentDataBack, projectInfo]);
 
   return (
     <div className={styles.Settings}>

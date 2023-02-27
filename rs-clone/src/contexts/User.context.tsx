@@ -1,5 +1,5 @@
+import React from 'react';
 import { AxiosError } from 'axios';
-import React, { useEffect } from 'react';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import api from '../api';
 import CurrentUserType from '../types/user/currentUserType';
@@ -16,6 +16,8 @@ interface UserContextType {
   visitProject: (projectId: string) => Promise<boolean>;
   deleteRecentProject: (projectId: string) => void;
   setUserDataBack: () => void | Promise<number | undefined>;
+  setNotedDataBack: () => void;
+  setRecentDataBack: () => void;
   updateProfileData: (id: string, data: { [string: string]: string }) => void;
 }
 
@@ -29,6 +31,8 @@ export const UserContext = createContext<UserContextType>({
   deleteNotedItem: () => Promise.resolve(false),
   setUserDataBack: () => undefined,
   visitProject: () => Promise.resolve(false),
+  setNotedDataBack: () => console.log('error'),
+  setRecentDataBack: () => console.log('error'),
   deleteRecentProject: () => console.log('error'),
   updateProfileData: () => []
 });
@@ -53,10 +57,21 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         console.log('Unexpected error', error);
       }
     }
-    // if (response.status === 403) {
-    //   Promise.reject();
-    // }
   }, []);
+
+  const setNotedDataBack = useCallback(async () => {
+    if (currentUser) {
+      const response = await api.users.getNotedData(currentUser._id);
+      if (response.status === 200) setNotedItemList(response.data);
+    }
+  }, [currentUser]);
+
+  const setRecentDataBack = useCallback(async () => {
+    if (currentUser) {
+      const response = await api.users.getRecentData(currentUser._id);
+      if (response.status === 200) setRecentList(response.data);
+    }
+  }, [currentUser]);
 
   const getNotedItemList = useCallback(
     (type: 'task' | 'project') => {
@@ -158,6 +173,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       addNotedItem,
       deleteNotedItem,
       setUserDataBack,
+      setNotedDataBack,
+      setRecentDataBack,
       visitProject,
       deleteRecentProject,
       updateProfileData
@@ -171,6 +188,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       addNotedItem,
       deleteNotedItem,
       setUserDataBack,
+      setNotedDataBack,
+      setRecentDataBack,
       visitProject,
       deleteRecentProject,
       setUserDataBack,

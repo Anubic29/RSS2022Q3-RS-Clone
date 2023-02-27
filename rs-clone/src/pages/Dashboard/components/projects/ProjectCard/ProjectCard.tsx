@@ -25,7 +25,7 @@ function ProjectCard(props: ProjectCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { deleteProject } = useProjects() as ProjectsContextValue;
   const { addAlert } = useAlerts();
-  const { deleteNotedItem, deleteRecentProject } = useUser();
+  const { setNotedDataBack, setRecentDataBack } = useUser();
 
   const deleteProjectHandler = async (event: React.MouseEvent) => {
     try {
@@ -34,8 +34,8 @@ function ProjectCard(props: ProjectCardProps) {
 
       setIsLoading(true);
       await deleteProject(id);
-      await deleteNotedItem(id);
-      deleteRecentProject(id);
+      setNotedDataBack();
+      setRecentDataBack();
       addAlert('Success', 'Project was deleted successfully');
     } catch {
       addAlert('Error', 'Server error. Can`t remove project');

@@ -23,7 +23,7 @@ function Task(props: TaskProps) {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const { getTaskList, getFullNameUser, deleteTask } = useBoard();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
-  const { isNotedItem, addNotedItem, deleteNotedItem } = useUser();
+  const { isNotedItem, addNotedItem, deleteNotedItem, setNotedDataBack } = useUser();
   const [isLoadingRemove, setIsLoadingRemove] = useState(false);
   const [isNoted, setIsNoted] = useState(false);
 
@@ -56,6 +56,7 @@ function Task(props: TaskProps) {
   const deleteTaskCallback = useCallback(async () => {
     setIsLoadingRemove(true);
     await deleteTask(props._id);
+    setNotedDataBack();
     setIsLoadingRemove(false);
   }, [props._id, getTaskList().length]);
 
@@ -67,15 +68,10 @@ function Task(props: TaskProps) {
       },
       {
         title: 'Remove',
-        callback: () => {
-          if (isNoted) {
-            deleteNotedItem(props._id);
-          }
-          deleteTaskCallback();
-        }
+        callback: deleteTaskCallback
       }
     ];
-  }, [onClickHandlerNoted, deleteTaskCallback, isNoted, deleteNotedItem]);
+  }, [onClickHandlerNoted, deleteTaskCallback, isNoted]);
 
   return (
     <div

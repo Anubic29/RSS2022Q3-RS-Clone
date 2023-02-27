@@ -24,7 +24,7 @@ interface TaskProps {
 const TaskPopUp = (props: TaskProps) => {
   const { updateTask, deleteTask, getTaskList, getColumnList, getUserList } = useBoard();
   const { getCommentDataBack } = useComments();
-  const { isNotedItem, addNotedItem, deleteNotedItem } = useUser();
+  const { isNotedItem, addNotedItem, deleteNotedItem, setNotedDataBack } = useUser();
   const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
   const [isNoted, setIsNoted] = useState(false);
 
@@ -111,8 +111,9 @@ const TaskPopUp = (props: TaskProps) => {
     }
   }, [addNotedItem, deleteNotedItem, props._id, isNoted]);
 
-  const deleteHandler = () => {
-    deleteTask(props._id);
+  const deleteHandler = async () => {
+    await deleteTask(props._id);
+    setNotedDataBack();
     closeHandler();
   };
 
