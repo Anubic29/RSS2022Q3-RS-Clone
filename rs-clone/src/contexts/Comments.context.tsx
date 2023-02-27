@@ -1,6 +1,5 @@
-import { string } from 'prop-types';
 import React from 'react';
-import { useContext, createContext, useState, useMemo, useCallback, useEffect } from 'react';
+import { useContext, createContext, useState, useMemo, useCallback } from 'react';
 import api from '../api';
 
 type CommentType = {

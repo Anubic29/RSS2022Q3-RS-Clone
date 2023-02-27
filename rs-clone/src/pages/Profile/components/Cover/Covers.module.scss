@@ -1,0 +1,99 @@
+@import '../../../../theme/variables.scss';
+
+.cover_imageInput {
+  display: none;
+}
+
+.cover_colorInput {
+  position: absolute;
+  opacity: 0;
+  top: -30px;
+  cursor: pointer;
+}
+
+.cover_imageCrealBtn {
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  height: auto;
+  position: relative;
+  bottom: -3px;
+}
+
+.cover_wrap {
+  height: 200px;
+  width: 100%;
+  position: relative;
+  background-position: center;
+  background-clip: content-box;
+  background-origin: border-box;
+  background-size: contain;
+  justify-items: baseline;
+  overflow: hidden;
+  background-color: $colorLightGrey;
+
+  .cover_imageControl {
+    position: absolute;
+    top: 50%;
+    z-index: 99;
+    left: 50%;
+    transform: translateX(-50%);
+    color: $colorWhite;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px;
+
+    & svg {
+      width: 50px;
+      height: 50px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      display: none;
+      opacity: 0;
+      transition: 200ms ease all;
+    }
+  }
+
+  .cover_darkner {
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    background: rgba(2, 4, 7, 0.5); 
+    opacity: 0;
+    transition: 200ms ease all;
+  }
+
+  &:hover .cover_darkner,
+  &:hover svg{
+    display: flex;
+    align-items: center;
+    opacity: 1; 
+  }
+  &:hover .cover_colorInput  {
+    display: block;
+  }
+
+  &::after {
+    height: 8px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background: linear-gradient(to top, rgba(9, 30, 66, 0.2) 0px, rgba(9, 30, 66, 0.05) 1px, rgba(9, 30, 66, 0.02) 3px, rgba(0, 0, 0, 0) 3px);    content: "";
+  }
+}
+
+.cover_imageInputLabel {
+  position: relative;
+}
+
+.cover_image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

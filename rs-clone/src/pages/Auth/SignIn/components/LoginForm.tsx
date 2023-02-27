@@ -29,7 +29,7 @@ const LoginForm = () => {
 
   const checkUser = async (email: string, password: string) => {
     change(true);
-    const payload = { mail: email, password: password }; //{ mail: 'example@gmail.com', password: 'exa_password' };
+    const payload = { mail: email, password: password };
     setTimeout(async () => {
       try {
         const response = await api.auth.signIn(payload);

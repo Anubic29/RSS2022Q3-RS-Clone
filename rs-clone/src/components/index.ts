@@ -20,6 +20,7 @@ import PartOverlay from './PartOverlay/PartOverlay';
 import SubmenuItem from './SubmenuItem/SubmenuItem';
 import TextRedactorBlock from './TextRedactorBlock/TextRedactorBlock';
 import UserIcon from './UserIcon/UserIcon';
+import EditableParagraph from './EditableParagraph/EditableParagraph';
 
 export {
   ProjectAvatar,
@@ -43,5 +44,6 @@ export {
   PartOverlay,
   SubmenuItem,
   TextRedactorBlock,
-  UserIcon
+  UserIcon,
+  EditableParagraph
 };

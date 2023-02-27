@@ -24,11 +24,9 @@ function Auth() {
       <div className={classes.modal_wrap}>
         <Modal translate={'twenty'}>
           <div className={classes['login-wrap']}>
-            <BoxWithShadow>
-              {isLoadingData && <Loader />}
-              {showResult && <Message text={text} />}
-              <Outlet context={[change, changeMessage, setMessageText]} />
-            </BoxWithShadow>
+            {isLoadingData && <Loader />}
+            {showResult && <Message text={text} />}
+            <Outlet context={[change, changeMessage, setMessageText]} />
             <div className={classes.logo}></div>
           </div>
         </Modal>
