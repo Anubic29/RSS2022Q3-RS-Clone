@@ -1,5 +1,5 @@
+import React from 'react';
 import { AxiosError } from 'axios';
-import React, { useEffect } from 'react';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import api from '../api';
 import CurrentUserType from '../types/user/currentUserType';
@@ -39,10 +39,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>();
   const [notedItemList, setNotedItemList] = useState<NotedItemUserType[]>([]);
   const [recentList, setRecentList] = useState<string[]>([]);
-
-  // useEffect(() => console.log(recentList), [recentList]);
-
-  useEffect(() => console.log(notedItemList), [notedItemList]);
 
   const setUserDataBack = useCallback(async () => {
     try {
