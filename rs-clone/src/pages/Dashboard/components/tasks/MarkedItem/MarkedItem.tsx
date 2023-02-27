@@ -42,7 +42,6 @@ function MarkedItem(props: MarkedItemProps) {
           setProject(await getProject(_id));
         } else {
           const fetchedTask = await getTask(_id);
-          console.log(fetchedTask);
           const fetchedProjects = await getProjects(currentUser?._id as string);
           const projTitle = fetchedProjects.find((proj) => proj._id === fetchedTask.projectId)
             ?.title as string;
