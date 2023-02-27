@@ -238,10 +238,15 @@ router.delete('/:id/info', authenticateToken, async (req, res) => {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found Project');
 
-    const users = (await User.find({})).filter((user) => user.recentProjects.includes(req.params.id));
+    const usersRecents = (await User.find({})).filter((user) => user.recentProjects.includes(project._id.toString()));
+    usersRecents.forEach(async (user) => {
+      user.recentProjects.splice(user.recentProjects.findIndex((data) => data === project._id.toString()), 1);
+      await user.save();
+    });
 
-    users.forEach(async (user) => {
-      user.recentProjects.splice(user.recentProjects.findIndex((data) => data === req.params.id), 1);
+    const usersNoted = (await User.find({})).filter((user) => user.notedItems.some((data) => data.id === project._id.toString()));
+    usersNoted.forEach(async (user) => {
+      user.notedItems.splice(user.notedItems.findIndex((data) => data.id === project._id.toString()), 1);
       await user.save();
     });
 

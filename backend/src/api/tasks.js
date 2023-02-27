@@ -1,5 +1,6 @@
 const express = require('express');
 const Task = require('../models/Task');
+const User = require('../models/User');
 const authenticateToken = require('../func/authenticateToken');
 const router = express.Router();
 
@@ -197,7 +198,9 @@ router.put('/by-column', authenticateToken, async(req, res) => {
 router.delete('/:id/info', authenticateToken, async (req, res) => {
   try {
     const task = (await Task.find({ _id: req.params.id }))[0];
-    if (!task) throw new Error('Not found');
+    if (!task) throw new Error('Not found Task');
+
+    await adjustDeleteTask(task);
 
     await Task.deleteOne({ _id: task._id });
     res.json(true);
@@ -227,6 +230,12 @@ router.delete('/:id/comments/:commentId', authenticateToken, async (req, res) =>
 
 router.delete('/by-column/:columnId', authenticateToken, async (req, res) => {
   try {
+    const tasks = await Task.find({ columnId: req.params.columnId });
+
+    tasks.forEach(async (task) => {
+      await adjustDeleteTask(task);
+    });
+
     await Task.deleteMany({ columnId: req.params.columnId });
     res.json(true);
   } catch(error) {
@@ -237,6 +246,12 @@ router.delete('/by-column/:columnId', authenticateToken, async (req, res) => {
 
 router.delete('/by-project/:projectId', authenticateToken, async (req, res) => {
   try {
+    const tasks = await Task.find({ projectId: req.params.projectId });
+
+    tasks.forEach(async (task) => {
+      await adjustDeleteTask(task);
+    });
+
     await Task.deleteMany({ projectId: req.params.projectId });
     res.json(true);
   } catch(error) {
@@ -244,6 +259,15 @@ router.delete('/by-project/:projectId', authenticateToken, async (req, res) => {
     return res.status(500).send(`Server error! ${error.message}`);
   }
 });
+
+async function adjustDeleteTask(task) {
+  const users = (await User.find({})).filter((user) => user.notedItems.some((data) => data.id === task._id.toString()));
+  users.forEach(async (user) => {
+    user.notedItems.splice(user.notedItems.findIndex((data) => data.id === task._id.toString()), 1);
+    await user.save();
+  });
+  return true;
+}
 
 
 module.exports = router;
