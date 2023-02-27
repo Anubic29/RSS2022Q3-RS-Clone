@@ -1,20 +1,15 @@
 import React, { useEffect } from 'react';
-import { RiBriefcase5Line } from 'react-icons/ri';
-import { MdWorkspacesOutline } from 'react-icons/md';
-import { BiBuildingHouse } from 'react-icons/bi';
-import { GiPositionMarker } from 'react-icons/gi';
-import { FaRegEnvelope } from 'react-icons/fa';
 
-import UserInfoType from '../../types/user/userInfoType';
-import UserType from '../../types/user/userType';
 import { useUser } from '../../contexts';
 import { useProjects } from '../../contexts';
 import classes from './Profile.module.scss';
 
 import Cover from './components/Cover/Cover';
 import Avatar from './components/Avatar/Avatar';
-import ContourBox from '../../components/ContourBox/ContourBox';
 import UserInfo from './components/UserInfo/UserInfo';
+import TeamProjects from './components/TeamProjects/TeamProjects';
+import OwnProjects from './components/OwnProjects/OwnProjects';
+import RecentProjects from './components/RecentProjects/RecentProjects';
 
 function Profile() {
   const { currentUser } = useUser();
@@ -41,14 +36,18 @@ function Profile() {
             <UserInfo />
           </div>
           <div className={classes.profile_body__right_col}>
-            <h2>Owned projects</h2>
-            <ContourBox>
-              <div></div>
-            </ContourBox>
-            <h2>Projects you are working at</h2>
-            <ContourBox>
-              <div></div>
-            </ContourBox>
+            <h2>Recently viewed projects</h2>
+            <div className={classes.profile_recentWrap}>
+              <RecentProjects></RecentProjects>
+            </div>
+            <div className={classes.profile_ownedWrap}>
+              <h2>Owned projects</h2>
+              <OwnProjects></OwnProjects>
+            </div>
+            <div className={classes.profile_memberWrap}>
+              <h2>Projects as member</h2>
+              <TeamProjects></TeamProjects>
+            </div>
           </div>
         </div>
       </div>

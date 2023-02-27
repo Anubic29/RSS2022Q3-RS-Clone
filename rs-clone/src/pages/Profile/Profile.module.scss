@@ -28,6 +28,12 @@
   width: 100%;
 }
 
-.profile_icon {
+.profile_body__right_col {
+  margin-bottom: 90px;
+}
 
+.profile_recentWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

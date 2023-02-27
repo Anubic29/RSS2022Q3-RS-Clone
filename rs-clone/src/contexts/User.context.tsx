@@ -38,8 +38,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [notedItemList, setNotedItemList] = useState<NotedItemUserType[]>([]);
   const [recentList, setRecentList] = useState<string[]>([]);
 
-  // useEffect(() => console.log(recentList), [recentList]);
-
   const setUserDataBack = useCallback(async () => {
     try {
       const response = await api.users.getCurrentData();

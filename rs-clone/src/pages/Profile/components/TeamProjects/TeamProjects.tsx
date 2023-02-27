@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import classes from './OwnProjects.module.scss';
+import classes from './TeamProjects.module.scss';
 import { useUser } from '../../../../contexts';
 import { useProjects } from '../../../../contexts';
 import ProjectType from '../../../../types/project/projectType';
 import ProjectRow from '../ProjectRow/ProjectRow';
 
-function OwnProjects() {
+function TeamProjects() {
   const { ...uData } = useUser();
   const { ...projData } = useProjects();
 
@@ -20,7 +20,7 @@ function OwnProjects() {
       <div className={classes.teamProjects_inner}>
         {projectsList.length > 0 &&
           projectsList.map((project) => {
-            if (project.author === uData.currentUser?._id) {
+            if (project.team.includes(uData.currentUser?._id as string)) {
               return ProjectRow(project);
             }
           })}
@@ -29,4 +29,4 @@ function OwnProjects() {
   );
 }
 
-export default OwnProjects;
+export default TeamProjects;
