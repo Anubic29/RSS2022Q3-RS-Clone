@@ -32,6 +32,7 @@ function MarkedItem(props: MarkedItemProps) {
   const [projectTitle, setProjectTitle] = useState('');
   const [project, setProject] = useState<ProjectType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -42,10 +43,11 @@ function MarkedItem(props: MarkedItemProps) {
           setTask(await getTask(_id));
           setProjectTitle(projects.find((proj) => proj._id === task?.projectId)?.title as string);
         }
-
-        setIsLoading(false);
       } catch {
+        setError(true);
         addAlert('Error', `Server error. Unable to load item ${_id}`);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, []);
@@ -64,40 +66,46 @@ function MarkedItem(props: MarkedItemProps) {
       : `projects/${task?.projectId}/selected-task/${task?._id}`;
 
   return (
-    <div className={styles.ItemWrapper}>
-      {isLoading && (
-        <div className={styles.PreloaderContainer}>
-          <Preloader />
+    <>
+      {error ? (
+        <></>
+      ) : (
+        <div className={styles.ItemWrapper}>
+          {isLoading && (
+            <div className={styles.PreloaderContainer}>
+              <Preloader />
+            </div>
+          )}
+
+          <Link to={linkToMarkedItem}>
+            <li className={styles.TaskItem}>
+              <div className={styles.IconsContainer}>
+                <StarIcon
+                  className={styles.StarIcon}
+                  title="Remove from marked"
+                  onClick={removeItemHandler}
+                />
+                {ICONS_MAP[type]}
+              </div>
+
+              <div className={styles.Content}>
+                <div className={styles.TitleArea}>
+                  <div className={styles.Title}>
+                    {type === 'project' ? project?.title : task?.title}
+                  </div>
+
+                  <div className={styles.Info}>
+                    <span>{type === 'project' ? 'Project' : 'Task'}</span>
+                    {type !== 'project' && <span className={styles.Separator}></span>}
+                    {type !== 'project' && <span>in {projectTitle}</span>}
+                  </div>
+                </div>
+              </div>
+            </li>
+          </Link>
         </div>
       )}
-
-      <Link to={linkToMarkedItem}>
-        <li className={styles.TaskItem}>
-          <div className={styles.IconsContainer}>
-            <StarIcon
-              className={styles.StarIcon}
-              title="Remove from marked"
-              onClick={removeItemHandler}
-            />
-            {ICONS_MAP[type]}
-          </div>
-
-          <div className={styles.Content}>
-            <div className={styles.TitleArea}>
-              <div className={styles.Title}>
-                {type === 'project' ? project?.title : task?.title}
-              </div>
-
-              <div className={styles.Info}>
-                <span>{type === 'project' ? 'Project' : 'Task'}</span>
-                {type !== 'project' && <span className={styles.Separator}></span>}
-                {type !== 'project' && <span>in {projectTitle}</span>}
-              </div>
-            </div>
-          </div>
-        </li>
-      </Link>
-    </div>
+    </>
   );
 }
 
