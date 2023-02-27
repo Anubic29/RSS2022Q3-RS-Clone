@@ -4,7 +4,8 @@
   width: 100%;
   height: $headerHeight;
   position: relative;
-  z-index: 30;
+  z-index: 100;
+
 
   &::after {
     height: 4px;

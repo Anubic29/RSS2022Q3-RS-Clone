@@ -37,7 +37,6 @@ const SubmenuItemLine: React.FC<{
     <li
       onClick={(e) => {
         e.stopPropagation();
-        console.log(props.link);
         navigate(props.link as string);
         window.location.reload();
       }}>

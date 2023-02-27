@@ -16,6 +16,7 @@ interface UserContextType {
   visitProject: (projectId: string) => Promise<boolean>;
   deleteRecentProject: (projectId: string) => void;
   setUserDataBack: () => void | Promise<number | undefined>;
+  updateProfileData: (id: string, data: { [string: string]: string }) => void;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -28,15 +29,14 @@ export const UserContext = createContext<UserContextType>({
   deleteNotedItem: () => Promise.resolve(false),
   setUserDataBack: () => undefined,
   visitProject: () => Promise.resolve(false),
-  deleteRecentProject: () => console.log('error')
+  deleteRecentProject: () => console.log('error'),
+  updateProfileData: () => []
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>();
   const [notedItemList, setNotedItemList] = useState<NotedItemUserType[]>([]);
   const [recentList, setRecentList] = useState<string[]>([]);
-
-  // useEffect(() => console.log(recentList), [recentList]);
 
   const setUserDataBack = useCallback(async () => {
     try {
@@ -121,6 +121,33 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setRecentList((prev) => prev.filter((project) => project !== projectId));
   }, []);
 
+  const updateProfileData = useCallback(
+    async (userId: string, updatedData: { [string: string]: string }) => {
+      if (currentUser) {
+        const payload = {
+          firstName: `${currentUser?.firstName as string}`,
+          lastName: `${currentUser?.lastName as string}`,
+          mail: `${currentUser?.mail as string}`,
+          password: `${currentUser?.password as string}`,
+
+          jobTitleInfo: `${currentUser?.jobTitleInfo || 'Job name'}`,
+          departmentInfo: `${currentUser?.departmentInfo || 'Department'}`,
+          organizationInfo: `${currentUser?.organizationInfo || 'Organization'}`,
+          locationInfo: `${currentUser?.locationInfo || 'Location'}`,
+          coverBlock: `${currentUser?.coverBlock || ''}`
+        };
+        const updatedUser = { ...payload, ...updatedData };
+        const response = await api.users.updateData(userId, updatedUser);
+        if (response.status) {
+          setCurrentUser(response.data);
+        }
+      } else {
+        return;
+      }
+    },
+    [currentUser]
+  );
+
   const values = useMemo(
     () => ({
       currentUser,
@@ -132,7 +159,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       deleteNotedItem,
       setUserDataBack,
       visitProject,
-      deleteRecentProject
+      deleteRecentProject,
+      updateProfileData
     }),
     [
       currentUser,
@@ -145,7 +173,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setUserDataBack,
       visitProject,
       deleteRecentProject,
-      setUserDataBack
+      setUserDataBack,
+      updateProfileData
     ]
   );
 

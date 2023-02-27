@@ -60,6 +60,8 @@ const SubmenuItemsBlock: React.FC<{
     switch (menuItem) {
       case 'project':
         return `/projects/${id}`;
+      case 'userMenu':
+        return `/profile`;
       default:
         return '/';
     }
@@ -105,6 +107,7 @@ const SubmenuItemsBlock: React.FC<{
             <SubmenuItemLine
               key={currentUser?._id}
               title={'Profile'}
+              link={'/profile'}
               article=""
               project=""
               src=""

@@ -8,7 +8,8 @@ import {
   Board,
   Settings,
   SingleProject,
-  Team
+  Team,
+  Profile
 } from '../pages';
 import {
   ProjectsProvider,
@@ -48,6 +49,7 @@ function AuthRoute() {
                   <Route path="settings" element={<Settings />} />
                   <Route path="team" element={<Team />} />
                 </Route>
+                <Route path="profile" element={<Profile />} />
               </Route>
               <Route path="create-project" element={<ProjectCreate />} />
               <Route path="*" element={<NotFound />} />

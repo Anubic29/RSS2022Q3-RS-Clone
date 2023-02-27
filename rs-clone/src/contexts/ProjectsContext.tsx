@@ -17,6 +17,7 @@ import { ProjectCreateBody } from '../types/project/projectCreateBody';
 import { ACCESS_TOKEN, BASE_URL } from '../api/config';
 import ColumnProjectType from '../types/project/columnProjectType';
 import UserType from '../types/user/userType';
+import { useUser } from './User.context';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];
@@ -35,13 +36,16 @@ const ProjectsContext = createContext<ProjectsContextValue | null>(null);
 function ProjectsProvider({ children }: PropsWithChildren) {
   const [projects, setProjects] = useState<ProjectType[]>([]);
   const [columnList, setColumnList] = useState<ColumnProjectType[]>([]);
+  const { ...uData } = useUser();
 
-  const getProjects = useCallback(async (_id: string) => {
-    const fetchedProjects = await getProjectsRequest(_id);
-    setProjects(fetchedProjects);
-
-    return fetchedProjects;
-  }, []);
+  const getProjects = useCallback(
+    async (_id: string) => {
+      const fetchedProjects = await getProjectsRequest(_id);
+      setProjects(fetchedProjects);
+      return fetchedProjects;
+    },
+    [uData.currentUser, projects]
+  );
 
   useEffect(() => {
     setColumnList(
