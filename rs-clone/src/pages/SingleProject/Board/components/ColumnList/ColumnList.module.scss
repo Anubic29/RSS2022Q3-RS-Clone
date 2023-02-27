@@ -50,7 +50,7 @@
 
   .column-block {
     transition: padding ease .3s;
-    height: 100%;
+    min-height: 150px;
   }
 
   .btn-add-container {
