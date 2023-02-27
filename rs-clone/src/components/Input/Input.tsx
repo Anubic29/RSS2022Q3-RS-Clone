@@ -19,6 +19,7 @@ interface InputProps {
   onBlur?: () => void;
   disabled?: boolean;
   style?: CSSProperties;
+  autoFocus?: boolean;
 }
 
 function Input(props: InputProps) {
@@ -36,7 +37,8 @@ function Input(props: InputProps) {
     onFocus,
     onBlur,
     disabled,
-    style
+    style,
+    autoFocus
   } = props;
 
   const classNames = className ? `${styles.Input} ${className}` : styles.Input;
@@ -56,6 +58,7 @@ function Input(props: InputProps) {
         onBlur={onBlur}
         disabled={disabled}
         style={style}
+        autoFocus={autoFocus}
       />
       {!isValid && <p className={styles.ValidationMessage}>{validationMessage}</p>}
     </>

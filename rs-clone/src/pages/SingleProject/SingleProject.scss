@@ -9,6 +9,8 @@
   width: 100%;
 
   .content {
+    max-height: calc(100vh - $headerHeight - $footerHeight);
+    overflow-y: auto;
     flex: 1;
   }
 

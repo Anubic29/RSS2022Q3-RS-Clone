@@ -81,9 +81,21 @@ router.get('/:id/info', authenticateToken, async (req, res) => {
 router.get('/:id/noted', authenticateToken, async (req, res) => {
   try {
     const user = (await User.find({ _id: req.params.id }))[0];
-    if (!user) throw new Error('Not found');
+    if (!user) throw new Error('Not found User');
 
     res.json(user.notedItems);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
+router.get('/:id/recent', authenticateToken, async (req, res) => {
+  try {
+    const user = (await User.find({ _id: req.params.id }))[0];
+    if (!user) throw new Error('Not found User');
+
+    res.json(user.recentProjects);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);

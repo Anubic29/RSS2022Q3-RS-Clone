@@ -21,7 +21,7 @@ import { useUser } from './User.context';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];
-  getProjects: (_id: string) => void;
+  getProjects: (_id: string) => Promise<ProjectType[]>;
   deleteProject: (id: string) => void;
   createProject: (body: ProjectCreateBody) => void;
   isProjectExist: (id: string) => boolean;
@@ -39,12 +39,10 @@ function ProjectsProvider({ children }: PropsWithChildren) {
   const { ...uData } = useUser();
 
   const getProjects = useCallback(
-    async (_id = uData.currentUser?._id) => {
-      getProjectsRequest(_id as string).then((data) => {
-        setProjects(() => {
-          return data;
-        });
-      });
+    async (_id: string) => {
+      const fetchedProjects = await getProjectsRequest(_id);
+      setProjects(fetchedProjects);
+      return fetchedProjects;
     },
     [uData.currentUser, projects]
   );
