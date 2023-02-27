@@ -14,6 +14,12 @@ export default function (instance: AxiosInstance) {
     getCurrentData() {
       return instance.get<CurrentUserType>('api/users/current');
     },
+    getNotedData(userId: string) {
+      return instance.get<NotedItemUserType[]>(`api/users/${userId}/noted`);
+    },
+    getRecentData(userId: string) {
+      return instance.get<string[]>(`api/users/${userId}/recent`);
+    },
     postData(config: AxiosRequestConfig) {
       return instance.post('api/users', config);
     },
