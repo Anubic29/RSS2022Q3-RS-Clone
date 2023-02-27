@@ -180,10 +180,10 @@ router.put('/by-column', authenticateToken, async(req, res) => {
     const tasks = await Task.find({ columnId: req.body.currId })
     if (!tasks) throw new Error('Not found tasks');
 
-    tasks.forEach(async (task) => {
-      task.columnId = req.body.newId;
-      await task.save();
-    })
+    for (let idx = 0; idx < tasks.length; idx++) {
+      tasks[idx].columnId = req.body.newId;
+      await tasks[idx].save();
+    }
 
     res.json(true);
   } catch (error) {
@@ -232,9 +232,9 @@ router.delete('/by-column/:columnId', authenticateToken, async (req, res) => {
   try {
     const tasks = await Task.find({ columnId: req.params.columnId });
 
-    tasks.forEach(async (task) => {
-      await adjustDeleteTask(task);
-    });
+    for (let idx = 0; idx < tasks.length; idx++) {
+      await adjustDeleteTask(tasks[idx]);
+    }
 
     await Task.deleteMany({ columnId: req.params.columnId });
     res.json(true);
@@ -248,9 +248,9 @@ router.delete('/by-project/:projectId', authenticateToken, async (req, res) => {
   try {
     const tasks = await Task.find({ projectId: req.params.projectId });
 
-    tasks.forEach(async (task) => {
-      await adjustDeleteTask(task);
-    });
+    for (let idx = 0; idx < tasks.length; idx++) {
+      await adjustDeleteTask(tasks[idx]);
+    }
 
     await Task.deleteMany({ projectId: req.params.projectId });
     res.json(true);
@@ -262,10 +262,10 @@ router.delete('/by-project/:projectId', authenticateToken, async (req, res) => {
 
 async function adjustDeleteTask(task) {
   const users = (await User.find({})).filter((user) => user.notedItems.some((data) => data.id === task._id.toString()));
-  users.forEach(async (user) => {
-    user.notedItems.splice(user.notedItems.findIndex((data) => data.id === task._id.toString()), 1);
-    await user.save();
-  });
+  for (let idx = 0; idx < users.length; idx++) {
+    users[idx].notedItems.splice(users[idx].notedItems.findIndex((data) => data.id === task._id.toString()), 1);
+    await users[idx].save();
+  }
   return true;
 }
 

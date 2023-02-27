@@ -240,16 +240,16 @@ router.delete('/:id/info', authenticateToken, async (req, res) => {
     if (!project) throw new Error('Not found Project');
 
     const usersRecents = (await User.find({})).filter((user) => user.recentProjects.includes(project._id.toString()));
-    usersRecents.forEach(async (user) => {
-      user.recentProjects.splice(user.recentProjects.findIndex((data) => data === project._id.toString()), 1);
-      await user.save();
-    });
+    for (let idx = 0; idx < usersRecents.length; idx++) {
+      usersRecents[idx].recentProjects.splice(usersRecents[idx].recentProjects.findIndex((data) => data === project._id.toString()), 1);
+      await usersRecents[idx].save();
+    }
 
     const usersNoted = (await User.find({})).filter((user) => user.notedItems.some((data) => data.id === project._id.toString()));
-    usersNoted.forEach(async (user) => {
-      user.notedItems.splice(user.notedItems.findIndex((data) => data.id === project._id.toString()), 1);
-      await user.save();
-    });
+    for (let idx = 0; idx < usersNoted.length; idx++) {
+      usersNoted[idx].notedItems.splice(usersNoted[idx].notedItems.findIndex((data) => data.id === project._id.toString()), 1);
+      await usersNoted[idx].save();
+    }
 
     await Project.deleteOne({ _id: project._id });
     res.json(true);
@@ -268,10 +268,10 @@ router.delete('/:id/team/:userId', authenticateToken, async (req, res) => {
     if (idx < 0) throw new Error('Not found user in team');
 
     const tasks = await Task.find({ projectId: req.params.id, executor: req.params.userId });
-    tasks.forEach(async (task) => {
-      task.executor = 'auto';
-      await task.save();
-    });
+    for (let idx = 0; idx < tasks.length; idx++) {
+      tasks[idx].executor = 'auto';
+      await tasks[idx].save();
+    }
 
     project.team.splice(idx, 1);
 
