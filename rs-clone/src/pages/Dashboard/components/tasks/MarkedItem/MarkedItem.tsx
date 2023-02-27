@@ -24,10 +24,11 @@ const ICONS_MAP = {
 
 function MarkedItem(props: MarkedItemProps) {
   const { type, _id } = props;
-  const { getProject, projects } = useProjects();
+  const { getProject, getProjects } = useProjects();
   const { getTask } = useTasks();
-  const { deleteNotedItem } = useUser();
+  const { deleteNotedItem, currentUser } = useUser();
   const { addAlert } = useAlerts();
+
   const [task, setTask] = useState<TaskType | null>(null);
   const [projectTitle, setProjectTitle] = useState('');
   const [project, setProject] = useState<ProjectType | null>(null);
@@ -40,8 +41,14 @@ function MarkedItem(props: MarkedItemProps) {
         if (type === 'project') {
           setProject(await getProject(_id));
         } else {
-          setTask(await getTask(_id));
-          setProjectTitle(projects.find((proj) => proj._id === task?.projectId)?.title as string);
+          const fetchedTask = await getTask(_id);
+          console.log(fetchedTask);
+          const fetchedProjects = await getProjects(currentUser?._id as string);
+          const projTitle = fetchedProjects.find((proj) => proj._id === fetchedTask.projectId)
+            ?.title as string;
+
+          setTask(fetchedTask);
+          setProjectTitle(projTitle);
         }
       } catch {
         setError(true);

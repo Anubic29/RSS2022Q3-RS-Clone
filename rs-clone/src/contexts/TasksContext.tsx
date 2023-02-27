@@ -57,9 +57,9 @@ function TasksProvider({ children }: PropsWithChildren) {
         Authorization: `Bearer ${ACCESS_TOKEN}`
       }
     });
-    const fetchedTask: TaskType = await res.json();
+    const fetchedTask: TaskType[] = await res.json();
 
-    return fetchedTask;
+    return fetchedTask[0];
   };
 
   const contextValue = {
