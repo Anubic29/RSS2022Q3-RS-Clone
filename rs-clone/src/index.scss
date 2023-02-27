@@ -22,6 +22,8 @@
 
 .App {
   flex: 1;
+  max-height: calc(100vh - $headerHeight - $footerHeight);
+  overflow-y: auto;
 }
 
 .container {

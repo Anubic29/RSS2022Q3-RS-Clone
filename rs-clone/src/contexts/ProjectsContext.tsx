@@ -20,7 +20,7 @@ import UserType from '../types/user/userType';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];
-  getProjects: (_id: string) => void;
+  getProjects: (_id: string) => Promise<ProjectType[]>;
   deleteProject: (id: string) => void;
   createProject: (body: ProjectCreateBody) => void;
   isProjectExist: (id: string) => boolean;
@@ -39,6 +39,8 @@ function ProjectsProvider({ children }: PropsWithChildren) {
   const getProjects = useCallback(async (_id: string) => {
     const fetchedProjects = await getProjectsRequest(_id);
     setProjects(fetchedProjects);
+
+    return fetchedProjects;
   }, []);
 
   useEffect(() => {
