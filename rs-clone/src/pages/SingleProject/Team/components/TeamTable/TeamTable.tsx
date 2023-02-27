@@ -15,7 +15,7 @@ import './TeamTable.scss';
 function TeamTable() {
   const { id: projectId } = useParams();
   const { addAlert } = useAlerts();
-  const { getUserList, projectInfo, removeProjectCollaborator } = useBoard();
+  const { getUserList, projectInfo, removeProjectCollaborator, addUserToTeam } = useBoard();
 
   const [sortOrder, setSortOrder] = useState('asc');
   const [collaborators, setCollaborators] = useState<UserType[]>([]);
@@ -31,7 +31,9 @@ function TeamTable() {
       try {
         const fetchedUsers = getUserList();
         const sortedUsersByDefault = fetchedUsers.sort((a, b) =>
-          a.firstName.localeCompare(b.firstName)
+          sortOrder === 'desc'
+            ? b.firstName.localeCompare(a.firstName)
+            : a.firstName.localeCompare(b.firstName)
         );
 
         setAdminId(projectInfo?.author as string);
@@ -44,7 +46,7 @@ function TeamTable() {
         setIsLoaded(true);
       }
     })();
-  }, []);
+  }, [addUserToTeam]);
 
   useEffect(() => {
     setTableWidth(getTableWidth());
@@ -96,7 +98,7 @@ function TeamTable() {
         collaborators
           .filter((collaborator) => collaborator._id !== id)
           .sort((a, b) =>
-            sortOrder === 'asc'
+            sortOrder === 'desc'
               ? b.firstName.localeCompare(a.firstName)
               : a.firstName.localeCompare(b.firstName)
           )

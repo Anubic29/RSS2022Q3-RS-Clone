@@ -1,35 +1,30 @@
 import React from 'react';
 import { Button } from '../../../components';
-import { TeamBreadcrumbs, TeamTable } from './components';
+import { ModalAddUser, TeamBreadcrumbs, TeamTable, TeamTableInfoTooltip } from './components';
+import { useOverlay } from '../../../contexts';
 
 import styles from './Team.module.scss';
 
 function Team() {
+  const { setIsVisibleBoard, setChildrenBoard } = useOverlay();
+
+  const handleAddCollaborator = () => {
+    setIsVisibleBoard(true);
+    setChildrenBoard(<ModalAddUser />);
+  };
+
   return (
     <div className={styles.Team}>
       <TeamBreadcrumbs />
 
       <div className={styles.TitleArea}>
         <span className={styles.Title}>Collaborators</span>
-        <Button>Add user to team</Button>
+
+        <Button onClick={handleAddCollaborator}>Add collaborator</Button>
       </div>
 
       <div className={styles.TeamDetails}>
-        <div className="TeamTable-info">
-          <div className="TeamTable-info-icon">i</div>
-          <p className="TeamTable-info-message">
-            <span>Only user with</span>
-            <span className="TeamTable-info-message-marked"> Admin </span>
-            <span>role can remove other users from collaborators.</span>
-            <span className="TeamTable-info-message-marked"> Admin </span>
-            <span>
-              is those user who created project. It is not possible to change users roles now,
-              because according functionality is not implemented yet, but you can delegate
-            </span>
-            <span className="TeamTable-info-message-marked"> Admin </span>
-            <span>role in project settings</span>
-          </p>
-        </div>
+        <TeamTableInfoTooltip />
 
         <div className={styles.TableWrapper}>
           <TeamTable />

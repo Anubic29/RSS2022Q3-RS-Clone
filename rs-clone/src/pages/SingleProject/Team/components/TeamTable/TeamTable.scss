@@ -1,7 +1,5 @@
 @import '../../../../../theme/variables';
 
-$colorMarked: #6554c0;
-
 .TeamTable-wrapper {
   overflow-x: auto;
 }
@@ -34,7 +32,7 @@ $colorMarked: #6554c0;
 .TeamTable {
   width: 100%;
   margin-top: 16px;
-  border-bottom: 2px solid #e6e6e6;
+  border-bottom: $borderAsideBar;
   border-spacing: 0;
 }
 
@@ -79,35 +77,4 @@ $colorMarked: #6554c0;
   left: 50%;
   padding: 50px 0;
   transform: translate(-50%);
-}
-
-.TeamTable-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.TeamTable-info-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  font-size: 14px;
-  color: $colorWhite;
-  background: $colorMarked;
-}
-
-.TeamTable-info-message {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: $colorSecondaryText;
-}
-
-.TeamTable-info-message-marked {
-  color: $colorMarked;
 }

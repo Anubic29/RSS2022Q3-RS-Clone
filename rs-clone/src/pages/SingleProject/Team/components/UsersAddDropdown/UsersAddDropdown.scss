@@ -1,8 +1,8 @@
 @import '../../../../../theme/variables';
 
-.UsersDropdown {
+.UsersAddDropdown {
   position: absolute;
-  top: 56px;
+  top: 45px;
   left: 0;
   z-index: 3;
   width: 100%;
@@ -14,7 +14,7 @@
   box-shadow: $boxShadow;
 }
 
-.UsersDropdown-item {
+.UsersAddDropdown-item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -28,22 +28,22 @@
   }
 }
 
-.UsersDropdown-item.active {
+.UsersAddDropdown-item.active {
   background: $colorUserDropdownHoverBackground;
   border-left: 2px solid $colorSecondary;
 
-  .UsersDropdown-user-name {
+  .UsersAddDropdown-user-name {
     color: $colorSecondary;
   }
 }
 
-.UsersDropdown-avatar {
+.UsersAddDropdown-avatar {
   width: 30px;
   height: 30px;
   font-size: 14px;
 }
 
-.UsersDropdown-user-name {
+.UsersAddDropdown-user-name {
   max-width: 140px;
   font-size: 15px;
   font-weight: 400;
@@ -53,14 +53,18 @@
   color: $colorContent;
 }
 
-.UsersDropdown-user-info {
+.UsersAddDropdown-empty {
+  padding: 12px 0;
+}
+
+.UsersAddDropdown-user-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex: 1;
 }
 
-.UsersDropdown-user-is-admin {
+.UsersAddDropdown-user-selected {
   font-size: 12px;
   font-weight: 400;
   color: $colorSecondaryText;
