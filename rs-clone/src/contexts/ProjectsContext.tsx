@@ -16,6 +16,7 @@ import {
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
 import { ACCESS_TOKEN, BASE_URL } from '../api/config';
 import ColumnProjectType from '../types/project/columnProjectType';
+import UserType from '../types/user/userType';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];
@@ -26,6 +27,7 @@ export interface ProjectsContextValue {
   getProject: (id: string) => Promise<ProjectType>;
   getColumnById: (id: string) => ColumnProjectType | undefined;
   changeProjectAuthor: (projectId: string, userId: string) => void;
+  getUsers: () => Promise<UserType[]>;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
@@ -94,6 +96,17 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     [projects]
   );
 
+  const getUsers = async () => {
+    const fetchedUsers = await fetch(`${BASE_URL}/users`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`
+      }
+    });
+
+    return await fetchedUsers.json();
+  };
+
   const contextValue: ProjectsContextValue = {
     projects,
     getProjects,
@@ -102,7 +115,8 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     isProjectExist,
     getProject,
     getColumnById,
-    changeProjectAuthor
+    changeProjectAuthor,
+    getUsers
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;

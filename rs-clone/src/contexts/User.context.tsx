@@ -4,8 +4,6 @@ import { createContext, ReactNode, useCallback, useContext, useMemo, useState } 
 import api from '../api';
 import CurrentUserType from '../types/user/currentUserType';
 import NotedItemUserType from '../types/user/notedItemUserType';
-import { ACCESS_TOKEN, BASE_URL } from '../api/config';
-import UserType from '../types/user/userType';
 
 interface UserContextType {
   currentUser: CurrentUserType | undefined;
@@ -15,7 +13,6 @@ interface UserContextType {
   isNotedItem: (id: string) => boolean;
   addNotedItem: (id: string, type: string) => Promise<boolean>;
   deleteNotedItem: (id: string) => Promise<boolean>;
-  getUsers: () => Promise<UserType[]>;
   visitProject: (projectId: string) => Promise<boolean>;
   deleteRecentProject: (projectId: string) => void;
   setUserDataBack: () => void | Promise<number | undefined>;
@@ -30,7 +27,6 @@ export const UserContext = createContext<UserContextType>({
   addNotedItem: () => Promise.resolve(false),
   deleteNotedItem: () => Promise.resolve(false),
   setUserDataBack: () => undefined,
-  getUsers: () => Promise.resolve([]),
   visitProject: () => Promise.resolve(false),
   deleteRecentProject: () => console.log('error')
 });
@@ -107,17 +103,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     [notedItemList, currentUser]
   );
 
-  const getUsers = async () => {
-    const fetchedUsers = await fetch(`${BASE_URL}/users`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`
-      }
-    });
-
-    return await fetchedUsers.json();
-  };
-
   const visitProject = useCallback(
     async (projectId: string) => {
       if (currentUser) {
@@ -146,7 +131,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       addNotedItem,
       deleteNotedItem,
       setUserDataBack,
-      getUsers,
       visitProject,
       deleteRecentProject
     }),
@@ -159,7 +143,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       addNotedItem,
       deleteNotedItem,
       setUserDataBack,
-      getUsers,
       visitProject,
       deleteRecentProject,
       setUserDataBack
