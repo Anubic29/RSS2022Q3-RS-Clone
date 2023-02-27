@@ -76,7 +76,7 @@ function TeamTable() {
           return fullName.includes(event.target.value) || email.includes(event.target.value);
         })
         .sort((a, b) =>
-          sortOrder === 'asc'
+          sortOrder === 'desc'
             ? b.firstName.localeCompare(a.firstName)
             : a.firstName.localeCompare(b.firstName)
         )
