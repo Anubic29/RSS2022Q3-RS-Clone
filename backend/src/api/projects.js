@@ -1,5 +1,6 @@
 const express = require('express');
 const Project = require('../models/Project');
+const Task = require('../models/Task');
 const User = require('../models/User');
 const authenticateToken = require('../func/authenticateToken');
 const router = express.Router();
@@ -238,10 +239,15 @@ router.delete('/:id/info', authenticateToken, async (req, res) => {
     const project = (await Project.find({ _id: req.params.id }))[0];
     if (!project) throw new Error('Not found Project');
 
-    const users = (await User.find({})).filter((user) => user.recentProjects.includes(req.params.id));
+    const usersRecents = (await User.find({})).filter((user) => user.recentProjects.includes(project._id.toString()));
+    usersRecents.forEach(async (user) => {
+      user.recentProjects.splice(user.recentProjects.findIndex((data) => data === project._id.toString()), 1);
+      await user.save();
+    });
 
-    users.forEach(async (user) => {
-      user.recentProjects.splice(user.recentProjects.findIndex((data) => data === req.params.id), 1);
+    const usersNoted = (await User.find({})).filter((user) => user.notedItems.some((data) => data.id === project._id.toString()));
+    usersNoted.forEach(async (user) => {
+      user.notedItems.splice(user.notedItems.findIndex((data) => data.id === project._id.toString()), 1);
       await user.save();
     });
 
@@ -259,7 +265,13 @@ router.delete('/:id/team/:userId', authenticateToken, async (req, res) => {
     if (!project) throw new Error('Not found project');
 
     const idx = project.team.indexOf(req.params.userId);
-    if (idx < 0) throw new Error('Not found column');
+    if (idx < 0) throw new Error('Not found user in team');
+
+    const tasks = await Task.find({ projectId: req.params.id, executor: req.params.userId });
+    tasks.forEach(async (task) => {
+      task.executor = 'auto';
+      await task.save();
+    });
 
     project.team.splice(idx, 1);
 
