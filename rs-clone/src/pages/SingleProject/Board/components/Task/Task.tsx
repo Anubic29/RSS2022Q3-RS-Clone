@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, useEffect } from 'react';
-import { MdDone, MdFlag } from 'react-icons/md';
+import { MdDone, MdOutlineStar as StarIcon } from 'react-icons/md';
 import { colorBackgroundHover, colorSecondaryLight } from '../../../../../theme/variables';
 import { convertLetterToHex } from '../../../../../utils/convertLetterToHex';
 import { useOverlay, useBoard } from '../../../../../contexts';
@@ -114,14 +114,14 @@ function Task(props: TaskProps) {
           <div className={styles['user-n-flag']}>
             {isNoted && (
               <div className={styles['icon-flag-block']}>
-                <MdFlag />
+                <StarIcon />
               </div>
             )}
             <div className={styles['user-block']}>
               {props.executor !== 'auto' && user && (
                 <UserAvatar
                   title={`${user.firstName} ${user.lastName}`}
-                  content={user.firstName[0] + user.lastName[0]}
+                  content={`${user.firstName} ${user.lastName}`}
                   color={`#${convertLetterToHex(user.firstName[0], 3, '9')}${convertLetterToHex(
                     user.lastName[0],
                     3,
