@@ -8,6 +8,7 @@ import {
   Board,
   Settings,
   SingleProject,
+  Team,
   Profile
 } from '../pages';
 import {
@@ -41,10 +42,12 @@ function AuthRoute() {
                       </CommentsProvider>
                     </BoardProvider>
                   }>
-                  <Route index element={<Board />} />
+                  <Route index element={<Navigate to="board" />} />
                   <Route path="board" element={<Board />} />
+                  <Route path="board/selected-task/:taskId" element={<Board />} />
                   <Route path="selected-task/:taskId" element={<Board />} />
                   <Route path="settings" element={<Settings />} />
+                  <Route path="team" element={<Team />} />
                 </Route>
                 <Route path="profile" element={<Profile />} />
               </Route>

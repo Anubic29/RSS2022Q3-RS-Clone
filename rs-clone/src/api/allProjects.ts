@@ -1,8 +1,9 @@
 import ProjectType from '../types/project/projectType';
-import { ACCESS_TOKEN, BASE_URL } from './config';
+import { BASE_URL } from './config';
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
 
 async function getProjectsRequest(userId: string): Promise<ProjectType[]> {
+  const ACCESS_TOKEN = localStorage.getItem('accessToken');
   const res = await fetch(`${BASE_URL}/projects?user=${userId}`, {
     method: 'GET',
     headers: {
@@ -14,6 +15,7 @@ async function getProjectsRequest(userId: string): Promise<ProjectType[]> {
 }
 
 async function getProjectRequest(id: string): Promise<ProjectType> {
+  const ACCESS_TOKEN = localStorage.getItem('accessToken');
   const res = await fetch(`${BASE_URL}/projects/${id}/info`, {
     method: 'GET',
     headers: {
@@ -25,6 +27,7 @@ async function getProjectRequest(id: string): Promise<ProjectType> {
 }
 
 async function deleteProjectRequest(id: string) {
+  const ACCESS_TOKEN = localStorage.getItem('accessToken');
   await fetch(`${BASE_URL}/projects/${id}/info`, {
     method: 'DELETE',
     headers: {
@@ -34,6 +37,7 @@ async function deleteProjectRequest(id: string) {
 }
 
 async function createProjectRequest(body: ProjectCreateBody) {
+  const ACCESS_TOKEN = localStorage.getItem('accessToken');
   await fetch(`${BASE_URL}/projects`, {
     method: 'POST',
     headers: {

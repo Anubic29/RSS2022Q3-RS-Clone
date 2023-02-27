@@ -1,4 +1,4 @@
-export const convertLetterToHex = (letter: string, maxLength: number, padStr: string) => {
+export const convertLetterToHex = (letter: string, maxLength = 3, padStr = '9') => {
   let charCode = letter.charCodeAt(0);
   if (charCode >= 78) charCode -= 50;
   else charCode += 50;

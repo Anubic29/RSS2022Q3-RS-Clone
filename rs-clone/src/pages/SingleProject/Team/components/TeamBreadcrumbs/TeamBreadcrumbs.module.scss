@@ -1,0 +1,31 @@
+@import '../../../../../theme/variables';
+
+.Breadcrumbs {
+  display: flex;
+  gap: 8px;
+}
+
+.Breadcrumb {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: $colorSecondaryText;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:last-child:hover {
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: $mediaMobile) {
+    font-size: 11px;
+  }
+}
+
+.Divider {
+  font-size: 14px;
+  font-weight: 400;
+  color: $colorSecondaryText;
+}

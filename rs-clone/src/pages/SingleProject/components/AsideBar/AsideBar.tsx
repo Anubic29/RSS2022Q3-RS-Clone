@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MdKeyboardArrowLeft as IconLeft, MdKeyboardArrowRight as IconRight } from 'react-icons/md';
 import { ProjectAvatar } from '../../../../components';
 import { AsideNavElement } from '../';
@@ -17,25 +17,31 @@ interface AsideBarProps {
 
 function AsideBar(props: AsideBarProps) {
   const { projectInfo } = useBoard();
+  const { title, description, pathImage, color } = projectInfo as ProjectType;
   const currentScreenWidth = window.screen.width;
   const location = useLocation();
   const currentPath = location.pathname.split('/').at(-1);
-  const [isActive, setIsActive] = useState({
-    board: currentPath !== 'settings',
-    settings: currentPath === 'settings'
+  const [activeLayout, setActiveLayout] = useState({
+    board: currentPath !== 'settings' && currentPath !== 'team',
+    settings: currentPath === 'settings',
+    team: currentPath === 'team'
   });
   const [isCollapsed, setIsCollapsed] = useState(currentScreenWidth <= MEDIA_TABLET);
-  const { title, description, pathImage, color } = projectInfo as ProjectType;
 
-  const changeActiveStateHandler = (event: React.MouseEvent<HTMLElement>) => {
+  useEffect(() => {
+    if (currentPath === 'settings') {
+      setActiveLayout({ board: false, settings: true, team: false });
+    } else if (currentPath === 'team') {
+      setActiveLayout({ board: false, settings: false, team: true });
+    } else {
+      setActiveLayout({ board: true, settings: false, team: false });
+    }
+  }, [currentPath]);
+
+  const changeActiveStateHandler = (event: React.MouseEvent) => {
     const target = (event.target as HTMLElement).closest('a') as HTMLElement;
 
-    if (target.id === 'board') {
-      setIsActive({ board: true, settings: false });
-    }
-    if (target.id === 'settings') {
-      setIsActive({ board: false, settings: true });
-    }
+    setActiveLayout({ board: false, settings: false, team: false, [target.id]: true });
   };
 
   const collapseHandler = useCallback(() => {
@@ -65,14 +71,21 @@ function AsideBar(props: AsideBarProps) {
           <AsideNavElement
             title="Board"
             id="board"
-            isActive={isActive.board}
+            isActive={activeLayout.board}
             link="board"
+            onClick={changeActiveStateHandler}
+          />
+          <AsideNavElement
+            title="Team"
+            id="team"
+            isActive={activeLayout.team}
+            link="team"
             onClick={changeActiveStateHandler}
           />
           <AsideNavElement
             title="Settings"
             id="settings"
-            isActive={isActive.settings}
+            isActive={activeLayout.settings}
             link="settings"
             onClick={changeActiveStateHandler}
           />
