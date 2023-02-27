@@ -15,7 +15,8 @@ import './TeamTable.scss';
 function TeamTable() {
   const { id: projectId } = useParams();
   const { addAlert } = useAlerts();
-  const { getUserList, projectInfo, removeProjectCollaborator, addUserToTeam } = useBoard();
+  const { getUserList, projectInfo, removeProjectCollaborator, addUserToTeam, updateProject } =
+    useBoard();
 
   const [sortOrder, setSortOrder] = useState('asc');
   const [collaborators, setCollaborators] = useState<UserType[]>([]);
@@ -94,6 +95,7 @@ function TeamTable() {
 
     try {
       await removeProjectCollaborator(projectId as string, id);
+      await updateProject({ ...projectInfo });
       setCollaborators((collaborators) =>
         collaborators
           .filter((collaborator) => collaborator._id !== id)
