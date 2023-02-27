@@ -26,9 +26,9 @@ export const UserContext = createContext<UserContextType>({
   isNotedItem: () => false,
   addNotedItem: () => Promise.resolve(false),
   deleteNotedItem: () => Promise.resolve(false),
+  setUserDataBack: () => undefined,
   visitProject: () => Promise.resolve(false),
-  deleteRecentProject: () => console.log('error'),
-  setUserDataBack: () => undefined
+  deleteRecentProject: () => console.log('error')
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -36,7 +36,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [notedItemList, setNotedItemList] = useState<NotedItemUserType[]>([]);
   const [recentList, setRecentList] = useState<string[]>([]);
 
-  useEffect(() => console.log(recentList), [recentList]);
+  // useEffect(() => console.log(recentList), [recentList]);
 
   const setUserDataBack = useCallback(async () => {
     try {
@@ -130,9 +130,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       isNotedItem,
       addNotedItem,
       deleteNotedItem,
+      setUserDataBack,
       visitProject,
-      deleteRecentProject,
-      setUserDataBack
+      deleteRecentProject
     }),
     [
       currentUser,
@@ -142,6 +142,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       isNotedItem,
       addNotedItem,
       deleteNotedItem,
+      setUserDataBack,
       visitProject,
       deleteRecentProject,
       setUserDataBack

@@ -21,6 +21,20 @@
   }
 }
 
+.Input:disabled {
+  cursor: default;
+
+  background: $colorInoutBackgroundHover;
+
+  &:hover {
+    background: $colorInoutBackgroundHover;
+  }
+
+  &:focus {
+    background: $colorInoutBackgroundHover;
+  }
+}
+
 .InputInvalid {
   border-color: $colorLabelMark;
 

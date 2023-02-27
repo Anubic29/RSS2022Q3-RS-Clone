@@ -41,3 +41,41 @@
   color: $colorIconDone;
   font-size: 25px;
 }
+
+.UserInputContainer {
+  position: relative;
+}
+
+.UserInput {
+  padding: 14px 10px 14px 35px;
+  cursor: pointer;
+}
+
+.SettingsUserAvatar {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.SettingsUserAvatarDisabled {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  transform: translateY(-50%);
+  cursor: default;
+}
+
+.SettingsUserIconEmpty {
+  left: 3px;
+  width: 30px;
+  height: 30px;
+  color: $colorSecondaryText;
+}

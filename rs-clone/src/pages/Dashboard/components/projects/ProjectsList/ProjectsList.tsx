@@ -5,6 +5,7 @@ import { EmptyData, Preloader } from '../../../../../components';
 import { useProjects, useUser } from '../../../../../contexts';
 
 import styles from './ProjectsList.module.scss';
+import { useAlerts } from '../../../../../contexts/AlertsContext';
 
 const PROJECT_BADGE_SIZE = 24;
 
@@ -13,6 +14,7 @@ function ProjectsList() {
   const [customMessage, setCustomMessage] = useState('There are no projects');
   const { currentUser } = useUser();
   const { projects, getProjects } = useProjects();
+  const { addAlert } = useAlerts();
 
   useEffect(() => {
     if (currentUser) {
@@ -21,6 +23,7 @@ function ProjectsList() {
           await getProjects(_id);
         } catch {
           setCustomMessage(`Server error`);
+          addAlert('Error', 'Sever error. Unable to load projects');
         } finally {
           setIsLoading(false);
         }

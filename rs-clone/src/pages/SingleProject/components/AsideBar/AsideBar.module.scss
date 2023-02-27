@@ -17,6 +17,7 @@
 
   @media screen and (max-width: $mediaTablet) {
     position: absolute;
+    z-index: 10;
     height: 100%;
   }
 }
@@ -42,6 +43,7 @@
 
   @media screen and (max-width: $mediaTablet) {
     position: absolute;
+    z-index: 10;
     height: 100%;
   }
 }

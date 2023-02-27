@@ -44,7 +44,7 @@ function Settings() {
 
   return (
     <div className={styles.Settings}>
-      <SettingsBreadcrumbs projId={`${projectInfo?._id}`} projTitle={`${projectInfo?.title}`} />
+      <SettingsBreadcrumbs />
 
       <div className={styles.TitleArea}>
         <span className={styles.Title}>Details</span>

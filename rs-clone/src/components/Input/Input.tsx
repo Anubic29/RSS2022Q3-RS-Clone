@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import styles from './Input.module.scss';
 
@@ -15,6 +15,10 @@ interface InputProps {
   maxLength?: number;
   isValid?: boolean;
   validationMessage?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  disabled?: boolean;
+  style?: CSSProperties;
 }
 
 function Input(props: InputProps) {
@@ -28,7 +32,11 @@ function Input(props: InputProps) {
     required,
     placeholder,
     isValid = true,
-    validationMessage
+    validationMessage,
+    onFocus,
+    onBlur,
+    disabled,
+    style
   } = props;
 
   const classNames = className ? `${styles.Input} ${className}` : styles.Input;
@@ -44,6 +52,10 @@ function Input(props: InputProps) {
         onChange={onChange}
         value={value}
         required={required}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        disabled={disabled}
+        style={style}
       />
       {!isValid && <p className={styles.ValidationMessage}>{validationMessage}</p>}
     </>

@@ -16,6 +16,7 @@ import {
 import { ProjectCreateBody } from '../types/project/projectCreateBody';
 import { ACCESS_TOKEN, BASE_URL } from '../api/config';
 import ColumnProjectType from '../types/project/columnProjectType';
+import UserType from '../types/user/userType';
 
 export interface ProjectsContextValue {
   projects: ProjectType[];
@@ -25,6 +26,8 @@ export interface ProjectsContextValue {
   isProjectExist: (id: string) => boolean;
   getProject: (id: string) => Promise<ProjectType>;
   getColumnById: (id: string) => ColumnProjectType | undefined;
+  changeProjectAuthor: (projectId: string, userId: string) => void;
+  getUsers: () => Promise<UserType[]>;
 }
 
 const ProjectsContext = createContext<ProjectsContextValue | null>(null);
@@ -75,12 +78,34 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     });
   };
 
+  const changeProjectAuthor = async (projectId: string, userId: string) => {
+    await fetch(`${BASE_URL}/projects/${projectId}/change-admin`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId })
+    });
+  };
+
   const isProjectExist = useCallback(
     (id: string) => {
       return projects.some((project) => project._id === id);
     },
     [projects]
   );
+
+  const getUsers = async () => {
+    const fetchedUsers = await fetch(`${BASE_URL}/users`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`
+      }
+    });
+
+    return await fetchedUsers.json();
+  };
 
   const contextValue: ProjectsContextValue = {
     projects,
@@ -89,7 +114,9 @@ function ProjectsProvider({ children }: PropsWithChildren) {
     createProject,
     isProjectExist,
     getProject,
-    getColumnById
+    getColumnById,
+    changeProjectAuthor,
+    getUsers
   };
 
   return <ProjectsContext.Provider value={contextValue}>{children}</ProjectsContext.Provider>;

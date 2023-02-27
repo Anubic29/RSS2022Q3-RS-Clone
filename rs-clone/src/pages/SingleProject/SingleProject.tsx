@@ -24,8 +24,9 @@ function SingleProject() {
           await getProjects(_id);
         } catch {
           setCustomMessage('Server error');
-        } finally {
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 2000);
         }
       })(currentUser._id);
     }
@@ -38,18 +39,19 @@ function SingleProject() {
           const data = (await setProjectDataBack(id as string)) as ProjectType;
 
           await visitProject(data._id);
-          console.log('1');
           await setTasksDataBack(data._id);
           await setUsersDataBack([data.author, ...data.team]);
 
           setProjectExistence(true);
+          setIsLoading(false);
         } else {
           setProjectExistence(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 2000);
         }
       } catch {
         setCustomMessage('Server error');
-      } finally {
-        setIsLoading(false);
       }
     })();
   }, [isProjectExist]);
