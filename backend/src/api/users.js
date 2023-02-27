@@ -81,9 +81,21 @@ router.get('/:id/info', authenticateToken, async (req, res) => {
 router.get('/:id/noted', authenticateToken, async (req, res) => {
   try {
     const user = (await User.find({ _id: req.params.id }))[0];
-    if (!user) throw new Error('Not found');
+    if (!user) throw new Error('Not found User');
 
     res.json(user.notedItems);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error! ${error.message}`);
+  }
+});
+
+router.get('/:id/recent', authenticateToken, async (req, res) => {
+  try {
+    const user = (await User.find({ _id: req.params.id }))[0];
+    if (!user) throw new Error('Not found User');
+
+    res.json(user.recentProjects);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error! ${error.message}`);
@@ -168,6 +180,11 @@ router.post('/:id/recent', authenticateToken, async (req, res) => {
 router.put('/:id/info', authenticateToken, async (req, res) => {
   try {
     if (!isCorrectUserInfo(req.body)) throw new Error('Not found property');
+    if (typeof req.body.jobTitleInfo !== 'string') throw new Error('Not found property jobTitleInfo');
+    if (typeof req.body.departmentInfo !== 'string') throw new Error('Not found property departmentInfo');
+    if (typeof req.body.organizationInfo !== 'string') throw new Error('Not found property organizationInfo');
+    if (typeof req.body.locationInfo !== 'string') throw new Error('Not found property locationInfo');
+    if (typeof req.body.coverBlock !== 'string') throw new Error('Not found property coverBlock');
 
     const user = (await User.find({ _id: req.params.id }))[0];
     if (!user) throw new Error('Not found user');
@@ -176,6 +193,12 @@ router.put('/:id/info', authenticateToken, async (req, res) => {
     user.lastName = req.body.lastName;
     user.mail = req.body.mail;
     user.password = req.body.password;
+
+    user.jobTitleInfo = req.body.jobTitleInfo;
+    user.departmentInfo = req.body.departmentInfo;
+    user.organizationInfo = req.body.organizationInfo;
+    user.locationInfo = req.body.locationInfo;
+    user.coverBlock = req.body.coverBlock;
 
     await user.save();
     res.json(user);
