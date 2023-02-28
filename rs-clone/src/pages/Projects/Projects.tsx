@@ -94,10 +94,11 @@ function Projects() {
             className={styles['search-bar']}
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
+            placeholder="Search project"
           />
-          <div className={styles.icon}>
-            <MdSearch />
-          </div>
+          <label htmlFor="search-projects" className={styles.icon}>
+            <MdSearch className={styles.projectsSearchIcon} />
+          </label>
         </div>
       </div>
       {isLoading ? (

@@ -17,6 +17,8 @@
   
   .title {
     font-size: 24px;
+    font-weight: 500;
+    color: $colorContent;
   }
 
   .search-block {
@@ -35,7 +37,6 @@
   }
 
   .search-bar {
-    height: 30px;
     padding-right: 30px;
   }
 }
@@ -55,7 +56,7 @@
     & > * {
       font-size: 15px;
       padding: 4px 8px;
-      border-bottom: 2px solid $colorBorder;
+      border-bottom: $borderAsideBar;
       text-align: left;
     }
   }
@@ -63,6 +64,9 @@
   th, td {
     word-wrap: break-word;
     max-width: 200px;
+    font-size: 14px;
+    font-weight: 400;
+    color: $colorContent;
   }
 
   .sortable-cell {
@@ -87,23 +91,37 @@
 
   .project {
     &__star {
+      font-size: 14px;
+      font-weight: 500;
+      color: $colorSecondaryText;
       width: 3%;
-      font-size: 20px;
     }
 
     &__title {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
       width: 22%;
     }
 
     &__key {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
       width: 8%;
     }
 
     &__description {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
       width: 25%;
     }
 
     &__author {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
       width: 16%;
     }
 
@@ -116,4 +134,9 @@
 
 .empty {
   margin-top: 40px;
+}
+
+.projectsSearchIcon {
+  color: $colorSecondaryText;
+  cursor: text;
 }
