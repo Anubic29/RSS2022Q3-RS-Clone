@@ -13,7 +13,7 @@ const LoginForm = () => {
   const { setTokenData, removeTokenData } = useAuth();
   const [change, changeMessage, setText] = changeIsLoading();
 
-  const passwRegEx = new RegExp('[0-9A-Za-z]{4,}$');
+  const passwRegEx = new RegExp('.{4,}$');
   const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
 
   const [emailInputValue, setEmailInputValue] = useState('');
@@ -133,6 +133,7 @@ const LoginForm = () => {
             type="password"
             name="password"
             placeholder="Password"
+            autoComplete="on"
             required
           />
         </p>

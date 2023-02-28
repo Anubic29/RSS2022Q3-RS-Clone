@@ -8,10 +8,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import useComponentVisible from '../../hooks/useComponentVisible/useComponentVisible';
 import { useUser } from '../../contexts';
 import { useTasks } from '../../contexts/TasksContext';
+import ProfileMenu from '../../components/SubmenuItem/components/ProfileMenu/ProfileMenu';
+import RecentProjects from '../../components/SubmenuItem/components/RecentProjects/RecentProjects';
+import AssignedTasks from '../../components/SubmenuItem/components/AssignedTasks/AssignedTasks';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
-  const [submenu, setSubmenu] = useState<'work' | 'userMenu' | 'project'>('work');
+  const [submenu, setSubmenu] = useState<'work' | 'project'>('work');
 
   const { currentUser } = useUser();
   const { getTasks } = useTasks();
@@ -68,14 +71,27 @@ const Header = () => {
   };
 
   const userIconHandler = () => {
-    const item = 'userMenu';
-    setActiveItem(item);
-    setSubmenu(item);
+    setActiveItem('userMenu');
     setUserIsMenuVisible(true);
-    if (activeItem === item) {
+    if (activeItem === 'userMenu') {
       setActiveItem('');
       setUserIsMenuVisible(false);
     }
+  };
+
+  const onUserMenuVisibleHandler = () => {
+    setActiveItem('');
+    setUserIsMenuVisible(false);
+  };
+
+  const onRecentVisibleHandler = () => {
+    setActiveItem('');
+    setProjIsMenuVisible(false);
+  };
+
+  const onTasksVisibleHandler = () => {
+    setActiveItem('');
+    setWorkIsMenuVisible(false);
   };
 
   return (
@@ -95,7 +111,7 @@ const Header = () => {
               </div>
               {activeItem === 'work' && (
                 <div className={classes.absolute} ref={workRef}>
-                  <SubmenuItem menuItem={submenu}></SubmenuItem>
+                  <AssignedTasks onVisHandler={onTasksVisibleHandler}></AssignedTasks>
                 </div>
               )}
             </li>
@@ -110,7 +126,7 @@ const Header = () => {
               </div>
               {activeItem === 'project' && isProjMenuVisible && (
                 <div className={classes.absolute} ref={projRef}>
-                  <SubmenuItem menuItem={submenu}></SubmenuItem>
+                  <RecentProjects onVisHandler={onRecentVisibleHandler}></RecentProjects>
                 </div>
               )}
             </li>
@@ -127,7 +143,7 @@ const Header = () => {
           </div>
           {activeItem === 'userMenu' && isUserMenuVisible && (
             <div className={classes.absolute + ' ' + classes.submenu_box_right} ref={userRef}>
-              <SubmenuItem menuItem={submenu}></SubmenuItem>
+              <ProfileMenu onVisibleHandler={onUserMenuVisibleHandler} />
             </div>
           )}
         </div>
