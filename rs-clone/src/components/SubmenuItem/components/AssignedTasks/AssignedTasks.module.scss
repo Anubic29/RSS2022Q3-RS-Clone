@@ -1,4 +1,4 @@
-@import '../../../../../theme/variables.scss';
+@import '../../../../theme/variables.scss';
 .profileMenu_wrap {
   max-width: 350px;
   margin-left: auto;
@@ -67,12 +67,29 @@
   border-radius: 3px;
 }
 
-.starIcon {
-  margin-left: auto;
-  margin-right: 30px;
+.itemsBlock {
+  max-height: 300px;
+  overflow: scroll;
+  
+  &::-webkit-scrollbar {
+  width: 5px;
+  height: 0;
 }
 
-.projectMenu_span {
-  max-width: 219px;
-  overflow: hidden;
+/* Track */
+  &::-webkit-scrollbar-track {
+  background: $colorWhite;
+}
+
+/* Handle */
+  &::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 }

@@ -51,7 +51,6 @@ function RecentProjects(props: { onVisHandler: () => void }) {
             All projects
           </p>
         </div>
-        <p></p>
       </BoxWithShadow>
     </div>
   );

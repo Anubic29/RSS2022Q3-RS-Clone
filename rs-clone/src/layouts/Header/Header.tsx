@@ -10,6 +10,7 @@ import { useUser } from '../../contexts';
 import { useTasks } from '../../contexts/TasksContext';
 import ProfileMenu from '../../components/SubmenuItem/components/ProfileMenu/ProfileMenu';
 import RecentProjects from '../../components/SubmenuItem/components/RecentProjects/RecentProjects';
+import AssignedTasks from '../../components/SubmenuItem/components/AssignedTasks/AssignedTasks';
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
@@ -88,6 +89,11 @@ const Header = () => {
     setProjIsMenuVisible(false);
   };
 
+  const onTasksVisibleHandler = () => {
+    setActiveItem('');
+    setWorkIsMenuVisible(false);
+  };
+
   return (
     <header className={classes.header}>
       <div className={classes.header_inner}>
@@ -105,7 +111,7 @@ const Header = () => {
               </div>
               {activeItem === 'work' && (
                 <div className={classes.absolute} ref={workRef}>
-                  <SubmenuItem menuItem={submenu}></SubmenuItem>
+                  <AssignedTasks onVisHandler={onTasksVisibleHandler}></AssignedTasks>
                 </div>
               )}
             </li>

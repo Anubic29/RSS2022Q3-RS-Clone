@@ -15,7 +15,7 @@ const SubmenuItem: React.FC<{ menuItem: 'work' | 'project' }> = (props) => {
       {props.menuItem === 'work' && (
         <>
           <SubmenuNav onNavTabHandler={saveTabValueHandler} menuItem={props.menuItem} />
-          <SubmenuItemsSortedBlock onTabChange={tab} menuItem={props.menuItem} />
+          <SubmenuItemsSortedBlock />
         </>
       )}
     </BoxWithShadow>
