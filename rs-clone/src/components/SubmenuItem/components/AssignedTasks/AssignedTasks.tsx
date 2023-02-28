@@ -42,7 +42,11 @@ function AssignedTasks(props: { onVisHandler: () => void }) {
         <div>
           <div className={classes.itemsBlock}>
             <SubmenuNav menuItem={'work'} onNavTabHandler={() => 'work'}></SubmenuNav>
-            {tasksBlocks.length === 0 && <EmptyData text={'No assigned tasks to you'} />}
+            {tasksBlocks.length === 0 && (
+              <div className={classes.recentInner_wrap}>
+                <EmptyData text={'No assigned tasks to you'} />
+              </div>
+            )}
             {tasksBlocks.length > 0 &&
               tasksBlocks.map((block) => {
                 return (
