@@ -92,8 +92,22 @@
       }
 
       .content {
+        position: relative;
         height: 100%;
-        width: 100%;
+        width: 400px;
+
+        @media screen and (max-width: $mediaDesktopSmall) {
+          width: 240px;
+        }
+
+        @media screen and (max-width: $mediaMobile) {
+          width: 220px;
+          z-index: 10;
+        }
+
+        @media screen and (max-width: $mediaMobileMedium) {
+          width: 200px;
+        }
       }
 
       .btns-block {
