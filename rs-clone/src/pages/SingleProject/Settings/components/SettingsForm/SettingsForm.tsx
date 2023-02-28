@@ -29,7 +29,7 @@ function SettingsForm(props: SettingsFormProps) {
   const { imageSrc, imageBg } = props;
   const { projectInfo, updateProject, getUserList } = useBoard();
   const { addAlert } = useAlerts();
-  const { changeProjectAuthor, getProjects, projects } = useProjects();
+  const { changeProjectAuthor, getProjects } = useProjects();
   const { currentUser } = useUser();
 
   const [name, setName] = useState(projectInfo?.title || '');
@@ -183,7 +183,7 @@ function SettingsForm(props: SettingsFormProps) {
         addAlert('Error', 'You have to fill form correctly');
       }
     },
-    [updateProject, name, key, description, imageSrc, imageBg, authorId, addAlert, projects]
+    [updateProject, name, key, description, imageSrc, imageBg, authorId, addAlert, getProjects]
   );
 
   const onSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
