@@ -40,7 +40,10 @@
   display: flex;
   align-items: center;
   color: $colorPrimary;
-  text-decoration: underline;
+
+  &:hover {
+    text-decoration: underline;
+  }
 
   .project-icon {
     border-radius: 5px;
