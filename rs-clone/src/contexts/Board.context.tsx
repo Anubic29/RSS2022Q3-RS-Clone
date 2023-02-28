@@ -54,6 +54,7 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
   const [searchValue, setSearchValue] = useState<string>('');
 
   const removeProjectCollaborator = async (projectId: string, collaboratorId: string) => {
+    const ACCESS_TOKEN = localStorage.getItem('accessToken');
     await fetch(`${BASE_URL}/projects/${projectId}/team/${collaboratorId}`, {
       method: 'DELETE',
       headers: {
@@ -62,6 +63,10 @@ export const BoardProvider = (props: { children: React.ReactNode }) => {
     });
 
     setUserList((users) => users.filter((user) => user._id !== collaboratorId));
+
+    taskList
+      .filter((task) => task.executor === collaboratorId)
+      .forEach((task) => (task.executor = 'auto'));
 
     return true;
   };
