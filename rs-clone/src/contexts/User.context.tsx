@@ -67,9 +67,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }, [currentUser]);
 
   const setRecentDataBack = useCallback(async () => {
-    if (currentUser) {
-      const response = await api.users.getRecentData(currentUser._id);
-      if (response.status === 200) setRecentList(response.data);
+    try {
+      if (currentUser) {
+        const response = await api.users.getRecentData(currentUser._id);
+        if (response.status === 200) setRecentList(response.data);
+      }
+    } catch (e) {
+      console.log(e);
     }
   }, [currentUser]);
 

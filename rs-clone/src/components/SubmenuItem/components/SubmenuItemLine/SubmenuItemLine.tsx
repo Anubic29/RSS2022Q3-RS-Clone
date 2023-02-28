@@ -6,11 +6,11 @@ import { FiCheck } from 'react-icons/fi';
 import { useUser } from '../../../../contexts';
 
 const SubmenuItemLine: React.FC<{
-  title: string;
-  src: string;
-  article: string;
-  project: string;
-  bgColor: string;
+  title?: string;
+  src?: string;
+  article?: string;
+  project?: string;
+  bgColor?: string;
   link?: string;
   marked?: boolean;
   id?: string;

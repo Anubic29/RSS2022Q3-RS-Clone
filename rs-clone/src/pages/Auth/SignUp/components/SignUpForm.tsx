@@ -12,7 +12,7 @@ const LoginForm = () => {
   const { setTokenData, removeTokenData } = useAuth();
   const [change, changeMessage, setText] = changeIsLoading();
 
-  const passwRegEx = new RegExp('[0-9A-Za-z]{4,}$');
+  const passwRegEx = new RegExp('.{4,}$');
   const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
   const navigate = useNavigate();
 
@@ -145,6 +145,7 @@ const LoginForm = () => {
                 type="text"
                 name="first-name"
                 placeholder="First Name"
+                autoComplete="on"
                 required
               />
             </p>
@@ -157,6 +158,7 @@ const LoginForm = () => {
                 type="text"
                 name="last-name"
                 placeholder="Last Name"
+                autoComplete="on"
                 required
               />
             </p>
@@ -170,6 +172,7 @@ const LoginForm = () => {
               type="email"
               name="email"
               placeholder="E-mail"
+              autoComplete="on"
               required
             />
           </p>
@@ -182,6 +185,7 @@ const LoginForm = () => {
               type="password"
               name="password"
               placeholder="Password"
+              autoComplete="on"
               required
             />
           </p>
@@ -194,6 +198,7 @@ const LoginForm = () => {
               type="password"
               name="password"
               placeholder="Confirm password"
+              autoComplete="on"
               required
             />
           </p>

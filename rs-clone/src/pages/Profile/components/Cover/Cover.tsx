@@ -29,7 +29,7 @@ const Cover = () => {
   };
   useEffect(() => {
     coverType();
-  }, [uData.currentUser]);
+  }, [uData.currentUser?.coverBlock]);
 
   const uploadToCloudinary = async (file: File) => {
     const formData = new FormData();

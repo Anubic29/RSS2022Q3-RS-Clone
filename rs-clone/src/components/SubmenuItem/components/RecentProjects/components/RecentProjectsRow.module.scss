@@ -1,0 +1,78 @@
+@import '../../../../../theme/variables.scss';
+.profileMenu_wrap {
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: 5px;
+  position: relative;
+  z-index: 101;
+  top: -10px;
+
+  & hr {
+    width: 100%;
+    border-color: $colorLightGrey;
+    border: 1px solid $colorLightGrey;
+  }
+
+}
+
+.profileMenu_row {
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    
+  & div.header_profileIcon {
+    height: 40px;
+    width: 40px;
+  }
+}
+
+.profileMenu_inner h2{
+    color: #42526e;
+    font-weight: 600;
+    padding: 0 30px;
+    padding-top: 20px;
+    font-size: 16px;
+    
+}
+
+.profileMenu_row__logOut {
+  cursor: pointer;
+    &:hover {
+    background-color: $colorLightGrey;
+  }
+}
+
+.profileMenu_profileWrap {
+  display: block;
+  cursor: pointer;
+  height: 40px;
+  padding-left: 30px;
+  line-height: 40px;
+  vertical-align: middle;
+  &:hover {
+    background-color: $colorLightGrey;
+  }
+}
+
+.profileMenu_profileWrap {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.projectMenu_img {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+}
+
+.starIcon {
+  margin-left: auto;
+  margin-right: 30px;
+}
+
+.projectMenu_span {
+  max-width: 219px;
+  overflow: hidden;
+}

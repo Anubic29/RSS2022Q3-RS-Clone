@@ -39,7 +39,7 @@
     }
   }
 }
-h1 {
+.userInfo_wrap h1 {
   color: $colorContent;
   font-size: 1.71429em;
   font-style: inherit;
@@ -52,7 +52,7 @@ h1 {
   word-break: break-all;
 }
 
-h2 {
+.userInfo_wrap h2 {
   color: $colorContent;
   font-size: 1.2em;
   font-style: inherit;
@@ -65,7 +65,7 @@ h2 {
   word-break: break-all;
 }
 
-h3 {
+.userInfo_wrap h3 {
   font-size: 0.857143em;
   font-style: inherit;
   line-height: 1.33333;
