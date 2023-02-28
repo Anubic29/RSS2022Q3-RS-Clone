@@ -47,6 +47,10 @@
 
 .header_menuItem {
   height: 32px;
+
+  @media screen and (max-width: $mediaTablet) {
+    display: none;
+  }
 }
 .menu_spanWrap {
   display: flex;
@@ -100,6 +104,10 @@
   top: 60px;
   min-width: 350px;
   z-index: 21;
+
+  @media screen and (max-width: $mediaTablet) {
+    min-width: 280px;
+  }
 }
 
 .submenu_box_right {
