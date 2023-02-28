@@ -5,6 +5,7 @@ import classes from './RecentProjects.module.scss';
 import { useNavigate } from 'react-router-dom';
 import ProjectType from '../../../../types/project/projectType';
 import RecentProjectRow from './components/RecentProjectRow';
+import EmptyData from '../../../EmptyData/EmptyData';
 
 function RecentProjects(props: { onVisHandler: () => void }) {
   const { ...uData } = useUser();
@@ -34,6 +35,11 @@ function RecentProjects(props: { onVisHandler: () => void }) {
         <div className={classes.profileMenu_inner}>
           <div className={`${classes.itemsBlock}`}>
             <h2>RECENTLY VIEWED</h2>
+            {recentList.length === 0 && (
+              <div className={classes.recentInner_wrap}>
+                <EmptyData text={`You haven't view any projects recently`}></EmptyData>
+              </div>
+            )}
             {recentList.length > 0 &&
               projectsList
                 .filter((project) => recentList.includes(project._id))
