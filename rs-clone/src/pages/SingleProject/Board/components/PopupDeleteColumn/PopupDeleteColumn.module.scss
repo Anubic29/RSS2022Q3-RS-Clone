@@ -1,0 +1,98 @@
+@import '../../../../../theme/variables.scss';
+
+.pop-up {
+  padding: 25px;
+  background-color: $colorBackground;
+  border-radius: 5px;
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &__title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      color: red;
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+    }
+  }
+
+  &__description {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    &__row {
+      display: flex;
+      margin-bottom: 5px;
+
+      .separator {
+        width: 40px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &__col {
+      flex-basis: 50%;
+    }
+
+    .title {
+      font-size: 12px;
+    }
+
+    .value {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+  }
+
+  &__btns-block {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+
+    .btn-block {
+      user-select: none;
+      margin: 0 3px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color ease .3s;
+      background-color: $colorBackground;
+
+      &:hover {
+        background-color: $colorBackgroundHover;
+        cursor: pointer;
+      }
+
+      &:active {
+        background-color: $colorSecondaryLight;
+      }
+
+      &--danger {
+        color: $colorBackground;
+        background-color: $colorBtnDanger;
+
+        &:hover {
+          background-color: $colorBtnDangerHover;
+        }
+
+        &:active {
+          background-color: $colorBtnDangerActive;
+        }
+      }
+    }
+  }
+}

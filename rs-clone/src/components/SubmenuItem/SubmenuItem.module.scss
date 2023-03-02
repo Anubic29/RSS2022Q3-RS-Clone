@@ -1,0 +1,75 @@
+@import '../../theme/variables.scss';
+
+.submenu_subtitle {
+  color: $colorGreyText;
+  font-weight: 600;
+  padding: 0 30px;
+  padding-top: 20px;
+}
+
+.submenu_itemsList {
+    &:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: $colorLightGrey;
+    position: absolute;
+    bottom: 60px;
+  }
+}
+
+.submenuBottomNav {
+  margin-top: 16px;
+  padding: 20px 30px;
+  color: $colorContent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $colorLightGrey;
+  }
+}
+.link {
+  padding-left: 30px;
+  line-height: 50px;
+  cursor: pointer;
+}
+
+.itemsBlock__jira {
+  padding-top: 20px;
+  position: relative;
+  &::before {
+    content: "";
+    width:100%;
+    height: 2px;
+    background-color: #ebecf0;
+    position: absolute;
+    top: 10px;
+  }
+}
+
+.itemsBlock {
+  max-height: 300px;
+  overflow: scroll;
+  
+  &::-webkit-scrollbar {
+  width: 5px;
+  height: 0;
+}
+
+/* Track */
+  &::-webkit-scrollbar-track {
+  background: $colorWhite;
+}
+
+/* Handle */
+  &::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+}

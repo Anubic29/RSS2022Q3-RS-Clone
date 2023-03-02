@@ -1,0 +1,11 @@
+@import '../../theme/variables';
+
+.Label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $colorSecondaryText;
+}
+
+.Required {
+  color: $colorLabelMark;
+}

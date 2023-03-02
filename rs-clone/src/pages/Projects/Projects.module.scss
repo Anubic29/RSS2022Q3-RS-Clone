@@ -1,0 +1,142 @@
+@import '../../theme/variables.scss';
+
+.wrapper {
+  padding: 0 40px;
+}
+
+.header {
+  margin: 25px 0 15px;
+  display: flex;
+  flex-direction: column;
+
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 500;
+    color: $colorContent;
+  }
+
+  .search-block {
+    margin-top: 15px;
+    max-width: 185px;
+    position: relative;
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translate(0, -50%);
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .search-bar {
+    padding-right: 30px;
+  }
+}
+
+.table-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 45px;
+}
+
+.project-list {
+  width: 100%;
+  border-spacing: 0;
+
+  &__header-row {
+    
+    & > * {
+      font-size: 15px;
+      padding: 4px 8px;
+      border-bottom: $borderAsideBar;
+      text-align: left;
+    }
+  }
+
+  th, td {
+    word-wrap: break-word;
+    max-width: 200px;
+    font-size: 14px;
+    font-weight: 400;
+    color: $colorContent;
+  }
+
+  .sortable-cell {
+    transition: background-color ease .3s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $colorBackgroundHover;
+    }
+
+    .content {
+      display: flex;
+
+      .icon {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .project {
+    &__star {
+      font-size: 14px;
+      font-weight: 500;
+      color: $colorSecondaryText;
+      width: 3%;
+    }
+
+    &__title {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
+      width: 22%;
+    }
+
+    &__key {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
+      width: 8%;
+    }
+
+    &__description {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
+      width: 25%;
+    }
+
+    &__author {
+      font-size: 12px;
+      font-weight: 500;
+      color: $colorSecondaryText;
+      width: 16%;
+    }
+
+    &__menu {
+      width: 4%;
+    }
+  }
+
+}
+
+.empty {
+  margin-top: 40px;
+}
+
+.projectsSearchIcon {
+  color: $colorSecondaryText;
+  cursor: text;
+}

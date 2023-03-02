@@ -1,0 +1,85 @@
+$colorOne: rgb(107, 119, 140);;
+$colorTwo: rgb(107, 119, 140, 0.2);;
+$colorThree: rgb(107, 119, 140, 0.5);;
+$colorFour: rgb(107, 119, 140, 0.7);;
+
+.Preloader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+}
+
+.Preloader-text {
+  font-size: 10px;
+  color: $colorOne;
+}
+
+.Preloader-icon {
+  position: relative;
+  top: 12px;
+  font-size: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  animation: mulShdSpin 1.1s infinite ease;
+}
+@keyframes mulShdSpin {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em $colorOne, 1.8em -1.8em 0 0em $colorTwo,
+      2.5em 0em 0 0em $colorTwo, 1.75em 1.75em 0 0em $colorTwo,
+      0em 2.5em 0 0em $colorTwo, -1.8em 1.8em 0 0em $colorTwo,
+      -2.6em 0em 0 0em $colorThree, -1.8em -1.8em 0 0em $colorFour;
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em $colorFour, 1.8em -1.8em 0 0em $colorOne,
+      2.5em 0em 0 0em $colorTwo, 1.75em 1.75em 0 0em $colorTwo,
+      0em 2.5em 0 0em $colorTwo, -1.8em 1.8em 0 0em $colorTwo,
+      -2.6em 0em 0 0em $colorTwo, -1.8em -1.8em 0 0em $colorThree;
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em $colorThree,
+      1.8em -1.8em 0 0em $colorFour, 2.5em 0em 0 0em $colorOne,
+      1.75em 1.75em 0 0em $colorTwo, 0em 2.5em 0 0em $colorTwo,
+      -1.8em 1.8em 0 0em $colorTwo, -2.6em 0em 0 0em $colorTwo,
+      -1.8em -1.8em 0 0em $colorTwo;
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em $colorTwo,
+      1.8em -1.8em 0 0em $colorThree, 2.5em 0em 0 0em $colorFour,
+      1.75em 1.75em 0 0em $colorOne, 0em 2.5em 0 0em $colorTwo,
+      -1.8em 1.8em 0 0em $colorTwo, -2.6em 0em 0 0em $colorTwo,
+      -1.8em -1.8em 0 0em $colorTwo;
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em $colorTwo,
+      1.8em -1.8em 0 0em $colorTwo, 2.5em 0em 0 0em $colorThree,
+      1.75em 1.75em 0 0em $colorFour, 0em 2.5em 0 0em $colorOne,
+      -1.8em 1.8em 0 0em $colorTwo, -2.6em 0em 0 0em $colorTwo,
+      -1.8em -1.8em 0 0em $colorTwo;
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em $colorTwo,
+      1.8em -1.8em 0 0em $colorTwo, 2.5em 0em 0 0em $colorTwo,
+      1.75em 1.75em 0 0em $colorThree, 0em 2.5em 0 0em $colorFour,
+      -1.8em 1.8em 0 0em $colorOne, -2.6em 0em 0 0em $colorTwo,
+      -1.8em -1.8em 0 0em $colorTwo;
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em $colorTwo,
+      1.8em -1.8em 0 0em $colorTwo, 2.5em 0em 0 0em $colorTwo,
+      1.75em 1.75em 0 0em $colorTwo, 0em 2.5em 0 0em $colorThree,
+      -1.8em 1.8em 0 0em $colorFour, -2.6em 0em 0 0em $colorOne,
+      -1.8em -1.8em 0 0em $colorTwo;
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em $colorTwo,
+      1.8em -1.8em 0 0em $colorTwo, 2.5em 0em 0 0em $colorTwo,
+      1.75em 1.75em 0 0em $colorTwo, 0em 2.5em 0 0em $colorTwo,
+      -1.8em 1.8em 0 0em $colorThree, -2.6em 0em 0 0em $colorFour,
+      -1.8em -1.8em 0 0em $colorOne;
+  }
+}

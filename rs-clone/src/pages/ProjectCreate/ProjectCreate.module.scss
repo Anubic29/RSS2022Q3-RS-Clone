@@ -1,0 +1,84 @@
+@import '../../theme/variables';
+
+.ProjectCreate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 50px 0;
+}
+
+.Container {
+  flex: 0 1 900px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  @media screen and (max-width: $mediaDesktopSmall) {
+    max-width: initial;
+    padding: 15px;
+  }
+}
+
+.Row {
+  display: flex;
+  gap: 60px;
+
+  @media screen and (max-width: $mediaTablet) {
+    flex-direction: column;
+  }
+}
+
+.Col {
+  width: 40%;
+
+  @media screen and (max-width: $mediaMobile) {
+    width: 100%;
+  }
+}
+
+.ColRight {
+  flex: 1;
+}
+
+.Title {
+  font-size: 29px;
+  font-weight: 700;
+  color: $colorContent;
+}
+
+.Subtitle {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: $colorContent;
+}
+
+.RowBottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: $borderProjectCreateRowBottom;
+}
+
+.ButtonCancel {
+  color: $colorButtonCancelText;
+  background: $colorButtonCancelBackground;
+
+  &:hover {
+    background: $colorButtonCancelBackgroundHover;
+  }
+}
+
+.PreloaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: $colorProjectPreloaderContainerBackground;
+}

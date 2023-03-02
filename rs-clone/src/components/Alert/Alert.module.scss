@@ -1,0 +1,93 @@
+@import '../../theme/variables';
+
+$errorBackground: rgb(253, 237, 237);
+$infoBackground: rgb(229, 246, 253);
+$successBackground: rgb(237, 247, 237);
+$warningBackground: rgb(253, 237, 237);
+
+$errorColor: rgb(95, 33, 32);
+$infoColor: rgb(1, 67, 97);
+$successColor: rgb(30, 70, 32);
+$warningColor: rgb(95, 33, 32);
+
+$errorIconColor: rgb(211, 47, 47);
+$infoIconColor: rgb(2, 136, 209);
+$successIconColor: rgb(46, 125, 50);
+$warningIconColor: rgb(237, 108, 2);
+
+.Alert {
+  position: relative;
+  z-index: 9999;
+  width: 500px;
+  padding: 12px 16px;
+  border-radius: 3px;
+  user-select: none;
+
+  @media screen and (max-width: $mediaMobile) {
+    width: 100%;
+  }
+}
+
+.AlertError {
+  color: $errorColor;
+  background: $errorBackground;
+}
+
+.AlertWarning {
+  color: $warningColor;
+  background: $warningBackground;
+}
+
+.AlertInfo {
+  color: $infoColor;
+  background: $infoBackground;
+}
+
+.AlertSuccess {
+  color: $successColor;
+  background: $successBackground;
+}
+
+.TitleArea {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.RowTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.Message {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.Icon {
+  flex: 0 0 auto;
+  font-size: 22px;
+}
+
+.IconError {
+  color: $errorIconColor;
+}
+
+.IconWarning {
+  color: $warningIconColor;
+}
+
+.IconSuccess {
+  color: $successIconColor;
+}
+
+.IconInfo {
+  color: $infoIconColor;
+}
+
+.RemoveIcon {
+  flex: 0 0 auto;
+  cursor: pointer;
+}

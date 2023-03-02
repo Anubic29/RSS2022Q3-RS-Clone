@@ -1,0 +1,70 @@
+@import '../../../../theme/variables.scss';
+
+.row {
+  font-size: 14px;
+  background-color: $colorBackground;
+
+  &:hover {
+    background-color: $colorBackgroundColumn;
+  }
+}
+
+.cell {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 4px 8px;
+}
+
+.btn-block {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  color: $colorStarNoted;
+  transition: color ease .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+    color: $colorStarNotedHover;
+  }
+
+  &.active {
+    color: $colorStarNotedActive;
+  }
+}
+
+.link-block {
+  display: flex;
+  align-items: center;
+  color: $colorPrimary;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  .project-icon {
+    border-radius: 5px;
+    margin-right: 10px;
+    overflow: hidden;
+  }
+}
+
+.user-cell {
+
+  .cell-content {
+    display: flex;
+    align-items: center;
+  }
+  .avatar {
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+  }
+}
+
+.menu-cell {
+  overflow: visible;
+}

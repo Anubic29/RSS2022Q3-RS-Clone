@@ -1,0 +1,54 @@
+@import '../../../../theme/variables';
+
+.AsideNavElement {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background: $borderAsideBarNavElementBackground;
+  }
+}
+
+.AsideNavElementActive {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  background: $borderAsideBarNavElementBackground;
+  cursor: pointer;
+
+  & .Icon,
+  & .Title {
+    color: $colorPrimary;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 4px;
+    height: 40%;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background: $colorPrimary;
+    transform: translateY(-50%);
+  }
+}
+
+.Icon {
+  font-size: 25px;
+  color: $colorGreyText;
+}
+
+.Title {
+  font-size: 14px;
+  font-weight: 400;
+  color: $colorGreyText;
+}

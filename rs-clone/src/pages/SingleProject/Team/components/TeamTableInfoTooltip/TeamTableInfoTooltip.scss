@@ -1,0 +1,32 @@
+@import '../../../../../theme/variables';
+
+.TeamTable-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.TeamTable-info-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: $colorWhite;
+  background: $colorMarkedTeam;
+}
+
+.TeamTable-info-message {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: $colorSecondaryText;
+}
+
+.TeamTable-info-message-marked {
+  color: $colorMarkedTeam;
+}

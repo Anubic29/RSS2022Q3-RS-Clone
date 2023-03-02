@@ -1,0 +1,37 @@
+@import '../../../theme/variables';
+
+.Team {
+  flex: 1;
+  padding: 24px 72px;
+
+  @media screen and (max-width: $mediaTablet) {
+    padding: 20px 20px 20px 50px;
+  }
+}
+
+.Title {
+  font-size: 24px;
+  font-weight: 500;
+  color: $colorContent;
+}
+
+.TitleArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: $mediaMobileMedium) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.TeamDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.TableWrapper {
+  margin-top: 16px;
+}
