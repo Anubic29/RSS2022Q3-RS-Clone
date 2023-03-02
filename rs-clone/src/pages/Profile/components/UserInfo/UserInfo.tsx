@@ -33,7 +33,7 @@ function UserInfo() {
       <ContourBox>
         <div className={classes.profile_userInfo}>
           <ul>
-            <h3>Інформація</h3>
+            <h3>Information</h3>
             <li className={classes.userInfo_row}>
               <RiBriefcase5Line className={classes.profile_icon} />
               <EditableParagraph
@@ -71,7 +71,7 @@ function UserInfo() {
               />
             </li>
           </ul>
-          <h3>Контакти</h3>
+          <h3>Contacts</h3>
           <div className={`${classes.userInfo_row} ${classes.userInfo_email}`}>
             <FaRegEnvelope className={classes.profile_icon} />
             <span>{uData?.mail}</span>
