@@ -1,0 +1,12 @@
+@import '../../theme/variables.scss';
+
+.content {
+  flex: 1;
+  max-height: calc(100vh - $heightHeader - $heightFooter);
+  max-width: $maxWidth;
+  width: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}

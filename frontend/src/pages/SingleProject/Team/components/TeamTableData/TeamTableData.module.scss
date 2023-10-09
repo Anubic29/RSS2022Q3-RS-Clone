@@ -1,0 +1,43 @@
+@import '../../../../../theme/variables';
+@import '../../../../../theme/mixins';
+
+.table-data {
+  position: relative;
+
+  &:hover {
+    background: $colorInputBack;
+  }
+}
+
+.data {
+  padding: 12px 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: $colorContent;
+}
+
+.data-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.remove {
+  color: $colorPrimary;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.preloader {
+  @include preloader-block();
+}

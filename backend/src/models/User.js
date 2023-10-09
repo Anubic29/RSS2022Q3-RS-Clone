@@ -9,11 +9,15 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  mail: {
+  email: {
     type: String,
     required: true
   },
   password: {
+    type: String,
+    required: true
+  },
+  color: {
     type: String,
     required: true
   },

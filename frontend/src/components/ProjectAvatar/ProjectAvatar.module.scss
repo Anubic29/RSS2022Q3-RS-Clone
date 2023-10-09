@@ -1,0 +1,25 @@
+$sizeProjectAvatarSmall: 24px;
+$sizeProjectAvatarLarge: 128px;
+
+.project-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+
+  &.size-small {
+    width: $sizeProjectAvatarSmall;
+    min-width: $sizeProjectAvatarSmall;
+    height: $sizeProjectAvatarSmall;
+  }
+
+  &.size-large {
+    width: $sizeProjectAvatarLarge;
+    min-width: $sizeProjectAvatarLarge;
+    height: $sizeProjectAvatarLarge;
+  }
+}
+
+.image {
+  width: 100%;
+}

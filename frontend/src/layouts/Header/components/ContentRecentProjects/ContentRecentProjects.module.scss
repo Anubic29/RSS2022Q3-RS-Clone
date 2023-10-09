@@ -1,0 +1,42 @@
+@import '../../../../theme/variables';
+@import '../../../../theme/mixins';
+
+.main-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.padding {
+  padding: 0 20px;
+}
+
+.title {
+  margin: 15px 0;
+  text-transform: uppercase;
+}
+
+.content {
+  @include scrollbar-y($maxHeight: 300px);
+}
+
+.empty {
+  margin: 30px 0;
+}
+
+.hr {
+  width: 100%;
+  border: 1px solid $colorLightGrey;
+}
+
+.last-link {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: $colorLightGrey;
+  }
+}

@@ -11,11 +11,11 @@ function generateAccessToken(object) {
 
 router.post('/', async (req, res) => {
   const user = {
-    mail: req.body.mail,
+    email: req.body.email,
     password: req.body.password
   }
-  const parsedData = await User.find({ mail: user.mail, password: user.password });
-  if (parsedData.length === 1) {
+  const users = await User.find({ ...user });
+  if (users.length === 1) {
     const accessToken = generateAccessToken(user);
     res.json(accessToken);
   } else {

@@ -1,0 +1,73 @@
+@import '../../theme/variables';
+@import '../../theme/mixins.scss';
+
+.project-create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1;
+  padding: 50px 0;
+  position: relative;
+}
+
+.content {
+  flex: 0 1 900px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  @media screen and (max-width: $mediaDesktopSmall) {
+    max-width: initial;
+    padding: 15px;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 60px;
+
+  @media screen and (max-width: $mediaTablet) {
+    flex-direction: column;
+  }
+}
+
+.project-form {
+  width: 40%;
+
+  @media screen and (max-width: $mediaMobile) {
+    width: 100%;
+  }
+}
+
+.info-cards {
+  flex: 1;
+}
+
+.title {
+  font-size: 29px;
+  font-weight: 700;
+  color: $colorContent;
+}
+
+.subtitle {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: $colorContent;
+}
+
+.hr {
+  border: 1px solid $colorLightGrey;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.preloader {
+  @include preloader-block();
+}

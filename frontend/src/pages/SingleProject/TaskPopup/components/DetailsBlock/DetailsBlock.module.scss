@@ -1,0 +1,54 @@
+
+@import '../../../../../theme/variables.scss';
+
+.details-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  padding: 15px;
+  border: 1px solid $colorLightGrey;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  &-title {
+    width: 75px;
+  }
+}
+
+.assign-block {
+  position: relative;
+  width: 200px;
+}
+
+.assign-btn {
+  position: absolute;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  width: fit-content;
+  cursor: pointer;
+  transition: color .3s ease;
+
+  &:hover {
+    color: $colorPrimary;
+  }
+}

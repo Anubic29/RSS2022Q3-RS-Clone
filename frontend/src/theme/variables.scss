@@ -1,0 +1,146 @@
+$colorContent: #172B4D;
+$colorBackground: #FFFFFF;
+$colorPrimary: #0052CC;
+$colorSecondary: #3381F7;
+$colorHoverBlue: #E8F1FF;
+$colorWhite: #FFFFFF;
+$colorLightGrey: #EBECF0;
+$colorGreyText: #42526E;
+$colorSecondaryLight: #94BFFF;
+$colorSecondaryText: #6B778C;
+$colorBackgroundColumn: #F4F5F7;
+$colorBackgroundHover: #DFDFDF;
+
+$colorBorder: #8A8A8A;
+$colorIconDone: #00875A;
+$colorError: #FF0000;
+$colorTaskIcon: #4CADE8;
+$colorLinkPrimary: #0065FF;
+
+$colorStarNoted: #808080;
+$colorStarNotedHover: #000000;
+$colorStarNotedActive: #FFAB00;
+
+// Mixins
+$colorPreloaderBack: rgba(255, 255, 255, 0.7);
+$colorScrollbarThumbBack: #888888;
+$colorScrollbarThumbBackHover: #555555;
+
+$colorAlertError: #5F2120;
+$colorAlertInfo: #014361;
+$colorAlertSuccess: #1E4620;
+$colorAlertWarning: #5F2120;
+$colorAlertErrorIcon: #D32F2F;
+$colorAlertInfoIcon: #0288D1;
+$colorAlertSuccessIcon: #2E7D32;
+$colorAlertWarningIcon: #ED6C02;
+$colorAlertErrorBack: #FDEDED;
+$colorAlertInfoBack: #E5F6FD;
+$colorAlertSuccessBack: #EDF7ED;
+$colorAlertWarningBack: #FDEDED;
+
+$colorBtnActionContent: #172B4D;
+$colorBtnActionTitle: #FFFFFF;
+$colorBtnActionTitleBack: #000000;
+$colorBtnActionBackFirst: #F2F2F2;
+$colorBtnActionBackSecond: #FFFFFF;
+$colorBtnActionBack: transparent;
+$colorBtnActionBackHover: #DFDFDF;
+$colorBtnActionBackActive: #94BFFF;
+
+$colorBtnMenuActionBack: #253858;
+$colorBtnMenuActionActive: #BFD9FF;
+
+// Button
+$colorButtonText: #42526E;
+$colorButtonBack: #F4F4F4;
+$colorButtonBackHover: #E7E7E7;
+
+$colorButtonTextDisabled: #A5ADBA;
+$colorButtonBackDisabled: rgba(9, 30, 66, 0.04);
+
+$colorButtonTextPrimary: #FFFFFF;
+$colorButtonBackPrimary: #0052CC;
+$colorButtonBackHoverPrimary: #0065FF;
+
+$colorButtonTextDanger: #FFFFFF;
+$colorButtonBackDanger: #DE350B;
+$colorButtonBackHoverDanger: #FF5630;
+
+// EditableText item
+$colorEditableTextBackHover: #DFDFDF;
+
+// InfoCard item
+$colorInfoCardBack: #FFFFFF;
+$colorInfoCardPicBack: #F4F5F7;
+
+// InfoCards item
+$colorInfoCardsBack: #FAFBFC;
+
+// Input item
+$colorInputText: #091E42;
+$colorInputBack: #FAFBFC;
+$colorInputBackHover: #EBECF0;
+$colorInputBackFocus: transparent;
+$colorInputBorder: #DFE1E6;
+$colorInputBorderFocus: #4C9AFF;
+
+// Overlay item
+$colorOverlayBack: rgba(0, 0, 0, 0.5);
+
+// User item
+$colorUserBackHover: #EAEAEA;
+
+// UserAvatar
+$colorUserAvatarLight: #FFFFFF;
+$colorUserAvatarDark: #000000;
+
+// Dashboard page
+$colorTabAfterBack: #EBECF0;
+$colorTabText: #42526E;
+$colorTabTextHover: #0052CC;
+
+$colorItemInfo: #6B778C;
+$colorItemBackHover: #EFEFEF;
+
+// ProjectCard item
+$colorProjectCardBack: #FFFFFF;
+$colorProjectCardTitleHover: #0065FF;
+$colorProjectCardActionsBorder: #EBECF0;
+
+// Team page
+$colorTeamMarked: #6554C0;
+
+// NotFound page
+$colorNotFoundCode: rgba(0, 0, 0, 0.05);
+
+// AsideBar item
+$borderAsideBar: 2px solid #E6E6E6;
+$colorAsideBarBack: #FBFBFC;
+$colorAsideBarNavBackHover: #E6EFFC;
+
+$widthAsideBarNormal: 238px;
+$widthAsideBarHidden: 30px;
+
+// 
+$boxShadow: 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+$boxShadow2: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+$boxShadowItem: 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+$boxShadowItemHover: 0 2px 4px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31);
+
+$linearGradient: linear-gradient(
+  rgba(9, 30, 66, 0.13) 0px,
+  rgba(9, 30, 66, 0.13) 1px,
+  rgba(9, 30, 66, 0.08) 1px,
+  rgba(9, 30, 66, 0) 4px
+);
+
+$mediaDesktopSmall: 1023px;
+$mediaTablet: 767px;
+$mediaMobile: 479px;
+$mediaMobileMedium: 374px;
+
+$maxWidth: 1440px;
+
+$heightHeader: 53px;
+$heightFooter: 53px;

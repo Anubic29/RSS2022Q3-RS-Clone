@@ -1,0 +1,52 @@
+@import '../../../../../theme/variables';
+@import '../../../../../theme/mixins';
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 380px;
+
+  @media screen and (max-width: $mediaMobile) {
+    width: 300px;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  color: $colorContent;
+}
+
+.buttons {
+  display: flex;
+  align-self: flex-end;
+  gap: 5px;
+}
+
+.badges-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  padding-top: 5px;
+  padding-left: 5px;
+
+  @include scrollbar-y($maxHeight: 270px);
+}
+
+.badge-item {
+  width: 72px;
+  height: 72px;
+
+  &.selected {
+    outline: 3px solid;
+    outline-color: $colorPrimary;
+    outline-offset: 3px;
+  }
+}
+
+.badge {
+  width: 100%;
+  cursor: pointer;
+}

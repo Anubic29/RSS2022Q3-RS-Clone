@@ -1,0 +1,80 @@
+@import '../../../../../../../theme/variables';
+@import '../../../../../../../theme/mixins';
+
+.column-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 5px 0;
+
+  &:hover {
+    .add-task {
+      visibility: visible;
+    }
+  }
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-task-block {
+  padding: 2px 5px;
+
+  .add-task {
+    padding: 0 10px;
+    font-size: 14px;
+    transition: background-color ease .3s;
+    height: 36px;
+    display: flex;
+    color: $colorContent;
+    align-items: center;
+    border-radius: 3px;
+    visibility: hidden;
+  
+    &:hover {
+      cursor: pointer;
+      background-color: $colorButtonBackHover;
+    }
+  
+    &:active {
+      background-color: $colorSecondaryLight;
+    }
+  }
+
+  .new-task {
+    border: 3px solid $colorSecondary;
+    border-radius: 5px;
+    background-color: $colorBackground;
+    padding: 5px;
+    position: relative;
+  }
+
+  .textarea {
+    outline: none;
+    height: 35px;
+    width: 100%;
+    border: none;
+    resize: none;
+    padding: 3px;
+    font-size: 14px;
+  }
+
+  .error-message {
+    font-size: 12px;
+    color: $colorError;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+  }
+
+  .block-loader {
+    border-radius: 5px;
+    @include preloader-block();
+  }
+}

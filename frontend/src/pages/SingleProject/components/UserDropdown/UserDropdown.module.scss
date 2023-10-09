@@ -1,0 +1,41 @@
+@import "../../../../theme/variables";
+@import "../../../../theme/mixins";
+
+.user-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.display {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+
+  & > * {
+    width: 100%;
+  }
+}
+
+.error {
+  font-size: 20px;
+}
+
+.user-list {
+  width: 100%;
+  position: absolute;
+  z-index: 5;
+
+  &.top {
+    top: -5px;
+    transform: translate(0, -100%);
+  }
+
+  &.bottom {
+    bottom: -5px;
+    transform: translate(0, 100%);
+  }
+
+  @include scrollbar-y();
+}

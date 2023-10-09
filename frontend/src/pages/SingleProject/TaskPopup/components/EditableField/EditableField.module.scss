@@ -1,0 +1,25 @@
+@import "../../../../../theme/variables.scss";
+
+.display {
+  padding: 10px;
+  list-style-position: inside;
+  border-radius: 5px;
+
+  a {
+    text-decoration: underline;
+    color: $colorLinkPrimary;
+  }
+
+  ol > li {
+    list-style-type: decimal;
+  }
+
+  ul > li {
+    list-style-type: disc;
+  }
+
+  * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

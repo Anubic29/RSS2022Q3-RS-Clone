@@ -1,0 +1,59 @@
+@import "../../theme/variables";
+
+.header {
+  height: $heightHeader;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    height: 4px;
+    position: absolute;
+    bottom: -4px;
+    right: 0px;
+    left: 0px;
+    z-index: 1;
+    background: $linearGradient;
+    content: "";
+  }
+}
+
+.inner {
+  width: 100%;
+  max-width: $maxWidth;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 135px;
+  height: 18px;
+  background-image: url("../../assets/icons/logo.svg");
+  background-size: cover;
+  margin-right: 26px;
+}
+
+.navigation {
+  @media screen and (max-width: $mediaTablet) {
+    display: none;
+  }
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-item {
+  height: 35px;
+  display: flex;
+  align-items: center;
+}
+
+.user-menu {
+  margin-left: auto;
+}

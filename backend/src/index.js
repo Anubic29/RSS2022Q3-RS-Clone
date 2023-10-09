@@ -1,14 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const createWebSocketServer = require('./web-socket');
 
 const users = require('./api/users');
-const projects = require('./api/projects');
-const tasks = require('./api/tasks');
 const auth = require('./api/auth');
-
-const app = express();
+const noted = require('./api/noted');
+const columns = require('./api/columns');
 
 const PORT = process.env.PORT || 5050;
+
+const app = express();
+const http = require('http').createServer(app);
+
+const userDucts = createWebSocketServer(http);
+app.locals.userDucts = userDucts;
 
 app.use(express.json());
 
@@ -22,16 +27,15 @@ app.use(function(req, res, next) {
 });
 
 app.use("/api/users", users);
-app.use("/api/projects", projects);
-app.use("/api/tasks", tasks);
-app.use("/func/auth", auth)
+app.use("/api/columns", columns);
+app.use("/api/noted", noted);
+app.use("/func/auth", auth);
 
 async function start() {
   try {
     mongoose.set('strictQuery', false);
-    await mongoose.connect('mongodb+srv://Lord:v9iYulws1fmGmQ1j@cluster0.y2fi5cq.mongodb.net/rs-clone');
-
-    app.listen(PORT, () => console.log(`Server is running in port ${PORT}`))
+    await mongoose.connect('mongodb+srv://Lord:v9iYulws1fmGmQ1j@cluster0.y2fi5cq.mongodb.net/rs-clone-project');
+    http.listen(PORT, () => console.log(`Server is running in port ${PORT}`))
   } catch (err) {
     console.log(err);
   }

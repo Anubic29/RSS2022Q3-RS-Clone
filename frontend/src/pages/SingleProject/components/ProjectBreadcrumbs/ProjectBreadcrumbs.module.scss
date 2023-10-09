@@ -1,0 +1,19 @@
+@import "../../../../theme/variables.scss";
+
+.breadcrumb-list {
+  display: flex;
+  gap: 8px;
+  color: $colorSecondaryText;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.breadcrumb {
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: $mediaMobile) {
+    font-size: 11px;
+  }
+}

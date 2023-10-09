@@ -1,0 +1,25 @@
+@import '../../../../theme/variables.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.input {
+  padding: 15px;
+}
+
+.btn {
+  width: 100%;
+  padding: 15px 0;
+}
+
+.link {
+  color: $colorGreyText;
+  transition: all 200ms ease-in;
+
+  &:hover{
+    color: $colorSecondary;
+  }
+}

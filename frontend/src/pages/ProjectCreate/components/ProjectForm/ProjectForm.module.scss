@@ -1,0 +1,11 @@
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 15px;
+  border: none;
+}
+
+.key {
+  width: 40%;
+}

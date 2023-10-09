@@ -1,0 +1,72 @@
+@import '../../theme/variables.scss';
+
+.wrapper {
+  padding: 25px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link-block {
+  display: flex;
+}
+
+.link {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  color: $colorContent;
+  transition: color .3s ease;
+
+  &:hover {
+    color: $colorPrimary;
+  }
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  color: $colorContent;
+}
+
+.search-block {
+  position: relative;
+  width: fit-content;
+
+  .input {
+    width: 160px;
+    height: 40px;
+    padding: 8px 30px 8px 6px;
+    transition: width .3s ease;
+
+    &:focus {
+      width: 225px;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: $colorSecondaryText;
+    cursor: text;
+  }
+}

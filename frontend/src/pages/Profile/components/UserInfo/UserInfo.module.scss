@@ -1,0 +1,103 @@
+@import '../../../../theme/variables.scss';
+
+.user-info {
+  color: $colorSecondaryText;
+  padding: 0 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.name {
+  color: $colorContent;
+  font-size: 1.71429em;
+  font-style: inherit;
+  line-height: 1.16667;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  word-break: break-all;
+}
+
+.box {
+  box-shadow: $boxShadow2;
+  border-radius: 3px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .title {
+    font-size: 0.857143em;
+    font-style: inherit;
+    line-height: 1.33333;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: normal;
+  }
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 10px;
+
+  .form-container {
+    width: calc(100% - 40px);
+    max-width: 260px;
+  }
+
+  .form {
+    height: 50px;
+  }
+
+  .text,
+  .input {
+    font-size: 16px;
+  }
+
+  &.email {
+    gap: 20px;
+    cursor: not-allowed;
+  
+    &:hover .warning {
+      display: block;
+    }
+  }
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+}
+
+.warning {
+  display: none;
+  position: absolute;
+  bottom: -50px;
+  left: 30px;
+  padding: 15px 30px;
+}

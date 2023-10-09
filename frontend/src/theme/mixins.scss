@@ -1,0 +1,55 @@
+@import "./variables.scss";
+
+@mixin preloader-block($position: absolute, $top: 0, $left: 0, $width: 100%, $height: 100%) {
+  position: $position;
+  top: $top;
+  left: $left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $width;
+  height: $height;
+  background-color: $colorPreloaderBack;
+}
+
+@mixin scrollbar($orientation: 'vertical') {
+  &::-webkit-scrollbar {
+    @if $orientation == 'vertical' {
+      width: 5px;
+      height: 0;
+    } @else if $orientation == 'horizon' {
+      width: 0;
+      height: 5px;
+    } @else {
+      height: 5px;
+      width: 5px;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $colorWhite;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $colorScrollbarThumbBack;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $colorScrollbarThumbBackHover;
+  }
+}
+
+@mixin scrollbar-y($overflow: auto, $maxHeight: 200px) {
+  overflow: $overflow;
+  max-height: $maxHeight;
+
+  @include scrollbar('vertical');
+}
+
+@mixin scrollbar-x($overflow: auto, $maxWidth: 100%) {
+  overflow: $overflow;
+  max-width: $maxWidth;
+
+  @include scrollbar('horizon');
+}

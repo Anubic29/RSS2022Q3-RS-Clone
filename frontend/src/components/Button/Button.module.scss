@@ -1,0 +1,40 @@
+@import "../../theme/variables";
+
+.button {
+  padding: 7px 10px;
+  border: none;
+  border-radius: 3px;
+  font-weight: 500;
+  color: $colorButtonText;
+  background-color: $colorButtonBack;
+  cursor: pointer;
+  transition: background-color .3s ease;
+  
+  &:hover {
+    background-color: $colorButtonBackHover;
+  }
+
+  &.primary {
+    color: $colorButtonTextPrimary;
+    background-color: $colorButtonBackPrimary;
+
+    &:hover {
+      background-color: $colorButtonBackHoverPrimary;
+    }
+  }
+
+  &.danger {
+    color: $colorButtonTextDanger;
+    background-color: $colorButtonBackDanger;
+
+    &:hover {
+      background-color: $colorButtonBackHoverDanger;
+    }
+  }
+
+  &:disabled {
+    color: $colorButtonTextDisabled;
+    background-color: $colorButtonBackDisabled !important;
+    cursor: not-allowed;
+  }
+}

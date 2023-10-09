@@ -1,0 +1,106 @@
+@import '../../../../theme/variables';
+@import '../../../../theme/mixins';
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 240px;
+  min-width: 240px;
+  border-left: 20px solid;
+  border-radius: 3px;
+  background-color: $colorProjectCardBack;
+  box-shadow: $boxShadowItem;
+  padding: 15px 0 0 0;
+  transition: box-shadow .1s ease;
+
+  &:hover {
+    box-shadow: $boxShadowItemHover;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: -12px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 171px;
+  white-space: nowrap;
+}
+
+.avatar {
+  align-self: flex-start;
+}
+
+.title-link,
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title-link {
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  color: $colorContent;
+  cursor: pointer;
+  transition: color .3s ease;
+
+  &:hover {
+    color: $colorProjectCardTitleHover;
+  }
+}
+
+.description {
+  font-size: 11px;
+  font-weight: 500;
+  color: $colorContent;
+}
+
+.actions {
+  border-top: 1px solid $colorProjectCardActionsBorder;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 12px 5px 15px;
+}
+
+.title {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: $colorSecondaryText;
+  margin-left: 5px;
+}
+
+.action-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 3px;
+  border-radius: 3px;
+  font-size: 11px;
+  color: $colorContent;
+  cursor: pointer;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: $colorItemBackHover;
+  }
+}
+
+.preloader {
+  @include preloader-block($left: -20px, $width: calc(100% + 20px));
+}

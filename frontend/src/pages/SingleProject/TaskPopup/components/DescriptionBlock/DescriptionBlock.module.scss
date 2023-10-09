@@ -1,0 +1,28 @@
+
+@import '../../../../../theme/variables.scss';
+
+.description-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.block-header {
+  display: flex;
+  align-items: center;
+
+  .icon-edit {
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 20px;
+    transition: color .3s ease;
+
+    &:hover {
+      color: $colorPrimary
+    }
+  }
+}
+
+.title {
+  color: $colorContent;
+}

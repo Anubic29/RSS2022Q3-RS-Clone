@@ -1,0 +1,47 @@
+@import '../../../../theme/variables';
+
+.element {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: $colorGreyText;
+
+  &:hover {
+    background: $colorAsideBarNavBackHover;
+  }
+
+  &.active {
+    position: relative;
+    background: $colorAsideBarNavBackHover;
+  
+    & .icon,
+    & .title {
+      color: $colorPrimary;
+    }
+  
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 4px;
+      height: 40%;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      background: $colorPrimary;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.icon {
+  font-size: 25px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 400;
+}

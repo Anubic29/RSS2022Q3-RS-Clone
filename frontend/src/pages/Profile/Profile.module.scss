@@ -1,0 +1,40 @@
+@import '../../theme/variables.scss';
+
+.profile-page {
+  width: 100%;
+  position: relative;
+  color: $colorGreyText;
+}
+
+.profile-inner {
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border: $colorWhite 5px solid;
+  border-radius: 50%;
+  position: absolute;
+  top:-15px;
+  transform: translateY(-50%);
+  font-size: 50px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 90px 0;
+}
+
+.left {
+  width: 350px;
+}
+
+.right {
+  flex: 1;
+}

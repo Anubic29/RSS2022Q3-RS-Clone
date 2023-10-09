@@ -1,0 +1,70 @@
+@import '../../../../theme/variables.scss';
+@import '../../../../theme/mixins.scss';
+
+.project {
+  font-size: 14px;
+  background-color: $colorBackground;
+  position: relative;
+
+  &:hover {
+    background-color: $colorBackgroundColumn;
+  }
+}
+
+.cell {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 4px 8px;
+}
+
+.btn-block {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  color: $colorStarNoted;
+  transition: color ease .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+    color: $colorStarNotedHover;
+  }
+
+  &.active {
+    color: $colorStarNotedActive;
+  }
+}
+
+.link-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: $colorPrimary;
+  width: fit-content;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  .project-icon {
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.menu-cell {
+  overflow: visible;
+}
+
+.preloader {
+  @include preloader-block();
+}

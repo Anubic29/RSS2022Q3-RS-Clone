@@ -1,0 +1,74 @@
+@import '../../../../theme/variables';
+@import '../../../../theme/mixins';
+
+.task-item {
+  position: relative;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: $colorItemBackHover;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: $colorTaskIcon;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  max-width: 700px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 150px;
+  white-space: nowrap;
+}
+
+.title,
+.subtitle,
+.column {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  color: $colorContent;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: $colorItemInfo;
+}
+
+.column {
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: $colorItemInfo;
+  max-width: 70px;
+  white-space: nowrap;
+}
+
+.preloader {
+  @include preloader-block();
+}

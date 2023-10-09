@@ -1,0 +1,23 @@
+.user-row {
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    left: 0;
+    width: fit-content;
+
+    .text {
+      margin: 10px 0;
+    }
+  }
+
+  .list {
+    display: flex;
+    gap: 12px;
+  }
+}

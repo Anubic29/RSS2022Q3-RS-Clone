@@ -1,0 +1,84 @@
+@import '../../../../../theme/variables';
+@import '../../../../../theme/mixins';
+
+.task {
+  position: relative;
+  width: 270px;
+  padding: 12px;
+  background-color: $colorBackground;
+  margin: 2px 0;
+  border-radius: 3px;
+  box-shadow: $boxShadowItem;
+  transition: background-color ease .5s;
+
+  .btn-more {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+
+  .title {
+    margin-right: 40px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    color: $colorContent;
+  }
+
+  .info-block {
+    display: flex;
+    justify-content: space-between;
+
+    .info {
+      display: flex;
+      align-items: center;
+
+      .task-icon {
+        width: 24px;
+        height: 24px;
+        color: $colorTaskIcon;
+      }
+
+      .key {
+        margin-left: 10px;
+        font-size: 12px;
+        font-weight: 500;
+        color: $colorSecondaryText;
+      }
+    }
+
+    .sub-info {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .icon-done {
+        font-size: 14px;
+        color: $colorIconDone;
+      }
+
+      .icon-flag {
+        font-size: 20px;
+        color: $colorStarNotedActive;
+      }
+
+      .user-block {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+      }
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $colorBackgroundColumn;
+  }
+}
+
+.loader {
+  border-radius: 5px;
+  @include preloader-block();
+}

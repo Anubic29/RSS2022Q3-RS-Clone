@@ -1,0 +1,76 @@
+@import '../../../../../theme/variables';
+
+.input-wrapper {
+  position: relative;
+  width: 300px;
+
+  @media screen and (max-width: $mediaMobileMedium) {
+    width: 240px;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: $colorSecondaryText;
+  cursor: text;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-bottom: $borderAsideBar;
+  border-spacing: 0;
+}
+
+.row-header {
+  & > * {
+    padding: 4px 8px;
+    border-bottom: $borderAsideBar;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    color: $colorSecondaryText;
+    user-select: none;
+  }
+
+  .name,
+  .email {
+    cursor: pointer;
+    transition: background-color .2s ease;
+
+    &:hover {
+      background-color: $colorBackgroundColumn;
+    }
+  }
+
+  .name,
+  .email,
+  .role {
+    width: 30%;
+  }
+
+  .remove {
+    width: 10%;
+  }
+}
+
+.th-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: capitalize;
+}
+
+.preloader {
+  padding: 50px 0;
+}

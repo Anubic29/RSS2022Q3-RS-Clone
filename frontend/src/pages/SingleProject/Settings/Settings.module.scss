@@ -1,0 +1,13 @@
+@import '../../../theme/variables';
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  color: $colorContent;
+}

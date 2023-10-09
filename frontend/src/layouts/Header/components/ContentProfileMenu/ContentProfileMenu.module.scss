@@ -1,0 +1,86 @@
+@import '../../../../theme/variables.scss';
+
+.main-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.padding {
+  padding: 0 20px;
+}
+
+.title {
+  color: $colorGreyText;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  column-gap: 15px;
+}
+
+.avatar {
+  height: 40px;
+  width: 40px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-name,
+.email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.full-name {
+  font-size: 16px;
+}
+
+.email {
+  font-size: 12px;
+  color: $colorSecondaryText;
+}
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  transition: background-color .3s ease;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:hover {
+    background-color: $colorLightGrey;
+  }
+}
+
+.hr {
+  width: 100%;
+  border: 1px solid $colorLightGrey;
+}
+
+.last-link {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: $colorLightGrey;
+  }
+}

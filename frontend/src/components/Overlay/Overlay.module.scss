@@ -1,0 +1,18 @@
+@import '../../theme/variables';
+
+.overlay {
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background: $colorOverlayBack;
+
+  &.part-overlay {
+    position: absolute;
+    z-index: 50;
+    width: 100%;
+    height: 100%;
+  }
+}

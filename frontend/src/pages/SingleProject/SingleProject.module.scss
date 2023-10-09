@@ -1,0 +1,32 @@
+@import '../../theme/variables';
+
+.single-project {
+  display: flex;
+  flex: 1 1;
+
+  .content {
+    max-height: calc(100vh - $heightHeader - $heightFooter);
+    overflow-y: auto;
+    flex: 1 1;
+    padding: 24px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    @media screen and (max-width: $mediaTablet) {
+      padding: 20px 20px 20px 50px;
+    }
+  }
+
+  @media screen and (max-width: $mediaTablet) {
+    position: relative;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 50px;
+}

@@ -1,0 +1,66 @@
+@import "../../../../../theme/variables";
+@import "../../../../../theme/mixins";
+
+.user-dropdown {
+  position: relative;
+  width: 200px;
+}
+
+.display {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+
+  & > * {
+    width: 100%;
+  }
+}
+
+.display-mess {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border: 2px solid $colorInputBorder;
+  transition: background-color .2s ease-in-out, border-color .2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $colorInputBackHover;
+  }
+}
+
+.user-list {
+  width: 100%;
+  position: absolute;
+  z-index: 5;
+  bottom: -5px;
+  transform: translate(0, 100%);
+
+  @include scrollbar-y();
+}
+
+.filter-user {
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+  transition: background-color .3s ease;
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    color: $colorTaskIcon;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $colorUserBackHover;
+  }
+}
+
+.not-found-mess {
+  padding: 15px 10px;
+}

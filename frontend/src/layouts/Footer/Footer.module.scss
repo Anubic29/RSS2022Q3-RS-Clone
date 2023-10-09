@@ -1,0 +1,68 @@
+@import "../../theme/variables";
+
+.footer {
+  height: $heightFooter;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    height: 4px;
+    position: absolute;
+    top: -4px;
+    right: 0;
+    left: 0;
+    background: $linearGradient;
+    transform: rotateZ(180deg);
+    content: "";
+  }
+}
+
+.inner {
+  width: 100%;
+  max-width: $maxWidth;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media screen and (max-width: $mediaTablet) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.logo {
+  width: 80px;
+}
+
+.developers {
+  display: flex;
+  gap: 20px;
+
+  @media screen and (max-width: $mediaTablet) {
+    display: none;
+  }
+}
+
+.developer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  color: $colorContent;
+  transition: color .3s ease;
+
+  &:hover {
+    color: $colorPrimary;
+  }
+}
+
+.separator {
+  @media screen and (max-width: $mediaTablet) {
+    display: none;
+  }
+}

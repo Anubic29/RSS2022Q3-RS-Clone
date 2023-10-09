@@ -1,0 +1,22 @@
+@import '../../../../theme/variables';
+
+.info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 16px;
+  background: $colorInfoCardsBack;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  font-size: 14px;
+  stroke-width: 500;
+  color: $colorSecondaryText;
+}

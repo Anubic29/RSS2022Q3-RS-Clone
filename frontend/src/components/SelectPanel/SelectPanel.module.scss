@@ -1,0 +1,73 @@
+@import '../../theme/variables';
+@import '../../theme/mixins';
+
+.select-panel {
+  position: relative;
+
+  .select {
+    height: 32px;
+    width: 100%;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: $colorContent;
+    background-color: $colorBackgroundColumn;
+    transition: background-color ease .3s;
+    border-radius: 5px;
+    font-size: 14px;
+
+    .text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: $colorBackgroundHover;
+    }
+
+    &.accent {
+      background-color: $colorPrimary;
+      color: $colorWhite;
+
+      &:hover {
+        background-color: $colorSecondary;
+      }
+    }
+  }
+
+  .option-list {
+    font-size: 14px;
+    border: 1px solid $colorBorder;
+    border-radius: 5px;
+    position: absolute;
+    background-color: $colorBackground;
+    right: 0;
+    bottom: -5px;
+    transform: translate(0, 100%);
+    padding: 3px 0;
+    max-width: 250px;
+
+    @include scrollbar-y();
+  }
+
+  .option {
+    padding: 8px 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $colorBackgroundColumn;
+    }
+  }
+}

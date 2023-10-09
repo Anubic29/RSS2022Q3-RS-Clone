@@ -1,0 +1,47 @@
+@import '../../theme/variables.scss';
+
+.menu {
+  position: relative;
+
+  .active-btn {
+    background-color: $colorBtnMenuActionBack !important;
+    color: $colorBackgroundColumn !important;
+  }
+
+  .list {
+    width: fit-content;
+    font-size: 14px;
+    border: 1px solid $colorBorder;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 5;
+    background-color: $colorBackground;
+    right: 0;
+    bottom: -5px;
+    transform: translate(0, 100%);
+    padding: 3px 0;
+  }
+
+  .option {
+    user-select: none;
+    padding: 8px 20px;
+    white-space: nowrap;
+    transition: background-color .3s ease;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $colorBackgroundColumn;
+    }
+
+    &:active {
+      background-color: $colorBtnMenuActionActive;
+    }
+
+    &.blocked {
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+}

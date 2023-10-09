@@ -29,25 +29,7 @@ const schema = new Schema({
   columnId: {
     type: String,
     required: true
-  },
-  commentList: [{
-    text: {
-      type: String,
-      required: true
-    },
-    author: {
-      type: String,
-      required: true
-    },
-    date: {
-      type: String,
-      required: true
-    },
-    dateUpdate: {
-      type: String,
-      required: true
-    }
-  }]
+  }
 });
 
 module.exports = model('Task', schema);

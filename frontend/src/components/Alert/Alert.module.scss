@@ -1,0 +1,75 @@
+@import '../../theme/variables';
+
+.alert {
+  position: relative;
+  z-index: 9999;
+  width: 500px;
+  padding: 12px 16px;
+  border-radius: 3px;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  @media screen and (max-width: $mediaMobile) {
+    width: 100%;
+  }
+
+  &.error {
+    color: $colorAlertError;
+    background: $colorAlertErrorBack;
+
+    .icon {
+      color: $colorAlertErrorIcon;
+    }
+  }
+
+  &.warning {
+    color: $colorAlertWarning;
+    background: $colorAlertWarningBack;
+
+    .icon {
+      color: $colorAlertWarningIcon;
+    }
+  }
+
+  &.info {
+    color: $colorAlertInfo;
+    background: $colorAlertInfoBack;
+
+    .icon {
+      color: $colorAlertInfoIcon;
+    }
+  }
+
+  &.success {
+    color: $colorAlertSuccess;
+    background: $colorAlertSuccessBack;
+
+    .icon {
+      color: $colorAlertSuccessIcon;
+    }
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  flex: 0 0 auto;
+  font-size: 22px;
+}
+
+.message {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.remove {
+  flex: 0 0 auto;
+  cursor: pointer;
+}
